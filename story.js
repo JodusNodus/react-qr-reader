@@ -4,4 +4,4 @@ import h from "react-hyperscript"
 import Reader from "./"
 
 storiesOf('QR Reader', module)
-.add('with camera', () => h(Reader, {handleScan: action("Scan")}))
+.add('with camera', () => h(Reader, {handleScan: action("Scan"), handleError: () => {}}))

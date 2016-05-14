@@ -1,35 +1,40 @@
 import React, { Component, PropTypes } from 'react'
-require("qrcode-reader/dist/browser.js")
+import jsQR from "jsqr"
 import h from "react-hyperscript"
 
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia
 
 export default class Reader extends Component {
   handleVideo(stream) {
     this.refs.preview.src = window.URL.createObjectURL(stream)
-    setInterval(this.updateCanvas.bind(this), this.props.interval)
+    if(this.props.interval){
+      setInterval(this.check.bind(this), this.props.interval)
+    }else{
+      window.requestAnimationFrame(this.check.bind(this))
+    }
   }
   handleVideoErr(e){
     console.error(e)
   }
   componentDidMount(){
-    const { height, width, handleScan } = this.props
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia
-    if (navigator.getUserMedia)
+    const { height, width, handleError } = this.props
+    if (navigator.getUserMedia){
       navigator.getUserMedia({video: { width, height }}, this.handleVideo.bind(this), this.handleVideoErr.bind(this))
-
-    this.qr = new window.QrCode()
-
-    this.qr.callback = result => {
-      if(result.indexOf("error") < 0)
-        handleScan(result)
+    }else{
+      handleError()
     }
   }
-  updateCanvas() {
-    const { height, width } = this.props
+  check() {
+    const { height, width, interval, handleScan } = this.props
+    if(!interval)
+      window.requestAnimationFrame(this.check.bind(this))
+
     const ctx = this.refs.canvas.getContext('2d')
     ctx.drawImage(this.refs.preview, 0, 0, width, height)
-    const data = this.refs.canvas.getContext("2d").getImageData(0, 0, width, height)
-    this.qr.decode(data)
+    const imageData = ctx.getImageData(0, 0, width, height)
+    const decoded = jsQR.decodeQRFromImage(imageData.data, imageData.width, imageData.height)
+    if(decoded)
+      handleScan(decoded)
   }
   render(){
     const { height, width } = this.props
@@ -51,11 +56,12 @@ export default class Reader extends Component {
 Reader.defaultProps = {
   height: 240,
   width: 320,
-  interval: 250
+  interval: null
 }
 Reader.propTypes = {
   height: PropTypes.number,
   width: PropTypes.number,
   handleScan: PropTypes.func.isRequired,
+  handleError: PropTypes.func.isRequired,
   interval: PropTypes.number
 }

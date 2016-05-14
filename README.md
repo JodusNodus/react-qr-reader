@@ -48,7 +48,7 @@ The horizontal resolution of the video stream.
 
 **interval**
 
-Type: `number`, Optional, Default: 250
+Type: `number`, Optional, Default: every frame
 
 The interval between scans in milliseconds.
 
@@ -58,7 +58,11 @@ Type: `function`, Required, Argument: `result`
 
 The function to call when a scan is succesfull.
 
+**handleError**
 
+Type: `function`, Required, Argument: `error`
+
+The function to call when an error occurs.
 
 ## Dev
 
