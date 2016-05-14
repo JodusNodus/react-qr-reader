@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>React-qr-reader by JodusNodus</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>React-qr-reader</h1>
+        <p>A react component for reading QR codes from the webcam.</p>
+
+        <p class="view"><a href="https://github.com/JodusNodus/react-qr-reader">View the Project on GitHub <small>JodusNodus/react-qr-reader</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/JodusNodus/react-qr-reader/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/JodusNodus/react-qr-reader/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/JodusNodus/react-qr-reader">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="react-qr-reader" class="anchor" href="#react-qr-reader" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>react-qr-reader</h1>
+
+<p>A react component for reading QR codes from the webcam.</p>
+
+<h2>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h2>
+
+<p><code>npm install react-qr-reader</code></p>
+
+<h2>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h2>
+
+<pre><code>import React, { Component }
+import QrReader from "react-qr-reader"
+
+class Container extends Component {
+  constructor(){
+    this.state = {
+      result: "No result"
+    }
+  }
+  handleScan(data){
+    this.setState({
+      result: data
+    })
+  }
+  render(){
+    return(
+      &lt;div&gt;
+        &lt;QrReader height={480} width={640} interval={500} handleScan={this.handleScan.bind(this)}/&gt;
+        &lt;p&gt;{this.state.result}&lt;/p&gt;
+      &lt;/div&gt;
+    )
+  }
+}
+</code></pre>
+
+<h2>
+<a id="props" class="anchor" href="#props" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Props</h2>
+
+<p><strong>height</strong></p>
+
+<p>Type: <code>number</code>, Optional, Default: 240</p>
+
+<p>The vertical resolution of the video stream.</p>
+
+<p><strong>width</strong></p>
+
+<p>Type: <code>number</code>, Optional, Default: 320</p>
+
+<p>The horizontal resolution of the video stream.</p>
+
+<p><strong>interval</strong></p>
+
+<p>Type: <code>number</code>, Optional, Default: 250</p>
+
+<p>The interval between scans in milliseconds.</p>
+
+<p><strong>handleScan</strong></p>
+
+<p>Type: <code>function</code>, Required, Argument: <code>result</code></p>
+
+<p>The function to call when a scan is succesfull.</p>
+
+<h2>
+<a id="dev" class="anchor" href="#dev" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dev</h2>
+
+<p>Install depencies</p>
+
+<p><code>npm install</code></p>
+
+<p>Run babel on filechange</p>
+
+<p><code>npm run watch</code></p>
+
+<p>Start hot-reloading web-server (port: 9001)</p>
+
+<p><code>npm run storybook</code></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/JodusNodus">JodusNodus</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
