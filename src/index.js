@@ -15,13 +15,16 @@ class Demo extends Component {
       result: data
     })
   }
+  handleError(){
+    console.error("error")
+  }
   render(){
     return h("div", [
       h(QrReader, {
         height: 480,
         width: 640,
-        interval: 250,
-        handleScan: this.handleScan.bind(this)
+        handleScan: this.handleScan.bind(this),
+        handleError: this.handleError
       }),
       h("p", this.state.result)
     ])
