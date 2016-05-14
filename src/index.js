@@ -21,12 +21,10 @@ class Demo extends Component {
   render(){
     return h("div", [
       h(QrReader, {
-        height: 480,
-        width: 640,
         handleScan: this.handleScan.bind(this),
         handleError: this.handleError
       }),
-      h("p", this.state.result)
+      h("h3", `Decoded QR-Code: ${this.state.result}`)
     ])
   }
 }
