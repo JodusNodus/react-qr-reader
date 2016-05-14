@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import QrCode from "qrcode-reader"
+require("qrcode-reader/dist/browser.js")
 import h from "react-hyperscript"
 
 
@@ -17,7 +17,7 @@ export default class Reader extends Component {
     if (navigator.getUserMedia)
       navigator.getUserMedia({video: { width, height }}, this.handleVideo.bind(this), this.handleVideoErr.bind(this))
 
-    this.qr = new QrCode()
+    this.qr = new window.QrCode()
 
     this.qr.callback = result => {
       if(result.indexOf("error") < 0)
