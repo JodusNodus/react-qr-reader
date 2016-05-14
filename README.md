@@ -1,6 +1,9 @@
 # react-qr-reader
 A react component for reading QR codes from the webcam.
 
+## Install
+`npm install react-qr-reader`
+
 ## Example
 
 ```
@@ -31,19 +34,42 @@ class Container extends Component {
 
 ## Props
 
-
 **height**
+
 Type: `number`, Optional, Default: 240
+
 The vertical resolution of the video stream.
 
 **width**
+
 Type: `number`, Optional, Default: 320
+
 The horizontal resolution of the video stream.
 
 **interval**
+
 Type: `number`, Optional, Default: 250
+
 The interval between scans in milliseconds.
 
 **handleScan**
+
 Type: `function`, Required, Argument: `result`
+
 The function to call when a scan is succesfull.
+
+
+
+## Dev
+
+Install depencies
+
+`npm install`
+
+Run babel on filechange
+
+`npm run watch`
+
+Start hot-reloading web-server (port: 9001)
+
+`npm run storybook`
