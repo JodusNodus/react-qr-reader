@@ -1,6 +1,8 @@
 # react-qr-reader
 A react component for reading QR codes from the webcam.
 
+## [Demo](https://jodusnodus.github.io/react-qr-reader)
+
 ## Install
 `npm install react-qr-reader`
 
@@ -21,10 +23,13 @@ class Container extends Component {
       result: data
     })
   }
+  handleError(err){
+    console.error(err)
+  }
   render(){
     return(
       <div>
-        <QrReader height={480} width={640} interval={500} handleScan={this.handleScan.bind(this)}/>
+        <QrReader height={480} width={640} interval={500} handleScan={this.handleScan.bind(this)} handleError={this.handleError}/>
         <p>{this.state.result}</p>
       </div>
     )
