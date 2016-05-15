@@ -39,12 +39,11 @@ export default class Reader extends Component {
   render(){
     const { height, width } = this.props
     const previewStyle = {
-      height,
-      width,
-      background: "#efefef"
+      display: "none"
     }
     const canvasStyle = {
-      display: "none"
+      height,
+      width
     }
     return h('section', [
       h("video", { autoplay: true, style: previewStyle, ref: "preview"}),
