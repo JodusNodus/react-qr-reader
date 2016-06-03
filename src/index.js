@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import jsQR from "jsqr"
-import h from "react-hyperscript"
 import "md-gum-polyfill"
 
 export default class Reader extends Component {
@@ -32,8 +31,8 @@ export default class Reader extends Component {
     const { height, width, handleError } = this.props
     const constrains = {
       video: {
-        width,
-        height
+        width: { min: 1024, ideal: 1280, max: 1920 },
+        height: { min: 776, ideal: 720, max: 1080 }
       }
     }
     if (navigator.mediaDevices.getUserMedia){
@@ -56,7 +55,7 @@ export default class Reader extends Component {
       const ctx = canvas.getContext('2d')
       ctx.drawImage(preview, 0, 0, width, height)
       const imageData = ctx.getImageData(0, 0, width, height)
-      const decoded = jsQR.decodeQRFromImage(imageData.data, imageData.width, imageData.height)
+      const decoded = jsQR.decodeQRFromImage(imageData.data, imageData.width, imageData.height, width)
       if(decoded)
         handleScan(decoded)
     }
@@ -67,13 +66,17 @@ export default class Reader extends Component {
       display: "none"
     }
     const canvasStyle = {
-      height,
-      width
+      minWidth: 1024,
+      maxWidth: 1920,
+      minHeight: 776,
+      maxHeight: 1080
     }
-    return h('section', [
-      h("video", { style: previewStyle, ref: "preview"}),
-      h("canvas", {width, height, ref: "canvas", style: canvasStyle})
-    ])
+    return (
+      <section>
+        <video style={previewStyle} ref="preview"/>
+        <canvas style={canvasStyle} ref="canvas"/>
+      </section>
+    )
   }
 }
 
