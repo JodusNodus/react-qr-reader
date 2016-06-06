@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
-import jsQR from "jsqr"
-import "md-gum-polyfill"
+import jsQR from 'jsqr'
+import 'md-gum-polyfill'
 
 export default class Reader extends Component {
   handleVideo(stream) {
@@ -15,7 +15,7 @@ export default class Reader extends Component {
       preview.src = stream
     }
 
-    preview.addEventListener("loadstart", e => {
+    preview.addEventListener('loadstart', e => {
       preview.play()
       if(this.props.interval){
         setInterval(this.check.bind(this), this.props.interval)
@@ -28,7 +28,7 @@ export default class Reader extends Component {
     this.initiate.apply(this)
   }
   initiate(){
-    const { height, width, handleError } = this.props
+    const { handleError } = this.props
     const constrains = {
       video: {
         width: { min: 1024, ideal: 1280, max: 1920 },
@@ -38,11 +38,9 @@ export default class Reader extends Component {
     if (navigator.mediaDevices.getUserMedia){
       navigator.mediaDevices.getUserMedia(constrains)
       .then(this.handleVideo.bind(this))
-      .catch(e => {
-        handleError(e.name)
-      })
+      .catch(e => handleError(e.name))
     }else{
-      handleError("Not compatible with getUserMedia")
+      handleError('Not compatible with getUserMedia')
     }
   }
   check() {
@@ -63,7 +61,7 @@ export default class Reader extends Component {
   render(){
     const { height, width } = this.props
     const previewStyle = {
-      display: "none"
+      display: 'none'
     }
     const canvasStyle = {
       height,
