@@ -66,10 +66,8 @@ export default class Reader extends Component {
       display: "none"
     }
     const canvasStyle = {
-      minWidth: 1024,
-      maxWidth: 1920,
-      minHeight: 776,
-      maxHeight: 1080
+      height,
+      width
     }
     return (
       <section>

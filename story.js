@@ -4,5 +4,5 @@ import Reader from "./"
 
 storiesOf('QR Reader', module)
 .add('with camera', () => (
-  <Reader previewHeight={480} previewWidth={640} handleScan={action("Scan")} handleError={action("Scan")} ref="hello"/>
+  <Reader previewHeight={240} previewWidth={320} handleScan={action("Scan")} handleError={action("Scan")} ref="hello"/>
 ))
