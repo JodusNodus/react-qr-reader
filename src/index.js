@@ -14,6 +14,8 @@ export default class Reader extends Component {
     } else {
       preview.src = stream
     }
+    
+    this.stopCamera = stream.getTracks()[0].stop;
 
     preview.addEventListener('loadstart', e => {
       preview.play()
@@ -30,6 +32,10 @@ export default class Reader extends Component {
   componentWillUnmount () {
     if (this._interval) {
       clearInterval(this._interval);
+    }
+    
+    if (typeof this.stopCamera === 'function') {
+      this.stopCamera();
     }
   }
   initiate(){
