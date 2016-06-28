@@ -7,13 +7,11 @@ export default class Reader extends Component {
     this.initiate.apply(this)
   }
   componentWillUnmount () {
-    if (this._interval) {
+    if (this._interval)
       clearInterval(this._interval)
-    }
     
-    if (typeof this.stopCamera === 'function') {
+    if (typeof this.stopCamera === 'function')
       this.stopCamera()
-    }
   }
   initiate(){
     const { handleError } = this.props
@@ -65,8 +63,7 @@ export default class Reader extends Component {
       ctx.drawImage(preview, 0, 0, width, height)
       const imageData = ctx.getImageData(0, 0, width, height)
       const decoded = jsQR.decodeQRFromImage(imageData.data, imageData.width, imageData.height, width)
-      if(decoded)
-        handleScan(decoded)
+      if(decoded) handleScan(decoded)
     }
   }
   render(){
