@@ -14,11 +14,13 @@ export default class Reader extends Component {
     } else {
       preview.src = stream
     }
+    
+    this.stopCamera = stream.getTracks()[0].stop.bind(stream.getTracks()[0]);
 
     preview.addEventListener('loadstart', e => {
       preview.play()
       if(this.props.interval){
-        setInterval(this.check.bind(this), this.props.interval)
+        this._interval = setInterval(this.check.bind(this), this.props.interval)
       }else{
         window.requestAnimationFrame(this.check.bind(this))
       }
@@ -26,6 +28,15 @@ export default class Reader extends Component {
   }
   componentDidMount(){
     this.initiate.apply(this)
+  }
+  componentWillUnmount () {
+    if (this._interval) {
+      clearInterval(this._interval);
+    }
+    
+    if (typeof this.stopCamera === 'function') {
+      this.stopCamera();
+    }
   }
   initiate(){
     const { handleError } = this.props
@@ -49,7 +60,7 @@ export default class Reader extends Component {
     if(!interval)
       window.requestAnimationFrame(this.check.bind(this))
 
-    if (preview.readyState === preview.HAVE_ENOUGH_DATA){
+    if (preview && preview.readyState === preview.HAVE_ENOUGH_DATA){
       const ctx = canvas.getContext('2d')
       ctx.drawImage(preview, 0, 0, width, height)
       const imageData = ctx.getImageData(0, 0, width, height)
