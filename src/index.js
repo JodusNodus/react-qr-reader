@@ -15,9 +15,9 @@ export default class Reader extends Component {
       preview.src = stream
     }
     
-    this.stopCamera = stream.getTracks()[0].stop.bind(stream.getTracks()[0]);
+    this.stopCamera = stream.getTracks()[0].stop.bind(stream.getTracks()[0])
 
-    preview.addEventListener('loadstart', e => {
+    preview.addEventListener('loadstart', () => {
       preview.play()
       if(this.props.interval){
         this._interval = setInterval(this.check.bind(this), this.props.interval)
@@ -31,11 +31,11 @@ export default class Reader extends Component {
   }
   componentWillUnmount () {
     if (this._interval) {
-      clearInterval(this._interval);
+      clearInterval(this._interval)
     }
     
     if (typeof this.stopCamera === 'function') {
-      this.stopCamera();
+      this.stopCamera()
     }
   }
   initiate(){
@@ -43,8 +43,8 @@ export default class Reader extends Component {
     const constrains = {
       video: {
         width: { min: 1024, ideal: 1280, max: 1920 },
-        height: { min: 776, ideal: 720, max: 1080 }
-      }
+        height: { min: 776, ideal: 720, max: 1080 },
+      },
     }
     if (navigator.mediaDevices.getUserMedia){
       navigator.mediaDevices.getUserMedia(constrains)
@@ -72,11 +72,11 @@ export default class Reader extends Component {
   render(){
     const { height, width } = this.props
     const previewStyle = {
-      display: 'none'
+      display: 'none',
     }
     const canvasStyle = {
       height,
-      width
+      width,
     }
     return (
       <section>
@@ -90,12 +90,12 @@ export default class Reader extends Component {
 Reader.defaultProps = {
   height: 240,
   width: 320,
-  interval: null
+  interval: null,
 }
 Reader.propTypes = {
   height: PropTypes.number,
   width: PropTypes.number,
   handleScan: PropTypes.func.isRequired,
   handleError: PropTypes.func.isRequired,
-  interval: PropTypes.number
+  interval: PropTypes.number,
 }
