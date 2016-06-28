@@ -3,29 +3,6 @@ import jsQR from 'jsqr'
 import 'md-gum-polyfill'
 
 export default class Reader extends Component {
-  handleVideo(stream) {
-    const { preview } = this.refs
-    if(window.URL.createObjectURL){
-      preview.src = window.URL.createObjectURL(stream)
-    }else if (window.webkitURL) {
-      preview.src = window.webkitURL.createObjectURL(stream)
-    } else if (preview.mozSrcObject !== undefined) {
-      preview.mozSrcObject = stream
-    } else {
-      preview.src = stream
-    }
-    
-    this.stopCamera = stream.getTracks()[0].stop.bind(stream.getTracks()[0])
-
-    preview.addEventListener('loadstart', () => {
-      preview.play()
-      if(this.props.interval){
-        this._interval = setInterval(this.check.bind(this), this.props.interval)
-      }else{
-        window.requestAnimationFrame(this.check.bind(this))
-      }
-    })
-  }
   componentDidMount(){
     this.initiate.apply(this)
   }
@@ -53,6 +30,29 @@ export default class Reader extends Component {
     }else{
       handleError('Not compatible with getUserMedia')
     }
+  }
+  handleVideo(stream) {
+    const { preview } = this.refs
+    if(window.URL.createObjectURL){
+      preview.src = window.URL.createObjectURL(stream)
+    }else if (window.webkitURL) {
+      preview.src = window.webkitURL.createObjectURL(stream)
+    } else if (preview.mozSrcObject !== undefined) {
+      preview.mozSrcObject = stream
+    } else {
+      preview.src = stream
+    }
+    
+    this.stopCamera = stream.getTracks()[0].stop.bind(stream.getTracks()[0])
+
+    preview.addEventListener('loadstart', () => {
+      preview.play()
+      if(this.props.interval){
+        this._interval = setInterval(this.check.bind(this), this.props.interval)
+      }else{
+        window.requestAnimationFrame(this.check.bind(this))
+      }
+    })
   }
   check() {
     const { height, width, interval, handleScan } = this.props
