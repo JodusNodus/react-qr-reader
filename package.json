@@ -47,7 +47,7 @@
     "react-dom": "^15.0.2"
   },
   "dependencies": {
-    "jsqr": "^0.1.2",
+    "jsqr": "^0.2.1",
     "md-gum-polyfill": "^1.0.0"
   }
 }
