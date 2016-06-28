@@ -15,7 +15,7 @@ export default class Reader extends Component {
       preview.src = stream
     }
     
-    this.stopCamera = stream.getTracks()[0].stop;
+    this.stopCamera = stream.getTracks()[0].stop.bind(stream);
 
     preview.addEventListener('loadstart', e => {
       preview.play()
