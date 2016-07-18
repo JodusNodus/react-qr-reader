@@ -1,11 +1,12 @@
 {
   "name": "react-qr-reader",
-  "version": "0.2.5",
+  "version": "0.2.7",
   "description": "A react component for reading QR codes from the webcam.",
   "main": "./lib/index.js",
   "scripts": {
     "storybook": "start-storybook -p 9001",
-    "watch": "babel -w ./src -d ./lib",
+    "build": "babel ./src -d ./lib",
+    "build:watch": "npm run build -- --watch",
     "lint": "eslint -c ./.eslintrc.js ./src"
   },
   "repository": {
