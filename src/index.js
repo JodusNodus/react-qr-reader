@@ -3,6 +3,13 @@ import jsQR from 'jsqr'
 import 'md-gum-polyfill'
 
 export default class Reader extends Component {
+  constructor(props){
+    super(props)
+
+    this.initiate = this.initiate.bind(this)
+    this.check = this.check.bind(this)
+    this.handleVideo = this.handleVideo.bind(this)
+  }
   componentDidMount(){
     this.initiate.apply(this)
   }
@@ -14,16 +21,20 @@ export default class Reader extends Component {
       this.stopCamera()
   }
   initiate(){
-    const { handleError } = this.props
+    const { handleError, facingMode } = this.props
+
+    const rearMode = { exact: 'environment' }
+
     const constrains = {
       video: {
-        width: { min: 1024, ideal: 1280, max: 1920 },
-        height: { min: 776, ideal: 720, max: 1080 },
+        facingMode: facingMode == 'rear' ? rearMode : 'user',
+        width: { min: 360, ideal: 1280, max: 1920 },
+        height: { min: 240, ideal: 720, max: 1080 },
       },
     }
     if (navigator.mediaDevices.getUserMedia){
       navigator.mediaDevices.getUserMedia(constrains)
-      .then(this.handleVideo.bind(this))
+      .then(this.handleVideo)
       .catch(e => handleError(e.name))
     }else{
       handleError('Not compatible with getUserMedia')
@@ -46,35 +57,41 @@ export default class Reader extends Component {
     preview.addEventListener('loadstart', () => {
       preview.play()
       if(this.props.interval){
-        this._interval = setInterval(this.check.bind(this), this.props.interval)
+        this._interval = setInterval(this.check, this.props.interval)
       }else{
-        window.requestAnimationFrame(this.check.bind(this))
+        window.requestAnimationFrame(this.check)
       }
     })
   }
   check() {
-    const { height, width, interval, handleScan } = this.props
+    const { interval, handleScan } = this.props
     const { preview, canvas } = this.refs
+    const width = preview.videoWidth
+    const height = preview.videoHeight
+
+    canvas.width = width
+    canvas.height = height
+
     if(!interval)
-      window.requestAnimationFrame(this.check.bind(this))
+      window.requestAnimationFrame(this.check)
 
     if (preview && preview.readyState === preview.HAVE_ENOUGH_DATA){
       const ctx = canvas.getContext('2d')
       ctx.drawImage(preview, 0, 0, width, height)
       const imageData = ctx.getImageData(0, 0, width, height)
-      const decoded = jsQR.decodeQRFromImage(imageData.data, imageData.width, imageData.height, width)
+      const decoded = jsQR.decodeQRFromImage(imageData.data, width, height, width)
       if(decoded) handleScan(decoded)
     }
   }
   render(){
-    const { height, width } = this.props
     const previewStyle = {
-      display: 'none',
+      display: 'block',
+      ...this.props.previewStyle,
     }
     const canvasStyle = {
-      height,
-      width,
+      display: 'none',
     }
+
     return (
       <section>
         <video style={previewStyle} ref="preview"/>
@@ -85,14 +102,14 @@ export default class Reader extends Component {
 }
 
 Reader.defaultProps = {
-  height: 240,
-  width: 320,
   interval: null,
+  previewStyle: {},
+  facingMode: 'front',
 }
 Reader.propTypes = {
-  height: PropTypes.number,
-  width: PropTypes.number,
   handleScan: PropTypes.func.isRequired,
   handleError: PropTypes.func.isRequired,
   interval: PropTypes.number,
+  previewStyle: PropTypes.object,
+  facingMode: PropTypes.string,
 }

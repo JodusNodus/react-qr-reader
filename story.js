@@ -3,17 +3,20 @@ import { storiesOf, action } from '@kadira/storybook'
 import Reader from './'
 
 class Wrapper extends Component {
-  componentDidMount(){
-    console.log(this.refs.hello.refs)
-  }
   render(){
+    const previewStyle = {
+      objectFit: 'fill',
+      height: 240,
+      width: 320,
+    }
+
     return(
       <Reader
-        previewHeight={240}
-        previewWidth={320}
-        handleError={action('Scan')}
+        previewStyle={previewStyle}
+        handleError={action('Error')}
         handleScan={action('Scan')}
-        ref="hello"
+        interval={500}
+        ref="reader"
         />
     )
   }
