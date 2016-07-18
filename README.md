@@ -72,6 +72,13 @@ Type: `object`, Optional
 
 Styling for the preview element. **Warning** The preview will keep its aspect ratio, to disable this set the CSS property [objectFit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) to `fill`.
 
+**facingMode**
+
+Type: `string`, Optional, Default: `front`
+
+Specify which camera should be used (if supported).
+
+Options: `front` and `rear`.
 
 ## Dev
 
