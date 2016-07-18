@@ -1,41 +1,30 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta charset="UTF-8">
     <title>React-qr-reader by JodusNodus</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-    <meta name="viewport" content="width=device-width">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>React-qr-reader</h1>
-        <p>A react component for reading QR codes from the webcam.</p>
+    <section class="page-header">
+      <h1 class="project-name">React-qr-reader</h1>
+      <h2 class="project-tagline">A react component for reading QR codes from the webcam.</h2>
+      <a href="https://github.com/JodusNodus/react-qr-reader" class="btn">View on GitHub</a>
+      <a href="https://github.com/JodusNodus/react-qr-reader/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/JodusNodus/react-qr-reader/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-        <p class="view"><a href="https://github.com/JodusNodus/react-qr-reader">View the Project on GitHub <small>JodusNodus/react-qr-reader</small></a></p>
-
-
-
-        <ul>
-          <li><a href="https://github.com/JodusNodus/react-qr-reader/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/JodusNodus/react-qr-reader/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/JodusNodus/react-qr-reader">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
+    <section class="main-content">
+      <h1>
 <a id="react-qr-reader" class="anchor" href="#react-qr-reader" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>react-qr-reader</h1>
 
 <p>A react component for reading QR codes from the webcam.</p>
 
-<h2>Demo</h2>
-<div id="demo-container"></div>
+<p><a href="https://jodusnodus.github.io/react-qr-reader">Demo</a></p>
 
 <h2>
 <a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h2>
@@ -45,24 +34,36 @@
 <h2>
 <a id="example" class="anchor" href="#example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h2>
 
-<pre><code>import React, { Component }
-import QrReader from "react-qr-reader"
+<pre><code>import React, { Component } from 'react'
+import QrReader from 'react-qr-reader'
 
-class Container extends Component {
-  constructor(){
+class Test extends Component {
+  constructor(props){
+    super(props)
     this.state = {
-      result: "No result"
+      result: 'No result',
     }
   }
   handleScan(data){
     this.setState({
-      result: data
+      result: data,
     })
   }
+  handleError(err){
+    console.error(err)
+  }
   render(){
+    const previewStyle = {
+      height: 240,
+      width: 320,
+    }
+
     return(
       &lt;div&gt;
-        &lt;QrReader height={480} width={640} interval={500} handleScan={this.handleScan.bind(this)}/&gt;
+        &lt;Reader
+          previewStyle={previewStyle}
+          handleError={this.handleError}
+          handleScan={this.handleScan.bind(this)}/&gt;
         &lt;p&gt;{this.state.result}&lt;/p&gt;
       &lt;/div&gt;
     )
@@ -73,29 +74,29 @@ class Container extends Component {
 <h2>
 <a id="props" class="anchor" href="#props" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Props</h2>
 
-<p><strong>height</strong></p>
-
-<p>Type: <code>number</code>, Optional, Default: 240</p>
-
-<p>The vertical resolution of the video stream.</p>
-
-<p><strong>width</strong></p>
-
-<p>Type: <code>number</code>, Optional, Default: 320</p>
-
-<p>The horizontal resolution of the video stream.</p>
-
-<p><strong>interval</strong></p>
-
-<p>Type: <code>number</code>, Optional, Default: 250</p>
-
-<p>The interval between scans in milliseconds.</p>
-
 <p><strong>handleScan</strong></p>
 
 <p>Type: <code>function</code>, Required, Argument: <code>result</code></p>
 
 <p>The function to call when a scan is succesfull.</p>
+
+<p><strong>handleError</strong></p>
+
+<p>Type: <code>function</code>, Required, Argument: <code>error</code></p>
+
+<p>The function to call when an error occurs.</p>
+
+<p><strong>interval</strong></p>
+
+<p>Type: <code>number</code>, Optional, Default: every frame</p>
+
+<p>The interval between scans in milliseconds.</p>
+
+<p><strong>previewStyle</strong></p>
+
+<p>Type: <code>object</code>, Optional</p>
+
+<p>Styling for the preview element. <strong>Warning</strong> The preview will keep its aspect ratio, to disable this set the CSS property <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit">objectFit</a> to <code>fill</code>.</p>
 
 <h2>
 <a id="dev" class="anchor" href="#dev" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dev</h2>
@@ -104,20 +105,30 @@ class Container extends Component {
 
 <p><code>npm install</code></p>
 
-<p>Run babel on filechange</p>
+<p>Build</p>
 
-<p><code>npm run watch</code></p>
+<p><code>npm run build</code></p>
+
+<p>or on file change</p>
+
+<p><code>npm run build:watch</code></p>
 
 <p>Start hot-reloading web-server (port: 9001)</p>
 
 <p><code>npm run storybook</code></p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/JodusNodus">JodusNodus</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+
+<p>Linting</p>
+
+<p><code>npm run lint</code></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/JodusNodus/react-qr-reader">React-qr-reader</a> is maintained by <a href="https://github.com/JodusNodus">JodusNodus</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-    <script src="javascripts/bundle.js"></script>
+
+    </section>
+
+  
   </body>
 </html>
