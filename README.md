@@ -1,7 +1,7 @@
 # react-qr-reader
 A react component for reading QR codes from the webcam.
 
-## [Demo](https://jodusnodus.github.io/react-qr-reader)
+[Demo](https://jodusnodus.github.io/react-qr-reader)
 
 ## Install
 `npm install react-qr-reader`
@@ -9,27 +9,36 @@ A react component for reading QR codes from the webcam.
 ## Example
 
 ```
-import React, { Component }
-import QrReader from "react-qr-reader"
+import React, { Component } from 'react'
+import QrReader from 'react-qr-reader'
 
-class Container extends Component {
-  constructor(){
+class Test extends Component {
+  constructor(props){
+    super(props)
     this.state = {
-      result: "No result"
+      result: 'No result',
     }
   }
   handleScan(data){
     this.setState({
-      result: data
+      result: data,
     })
   }
   handleError(err){
     console.error(err)
   }
   render(){
+    const previewStyle = {
+      height: 240,
+      width: 320,
+    }
+
     return(
       <div>
-        <QrReader height={480} width={640} interval={500} handleScan={this.handleScan.bind(this)} handleError={this.handleError}/>
+        <Reader
+          previewStyle={previewStyle}
+          handleError={this.handleError}
+          handleScan={this.handleScan.bind(this)}/>
         <p>{this.state.result}</p>
       </div>
     )
@@ -38,24 +47,6 @@ class Container extends Component {
 ```
 
 ## Props
-
-**height**
-
-Type: `number`, Optional, Default: 240
-
-The vertical resolution of the video stream.
-
-**width**
-
-Type: `number`, Optional, Default: 320
-
-The horizontal resolution of the video stream.
-
-**interval**
-
-Type: `number`, Optional, Default: every frame
-
-The interval between scans in milliseconds.
 
 **handleScan**
 
@@ -69,16 +60,37 @@ Type: `function`, Required, Argument: `error`
 
 The function to call when an error occurs.
 
+**interval**
+
+Type: `number`, Optional, Default: every frame
+
+The interval between scans in milliseconds.
+
+**previewStyle**
+
+Type: `object`, Optional
+
+Styling for the preview element. **Warning** The preview will keep its aspect ratio, to disable this set the CSS property [objectFit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) to `fill`.
+
+
 ## Dev
 
 Install depencies
 
 `npm install`
 
-Run babel on filechange
+Build
 
-`npm run watch`
+`npm run build`
+
+or on file change
+
+`npm run build:watch`
 
 Start hot-reloading web-server (port: 9001)
 
 `npm run storybook`
+
+Linting
+
+`npm run lint`
