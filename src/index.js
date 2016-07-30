@@ -18,12 +18,22 @@ export default class Reader extends Component {
   componentDidMount(){
     this.initiate()
   }
+  componentWillReceiveProps(newProps){
+    if(this.props.facingMode != newProps.facingMode){
+      this.initiate()
+    }
+  }
   componentWillUnmount(){
     if (this._interval)
       clearInterval(this._interval)
 
     if (typeof this.stopCamera === 'function')
       this.stopCamera()
+
+    if(this.requestFrameId){
+      window.cancelAnimationFrame(this.requestFrameId)
+      this.requestFrameId == undefined
+    }
   }
   initiate(){
     const { handleError, facingMode } = this.props
@@ -69,8 +79,8 @@ export default class Reader extends Component {
     preview.play()
     if(this.props.interval){
       this._interval = setInterval(this.check, this.props.interval)
-    }else{
-      window.requestAnimationFrame(this.check)
+    }else if(!this.requestFrameId){
+      this.check()
     }
 
     preview.removeEventListener('loadstart', this.handleLoadStart)
@@ -85,7 +95,7 @@ export default class Reader extends Component {
     canvas.height = height
 
     if(!interval)
-      window.requestAnimationFrame(this.check)
+      this.requestFrameId = window.requestAnimationFrame(this.check)
 
     if (preview && preview.readyState === preview.HAVE_ENOUGH_DATA){
       const ctx = canvas.getContext('2d')
