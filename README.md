@@ -74,7 +74,7 @@ Styling for the preview element. **Warning** The preview will keep its aspect ra
 
 **facingMode**
 
-Type: `string`, Optional, Default: `front`
+Type: `string`, Optional, Default: user decides.
 
 Specify which camera should be used (if supported).
 

@@ -13,10 +13,10 @@ export default class Reader extends Component {
   componentDidMount(){
     this.initiate.apply(this)
   }
-  componentWillUnmount () {
+  componentWillUnmount(){
     if (this._interval)
       clearInterval(this._interval)
-    
+
     if (typeof this.stopCamera === 'function')
       this.stopCamera()
   }
@@ -24,10 +24,11 @@ export default class Reader extends Component {
     const { handleError, facingMode } = this.props
 
     const rearMode = { exact: 'environment' }
+    const frontMode = { exact: 'user' }
 
     const constrains = {
       video: {
-        facingMode: facingMode == 'rear' ? rearMode : 'user',
+        facingMode: !facingMode ? 'user' : facingMode == 'rear' ? rearMode : frontMode,
         width: { min: 360, ideal: 1280, max: 1920 },
         height: { min: 240, ideal: 720, max: 1080 },
       },
@@ -51,7 +52,7 @@ export default class Reader extends Component {
     } else {
       preview.src = stream
     }
-    
+
     this.stopCamera = stream.getTracks()[0].stop.bind(stream.getTracks()[0])
 
     preview.addEventListener('loadstart', () => {
@@ -104,7 +105,6 @@ export default class Reader extends Component {
 Reader.defaultProps = {
   interval: null,
   previewStyle: {},
-  facingMode: 'front',
 }
 Reader.propTypes = {
   handleScan: PropTypes.func.isRequired,
