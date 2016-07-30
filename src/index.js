@@ -1,7 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import jsQR from 'jsqr'
+import raf from 'raf'
 import 'md-gum-polyfill'
 import 'webrtc-adapter'
+
+raf.polyfill()
 
 export default class Reader extends Component {
   constructor(props){
@@ -73,7 +76,6 @@ export default class Reader extends Component {
     preview.removeEventListener('loadstart', this.handleLoadStart)
   }
   check() {
-    console.log('check')
     const { interval, handleScan } = this.props
     const { preview, canvas } = this.refs
     const width = preview.videoWidth

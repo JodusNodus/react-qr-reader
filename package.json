@@ -50,6 +50,7 @@
   "dependencies": {
     "jsqr": "^0.2.1",
     "md-gum-polyfill": "^1.0.0",
+    "raf": "^3.2.0",
     "webrtc-adapter": "^1.4.0"
   }
 }
