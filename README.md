@@ -35,7 +35,7 @@ class Test extends Component {
 
     return(
       <div>
-        <Reader
+        <QrReader
           previewStyle={previewStyle}
           handleError={this.handleError}
           handleScan={this.handleScan.bind(this)}/>
