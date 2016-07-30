@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import jsQR from 'jsqr'
 import 'md-gum-polyfill'
+import 'webrtc-adapter'
 
 export default class Reader extends Component {
   constructor(props){
