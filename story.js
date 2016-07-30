@@ -9,13 +9,11 @@ class Wrapper extends Component {
       height: 240,
       width: 320,
     }
-
     return(
       <Reader
         previewStyle={previewStyle}
         handleError={action('Error')}
         handleScan={action('Scan')}
-        interval={500}
         ref="reader"
         />
     )
