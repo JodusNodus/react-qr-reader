@@ -10,9 +10,10 @@ export default class Reader extends Component {
     this.initiate = this.initiate.bind(this)
     this.check = this.check.bind(this)
     this.handleVideo = this.handleVideo.bind(this)
+    this.handleLoadStart = this.handleLoadStart.bind(this)
   }
   componentDidMount(){
-    this.initiate.apply(this)
+    this.initiate()
   }
   componentWillUnmount(){
     if (this._interval)
@@ -24,26 +25,27 @@ export default class Reader extends Component {
   initiate(){
     const { handleError, facingMode } = this.props
 
-    const rearMode = { exact: 'environment' }
-    const frontMode = { exact: 'user' }
-
     const constrains = {
       video: {
-        facingMode: !facingMode ? 'user' : facingMode == 'rear' ? rearMode : frontMode,
+        facingMode: facingMode ? {
+          exact: facingMode == 'rear' ? 'environment' : 'user',
+        } : undefined,
         width: { min: 360, ideal: 1280, max: 1920 },
         height: { min: 240, ideal: 720, max: 1080 },
       },
     }
-    if (navigator.mediaDevices.getUserMedia){
+
+    try {
       navigator.mediaDevices.getUserMedia(constrains)
       .then(this.handleVideo)
       .catch(e => handleError(e.name))
-    }else{
-      handleError('Not compatible with getUserMedia')
+    } catch (e) {
+      handleError('Not compatible with getUserMedia.')
     }
   }
   handleVideo(stream) {
     const { preview } = this.refs
+
     if(window.URL.createObjectURL){
       preview.src = window.URL.createObjectURL(stream)
     }else if (window.webkitURL) {
@@ -54,18 +56,24 @@ export default class Reader extends Component {
       preview.src = stream
     }
 
-    this.stopCamera = stream.getTracks()[0].stop.bind(stream.getTracks()[0])
+    const streamTrack = stream.getTracks()[0]
+    this.stopCamera = streamTrack.stop.bind(streamTrack)
 
-    preview.addEventListener('loadstart', () => {
-      preview.play()
-      if(this.props.interval){
-        this._interval = setInterval(this.check, this.props.interval)
-      }else{
-        window.requestAnimationFrame(this.check)
-      }
-    })
+    preview.addEventListener('loadstart', this.handleLoadStart)
+  }
+  handleLoadStart(){
+    const preview = this.refs.preview
+    preview.play()
+    if(this.props.interval){
+      this._interval = setInterval(this.check, this.props.interval)
+    }else{
+      window.requestAnimationFrame(this.check)
+    }
+
+    preview.removeEventListener('loadstart', this.handleLoadStart)
   }
   check() {
+    console.log('check')
     const { interval, handleScan } = this.props
     const { preview, canvas } = this.refs
     const width = preview.videoWidth
@@ -82,7 +90,9 @@ export default class Reader extends Component {
       ctx.drawImage(preview, 0, 0, width, height)
       const imageData = ctx.getImageData(0, 0, width, height)
       const decoded = jsQR.decodeQRFromImage(imageData.data, width, height, width)
-      if(decoded) handleScan(decoded)
+
+      if(decoded)
+        handleScan(decoded)
     }
   }
   render(){
