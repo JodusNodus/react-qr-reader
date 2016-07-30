@@ -35,13 +35,15 @@ class Demo extends Component {
     if(this.state.error){
       return h('h3', 'Demo could not be displayed.')
     }else{
-      console.log(this.refs.reader)
       return h('div', [
         h(QrReader, {
           handleScan: this.handleScan,
           handleError: this.handleError,
           facingMode: this.state.facingMode,
           ref: 'reader',
+          previewStyle: {
+            width: '100%',
+          },
         }),
         h('p', [
           'Facing Mode: ',
