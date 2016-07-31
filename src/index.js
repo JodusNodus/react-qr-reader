@@ -40,6 +40,7 @@ class Demo extends Component {
           handleScan: this.handleScan,
           handleError: this.handleError,
           facingMode: this.state.facingMode,
+          interval: 500,
           ref: 'reader',
           previewStyle: {
             width: '100%',
