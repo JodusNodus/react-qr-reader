@@ -54,7 +54,7 @@ class Demo extends Component {
             },
           }, [
             h('option', {value: 'front'}, 'Front'),
-            h('option', {value: 'back'}, 'Back'),
+            h('option', {value: 'rear'}, 'Rear'),
           ]),
         ]),
         h('h3', `Decoded QR-Code: ${this.state.result}`),
