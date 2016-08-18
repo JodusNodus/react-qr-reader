@@ -118,9 +118,12 @@ export default class Reader extends Component {
     const { preview, canvas, img } = this.refs
     let width = Math.floor(legacyMode ? img.naturalWidth : preview.videoWidth)
     let height = Math.floor(legacyMode ? img.naturalHeight : preview.videoHeight)
-    if((width >= 2000) || (height >= 2000)){
-      width = width / 2
-      height = height / 2
+
+    if(legacyMode){
+      while ((width > height ? width : height) > 1000) {
+        width = Math.floor(width / 1.5)
+        height = Math.floor(width / 1.5)
+      }
     }
 
     canvas.width = width
