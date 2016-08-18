@@ -170,7 +170,7 @@ export default class Reader extends Component {
         {this.props.legacyMode ? (
           <div>
             <input style={this.props.inputStyle} type="file" accept="image/*" ref="input" onChange={this.handleInputChange}/>
-            <img style={previewStyle} ref="img"/>
+            <img style={{...previewStyle, display: 'none'}} ref="img"/>
           </div>
         ) : (
           <video style={previewStyle} ref="preview"/>
