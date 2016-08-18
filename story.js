@@ -10,11 +10,9 @@ class Wrapper extends Component {
     }
   }
   render(){
-    const { facingMode, select } = this.props
+    const { facingMode, select, legacyMode } = this.props
 
     const previewStyle = {
-      objectFit: 'fill',
-      height: 240,
       width: 320,
     }
     return(
@@ -33,6 +31,7 @@ class Wrapper extends Component {
           handleScan={action('Scan')}
           ref="reader"
           facingMode={select ? this.state.facingMode : facingMode}
+          legacyMode={legacyMode}
           />
       </div>
     )
@@ -49,6 +48,9 @@ storiesOf('QR Reader', module)
 .add('facingMode not specified', () => (
   <Wrapper/>
 ))
-.add('facingMode select', () => (
+.add('facingmode select', () => (
   <Wrapper select={true}/>
+))
+.add('legacy mode', () => (
+  <Wrapper legacyMode={true}/>
 ))

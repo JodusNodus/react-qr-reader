@@ -14,12 +14,26 @@ export default class Reader extends Component {
     this.check = this.check.bind(this)
     this.handleVideo = this.handleVideo.bind(this)
     this.handleLoadStart = this.handleLoadStart.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this)
   }
   componentDidMount(){
-    this.initiate()
+    if(!this.props.legacyMode){
+      this.initiate()
+    }else{
+      const img = this.refs.img
+      this.reader = new FileReader()
+
+      this.reader.addEventListener('load', (e) => {
+        img.src = e.target.result
+      })
+
+      img.addEventListener('load', () => {
+        this.check()
+      }, false)
+    }
   }
   componentWillReceiveProps(newProps){
-    if(this.props.facingMode != newProps.facingMode){
+    if(!newProps.legacyMode && this.props.facingMode != newProps.facingMode){
       this.initiate()
     }
   }
@@ -34,6 +48,9 @@ export default class Reader extends Component {
       window.cancelAnimationFrame(this.requestFrameId)
       this.requestFrameId == undefined
     }
+  }
+  handleInputChange(e){
+    this.reader.readAsDataURL(e.target.files[0])
   }
   initiate(){
     const { handleError, facingMode } = this.props
@@ -86,22 +103,27 @@ export default class Reader extends Component {
     preview.removeEventListener('loadstart', this.handleLoadStart)
   }
   check() {
-    const { interval, handleScan } = this.props
-    const { preview, canvas } = this.refs
-    const width = preview.videoWidth
-    const height = preview.videoHeight
+    const { interval, handleScan, legacyMode } = this.props
+    const { preview, canvas, img } = this.refs
+    let width = Math.floor(legacyMode ? img.naturalWidth : preview.videoWidth)
+    let height = Math.floor(legacyMode ? img.naturalHeight : preview.videoHeight)
+    if((width >= 2000) || (height >= 2000)){
+      width = width / 2
+      height = height / 2
+    }
 
     canvas.width = width
     canvas.height = height
 
-    if(!interval)
+    if(!interval && !legacyMode)
       this.requestFrameId = window.requestAnimationFrame(this.check)
 
-    if (preview && preview.readyState === preview.HAVE_ENOUGH_DATA){
+    if (legacyMode || (preview && preview.readyState === preview.HAVE_ENOUGH_DATA)){
       const ctx = canvas.getContext('2d')
-      ctx.drawImage(preview, 0, 0, width, height)
+      ctx.drawImage(legacyMode ? img : preview, 0, 0, width, height)
+
       const imageData = ctx.getImageData(0, 0, width, height)
-      const decoded = jsQR.decodeQRFromImage(imageData.data, width, height, width)
+      const decoded = jsQR.decodeQRFromImage(imageData.data, width, height)
 
       if(decoded)
         handleScan(decoded)
@@ -110,6 +132,7 @@ export default class Reader extends Component {
   render(){
     const previewStyle = {
       display: 'block',
+      objectFit: 'contain',
       ...this.props.previewStyle,
     }
     const canvasStyle = {
@@ -118,7 +141,14 @@ export default class Reader extends Component {
 
     return (
       <section>
-        <video style={previewStyle} ref="preview"/>
+        {this.props.legacyMode ? (
+          <div>
+            <input style={this.props.inputStyle} type="file" accept="image/*" ref="input" onChange={this.handleInputChange}/>
+            <img style={previewStyle} ref="img"/>
+          </div>
+        ) : (
+          <video style={previewStyle} ref="preview"/>
+        )}
         <canvas style={canvasStyle} ref="canvas"/>
       </section>
     )
@@ -128,11 +158,14 @@ export default class Reader extends Component {
 Reader.defaultProps = {
   interval: null,
   previewStyle: {},
+  inputStyle: {},
 }
 Reader.propTypes = {
   handleScan: PropTypes.func.isRequired,
   handleError: PropTypes.func.isRequired,
   interval: PropTypes.number,
   previewStyle: PropTypes.object,
+  inputStyle: PropTypes.object,
   facingMode: PropTypes.string,
+  legacyMode: PropTypes.bool,
 }
