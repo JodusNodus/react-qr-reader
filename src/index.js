@@ -11,33 +11,38 @@ export default class Reader extends Component {
     super(props)
 
     this.initiate = this.initiate.bind(this)
+    this.initiateLegacyMode = this.initiateLegacyMode.bind(this)
     this.check = this.check.bind(this)
     this.handleVideo = this.handleVideo.bind(this)
     this.handleLoadStart = this.handleLoadStart.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
+    this.clearComponent = this.clearComponent.bind(this)
+    this.handleReaderLoad = this.handleReaderLoad.bind(this)
+
+    this.componentWillUnmount = this.clearComponent
   }
   componentDidMount(){
     if(!this.props.legacyMode){
       this.initiate()
     }else{
-      const img = this.refs.img
-      this.reader = new FileReader()
-
-      this.reader.addEventListener('load', (e) => {
-        img.src = e.target.result
-      })
-
-      img.addEventListener('load', () => {
-        this.check()
-      }, false)
+      this.initiateLegacyMode()
     }
   }
   componentWillReceiveProps(newProps){
     if(!newProps.legacyMode && this.props.facingMode != newProps.facingMode){
+      this.clearComponent()
+      this.initiate()
+    }
+    if(!this.props.legacyMode && newProps.legacyMode){
+      this.clearComponent()
+      this.componentDidUpdate = this.initiateLegacyMode
+    }
+    if(this.props.legacyMode && !newProps.legacyMode){
+      this.clearComponent()
       this.initiate()
     }
   }
-  componentWillUnmount(){
+  clearComponent(){
     if (this._interval)
       clearInterval(this._interval)
 
@@ -46,11 +51,17 @@ export default class Reader extends Component {
 
     if(this.requestFrameId){
       window.cancelAnimationFrame(this.requestFrameId)
-      this.requestFrameId == undefined
+      delete this.requestFrameId
     }
-  }
-  handleInputChange(e){
-    this.reader.readAsDataURL(e.target.files[0])
+
+    if(this.reader){
+      this.reader.removeEventListener('load', this.handleReaderLoad)
+      this.reader = undefined
+    }
+
+    if(this.refs.img){
+      this.refs.img.removeEventListener('load', this.check)
+    }
   }
   initiate(){
     const { handleError, facingMode } = this.props
@@ -128,6 +139,21 @@ export default class Reader extends Component {
       if(decoded)
         handleScan(decoded)
     }
+  }
+  initiateLegacyMode(){
+    this.reader = new FileReader()
+
+    this.reader.addEventListener('load', this.handleReaderLoad)
+
+    this.refs.img.addEventListener('load', this.check, false)
+
+    this.componentDidUpdate = undefined
+  }
+  handleInputChange(e){
+    this.reader.readAsDataURL(e.target.files[0])
+  }
+  handleReaderLoad(e){
+    this.refs.img.src = e.target.result
   }
   render(){
     const previewStyle = {
