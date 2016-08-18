@@ -120,9 +120,10 @@ export default class Reader extends Component {
     let height = Math.floor(legacyMode ? img.naturalHeight : preview.videoHeight)
 
     if(legacyMode){
+      const ratio = 1.2
       while ((width > height ? width : height) > 1000) {
-        width = Math.floor(width / 1.5)
-        height = Math.floor(width / 1.5)
+        width = Math.floor(width / ratio)
+        height = Math.floor(height / ratio)
       }
     }
 
@@ -135,6 +136,8 @@ export default class Reader extends Component {
     if (legacyMode || (preview && preview.readyState === preview.HAVE_ENOUGH_DATA)){
       const ctx = canvas.getContext('2d')
       ctx.drawImage(legacyMode ? img : preview, 0, 0, width, height)
+
+      this.props.handleScan('height:' + height + ', width:'+width)
 
       const imageData = ctx.getImageData(0, 0, width, height)
       const decoded = jsQR.decodeQRFromImage(imageData.data, width, height)
