@@ -3,8 +3,6 @@ A react component for reading QR codes from the webcam.
 
 [Demo](https://jodusnodus.github.io/react-qr-reader)
 
-**Currently not compatible with any iOS device**. This is due to Apple not willing to be compliant with the webRTC standard.
-
 ## Install
 `npm install react-qr-reader`
 
@@ -81,6 +79,12 @@ Type: `string`, Optional, Default: user decides.
 Specify which camera should be used (if supported).
 
 Options: `front` and `rear`.
+
+**legacyMode**
+
+Type: `boolean`, Optional, Default: `false`.
+
+If the device does not allow camera access (e.g. IOS Browsers, Safari) you can enable legacyMode to allow the user to take a picture (On a mobile device) or use an existing one.
 
 ## Dev
 
