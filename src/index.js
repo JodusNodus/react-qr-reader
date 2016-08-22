@@ -137,8 +137,6 @@ export default class Reader extends Component {
       const ctx = canvas.getContext('2d')
       ctx.drawImage(legacyMode ? img : preview, 0, 0, width, height)
 
-      this.props.handleScan('height:' + height + ', width:'+width)
-
       const imageData = ctx.getImageData(0, 0, width, height)
       const decoded = jsQR.decodeQRFromImage(imageData.data, width, height)
 
