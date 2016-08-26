@@ -114,14 +114,14 @@ export default class Reader extends Component {
     preview.removeEventListener('loadstart', this.handleLoadStart)
   }
   check() {
-    const { interval, handleScan, legacyMode } = this.props
+    const { interval, handleScan, legacyMode, maxImageSize } = this.props
     const { preview, canvas, img } = this.refs
     let width = Math.floor(legacyMode ? img.naturalWidth : preview.videoWidth)
     let height = Math.floor(legacyMode ? img.naturalHeight : preview.videoHeight)
 
     if(legacyMode){
-      const ratio = 1.2
-      while ((width > height ? width : height) > 1000) {
+      const ratio = 1.1
+      while ((width > height ? width : height) > maxImageSize) {
         width = Math.floor(width / ratio)
         height = Math.floor(height / ratio)
       }
@@ -189,6 +189,7 @@ Reader.defaultProps = {
   interval: null,
   previewStyle: {},
   inputStyle: {},
+  maxImageSize: 1500,
 }
 Reader.propTypes = {
   handleScan: PropTypes.func.isRequired,
@@ -198,4 +199,5 @@ Reader.propTypes = {
   inputStyle: PropTypes.object,
   facingMode: PropTypes.string,
   legacyMode: PropTypes.bool,
+  maxImageSize: PropTypes.number,
 }

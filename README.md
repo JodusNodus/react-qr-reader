@@ -86,6 +86,12 @@ Type: `boolean`, Optional, Default: `false`.
 
 If the device does not allow camera access (e.g. IOS Browsers, Safari) you can enable legacyMode to allow the user to take a picture (On a mobile device) or use an existing one.
 
+**maxImageSize**
+
+Type: `number`, Optional, Default: `1500`.
+
+If `legacyMode` is active then the image will be resized if it larger then the given value. Allowing larger images will increase the detail level but it will also slow down the processing time.
+
 ## Dev
 
 Install depencies
