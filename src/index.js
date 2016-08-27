@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import jsQR from 'jsqr'
 import raf from 'raf'
+
 import 'md-gum-polyfill'
 import 'webrtc-adapter'
 
@@ -18,6 +19,7 @@ export default class Reader extends Component {
     this.handleInputChange = this.handleInputChange.bind(this)
     this.clearComponent = this.clearComponent.bind(this)
     this.handleReaderLoad = this.handleReaderLoad.bind(this)
+    this.openImageDialog = this.openImageDialog.bind(this)
 
     this.componentWillUnmount = this.clearComponent
   }
@@ -161,6 +163,9 @@ export default class Reader extends Component {
   }
   handleReaderLoad(e){
     this.refs.img.src = e.target.result
+  }
+  openImageDialog(){
+    this.refs.input.click()
   }
   render(){
     const previewStyle = {
