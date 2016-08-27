@@ -84,7 +84,7 @@ Options: `front` and `rear`.
 
 Type: `boolean`, Optional, Default: `false`.
 
-If the device does not allow camera access (e.g. IOS Browsers, Safari) you can enable legacyMode to allow the user to take a picture (On a mobile device) or use an existing one.
+If the device does not allow camera access (e.g. IOS Browsers, Safari) you can enable legacyMode to allow the user to take a picture (On a mobile device) or use an existing one. To trigger the image dialog just call the method `openImageDialog` from the parent component. **Warning** You must call the method from a user action (eg. click event on some element).
 
 **maxImageSize**
 
