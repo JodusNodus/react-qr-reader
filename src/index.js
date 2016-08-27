@@ -114,7 +114,7 @@ export default class Reader extends Component {
     preview.removeEventListener('loadstart', this.handleLoadStart)
   }
   check() {
-    const { interval, handleScan, legacyMode, maxImageSize } = this.props
+    const { interval, handleScan, legacyMode, maxImageSize, handleImageNotRecognised } = this.props
     const { preview, canvas, img } = this.refs
     let width = Math.floor(legacyMode ? img.naturalWidth : preview.videoWidth)
     let height = Math.floor(legacyMode ? img.naturalHeight : preview.videoHeight)
@@ -140,8 +140,11 @@ export default class Reader extends Component {
       const imageData = ctx.getImageData(0, 0, width, height)
       const decoded = jsQR.decodeQRFromImage(imageData.data, width, height)
 
-      if(decoded)
+      if(decoded){
         handleScan(decoded)
+      }else if (legacyMode && handleImageNotRecognised) {
+        handleImageNotRecognised()
+      }
     }
   }
   initiateLegacyMode(){
@@ -168,12 +171,16 @@ export default class Reader extends Component {
     const canvasStyle = {
       display: 'none',
     }
+    const inputStyle = {
+      display: 'none',
+      ...this.props.inputStyle,
+    }
 
     return (
       <section>
         {this.props.legacyMode ? (
           <div>
-            <input style={this.props.inputStyle} type="file" accept="image/*" ref="input" onChange={this.handleInputChange}/>
+            <input style={inputStyle} id="react-qr-reader-input" type="file" accept="image/*" ref="input" onChange={this.handleInputChange}/>
             <img style={{...previewStyle, display: 'none'}} ref="img"/>
           </div>
         ) : (
@@ -194,6 +201,7 @@ Reader.defaultProps = {
 Reader.propTypes = {
   handleScan: PropTypes.func.isRequired,
   handleError: PropTypes.func.isRequired,
+  handleImageNotRecognised: PropTypes.func,
   interval: PropTypes.number,
   previewStyle: PropTypes.object,
   inputStyle: PropTypes.object,
