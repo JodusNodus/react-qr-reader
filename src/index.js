@@ -116,7 +116,7 @@ export default class Reader extends Component {
     preview.removeEventListener('loadstart', this.handleLoadStart)
   }
   check() {
-    const { interval, handleScan, legacyMode, maxImageSize, handleImageNotRecognised } = this.props
+    const { interval, handleScan, legacyMode, maxImageSize, handleImageNotRecognized } = this.props
     const { preview, canvas, img } = this.refs
     let width = Math.floor(legacyMode ? img.naturalWidth : preview.videoWidth)
     let height = Math.floor(legacyMode ? img.naturalHeight : preview.videoHeight)
@@ -144,8 +144,8 @@ export default class Reader extends Component {
 
       if(decoded){
         handleScan(decoded)
-      }else if (legacyMode && handleImageNotRecognised) {
-        handleImageNotRecognised()
+      }else if (legacyMode && handleImageNotRecognized) {
+        handleImageNotRecognized()
       }
     }
   }
@@ -206,7 +206,7 @@ Reader.defaultProps = {
 Reader.propTypes = {
   handleScan: PropTypes.func.isRequired,
   handleError: PropTypes.func.isRequired,
-  handleImageNotRecognised: PropTypes.func,
+  handleImageNotRecognized: PropTypes.func,
   interval: PropTypes.number,
   previewStyle: PropTypes.object,
   inputStyle: PropTypes.object,

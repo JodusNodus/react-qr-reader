@@ -29,7 +29,7 @@ class Wrapper extends Component {
           previewStyle={previewStyle}
           handleError={action('Error')}
           handleScan={action('Scan')}
-          handleImageNotRecognised={action('Image Not Recognised')}
+          handleImageNotRecognized={action('Image Not Recognised')}
           ref="reader"
           facingMode={select ? this.state.facingMode : facingMode}
           legacyMode={legacyMode}

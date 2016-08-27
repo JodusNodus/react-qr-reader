@@ -92,6 +92,12 @@ Type: `number`, Optional, Default: `1500`.
 
 If `legacyMode` is active then the image will be resized if it larger then the given value. Allowing larger images will increase the detail level but it will also slow down the processing time.
 
+**handleImageNotRecognized**
+
+Type: `function`, Optional
+
+If `legacyMode` is active then the function is called when no QR code was recognized in the image.
+
 ## Dev
 
 Install depencies
