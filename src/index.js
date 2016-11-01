@@ -73,8 +73,8 @@ export default class Reader extends Component {
         facingMode: facingMode ? {
           exact: facingMode == 'rear' ? 'environment' : 'user',
         } : undefined,
-        width: width || { min: 360, ideal: 1280, max: 1920 },
-        height: height || { min: 240, ideal: 720, max: 1080 },
+        width,
+        height,
       },
     }
 
@@ -202,12 +202,16 @@ Reader.defaultProps = {
   previewStyle: {},
   inputStyle: {},
   maxImageSize: 1500,
+	width: { min: 360, ideal: 1280, max: 1920 },
+	height: { min: 240, ideal: 720, max: 1080 },
 }
 Reader.propTypes = {
   handleScan: PropTypes.func.isRequired,
   handleError: PropTypes.func.isRequired,
   handleImageNotRecognized: PropTypes.func,
   interval: PropTypes.number,
+  width: PropTypes.object.object,
+  height: PropTypes.object.object,
   previewStyle: PropTypes.object,
   inputStyle: PropTypes.object,
   facingMode: PropTypes.string,
