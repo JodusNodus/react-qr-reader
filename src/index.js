@@ -66,15 +66,15 @@ export default class Reader extends Component {
     }
   }
   initiate(){
-    const { handleError, facingMode } = this.props
+    const { handleError, facingMode, width, height } = this.props
 
     const constrains = {
       video: {
         facingMode: facingMode ? {
           exact: facingMode == 'rear' ? 'environment' : 'user',
         } : undefined,
-        width: { min: 360, ideal: 1280, max: 1920 },
-        height: { min: 240, ideal: 720, max: 1080 },
+        width: width || { min: 360, ideal: 1280, max: 1920 },
+        height: height || { min: 240, ideal: 720, max: 1080 },
       },
     }
 
