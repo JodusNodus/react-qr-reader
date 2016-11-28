@@ -1,8 +1,13 @@
-import React, { Component, PropTypes } from 'react'
-import jsQR from 'jsqr'
+const React = require('react')
+const { Component, PropTypes } = React
 
-import 'md-gum-polyfill'
-import 'webrtc-adapter'
+require('md-gum-polyfill')
+require('webrtc-adapter')
+
+const workerBlob = new Blob(
+  [__inline('../lib/worker.js')],
+  {type: 'application/javascript'}
+)
 
 export default class Reader extends Component {
   static propTypes = {
@@ -39,10 +44,14 @@ export default class Reader extends Component {
     this.handleReaderLoad = this.handleReaderLoad.bind(this)
     this.openImageDialog = this.openImageDialog.bind(this)
     this.setInterval = this.setInterval.bind(this)
+    this.handleWorkerMessage = this.handleWorkerMessage.bind(this)
 
     this.componentWillUnmount = this.clearComponent
   }
   componentDidMount(){
+    this.worker = new Worker(URL.createObjectURL(workerBlob))
+    this.worker.onmessage = this.handleWorkerMessage
+
     if(!this.props.legacyMode){
       this.initiate()
     }else{
@@ -64,6 +73,11 @@ export default class Reader extends Component {
     }
   }
   clearComponent(){
+    if(this.worker){
+      this.worker.terminate()
+      delete this.worker
+    }
+
     if (this._interval)
       clearInterval(this._interval)
 
@@ -132,7 +146,7 @@ export default class Reader extends Component {
     preview.removeEventListener('loadstart', this.handleLoadStart)
   }
   check() {
-    const { interval, handleScan, legacyMode, maxImageSize, handleImageNotRecognized } = this.props
+    const { legacyMode, maxImageSize } = this.props
     const { preview, canvas, img } = this.refs
     let width = Math.floor(legacyMode ? img.naturalWidth : preview.videoWidth)
     let height = Math.floor(legacyMode ? img.naturalHeight : preview.videoHeight)
@@ -153,13 +167,18 @@ export default class Reader extends Component {
       ctx.drawImage(legacyMode ? img : preview, 0, 0, width, height)
 
       const imageData = ctx.getImageData(0, 0, width, height)
-      const decoded = jsQR.decodeQRFromImage(imageData.data, width, height)
 
-      if(decoded){
-        handleScan(decoded)
-      }else if (legacyMode && handleImageNotRecognized) {
-        handleImageNotRecognized()
-      }
+      this.worker.postMessage({imageData})
+    }
+  }
+  handleWorkerMessage(e){
+    const { handleScan, legacyMode, handleImageNotRecognized } = this.props
+    const decoded = e.data
+
+    if(decoded){
+      handleScan(decoded)
+    }else if (legacyMode && handleImageNotRecognized) {
+      handleImageNotRecognized()
     }
   }
   initiateLegacyMode(){
