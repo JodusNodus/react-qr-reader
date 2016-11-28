@@ -1,13 +1,31 @@
 import React, { Component, PropTypes } from 'react'
 import jsQR from 'jsqr'
-import raf from 'raf'
 
 import 'md-gum-polyfill'
 import 'webrtc-adapter'
 
-raf.polyfill()
-
 export default class Reader extends Component {
+  static propTypes = {
+    handleScan: PropTypes.func.isRequired,
+    handleError: PropTypes.func.isRequired,
+    handleImageNotRecognized: PropTypes.func,
+    interval: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.bool,
+    ]),
+    previewStyle: PropTypes.object,
+    inputStyle: PropTypes.object,
+    facingMode: PropTypes.string,
+    legacyMode: PropTypes.bool,
+    maxImageSize: PropTypes.number,
+  }
+  static defaultProps = {
+    interval: 500,
+    previewStyle: {},
+    inputStyle: {},
+    maxImageSize: 1500,
+  }
+
   constructor(props){
     super(props)
 
@@ -20,6 +38,7 @@ export default class Reader extends Component {
     this.clearComponent = this.clearComponent.bind(this)
     this.handleReaderLoad = this.handleReaderLoad.bind(this)
     this.openImageDialog = this.openImageDialog.bind(this)
+    this.setInterval = this.setInterval.bind(this)
 
     this.componentWillUnmount = this.clearComponent
   }
@@ -34,12 +53,12 @@ export default class Reader extends Component {
     if(!newProps.legacyMode && this.props.facingMode != newProps.facingMode){
       this.clearComponent()
       this.initiate()
-    }
-    if(!this.props.legacyMode && newProps.legacyMode){
+    }else if(this.props.interval != newProps.interval){
+      this.setInterval(newProps.interval)
+    }else if(!this.props.legacyMode && newProps.legacyMode){
       this.clearComponent()
       this.componentDidUpdate = this.initiateLegacyMode
-    }
-    if(this.props.legacyMode && !newProps.legacyMode){
+    }else if(this.props.legacyMode && !newProps.legacyMode){
       this.clearComponent()
       this.initiate()
     }
@@ -50,11 +69,6 @@ export default class Reader extends Component {
 
     if (typeof this.stopCamera === 'function')
       this.stopCamera()
-
-    if(this.requestFrameId){
-      window.cancelAnimationFrame(this.requestFrameId)
-      delete this.requestFrameId
-    }
 
     if(this.reader){
       this.reader.removeEventListener('load', this.handleReaderLoad)
@@ -102,14 +116,18 @@ export default class Reader extends Component {
 
     preview.addEventListener('loadstart', this.handleLoadStart)
   }
+  setInterval(interval){
+    if (this._interval){
+      clearInterval(this._interval)
+    }
+    if(interval !== false){
+      this._interval = setInterval(this.check, interval)
+    }
+  }
   handleLoadStart(){
     const preview = this.refs.preview
     preview.play()
-    if(this.props.interval){
-      this._interval = setInterval(this.check, this.props.interval)
-    }else if(!this.requestFrameId){
-      this.check()
-    }
+    this.setInterval(this.props.interval)
 
     preview.removeEventListener('loadstart', this.handleLoadStart)
   }
@@ -129,9 +147,6 @@ export default class Reader extends Component {
 
     canvas.width = width
     canvas.height = height
-
-    if(!interval && !legacyMode)
-      this.requestFrameId = window.requestAnimationFrame(this.check)
 
     if (legacyMode || (preview && preview.readyState === preview.HAVE_ENOUGH_DATA)){
       const ctx = canvas.getContext('2d')
@@ -193,22 +208,4 @@ export default class Reader extends Component {
       </section>
     )
   }
-}
-
-Reader.defaultProps = {
-  interval: null,
-  previewStyle: {},
-  inputStyle: {},
-  maxImageSize: 1500,
-}
-Reader.propTypes = {
-  handleScan: PropTypes.func.isRequired,
-  handleError: PropTypes.func.isRequired,
-  handleImageNotRecognized: PropTypes.func,
-  interval: PropTypes.number,
-  previewStyle: PropTypes.object,
-  inputStyle: PropTypes.object,
-  facingMode: PropTypes.string,
-  legacyMode: PropTypes.bool,
-  maxImageSize: PropTypes.number,
 }

@@ -62,9 +62,9 @@ The function to call when an error occurs.
 
 **interval**
 
-Type: `number`, Optional, Default: every frame
+Type: `number`, Optional, Default: 500
 
-The interval between scans in milliseconds.
+The interval between scans in milliseconds. To disable the interval pass in `false`.
 
 **previewStyle**
 
@@ -90,7 +90,7 @@ If the device does not allow camera access (e.g. IOS Browsers, Safari) you can e
 
 Type: `number`, Optional, Default: `1500`.
 
-If `legacyMode` is active then the image will be resized if it larger then the given value. Allowing larger images will increase the detail level but it will also slow down the processing time.
+If `legacyMode` is active then the image will be resized if it is larger than the given value. Allowing larger images will increase the accuracy but it will also slow down the processing time.
 
 **handleImageNotRecognized**
 
@@ -100,7 +100,7 @@ If `legacyMode` is active then the function is called when no QR code was recogn
 
 ## Dev
 
-Install depencies
+Install dependencies
 
 `npm install`
 

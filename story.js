@@ -7,17 +7,18 @@ class Wrapper extends Component {
     super(props)
     this.state = {
       facingMode: 'front',
+      interval: 1000,
     }
   }
   render(){
-    const { facingMode, select, legacyMode } = this.props
+    const { selectFacingMode, selectInterval, legacyMode } = this.props
 
     const previewStyle = {
       width: 320,
     }
     return(
       <div>
-        {select && (
+        {selectFacingMode && (
           <select onChange={e => this.setState({
               facingMode: e.target.value,
             })}>
@@ -25,14 +26,32 @@ class Wrapper extends Component {
             <option value="rear">Rear</option>
           </select>
         )}
+        {selectInterval && (
+          <div>
+            <button
+              onClick={() => this.setState({
+                interval: false,
+              })}
+              >Disable Interval</button>
+            <input
+              placeholder="Interval in ms"
+              type="number"
+              value={this.state.interval}
+              onChange={e => this.setState({
+                interval: parseInt(e.target.value),
+              })}
+              />
+          </div>
+        )}
         <Reader
           previewStyle={previewStyle}
           handleError={action('Error')}
           handleScan={action('Scan')}
           handleImageNotRecognized={action('Image Not Recognised')}
           ref="reader"
-          facingMode={select ? this.state.facingMode : facingMode}
+          facingMode={this.state.facingMode}
           legacyMode={legacyMode}
+          interval={this.state.interval}
           />
         {legacyMode && <button onClick={() => this.refs.reader.openImageDialog()}>Open Image Dialog</button>}
       </div>
@@ -41,18 +60,15 @@ class Wrapper extends Component {
 }
 
 storiesOf('QR Reader', module)
-.add('with front camera', () => (
-  <Wrapper facingMode="front"/>
-))
-.add('with rear camera', () => (
-  <Wrapper facingMode="rear"/>
-))
 .add('facingMode not specified', () => (
   <Wrapper/>
 ))
-.add('facingmode select', () => (
-  <Wrapper select={true}/>
+.add('choose facingmode', () => (
+  <Wrapper selectFacingMode />
 ))
 .add('legacy mode', () => (
   <Wrapper legacyMode={true}/>
+))
+.add('choose interval', () => (
+  <Wrapper selectInterval />
 ))
