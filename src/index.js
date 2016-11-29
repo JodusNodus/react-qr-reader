@@ -45,8 +45,6 @@ export default class Reader extends Component {
     this.openImageDialog = this.openImageDialog.bind(this)
     this.setInterval = this.setInterval.bind(this)
     this.handleWorkerMessage = this.handleWorkerMessage.bind(this)
-
-    this.componentWillUnmount = this.clearComponent
   }
   componentDidMount(){
     this.worker = new Worker(URL.createObjectURL(workerBlob))
@@ -72,12 +70,14 @@ export default class Reader extends Component {
       this.initiate()
     }
   }
-  clearComponent(){
+  componentWillUnmount(){
     if(this.worker){
       this.worker.terminate()
       delete this.worker
     }
-
+    this.clearComponent()
+  }
+  clearComponent(){
     if (this._interval)
       clearInterval(this._interval)
 
