@@ -1,7 +1,7 @@
 const React = require('react')
 const { Component, PropTypes } = React
+const getDeviceId = require('./getDeviceId')
 
-require('md-gum-polyfill')
 require('webrtc-adapter')
 
 const workerBlob = new Blob(
@@ -57,7 +57,7 @@ export default class Reader extends Component {
     }
   }
   componentWillReceiveProps(newProps){
-    if(!newProps.legacyMode && this.props.facingMode != newProps.facingMode){
+    if(this.props.facingMode != newProps.facingMode){
       this.clearComponent()
       this.initiate()
     }else if(this.props.interval != newProps.interval){
@@ -96,21 +96,19 @@ export default class Reader extends Component {
   initiate(){
     const { handleError, facingMode } = this.props
 
-    const constrains = {
-      video: {
-        facingMode: facingMode == 'rear' ? 'environment' : 'user',
-        width: { min: 360, ideal: 1280, max: 1920 },
-        height: { min: 240, ideal: 720, max: 1080 },
-      },
-    }
-
-    try {
-      navigator.mediaDevices.getUserMedia(constrains)
-      .then(this.handleVideo)
-      .catch(e => handleError(e.name))
-    } catch (e) {
-      handleError('Not compatible with getUserMedia.')
-    }
+    getDeviceId(facingMode)
+    .then((deviceId) => {
+      return navigator.mediaDevices.getUserMedia({
+        video: {
+          deviceId,
+          facingMode: facingMode == 'rear' ? 'environment' : 'user',
+          width: { min: 360, ideal: 1280, max: 1920 },
+          height: { min: 240, ideal: 720, max: 1080 },
+        },
+      })
+    })
+    .then(this.handleVideo)
+    .catch(e => handleError(e.name))
   }
   handleVideo(stream) {
     const { preview } = this.refs

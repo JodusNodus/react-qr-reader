@@ -6,7 +6,7 @@ const uglify = require('gulp-uglify')
 const concat = require('gulp-concat')
 
 const paths = {
-  scripts: ['src/index.js'],
+  scripts: ['src/index.js', 'src/getDeviceId.js'],
   worker: 'src/worker.js',
   jsQR: 'node_modules/jsqr/dist/jsQR.js',
   destination: './lib',
