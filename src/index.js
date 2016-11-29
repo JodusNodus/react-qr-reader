@@ -168,7 +168,7 @@ export default class Reader extends Component {
 
       const imageData = ctx.getImageData(0, 0, width, height)
 
-      this.worker.postMessage({imageData})
+      this.worker.postMessage(imageData)
     }
   }
   handleWorkerMessage(e){
