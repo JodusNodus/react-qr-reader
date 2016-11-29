@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import QrReader from './react-qr-reader'
+import QrReader from 'react-qr-reader'
 
 class Demo extends Component {
   constructor(props){
