@@ -64,6 +64,12 @@ module.exports = class Reader extends Component {
         this.clearComponent()
         this.initiate()
         break
+      } else if (prop == 'delay') {
+        if (this.props.delay == false) {
+          this.timeout = setTimeout(this.check, this.props.delay)
+        } else if (nextProps.delay == false) {
+          clearTimeout(this.timeout)
+        }
       } else if (prop == 'legacyMode') {
         if (this.props.legacyMode && !nextProps.legacyMode) {
           this.clearComponent()
@@ -143,7 +149,9 @@ module.exports = class Reader extends Component {
     const preview = this.els.preview
     preview.play()
 
-    this.timeout = setTimeout(this.check, this.props.delay)
+    if (typeof this.props.delay == 'number') {
+      this.timeout = setTimeout(this.check, this.props.delay)
+    }
 
     // Some browsers call loadstart continuously
     preview.removeEventListener('loadstart', this.handleLoadStart)
@@ -191,7 +199,9 @@ module.exports = class Reader extends Component {
     } else if (legacyMode) {
       onError(new Error('QR Code not recognised in image.'))
     }
-    this.timeout = setTimeout(this.check, delay)
+    if (typeof delay == 'number') {
+      this.timeout = setTimeout(this.check, delay)
+    }
   }
   initiateLegacyMode() {
     this.reader = new FileReader()
