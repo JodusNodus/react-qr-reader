@@ -1,7 +1,8 @@
-# react-qr-reader
-A react component for reading QR codes from the webcam.
+# Introduction
+A react component for reading QR-codes from the webcam. It uses the WebRTC standards for reading webcam data and [jsQR](https://github.com/cozmo/jsQR) is used for detecting QR codes in that data. To optimise the speed and experience, a web-worker is used to offload the heavy QR-code algorithm on a separate process. The web worker is inlined and loaded on creation of the component.
 
-[Demo](https://jodusnodus.github.io/react-qr-reader)
+## Demo
+[JodusNodus.github.io/react-qr-reader](https://jodusnodus.github.io/react-qr-reader)
 
 ## Install
 `npm install --save react-qr-reader`
@@ -19,6 +20,7 @@ class Test extends Component {
       delay: 100,
       result: 'No result',
     }
+
     this.handleScan = this.handleScan.bind(this)
   }
   handleScan(data){
@@ -41,7 +43,8 @@ class Test extends Component {
           delay={this.state.delay}
           previewStyle={previewStyle}
           onError={this.handleError}
-          onScan={this.handleScan}/>
+          onScan={this.handleScan}
+          />
         <p>{this.state.result}</p>
       </div>
     )
@@ -55,13 +58,15 @@ class Test extends Component {
 
 Type: `function`, Required, Argument: `result`
 
-Callback function on succesfull decoded message.
+Function to call when a QR-code was found and decoded.
 
 ### onError
 
 Type: `function`, Required, Argument: `error`
 
-Callback function when an error occurs such as the lack of available devices or when `legacyMode` is `true` no QR code was recognized in the image.
+Function to call when an error occurs such as:
+- The lack of available devices.
+- When `legacyMode` is `true` no QR code was recognized in the image.
 
 ### delay
 
@@ -71,11 +76,9 @@ The delay between scans in milliseconds. To disable the interval pass in `false`
 
 ### facingMode
 
-Type: `string`, Optional, Default: user decides.
+Type: `string`, Optional
 
-Specify which camera should be used (if supported).
-
-Options: `front` and `rear`.
+Specify which camera direction should be used (if available). Options: `front` and `rear`.
 
 ### legacyMode
 
@@ -87,13 +90,13 @@ If the device does not allow camera access (e.g. IOS Browsers, Safari) you can e
 
 Type: `number`, Optional, Default: `1500`.
 
-If `legacyMode` is active then the image will be resized if it is larger than the given value. Allowing larger images will increase the accuracy but it will also slow down the processing time.
+If `legacyMode` is active then the image will be downscaled to the given value while keepings its aspect ratio. Allowing larger images will increase the accuracy but it will also slow down the processing time.
 
-### previewStyle
+### style
 
 Type: `object`, Optional
 
-Styling for the preview element. **Warning** The preview will keep its aspect ratio, to disable this set the CSS property [objectFit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) to `fill`.
+Styling for the preview element. This will be a `video` or an `img` when `legacymode` is `true`. **Warning** The preview will keep its aspect ratio, to disable this set the CSS property [objectFit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) to `fill`.
 
 
 ## Dev
