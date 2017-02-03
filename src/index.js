@@ -12,19 +12,19 @@ const workerBlob = new Blob([ __inline('../lib/worker.js') ], {
 })
 
 // Props that are allowed to change dynamicly
-const propsKeys = [ 'interval', 'legacy', 'facingMode' ]
+const propsKeys = [ 'delay', 'legacyMode', 'facingMode' ]
 
 module.exports = class Reader extends Component {
   static propTypes = {
     onScan: PropTypes.func.isRequired,
     onError: PropTypes.func.isRequired,
-    interval: PropTypes.oneOfType([ PropTypes.number, PropTypes.bool ]),
+    delay: PropTypes.oneOfType([ PropTypes.number, PropTypes.bool ]),
     facingMode: PropTypes.string,
     legacyMode: PropTypes.bool,
     maxImageSize: PropTypes.number,
     previewStyle: PropTypes.object,
   };
-  static defaultProps = { interval: 500, previewStyle: {}, maxImageSize: 1500 };
+  static defaultProps = { delay: 500, previewStyle: {}, maxImageSize: 1500 };
 
   els = {};
 
@@ -41,7 +41,6 @@ module.exports = class Reader extends Component {
     this.clearComponent = this.clearComponent.bind(this)
     this.handleReaderLoad = this.handleReaderLoad.bind(this)
     this.openImageDialog = this.openImageDialog.bind(this)
-    this.setInterval = this.setInterval.bind(this)
     this.handleWorkerMessage = this.handleWorkerMessage.bind(this)
     this.setRefFactory = this.setRefFactory.bind(this)
   }
@@ -65,8 +64,6 @@ module.exports = class Reader extends Component {
         this.clearComponent()
         this.initiate()
         break
-      } else if (prop == 'interval') {
-        this.setInterval(nextProps.interval)
       } else if (prop == 'legacyMode') {
         if (this.props.legacyMode && !nextProps.legacyMode) {
           this.clearComponent()
@@ -94,8 +91,9 @@ module.exports = class Reader extends Component {
   }
   clearComponent() {
     // Remove all event listeners and variables
-    if (this.interval) {
-      clearInterval(this.interval)
+    if (this.timeout) {
+      clearTimeout(this.timeout)
+      this.timeout = undefined
     }
     if (this.stopCamera) {
       this.stopCamera()
@@ -136,23 +134,16 @@ module.exports = class Reader extends Component {
     }
 
     const streamTrack = stream.getTracks()[0]
+    // Assign `stopCamera` so the track can be stopped once component is cleared
     this.stopCamera = streamTrack.stop.bind(streamTrack)
 
     preview.addEventListener('loadstart', this.handleLoadStart)
-  }
-  setInterval(interval) {
-    if (this.interval) {
-      clearInterval(this.interval)
-    }
-    if (interval != false) {
-      this.interval = setInterval(this.check, interval)
-    }
   }
   handleLoadStart() {
     const preview = this.els.preview
     preview.play()
 
-    this.setInterval(this.props.interval)
+    this.timeout = setTimeout(this.check, this.props.delay)
 
     // Some browsers call loadstart continuously
     preview.removeEventListener('loadstart', this.handleLoadStart)
@@ -192,7 +183,7 @@ module.exports = class Reader extends Component {
     }
   }
   handleWorkerMessage(e) {
-    const { onScan, legacyMode, onError } = this.props
+    const { onScan, legacyMode, onError, delay } = this.props
     const decoded = e.data
 
     if (decoded) {
@@ -200,6 +191,7 @@ module.exports = class Reader extends Component {
     } else if (legacyMode) {
       onError(new Error('QR Code not recognised in image.'))
     }
+    this.timeout = setTimeout(this.check, delay)
   }
   initiateLegacyMode() {
     this.reader = new FileReader()
