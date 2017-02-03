@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import { storiesOf, action } from '@kadira/storybook';
-import Reader from './lib';
+import React, { Component } from 'react'
+import { storiesOf, action } from '@kadira/storybook'
+import Reader from './lib'
 
 class Wrapper extends Component {
   constructor(props) {
-    super(props);
-    this.state = { facingMode: 'front', interval: 1000 };
+    super(props)
+    this.state = { facingMode: 'front', delay: 1000 }
   }
   render() {
-    const { selectFacingMode, selectInterval, legacyMode } = this.props;
+    const { selectFacingMode, selectDelay, legacyMode } = this.props
 
-    const previewStyle = { width: 320 };
+    const previewStyle = { width: 320 }
     return (
       <div>
         {
@@ -24,17 +24,17 @@ class Wrapper extends Component {
             )
         }
         {
-          selectInterval && (
+          selectDelay && (
               <div>
-                <button onClick={() => this.setState({ interval: false })}>
-                  Disable Interval
+                <button onClick={() => this.setState({ delay: false })}>
+                  Disable Delay
                 </button>
                 <input
-                  placeholder="Interval in ms"
+                  placeholder="Delay in ms"
                   type="number"
-                  value={this.state.interval}
+                  value={this.state.delay}
                   onChange={e =>
-                    this.setState({ interval: parseInt(e.target.value) })}
+                    this.setState({ delay: parseInt(e.target.value) })}
                 />
               </div>
             )
@@ -43,11 +43,10 @@ class Wrapper extends Component {
           previewStyle={previewStyle}
           onError={action('Error')}
           onScan={action('Scan')}
-          handleImageNotRecognized={action('Image Not Recognised')}
           ref="reader"
           facingMode={this.state.facingMode}
           legacyMode={legacyMode}
-          interval={this.state.interval}
+          delay={this.state.delay}
         />
         {
           legacyMode && (
@@ -57,12 +56,12 @@ class Wrapper extends Component {
             )
         }
       </div>
-    );
+    )
   }
 }
 
 storiesOf('QR Reader', module)
-  .add('facingMode not specified', () => <Wrapper />)
-  .add('choose facingmode', () => <Wrapper selectFacingMode />)
-  .add('legacy mode', () => <Wrapper legacyMode />)
-  .add('choose interval', () => <Wrapper selectInterval />);
+  .add('FacingMode not specified', () => <Wrapper />)
+  .add('Choose facingMode', () => <Wrapper selectFacingMode />)
+  .add('Legacy mode', () => <Wrapper legacyMode />)
+  .add('Choose delay', () => <Wrapper selectDelay />)
