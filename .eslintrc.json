@@ -47,6 +47,7 @@
       "no-dupe-class-members": "error",
       "no-var": "warn",
       "no-this-before-super": "error",
+      "no-extra-boolean-cast": "off",
       "object-shorthand": [
         "error",
       "always"

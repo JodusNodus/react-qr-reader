@@ -1,39 +1,37 @@
 const React = require('react')
 const { Component, PropTypes } = React
 const getDeviceId = require('./getDeviceId')
+const havePropsChanged = require('./havePropsChanged')
 
+// Require adapter to support older browser implementations
 require('webrtc-adapter')
 
-const workerBlob = new Blob(
-  [__inline('../lib/worker.js')],
-  {type: 'application/javascript'}
-)
+// Inline worker.js as a string value of workerBlob.
+const workerBlob = new Blob([ __inline('../lib/worker.js') ], {
+  type: 'application/javascript',
+})
 
-export default class Reader extends Component {
+// Props that are allowed to change dynamicly
+const propsKeys = [ 'interval', 'legacy', 'facingMode' ]
+
+module.exports = class Reader extends Component {
   static propTypes = {
-    handleScan: PropTypes.func.isRequired,
-    handleError: PropTypes.func.isRequired,
-    handleImageNotRecognized: PropTypes.func,
-    interval: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.bool,
-    ]),
-    previewStyle: PropTypes.object,
-    inputStyle: PropTypes.object,
+    onScan: PropTypes.func.isRequired,
+    onError: PropTypes.func.isRequired,
+    interval: PropTypes.oneOfType([ PropTypes.number, PropTypes.bool ]),
     facingMode: PropTypes.string,
     legacyMode: PropTypes.bool,
     maxImageSize: PropTypes.number,
-  }
-  static defaultProps = {
-    interval: 500,
-    previewStyle: {},
-    inputStyle: {},
-    maxImageSize: 1500,
-  }
+    previewStyle: PropTypes.object,
+  };
+  static defaultProps = { interval: 500, previewStyle: {}, maxImageSize: 1500 };
 
-  constructor(props){
+  els = {};
+
+  constructor(props) {
     super(props)
 
+    // Bind function to the class
     this.initiate = this.initiate.bind(this)
     this.initiateLegacyMode = this.initiateLegacyMode.bind(this)
     this.check = this.check.bind(this)
@@ -45,59 +43,74 @@ export default class Reader extends Component {
     this.openImageDialog = this.openImageDialog.bind(this)
     this.setInterval = this.setInterval.bind(this)
     this.handleWorkerMessage = this.handleWorkerMessage.bind(this)
+    this.setRefFactory = this.setRefFactory.bind(this)
   }
-  componentDidMount(){
+  componentDidMount() {
+    // Initiate web worker execute handler according to mode.
     this.worker = new Worker(URL.createObjectURL(workerBlob))
     this.worker.onmessage = this.handleWorkerMessage
 
-    if(!this.props.legacyMode){
+    if (!this.props.legacyMode) {
       this.initiate()
-    }else{
+    } else {
       this.initiateLegacyMode()
     }
   }
-  componentWillReceiveProps(newProps){
-    if(this.props.facingMode != newProps.facingMode){
-      this.clearComponent()
-      this.initiate()
-    }else if(this.props.interval != newProps.interval){
-      this.setInterval(newProps.interval)
-    }else if(!this.props.legacyMode && newProps.legacyMode){
-      this.clearComponent()
-      this.componentDidUpdate = this.initiateLegacyMode
-    }else if(this.props.legacyMode && !newProps.legacyMode){
-      this.clearComponent()
-      this.initiate()
+  componentWillReceiveProps(nextProps) {
+    // React according to change in props
+    const changedProps = havePropsChanged(this.props, nextProps, propsKeys)
+
+    for (const prop of changedProps) {
+      if (prop == 'facingMode') {
+        this.clearComponent()
+        this.initiate()
+        break
+      } else if (prop == 'interval') {
+        this.setInterval(nextProps.interval)
+      } else if (prop == 'legacyMode') {
+        if (this.props.legacyMode && !nextProps.legacyMode) {
+          this.clearComponent()
+          this.initiate()
+        } else {
+          this.clearComponent()
+          this.componentDidUpdate = this.initiateLegacyMode
+        }
+        break
+      }
     }
   }
-  componentWillUnmount(){
-    if(this.worker){
+  shouldComponentUpdate(nextProps) {
+    // Only render when the `propsKeys` have changed.
+    const changedProps = havePropsChanged(this.props, nextProps, propsKeys)
+    return changedProps.length > 0
+  }
+  componentWillUnmount() {
+    // Stop web-worker and clear the component
+    if (this.worker) {
       this.worker.terminate()
-      delete this.worker
+      this.worker = undefined
     }
     this.clearComponent()
   }
-  clearComponent(){
-    if (this._interval)
-      clearInterval(this._interval)
-
-    if (typeof this.stopCamera === 'function')
-      this.stopCamera()
-
-    if(this.reader){
-      this.reader.removeEventListener('load', this.handleReaderLoad)
-      this.reader = undefined
+  clearComponent() {
+    // Remove all event listeners and variables
+    if (this.interval) {
+      clearInterval(this.interval)
     }
-
-    if(this.refs.img){
-      this.refs.img.removeEventListener('load', this.check)
+    if (this.stopCamera) {
+      this.stopCamera()
+    }
+    if (this.reader) {
+      this.reader.removeEventListener('load', this.handleReaderLoad)
+    }
+    if (this.els.img) {
+      this.els.img.removeEventListener('load', this.check)
     }
   }
-  initiate(){
-    const { handleError, facingMode } = this.props
+  initiate() {
+    const { onError, facingMode } = this.props
 
-    getDeviceId(facingMode)
-    .then((deviceId) => {
+    getDeviceId(facingMode).then(deviceId => {
       return navigator.mediaDevices.getUserMedia({
         video: {
           deviceId,
@@ -106,16 +119,15 @@ export default class Reader extends Component {
           height: { min: 240, ideal: 720, max: 1080 },
         },
       })
-    })
-    .then(this.handleVideo)
-    .catch(e => handleError(e.name))
+    }).then(this.handleVideo).catch(onError)
   }
   handleVideo(stream) {
-    const { preview } = this.refs
+    const { preview } = this.els
 
-    if(window.URL.createObjectURL){
+    // Handle different browser implementations of `createObjectURL`
+    if (window.URL.createObjectURL) {
       preview.src = window.URL.createObjectURL(stream)
-    }else if (window.webkitURL) {
+    } else if (window.webkitURL) {
       preview.src = window.webkitURL.createObjectURL(stream)
     } else if (preview.mozSrcObject !== undefined) {
       preview.mozSrcObject = stream
@@ -128,28 +140,35 @@ export default class Reader extends Component {
 
     preview.addEventListener('loadstart', this.handleLoadStart)
   }
-  setInterval(interval){
-    if (this._interval){
-      clearInterval(this._interval)
+  setInterval(interval) {
+    if (this.interval) {
+      clearInterval(this.interval)
     }
-    if(interval !== false){
-      this._interval = setInterval(this.check, interval)
+    if (interval != false) {
+      this.interval = setInterval(this.check, interval)
     }
   }
-  handleLoadStart(){
-    const preview = this.refs.preview
+  handleLoadStart() {
+    const preview = this.els.preview
     preview.play()
+
     this.setInterval(this.props.interval)
 
+    // Some browsers call loadstart continuously
     preview.removeEventListener('loadstart', this.handleLoadStart)
   }
   check() {
     const { legacyMode, maxImageSize } = this.props
-    const { preview, canvas, img } = this.refs
-    let width = Math.floor(legacyMode ? img.naturalWidth : preview.videoWidth)
-    let height = Math.floor(legacyMode ? img.naturalHeight : preview.videoHeight)
+    const { preview, canvas, img } = this.els
 
-    if(legacyMode){
+    // Get image/video dimensions
+    let width = Math.floor(legacyMode ? img.naturalWidth : preview.videoWidth)
+    let height = Math.floor(
+      legacyMode ? img.naturalHeight : preview.videoHeight,
+    )
+
+    if (legacyMode) {
+      // Downscale image to `maxImageSize`
       const ratio = 1.1
       while ((width > height ? width : height) > maxImageSize) {
         width = Math.floor(width / ratio)
@@ -160,68 +179,80 @@ export default class Reader extends Component {
     canvas.width = width
     canvas.height = height
 
-    if (legacyMode || (preview && preview.readyState === preview.HAVE_ENOUGH_DATA)){
+    const previewIsPlaying = preview &&
+      preview.readyState === preview.HAVE_ENOUGH_DATA
+
+    if (legacyMode || previewIsPlaying) {
       const ctx = canvas.getContext('2d')
-      ctx.drawImage(legacyMode ? img : preview, 0, 0, width, height)
+      ctx.drawImage(legacyMode ? img : preview, 0, 0, width, height)
 
       const imageData = ctx.getImageData(0, 0, width, height)
-
+      // Send data to web-worker
       this.worker.postMessage(imageData)
     }
   }
-  handleWorkerMessage(e){
-    const { handleScan, legacyMode, handleImageNotRecognized } = this.props
+  handleWorkerMessage(e) {
+    const { onScan, legacyMode, onError } = this.props
     const decoded = e.data
 
-    if(decoded){
-      handleScan(decoded)
-    }else if (legacyMode && handleImageNotRecognized) {
-      handleImageNotRecognized()
+    if (decoded) {
+      onScan(decoded)
+    } else if (legacyMode) {
+      onError(new Error('QR Code not recognised in image.'))
     }
   }
-  initiateLegacyMode(){
+  initiateLegacyMode() {
     this.reader = new FileReader()
-
     this.reader.addEventListener('load', this.handleReaderLoad)
+    this.els.img.addEventListener('load', this.check, false)
 
-    this.refs.img.addEventListener('load', this.check, false)
-
+    // Reset componentDidUpdate
     this.componentDidUpdate = undefined
   }
-  handleInputChange(e){
-    this.reader.readAsDataURL(e.target.files[0])
+  handleInputChange(e) {
+    const selectedImg = e.target.files[0]
+    this.reader.readAsDataURL(selectedImg)
   }
-  handleReaderLoad(e){
-    this.refs.img.src = e.target.result
+  handleReaderLoad(e) {
+    // Set selected image blob as img source
+    this.els.img.src = e.target.result
   }
-  openImageDialog(){
-    this.refs.input.click()
+  openImageDialog() {
+    // Function to be executed by parent in user action context to trigger img file uploader
+    this.els.input.click()
   }
-  render(){
+  setRefFactory(key) {
+    return element => {
+      this.els[key] = element
+    }
+  }
+  render() {
+    const hiddenStyle = { display: 'none' }
     const previewStyle = {
       display: 'block',
       objectFit: 'contain',
       ...this.props.previewStyle,
     }
-    const canvasStyle = {
-      display: 'none',
-    }
-    const inputStyle = {
-      display: 'none',
-      ...this.props.inputStyle,
-    }
+    const imgStyle = { ...previewStyle, ...hiddenStyle }
 
     return (
       <section>
-        {this.props.legacyMode ? (
-          <div>
-            <input style={inputStyle} id="react-qr-reader-input" type="file" accept="image/*" ref="input" onChange={this.handleInputChange}/>
-            <img style={{...previewStyle, display: 'none'}} ref="img"/>
-          </div>
-        ) : (
-          <video style={previewStyle} ref="preview"/>
-        )}
-        <canvas style={canvasStyle} ref="canvas"/>
+        {
+          this.props.legacyMode ? <div>
+              <input
+                style={hiddenStyle}
+                type="file"
+                accept="image/*"
+                ref={this.setRefFactory('input')}
+                onChange={this.handleInputChange}
+              />
+              <img style={imgStyle} ref={this.setRefFactory('img')} />
+            </div> : <video
+              style={previewStyle}
+              ref={this.setRefFactory('preview')}
+            />
+        }
+        <canvas style={hiddenStyle} ref={this.setRefFactory('canvas')} />
       </section>
     )
   }
