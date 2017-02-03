@@ -22,9 +22,9 @@ module.exports = class Reader extends Component {
     facingMode: PropTypes.string,
     legacyMode: PropTypes.bool,
     maxImageSize: PropTypes.number,
-    previewStyle: PropTypes.object,
+    style: PropTypes.object,
   };
-  static defaultProps = { delay: 500, previewStyle: {}, maxImageSize: 1500 };
+  static defaultProps = { delay: 500, style: {}, maxImageSize: 1500 };
 
   els = {};
 
@@ -233,9 +233,8 @@ module.exports = class Reader extends Component {
     const previewStyle = {
       display: 'block',
       objectFit: 'contain',
-      ...this.props.previewStyle,
+      ...this.props.style,
     }
-    const imgStyle = { ...previewStyle, ...hiddenStyle }
 
     return (
       <section>
@@ -248,7 +247,7 @@ module.exports = class Reader extends Component {
                 ref={this.setRefFactory('input')}
                 onChange={this.handleInputChange}
               />
-              <img style={imgStyle} ref={this.setRefFactory('img')} />
+              <img style={previewStyle} ref={this.setRefFactory('img')} />
             </div> : <video
               style={previewStyle}
               ref={this.setRefFactory('preview')}
