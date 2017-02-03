@@ -40,7 +40,7 @@ class Wrapper extends Component {
             )
         }
         <Reader
-          previewStyle={previewStyle}
+          style={previewStyle}
           onError={action('Error')}
           onScan={action('Scan')}
           ref="reader"
