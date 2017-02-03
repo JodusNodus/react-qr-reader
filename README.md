@@ -4,7 +4,7 @@ A react component for reading QR codes from the webcam.
 [Demo](https://jodusnodus.github.io/react-qr-reader)
 
 ## Install
-`npm install react-qr-reader`
+`npm install --save react-qr-reader`
 
 ## Example
 
@@ -16,8 +16,10 @@ class Test extends Component {
   constructor(props){
     super(props)
     this.state = {
+      delay: 100,
       result: 'No result',
     }
+    this.handleScan = this.handleScan.bind(this)
   }
   handleScan(data){
     this.setState({
@@ -36,9 +38,10 @@ class Test extends Component {
     return(
       <div>
         <QrReader
+          delay={this.state.delay}
           previewStyle={previewStyle}
-          handleError={this.handleError}
-          handleScan={this.handleScan.bind(this)}/>
+          onError={this.handleError}
+          onScan={this.handleScan}/>
         <p>{this.state.result}</p>
       </div>
     )
@@ -48,31 +51,25 @@ class Test extends Component {
 
 ## Props
 
-**handleScan**
+### onScan
 
 Type: `function`, Required, Argument: `result`
 
-The function to call when a scan is succesfull.
+Callback function on succesfull decoded message.
 
-**handleError**
+### onError
 
 Type: `function`, Required, Argument: `error`
 
-The function to call when an error occurs.
+Callback function when an error occurs such as the lack of available devices or when `legacyMode` is `true` no QR code was recognized in the image.
 
-**interval**
+### delay
 
-Type: `number`, Optional, Default: 500
+Type: `number`, Optional, Default: `500`
 
-The interval between scans in milliseconds. To disable the interval pass in `false`.
+The delay between scans in milliseconds. To disable the interval pass in `false`.
 
-**previewStyle**
-
-Type: `object`, Optional
-
-Styling for the preview element. **Warning** The preview will keep its aspect ratio, to disable this set the CSS property [objectFit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) to `fill`.
-
-**facingMode**
+### facingMode
 
 Type: `string`, Optional, Default: user decides.
 
@@ -80,42 +77,62 @@ Specify which camera should be used (if supported).
 
 Options: `front` and `rear`.
 
-**legacyMode**
+### legacyMode
 
 Type: `boolean`, Optional, Default: `false`.
 
 If the device does not allow camera access (e.g. IOS Browsers, Safari) you can enable legacyMode to allow the user to take a picture (On a mobile device) or use an existing one. To trigger the image dialog just call the method `openImageDialog` from the parent component. **Warning** You must call the method from a user action (eg. click event on some element).
 
-**maxImageSize**
+### maxImageSize
 
 Type: `number`, Optional, Default: `1500`.
 
 If `legacyMode` is active then the image will be resized if it is larger than the given value. Allowing larger images will increase the accuracy but it will also slow down the processing time.
 
-**handleImageNotRecognized**
+### previewStyle
 
-Type: `function`, Optional
+Type: `object`, Optional
 
-If `legacyMode` is active then the function is called when no QR code was recognized in the image.
+Styling for the preview element. **Warning** The preview will keep its aspect ratio, to disable this set the CSS property [objectFit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) to `fill`.
+
 
 ## Dev
 
-Install dependencies
-
+### Install dependencies
 `npm install`
 
-Build
-
+### Build
 `npm run build`
 
-or on file change
-
-`npm run build:watch`
-
-Start hot-reloading web-server (port: 9001)
-
+### Demo
 `npm run storybook`
 
-Linting
+### Test
+`npm test`
 
+### Linting
 `npm run lint`
+
+
+## License
+The MIT License (MIT)
+
+Copyright (c) 2017 Thomas Billiet
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
