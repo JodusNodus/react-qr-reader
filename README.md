@@ -1,4 +1,6 @@
-# Introduction
+[![npm version](https://badge.fury.io/js/react-qr-reader.svg)](https://badge.fury.io/js/react-qr-reader)
+
+## Introduction
 A react component for reading QR-codes from the webcam. It uses the WebRTC standards for reading webcam data and [jsQR](https://github.com/cozmo/jsQR) is used for detecting QR codes in that data. To optimise the speed and experience, a web-worker is used to offload the heavy QR-code algorithm on a separate process. The web worker is inlined and loaded on creation of the component.
 
 ## Demo
@@ -9,7 +11,7 @@ A react component for reading QR-codes from the webcam. It uses the WebRTC stand
 
 ## Example
 
-```
+```js
 import React, { Component } from 'react'
 import QrReader from 'react-qr-reader'
 
@@ -98,6 +100,13 @@ Type: `object`, Optional
 
 Styling for the preview element. This will be a `video` or an `img` when `legacymode` is `true`. **Warning** The preview will keep its aspect ratio, to disable this set the CSS property [objectFit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) to `fill`.
 
+## Tested platforms
+- Chrome 56 and Firefox 53 on macOs 10.12
+- Chrome 55 and Firefox 50 on Android 6.0.1
+
+## Known Issues
+- Not compatible with OSX/IOS Safari. Use `legacyMode` to support these platforms.
+- In Firefox a prompt will be shown to the user asking which camera to use so `facingMode` will not affect it.
 
 ## Dev
 
