@@ -7,18 +7,18 @@ const havePropsChanged = require('./havePropsChanged')
 require('webrtc-adapter')
 
 // Inline worker.js as a string value of workerBlob.
-const workerBlob = new Blob([ __inline('../lib/worker.js') ], {
+const workerBlob = new Blob([__inline('../lib/worker.js')], {
   type: 'application/javascript',
 })
 
 // Props that are allowed to change dynamicly
-const propsKeys = [ 'delay', 'legacyMode', 'facingMode' ]
+const propsKeys = ['delay', 'legacyMode', 'facingMode']
 
 module.exports = class Reader extends Component {
   static propTypes = {
     onScan: PropTypes.func.isRequired,
     onError: PropTypes.func.isRequired,
-    delay: PropTypes.oneOfType([ PropTypes.number, PropTypes.bool ]),
+    delay: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
     facingMode: PropTypes.string,
     legacyMode: PropTypes.bool,
     maxImageSize: PropTypes.number,
@@ -62,7 +62,7 @@ module.exports = class Reader extends Component {
     for (const prop of changedProps) {
       if (prop == 'facingMode') {
         this.clearComponent()
-        this.initiate()
+        this.initiate(nextProps)
         break
       } else if (prop == 'delay') {
         if (this.props.delay == false) {
@@ -73,7 +73,7 @@ module.exports = class Reader extends Component {
       } else if (prop == 'legacyMode') {
         if (this.props.legacyMode && !nextProps.legacyMode) {
           this.clearComponent()
-          this.initiate()
+          this.initiate(nextProps)
         } else {
           this.clearComponent()
           this.componentDidUpdate = this.initiateLegacyMode
@@ -111,19 +111,22 @@ module.exports = class Reader extends Component {
       this.els.img.removeEventListener('load', this.check)
     }
   }
-  initiate() {
-    const { onError, facingMode } = this.props
+  initiate(props = this.props) {
+    const { onError, facingMode } = props
 
-    getDeviceId(facingMode).then(deviceId => {
-      return navigator.mediaDevices.getUserMedia({
-        video: {
-          deviceId,
-          facingMode: facingMode == 'rear' ? 'environment' : 'user',
-          width: { min: 360, ideal: 1280, max: 1920 },
-          height: { min: 240, ideal: 720, max: 1080 },
-        },
+    getDeviceId(facingMode)
+      .then(deviceId => {
+        return navigator.mediaDevices.getUserMedia({
+          video: {
+            deviceId,
+            facingMode: facingMode == 'rear' ? 'environment' : 'user',
+            width: { min: 360, ideal: 1280, max: 1920 },
+            height: { min: 240, ideal: 720, max: 1080 },
+          },
+        })
       })
-    }).then(this.handleVideo).catch(onError)
+      .then(this.handleVideo)
+      .catch(onError)
   }
   handleVideo(stream) {
     const { preview } = this.els
@@ -163,7 +166,7 @@ module.exports = class Reader extends Component {
     // Get image/video dimensions
     let width = Math.floor(legacyMode ? img.naturalWidth : preview.videoWidth)
     let height = Math.floor(
-      legacyMode ? img.naturalHeight : preview.videoHeight,
+      legacyMode ? img.naturalHeight : preview.videoHeight
     )
 
     if (legacyMode) {
@@ -238,8 +241,8 @@ module.exports = class Reader extends Component {
 
     return (
       <section>
-        {
-          this.props.legacyMode ? <div>
+        {this.props.legacyMode
+          ? <div>
               <input
                 style={hiddenStyle}
                 type="file"
@@ -248,11 +251,8 @@ module.exports = class Reader extends Component {
                 onChange={this.handleInputChange}
               />
               <img style={previewStyle} ref={this.setRefFactory('img')} />
-            </div> : <video
-              style={previewStyle}
-              ref={this.setRefFactory('preview')}
-            />
-        }
+            </div>
+          : <video style={previewStyle} ref={this.setRefFactory('preview')} />}
         <canvas style={hiddenStyle} ref={this.setRefFactory('canvas')} />
       </section>
     )
