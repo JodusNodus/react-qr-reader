@@ -4,7 +4,7 @@ module.exports = function getDeviceId(facingMode) {
     navigator.mediaDevices.enumerateDevices().then(devices => {
       // Filter out non-videoinputs
       const videoDevices = devices.filter(
-        device => device.kind == 'videoinput',
+        device => device.kind == 'videoinput'
       )
 
       if (videoDevices.length < 1) {
@@ -21,15 +21,14 @@ module.exports = function getDeviceId(facingMode) {
         : /front|user|face/ig
 
       // Filter out video devices without the pattern
-      const filteredDevices = videoDevices.filter(
-        ({ label }) => pattern.test(label),
-      )
+      const filteredDevices = videoDevices.filter(({ label }) =>
+        pattern.test(label))
 
       if (filteredDevices.length > 0) {
         resolve(filteredDevices[0].deviceId)
       } else {
         // No device found with the pattern thus use another video device
-        reject(videoDevices[0].deviceId)
+        resolve(videoDevices[0].deviceId)
       }
     })
   })
