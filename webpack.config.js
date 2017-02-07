@@ -3,7 +3,6 @@ module.exports = {
   output: {
     filename: './javascripts/bundle.js'
   },
-  devtool: 'eval',
   module: {
     loaders: [
       {
@@ -15,4 +14,4 @@ module.exports = {
       }
     ]
   }
-}
+};
