@@ -6,7 +6,7 @@
   "dependencies": {
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
-    "react-qr-reader": "^1.0.1"
+    "react-qr-reader": "^1.0.2"
   },
   "devDependencies": {
     "babel-loader": "^6.2.4",
