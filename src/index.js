@@ -64,12 +64,6 @@ module.exports = class Reader extends Component {
         this.clearComponent()
         this.initiate(nextProps)
         break
-      } else if (prop == 'delay') {
-        if (this.props.delay == false) {
-          this.timeout = setTimeout(this.check, this.props.delay)
-        } else if (nextProps.delay == false) {
-          clearTimeout(this.timeout)
-        }
       } else if (prop == 'legacyMode') {
         if (this.props.legacyMode && !nextProps.legacyMode) {
           this.clearComponent()
@@ -98,7 +92,7 @@ module.exports = class Reader extends Component {
   clearComponent() {
     // Remove all event listeners and variables
     if (this.timeout) {
-      clearTimeout(this.timeout)
+      clearInterval(this.timeout)
       this.timeout = undefined
     }
     if (this.stopCamera) {
@@ -153,7 +147,7 @@ module.exports = class Reader extends Component {
     preview.play()
 
     if (typeof this.props.delay == 'number') {
-      this.timeout = setTimeout(this.check, this.props.delay)
+      this.timeout = setInterval(this.check, this.props.delay)
     }
 
     // Some browsers call loadstart continuously
@@ -201,9 +195,6 @@ module.exports = class Reader extends Component {
       onScan(decoded)
     } else if (legacyMode) {
       onError(new Error('QR Code not recognised in image.'))
-    }
-    if (typeof delay == 'number') {
-      this.timeout = setTimeout(this.check, delay)
     }
   }
   initiateLegacyMode() {
