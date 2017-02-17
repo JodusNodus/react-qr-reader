@@ -160,7 +160,7 @@ module.exports = class Reader extends Component {
     preview.removeEventListener('loadstart', this.handleLoadStart)
   }
   check() {
-    const { legacyMode, maxImageSize } = this.props
+    const { legacyMode, maxImageSize, delay } = this.props
     const { preview, canvas, img } = this.els
 
     // Get image/video dimensions
@@ -191,6 +191,9 @@ module.exports = class Reader extends Component {
       const imageData = ctx.getImageData(0, 0, width, height)
       // Send data to web-worker
       this.worker.postMessage(imageData)
+    } else {
+      // Preview not ready -> check later
+      this.timeout = setTimeout(this.check, delay)
     }
   }
   handleWorkerMessage(e) {
