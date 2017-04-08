@@ -48,7 +48,7 @@ class Test extends Component {
       <div>
         <QrReader
           delay={this.state.delay}
-          previewStyle={previewStyle}
+          style={previewStyle}
           onError={this.handleError}
           onScan={this.handleScan}
           />
