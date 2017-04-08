@@ -44,7 +44,7 @@
     "react-dom": "^15.0.2"
   },
   "dependencies": {
-    "jsqr": "^0.2.1",
+    "jsqr": "^0.2.2",
     "webrtc-adapter": "^2.0.8"
   }
 }
