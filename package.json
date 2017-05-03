@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "jsqr": "^0.2.2",
+    "prop-types": "^15.5.8",
     "webrtc-adapter": "^2.0.8"
   }
 }
