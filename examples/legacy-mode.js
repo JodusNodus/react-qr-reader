@@ -10,11 +10,12 @@ class LegacyModeExample extends Component {
     }
 
     this.handleScan = this.handleScan.bind(this)
+    this.openImageDialog = this.openImageDialog.bind(this)
   }
-  handleScan(data){
-    this.setState({
-      result: data,
-    })
+  handleScan(result){
+    if(result){
+      this.setState({ result })
+    }
   }
   handleError(err){
     console.error(err)
@@ -39,7 +40,7 @@ class LegacyModeExample extends Component {
           onScan={this.handleScan}
           legacyMode
         />
-        <input type="button" value="Submit QR Code" onClick={this.openImageDialog.bind(this)} />
+        <input type="button" value="Submit QR Code" onClick={this.openImageDialog} />
         <p>{this.state.result}</p>
       </div>
     )

@@ -5,16 +5,16 @@ class Example extends Component {
   constructor(props){
     super(props)
     this.state = {
-      delay: 100,
+      delay: 500,
       result: 'No result',
     }
 
     this.handleScan = this.handleScan.bind(this)
   }
-  handleScan(data){
-    this.setState({
-      result: data,
-    })
+  handleScan(result){
+    if(result){
+      this.setState({ result })
+    }
   }
   handleError(err){
     console.error(err)
