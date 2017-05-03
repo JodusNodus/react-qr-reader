@@ -205,7 +205,7 @@ module.exports = class Reader extends Component {
     } else if (legacyMode) {
       onError(new Error('QR Code not recognised in image.'))
     }
-    if (typeof delay == 'number' && this.worker) {
+    if (!legacyMode && typeof delay == 'number' && this.worker) {
       this.timeout = setTimeout(this.check, delay)
     }
   }
