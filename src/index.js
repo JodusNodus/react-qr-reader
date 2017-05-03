@@ -197,14 +197,11 @@ module.exports = class Reader extends Component {
     }
   }
   handleWorkerMessage(e) {
-    const { onScan, legacyMode, onError, delay } = this.props
+    const { onScan, legacyMode, delay } = this.props
     const decoded = e.data
 
-    if (decoded) {
-      onScan(decoded)
-    } else if (legacyMode) {
-      onError(new Error('QR Code not recognised in image.'))
-    }
+    onScan(decoded || null)
+
     if (!legacyMode && typeof delay == 'number' && this.worker) {
       this.timeout = setTimeout(this.check, delay)
     }

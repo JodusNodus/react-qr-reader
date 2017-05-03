@@ -65,15 +65,15 @@ class Test extends Component {
 
 Type: `function`, Required, Argument: `result`
 
-Function to call when a QR-code was found and decoded.
+Scan event handler. Called every scan with the decoded value or `null` if no QR code was found.
 
 **onError**
 
 Type: `function`, Required, Argument: `error`
 
 Function to call when an error occurs such as:
-- The lack of available devices.
-- When `legacyMode` is `true` no QR code was recognized in the image.
+- Not supported platform
+- The lack of available devices
 
 **delay**
 
