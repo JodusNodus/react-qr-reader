@@ -18,6 +18,7 @@ module.exports = class Reader extends Component {
   static propTypes = {
     onScan: PropTypes.func.isRequired,
     onError: PropTypes.func.isRequired,
+    onLoad: PropTypes.func,
     delay: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
     facingMode: PropTypes.string,
     legacyMode: PropTypes.bool,
@@ -149,11 +150,16 @@ module.exports = class Reader extends Component {
     preview.addEventListener('loadstart', this.handleLoadStart)
   }
   handleLoadStart() {
+    const { delay, onLoad } = this.props
     const preview = this.els.preview
     preview.play()
 
-    if (typeof this.props.delay == 'number') {
-      this.timeout = setTimeout(this.check, this.props.delay)
+    if(typeof onLoad == 'function') {
+      onLoad()
+    }
+
+    if (typeof delay == 'number') {
+      this.timeout = setTimeout(this.check, delay)
     }
 
     // Some browsers call loadstart continuously
@@ -213,6 +219,10 @@ module.exports = class Reader extends Component {
 
     // Reset componentDidUpdate
     this.componentDidUpdate = undefined
+
+    if(typeof this.props.onLoad == 'function') {
+      this.props.onLoad()
+    }
   }
   handleInputChange(e) {
     const selectedImg = e.target.files[0]

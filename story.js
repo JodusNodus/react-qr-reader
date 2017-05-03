@@ -43,6 +43,7 @@ class Wrapper extends Component {
           style={previewStyle}
           onError={action('Error')}
           onScan={action('Scan')}
+          onLoad={action('Load')}
           ref="reader"
           facingMode={this.state.facingMode}
           legacyMode={legacyMode}

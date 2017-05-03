@@ -75,6 +75,12 @@ Function to call when an error occurs such as:
 - Not supported platform
 - The lack of available devices
 
+**onLoad**
+
+Type: `function`, Optional
+
+Called when the component is ready for use.
+
 **delay**
 
 Type: `number`, Optional, Default: `500`
