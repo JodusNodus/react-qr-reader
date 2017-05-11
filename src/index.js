@@ -25,6 +25,7 @@ module.exports = class Reader extends Component {
     legacyMode: PropTypes.bool,
     maxImageSize: PropTypes.number,
     style: PropTypes.object,
+    className: PropTypes.string,
   };
   static defaultProps = { delay: 500, style: {}, maxImageSize: 1500 };
 
@@ -251,7 +252,7 @@ module.exports = class Reader extends Component {
     }
 
     return (
-      <section>
+      <section className={this.props.className}>
         {this.props.legacyMode
           ? <div>
               <input

@@ -48,6 +48,7 @@ class Wrapper extends Component {
           facingMode={this.state.facingMode}
           legacyMode={legacyMode}
           delay={this.state.delay}
+          className="reader-container"
         />
         {
           legacyMode && (

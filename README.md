@@ -111,6 +111,12 @@ Type: `object`, Optional
 
 Styling for the preview element. This will be a `video` or an `img` when `legacymode` is `true`. **Warning** The preview will keep its aspect ratio, to disable this set the CSS property [objectFit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) to `fill`.
 
+**className**
+
+Type: `string`, Optional
+
+ClassName for the container element.
+
 ## Dev
 
 ### Install dependencies
