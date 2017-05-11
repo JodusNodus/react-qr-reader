@@ -10,6 +10,7 @@ const babelOptions = JSON.parse(fs.readFileSync('./.babelrc', 'utf8'));
 
 const paths = {
   scripts: [ 'src/index.js', 'src/getDeviceId.js', 'src/havePropsChanged.js' ],
+  scripts: [ 'src/index.js', 'src/getDeviceId.js', 'src/havePropsChanged.js', 'src/errors.js' ],
   worker: 'src/worker.js',
   jsQR: 'node_modules/jsqr/dist/jsQR.js',
   destination: './lib',

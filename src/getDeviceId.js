@@ -1,14 +1,22 @@
+const { NoVideoInputDevicesError } = require('./errors')
+
 module.exports = function getDeviceId(facingMode) {
   // Get manual deviceId from available devices.
   return new Promise((resolve, reject) => {
-    navigator.mediaDevices.enumerateDevices().then(devices => {
+    let enumerateDevices
+    try{
+      enumerateDevices = navigator.mediaDevices.enumerateDevices()
+    }catch(err){
+      reject(new NoVideoInputDevicesError())
+    }
+    enumerateDevices.then(devices => {
       // Filter out non-videoinputs
       const videoDevices = devices.filter(
         device => device.kind == 'videoinput'
       )
 
       if (videoDevices.length < 1) {
-        reject(new Error('No video input devices found'))
+        reject(new NoVideoInputDevicesError())
         return
       } else if (videoDevices.length == 1) {
         // Only 1 video device available thus stop here
