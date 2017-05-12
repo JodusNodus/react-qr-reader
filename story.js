@@ -24,7 +24,7 @@ class Wrapper extends Component {
             )
         }
         {
-          selectDelay && (
+          (selectDelay || legacyMode) && (
               <div>
                 <button onClick={() => this.setState({ delay: false })}>
                   Disable Delay
