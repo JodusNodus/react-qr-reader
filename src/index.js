@@ -68,9 +68,10 @@ module.exports = class Reader extends Component {
         this.initiate(nextProps)
         break
       } else if (prop == 'delay') {
-        if (this.props.delay == false) {
+        if (this.props.delay == false && !nextProps.legacyMode) {
           this.timeout = setTimeout(this.check, nextProps.delay)
-        } else if (nextProps.delay == false) {
+        }
+        if (nextProps.delay == false) {
           clearTimeout(this.timeout)
         }
       } else if (prop == 'legacyMode') {
