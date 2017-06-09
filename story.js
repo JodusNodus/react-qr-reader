@@ -5,7 +5,7 @@ import Reader from './lib'
 class Wrapper extends Component {
   constructor(props) {
     super(props)
-    this.state = { facingMode: 'front', delay: 1000 }
+    this.state = { facingMode: 'front', delay: 500 }
   }
   render() {
     const { selectFacingMode, selectDelay, legacyMode } = this.props
