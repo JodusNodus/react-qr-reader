@@ -42,7 +42,7 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -52,11 +52,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(39);
+	var _reactDom = __webpack_require__(36);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _reactQrReader = __webpack_require__(189);
+	var _reactQrReader = __webpack_require__(182);
 
 	var _reactQrReader2 = _interopRequireDefault(_reactQrReader);
 
@@ -244,17 +244,17 @@
 
 	_reactDom2.default.render(_react2.default.createElement(Demo, null), document.getElementById('demo-container'));
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = __webpack_require__(2);
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -277,9 +277,9 @@
 	var ReactDOMFactories = __webpack_require__(24);
 	var ReactElement = __webpack_require__(9);
 	var ReactPropTypes = __webpack_require__(29);
-	var ReactVersion = __webpack_require__(37);
+	var ReactVersion = __webpack_require__(34);
 
-	var onlyChild = __webpack_require__(38);
+	var onlyChild = __webpack_require__(35);
 	var warning = __webpack_require__(11);
 
 	var createElement = ReactElement.createElement;
@@ -361,9 +361,9 @@
 	module.exports = React;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -532,6 +532,12 @@
 	process.removeListener = noop;
 	process.removeAllListeners = noop;
 	process.emit = noop;
+	process.prependListener = noop;
+	process.prependOnceListener = noop;
+
+	process.listeners = function (name) {
+	    return [];
+	};
 
 	process.binding = function (name) {
 	    throw new Error('process.binding is not supported');
@@ -547,13 +553,20 @@
 	    return 0;
 	};
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
+
+	/*
+	object-assign
+	(c) Sindre Sorhus
+	@license MIT
+	*/
 
 	'use strict';
 	/* eslint-disable no-unused-vars */
 
+	var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
@@ -574,7 +587,7 @@
 			// Detect buggy property enumeration order in older V8 versions.
 
 			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-			var test1 = new String('abc'); // eslint-disable-line
+			var test1 = new String('abc'); // eslint-disable-line no-new-wrappers
 			test1[5] = 'de';
 			if (Object.getOwnPropertyNames(test1)[0] === '5') {
 				return false;
@@ -602,7 +615,7 @@
 			}
 
 			return true;
-		} catch (e) {
+		} catch (err) {
 			// We don't expect any of the above to throw, but better to be safe.
 			return false;
 		}
@@ -622,8 +635,8 @@
 				}
 			}
 
-			if (Object.getOwnPropertySymbols) {
-				symbols = Object.getOwnPropertySymbols(from);
+			if (getOwnPropertySymbols) {
+				symbols = getOwnPropertySymbols(from);
 				for (var i = 0; i < symbols.length; i++) {
 					if (propIsEnumerable.call(from, symbols[i])) {
 						to[symbols[i]] = from[symbols[i]];
@@ -635,9 +648,9 @@
 		return to;
 	};
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -829,9 +842,9 @@
 
 	module.exports = ReactChildren;
 
-/***/ },
+/***/ }),
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -946,9 +959,9 @@
 	module.exports = PooledClass;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 7 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -989,9 +1002,9 @@
 
 	module.exports = reactProdInvariant;
 
-/***/ },
+/***/ }),
 /* 8 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -1050,9 +1063,9 @@
 	module.exports = invariant;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 9 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -1066,7 +1079,7 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _assign = __webpack_require__(4);
 
@@ -1398,9 +1411,9 @@
 	module.exports = ReactElement;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 10 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1434,9 +1447,9 @@
 
 	module.exports = ReactCurrentOwner;
 
-/***/ },
+/***/ }),
 /* 11 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-2015, Facebook, Inc.
@@ -1506,9 +1519,9 @@
 	module.exports = warning;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 12 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -1549,9 +1562,9 @@
 
 	module.exports = emptyFunction;
 
-/***/ },
+/***/ }),
 /* 13 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1580,9 +1593,9 @@
 	module.exports = canDefineProperty;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 14 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -1604,9 +1617,9 @@
 
 	module.exports = REACT_ELEMENT_TYPE;
 
-/***/ },
+/***/ }),
 /* 15 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1620,7 +1633,7 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _prodInvariant = __webpack_require__(7);
 
@@ -1787,9 +1800,9 @@
 	module.exports = traverseAllChildren;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 16 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1832,9 +1845,9 @@
 
 	module.exports = getIteratorFn;
 
-/***/ },
+/***/ }),
 /* 17 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1895,9 +1908,9 @@
 
 	module.exports = KeyEscapeUtils;
 
-/***/ },
+/***/ }),
 /* 18 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1911,7 +1924,7 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _prodInvariant = __webpack_require__(7);
 
@@ -2020,9 +2033,9 @@
 	module.exports = ReactComponent;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 19 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -2121,9 +2134,9 @@
 	module.exports = ReactNoopUpdateQueue;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 20 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -2146,9 +2159,9 @@
 	module.exports = emptyObject;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 21 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -2192,9 +2205,9 @@
 
 	module.exports = ReactPureComponent;
 
-/***/ },
+/***/ }),
 /* 22 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -2208,7 +2221,7 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _prodInvariant = __webpack_require__(7),
 	    _assign = __webpack_require__(4);
@@ -2921,9 +2934,9 @@
 	module.exports = ReactClass;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 23 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -2951,9 +2964,9 @@
 	module.exports = ReactPropTypeLocationNames;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 24 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3126,9 +3139,9 @@
 	module.exports = ReactDOMFactories;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 25 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -3149,7 +3162,7 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var ReactCurrentOwner = __webpack_require__(10);
 	var ReactComponentTreeHook = __webpack_require__(26);
@@ -3386,9 +3399,9 @@
 	module.exports = ReactElementValidator;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 26 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2016-present, Facebook, Inc.
@@ -3403,7 +3416,7 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _prodInvariant = __webpack_require__(7);
 
@@ -3418,11 +3431,11 @@
 	  var hasOwnProperty = Object.prototype.hasOwnProperty;
 	  var reIsNative = RegExp('^' + funcToString
 	  // Take an example native function source for comparison
-	  .call(hasOwnProperty)
+	  .call(hasOwnProperty
 	  // Strip regex characters so we can use it for regex
-	  .replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')
+	  ).replace(/[\\^$.*+?()[\]{}|]/g, '\\$&'
 	  // Remove hasOwnProperty from the template to make it generic
-	  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+	  ).replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
 	  try {
 	    var source = funcToString.call(fn);
 	    return reIsNative.test(source);
@@ -3726,9 +3739,9 @@
 	module.exports = ReactComponentTreeHook;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 27 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3742,7 +3755,7 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _prodInvariant = __webpack_require__(7);
 
@@ -3820,9 +3833,9 @@
 	module.exports = checkReactTypeSpec;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 28 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3841,9 +3854,9 @@
 
 	module.exports = ReactPropTypesSecret;
 
-/***/ },
+/***/ }),
 /* 29 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3864,9 +3877,9 @@
 
 	module.exports = factory(isValidElement);
 
-/***/ },
+/***/ }),
 /* 30 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3891,9 +3904,9 @@
 	  return factory(isValidElement, throwOnDirectAccess);
 	};
 
-/***/ },
+/***/ }),
 /* 31 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3906,14 +3919,14 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var emptyFunction = __webpack_require__(32);
-	var invariant = __webpack_require__(33);
-	var warning = __webpack_require__(34);
+	var emptyFunction = __webpack_require__(12);
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
-	var ReactPropTypesSecret = __webpack_require__(35);
-	var checkPropTypes = __webpack_require__(36);
+	var ReactPropTypesSecret = __webpack_require__(32);
+	var checkPropTypes = __webpack_require__(33);
 
 	module.exports = function (isValidElement, throwOnDirectAccess) {
 	  /* global Symbol */
@@ -4203,6 +4216,14 @@
 	      return emptyFunction.thatReturnsNull;
 	    }
 
+	    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+	      var checker = arrayOfTypeCheckers[i];
+	      if (typeof checker !== 'function') {
+	        warning(false, 'Invalid argument supplid to oneOfType. Expected an array of check functions, but ' + 'received %s at index %s.', getPostfixForTypeWarning(checker), i);
+	        return emptyFunction.thatReturnsNull;
+	      }
+	    }
+
 	    function validate(props, propName, componentName, location, propFullName) {
 	      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
 	        var checker = arrayOfTypeCheckers[i];
@@ -4335,6 +4356,9 @@
 	  // This handles more types than `getPropType`. Only used for error messages.
 	  // See `createPrimitiveTypeChecker`.
 	  function getPreciseType(propValue) {
+	    if (typeof propValue === 'undefined' || propValue === null) {
+	      return '' + propValue;
+	    }
 	    var propType = getPropType(propValue);
 	    if (propType === 'object') {
 	      if (propValue instanceof Date) {
@@ -4344,6 +4368,23 @@
 	      }
 	    }
 	    return propType;
+	  }
+
+	  // Returns a string that is postfixed to a warning about an invalid type.
+	  // For example, "undefined" or "of type array"
+	  function getPostfixForTypeWarning(value) {
+	    var type = getPreciseType(value);
+	    switch (type) {
+	      case 'array':
+	      case 'object':
+	        return 'an ' + type;
+	      case 'boolean':
+	      case 'date':
+	      case 'regexp':
+	        return 'a ' + type;
+	      default:
+	        return type;
+	    }
 	  }
 
 	  // Returns class name of the object, if any.
@@ -4361,185 +4402,9 @@
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 32 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * 
-	 */
-
-	function makeEmptyFunction(arg) {
-	  return function () {
-	    return arg;
-	  };
-	}
-
-	/**
-	 * This function accepts and discards inputs; it has no side effects. This is
-	 * primarily useful idiomatically for overridable function endpoints which
-	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
-	 */
-	var emptyFunction = function emptyFunction() {};
-
-	emptyFunction.thatReturns = makeEmptyFunction;
-	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-	emptyFunction.thatReturnsThis = function () {
-	  return this;
-	};
-	emptyFunction.thatReturnsArgument = function (arg) {
-	  return arg;
-	};
-
-	module.exports = emptyFunction;
-
-/***/ },
-/* 33 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-
-	'use strict';
-
-	/**
-	 * Use invariant() to assert state which your program assumes to be true.
-	 *
-	 * Provide sprintf-style format (only %s is supported) and arguments
-	 * to provide information about what broke and what you were
-	 * expecting.
-	 *
-	 * The invariant message will be stripped in production, but the invariant
-	 * will remain to ensure logic does not differ in production.
-	 */
-
-	var validateFormat = function validateFormat(format) {};
-
-	if (process.env.NODE_ENV !== 'production') {
-	  validateFormat = function validateFormat(format) {
-	    if (format === undefined) {
-	      throw new Error('invariant requires an error message argument');
-	    }
-	  };
-	}
-
-	function invariant(condition, format, a, b, c, d, e, f) {
-	  validateFormat(format);
-
-	  if (!condition) {
-	    var error;
-	    if (format === undefined) {
-	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-	    } else {
-	      var args = [a, b, c, d, e, f];
-	      var argIndex = 0;
-	      error = new Error(format.replace(/%s/g, function () {
-	        return args[argIndex++];
-	      }));
-	      error.name = 'Invariant Violation';
-	    }
-
-	    error.framesToPop = 1; // we don't care about invariant's own frame
-	    throw error;
-	  }
-	}
-
-	module.exports = invariant;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 34 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2014-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-
-	'use strict';
-
-	var emptyFunction = __webpack_require__(32);
-
-	/**
-	 * Similar to invariant but only logs a warning if the condition is not met.
-	 * This can be used to log issues in development environments in critical
-	 * paths. Removing the logging code for production environments will keep the
-	 * same logic and follow the same code paths.
-	 */
-
-	var warning = emptyFunction;
-
-	if (process.env.NODE_ENV !== 'production') {
-	  (function () {
-	    var printWarning = function printWarning(format) {
-	      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	        args[_key - 1] = arguments[_key];
-	      }
-
-	      var argIndex = 0;
-	      var message = 'Warning: ' + format.replace(/%s/g, function () {
-	        return args[argIndex++];
-	      });
-	      if (typeof console !== 'undefined') {
-	        console.error(message);
-	      }
-	      try {
-	        // --- Welcome to debugging React ---
-	        // This error was thrown as a convenience so that you can use this stack
-	        // to find the callsite that caused this warning to fire.
-	        throw new Error(message);
-	      } catch (x) {}
-	    };
-
-	    warning = function warning(condition, format) {
-	      if (format === undefined) {
-	        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-	      }
-
-	      if (format.indexOf('Failed Composite propType: ') === 0) {
-	        return; // Ignore CompositeComponent proptype check.
-	      }
-
-	      if (!condition) {
-	        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-	          args[_key2 - 2] = arguments[_key2];
-	        }
-
-	        printWarning.apply(undefined, [format].concat(args));
-	      }
-	    };
-	  })();
-	}
-
-	module.exports = warning;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 35 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -4556,9 +4421,9 @@
 
 	module.exports = ReactPropTypesSecret;
 
-/***/ },
-/* 36 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -4571,12 +4436,12 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	if (process.env.NODE_ENV !== 'production') {
-	  var invariant = __webpack_require__(33);
-	  var warning = __webpack_require__(34);
-	  var ReactPropTypesSecret = __webpack_require__(35);
+	  var invariant = __webpack_require__(8);
+	  var warning = __webpack_require__(11);
+	  var ReactPropTypesSecret = __webpack_require__(32);
 	  var loggedTypeFailures = {};
 	}
 
@@ -4625,9 +4490,9 @@
 	module.exports = checkPropTypes;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 37 */
-/***/ function(module, exports) {
+/***/ }),
+/* 34 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -4643,9 +4508,9 @@
 
 	module.exports = '15.5.4';
 
-/***/ },
-/* 38 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -4686,17 +4551,17 @@
 	module.exports = onlyChild;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 39 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(40);
+	module.exports = __webpack_require__(37);
 
-/***/ },
-/* 40 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -4712,17 +4577,17 @@
 
 	'use strict';
 
-	var ReactDOMComponentTree = __webpack_require__(41);
-	var ReactDefaultInjection = __webpack_require__(46);
-	var ReactMount = __webpack_require__(177);
-	var ReactReconciler = __webpack_require__(69);
-	var ReactUpdates = __webpack_require__(66);
-	var ReactVersion = __webpack_require__(182);
+	var ReactDOMComponentTree = __webpack_require__(38);
+	var ReactDefaultInjection = __webpack_require__(42);
+	var ReactMount = __webpack_require__(170);
+	var ReactReconciler = __webpack_require__(63);
+	var ReactUpdates = __webpack_require__(60);
+	var ReactVersion = __webpack_require__(175);
 
-	var findDOMNode = __webpack_require__(183);
-	var getHostComponentFromComposite = __webpack_require__(184);
-	var renderSubtreeIntoContainer = __webpack_require__(185);
-	var warning = __webpack_require__(54);
+	var findDOMNode = __webpack_require__(176);
+	var getHostComponentFromComposite = __webpack_require__(177);
+	var renderSubtreeIntoContainer = __webpack_require__(178);
+	var warning = __webpack_require__(11);
 
 	ReactDefaultInjection.inject();
 
@@ -4761,7 +4626,7 @@
 	}
 
 	if (process.env.NODE_ENV !== 'production') {
-	  var ExecutionEnvironment = __webpack_require__(58);
+	  var ExecutionEnvironment = __webpack_require__(52);
 	  if (ExecutionEnvironment.canUseDOM && window.top === window.self) {
 
 	    // First check if devtools is not installed
@@ -4797,10 +4662,10 @@
 	}
 
 	if (process.env.NODE_ENV !== 'production') {
-	  var ReactInstrumentation = __webpack_require__(72);
-	  var ReactDOMUnknownPropertyHook = __webpack_require__(186);
-	  var ReactDOMNullInputValuePropHook = __webpack_require__(187);
-	  var ReactDOMInvalidARIAHook = __webpack_require__(188);
+	  var ReactInstrumentation = __webpack_require__(66);
+	  var ReactDOMUnknownPropertyHook = __webpack_require__(179);
+	  var ReactDOMNullInputValuePropHook = __webpack_require__(180);
+	  var ReactDOMInvalidARIAHook = __webpack_require__(181);
 
 	  ReactInstrumentation.debugTool.addHook(ReactDOMUnknownPropertyHook);
 	  ReactInstrumentation.debugTool.addHook(ReactDOMNullInputValuePropHook);
@@ -4810,9 +4675,9 @@
 	module.exports = ReactDOM;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 41 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -4826,12 +4691,12 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var DOMProperty = __webpack_require__(43);
-	var ReactDOMComponentFlags = __webpack_require__(45);
+	var DOMProperty = __webpack_require__(40);
+	var ReactDOMComponentFlags = __webpack_require__(41);
 
-	var invariant = __webpack_require__(44);
+	var invariant = __webpack_require__(8);
 
 	var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
 	var Flags = ReactDOMComponentFlags;
@@ -5010,9 +4875,9 @@
 	module.exports = ReactDOMComponentTree;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 42 */
-/***/ function(module, exports) {
+/***/ }),
+/* 39 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -5053,9 +4918,9 @@
 
 	module.exports = reactProdInvariant;
 
-/***/ },
-/* 43 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5069,9 +4934,9 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var invariant = __webpack_require__(44);
+	var invariant = __webpack_require__(8);
 
 	function checkMask(value, bitmask) {
 	  return (value & bitmask) === bitmask;
@@ -5268,70 +5133,9 @@
 	module.exports = DOMProperty;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 44 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-
-	'use strict';
-
-	/**
-	 * Use invariant() to assert state which your program assumes to be true.
-	 *
-	 * Provide sprintf-style format (only %s is supported) and arguments
-	 * to provide information about what broke and what you were
-	 * expecting.
-	 *
-	 * The invariant message will be stripped in production, but the invariant
-	 * will remain to ensure logic does not differ in production.
-	 */
-
-	var validateFormat = function validateFormat(format) {};
-
-	if (process.env.NODE_ENV !== 'production') {
-	  validateFormat = function validateFormat(format) {
-	    if (format === undefined) {
-	      throw new Error('invariant requires an error message argument');
-	    }
-	  };
-	}
-
-	function invariant(condition, format, a, b, c, d, e, f) {
-	  validateFormat(format);
-
-	  if (!condition) {
-	    var error;
-	    if (format === undefined) {
-	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-	    } else {
-	      var args = [a, b, c, d, e, f];
-	      var argIndex = 0;
-	      error = new Error(format.replace(/%s/g, function () {
-	        return args[argIndex++];
-	      }));
-	      error.name = 'Invariant Violation';
-	    }
-
-	    error.framesToPop = 1; // we don't care about invariant's own frame
-	    throw error;
-	  }
-	}
-
-	module.exports = invariant;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 45 */
-/***/ function(module, exports) {
+/***/ }),
+/* 41 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -5351,9 +5155,9 @@
 
 	module.exports = ReactDOMComponentFlags;
 
-/***/ },
-/* 46 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5367,25 +5171,25 @@
 
 	'use strict';
 
-	var ARIADOMPropertyConfig = __webpack_require__(47);
-	var BeforeInputEventPlugin = __webpack_require__(48);
-	var ChangeEventPlugin = __webpack_require__(65);
-	var DefaultEventPluginOrder = __webpack_require__(82);
-	var EnterLeaveEventPlugin = __webpack_require__(83);
-	var HTMLDOMPropertyConfig = __webpack_require__(88);
-	var ReactComponentBrowserEnvironment = __webpack_require__(89);
-	var ReactDOMComponent = __webpack_require__(102);
-	var ReactDOMComponentTree = __webpack_require__(41);
-	var ReactDOMEmptyComponent = __webpack_require__(148);
-	var ReactDOMTreeTraversal = __webpack_require__(149);
-	var ReactDOMTextComponent = __webpack_require__(150);
-	var ReactDefaultBatchingStrategy = __webpack_require__(151);
-	var ReactEventListener = __webpack_require__(152);
-	var ReactInjection = __webpack_require__(155);
-	var ReactReconcileTransaction = __webpack_require__(156);
-	var SVGDOMPropertyConfig = __webpack_require__(164);
-	var SelectEventPlugin = __webpack_require__(165);
-	var SimpleEventPlugin = __webpack_require__(166);
+	var ARIADOMPropertyConfig = __webpack_require__(43);
+	var BeforeInputEventPlugin = __webpack_require__(44);
+	var ChangeEventPlugin = __webpack_require__(59);
+	var DefaultEventPluginOrder = __webpack_require__(76);
+	var EnterLeaveEventPlugin = __webpack_require__(77);
+	var HTMLDOMPropertyConfig = __webpack_require__(82);
+	var ReactComponentBrowserEnvironment = __webpack_require__(83);
+	var ReactDOMComponent = __webpack_require__(96);
+	var ReactDOMComponentTree = __webpack_require__(38);
+	var ReactDOMEmptyComponent = __webpack_require__(141);
+	var ReactDOMTreeTraversal = __webpack_require__(142);
+	var ReactDOMTextComponent = __webpack_require__(143);
+	var ReactDefaultBatchingStrategy = __webpack_require__(144);
+	var ReactEventListener = __webpack_require__(145);
+	var ReactInjection = __webpack_require__(148);
+	var ReactReconcileTransaction = __webpack_require__(149);
+	var SVGDOMPropertyConfig = __webpack_require__(157);
+	var SelectEventPlugin = __webpack_require__(158);
+	var SimpleEventPlugin = __webpack_require__(159);
 
 	var alreadyInjected = false;
 
@@ -5441,9 +5245,9 @@
 	  inject: inject
 	};
 
-/***/ },
-/* 47 */
-/***/ function(module, exports) {
+/***/ }),
+/* 43 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5519,9 +5323,9 @@
 
 	module.exports = ARIADOMPropertyConfig;
 
-/***/ },
-/* 48 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present Facebook, Inc.
@@ -5535,13 +5339,13 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var EventPropagators = __webpack_require__(49);
-	var ExecutionEnvironment = __webpack_require__(58);
-	var FallbackCompositionState = __webpack_require__(59);
-	var SyntheticCompositionEvent = __webpack_require__(62);
-	var SyntheticInputEvent = __webpack_require__(64);
+	var EventPropagators = __webpack_require__(45);
+	var ExecutionEnvironment = __webpack_require__(52);
+	var FallbackCompositionState = __webpack_require__(53);
+	var SyntheticCompositionEvent = __webpack_require__(56);
+	var SyntheticInputEvent = __webpack_require__(58);
 
 	var END_KEYCODES = [9, 13, 27, 32]; // Tab, Return, Esc, Space
 	var START_KEYCODE = 229;
@@ -5910,9 +5714,9 @@
 
 	module.exports = BeforeInputEventPlugin;
 
-/***/ },
-/* 49 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5926,12 +5730,12 @@
 
 	'use strict';
 
-	var EventPluginHub = __webpack_require__(50);
-	var EventPluginUtils = __webpack_require__(52);
+	var EventPluginHub = __webpack_require__(46);
+	var EventPluginUtils = __webpack_require__(48);
 
-	var accumulateInto = __webpack_require__(56);
-	var forEachAccumulated = __webpack_require__(57);
-	var warning = __webpack_require__(54);
+	var accumulateInto = __webpack_require__(50);
+	var forEachAccumulated = __webpack_require__(51);
+	var warning = __webpack_require__(11);
 
 	var getListener = EventPluginHub.getListener;
 
@@ -6049,9 +5853,9 @@
 	module.exports = EventPropagators;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 50 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6065,17 +5869,17 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var EventPluginRegistry = __webpack_require__(51);
-	var EventPluginUtils = __webpack_require__(52);
-	var ReactErrorUtils = __webpack_require__(53);
+	var EventPluginRegistry = __webpack_require__(47);
+	var EventPluginUtils = __webpack_require__(48);
+	var ReactErrorUtils = __webpack_require__(49);
 
-	var accumulateInto = __webpack_require__(56);
-	var forEachAccumulated = __webpack_require__(57);
-	var invariant = __webpack_require__(44);
+	var accumulateInto = __webpack_require__(50);
+	var forEachAccumulated = __webpack_require__(51);
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Internal store for event listeners
@@ -6334,9 +6138,9 @@
 	module.exports = EventPluginHub;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 51 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6351,9 +6155,9 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var invariant = __webpack_require__(44);
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Injectable ordering of event plugins.
@@ -6594,9 +6398,9 @@
 	module.exports = EventPluginRegistry;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 52 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6610,12 +6414,12 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var ReactErrorUtils = __webpack_require__(53);
+	var ReactErrorUtils = __webpack_require__(49);
 
-	var invariant = __webpack_require__(44);
-	var warning = __webpack_require__(54);
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	/**
 	 * Injected dependencies:
@@ -6825,9 +6629,9 @@
 	module.exports = EventPluginUtils;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 53 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6906,124 +6710,9 @@
 	module.exports = ReactErrorUtils;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 54 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2014-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-
-	'use strict';
-
-	var emptyFunction = __webpack_require__(55);
-
-	/**
-	 * Similar to invariant but only logs a warning if the condition is not met.
-	 * This can be used to log issues in development environments in critical
-	 * paths. Removing the logging code for production environments will keep the
-	 * same logic and follow the same code paths.
-	 */
-
-	var warning = emptyFunction;
-
-	if (process.env.NODE_ENV !== 'production') {
-	  (function () {
-	    var printWarning = function printWarning(format) {
-	      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	        args[_key - 1] = arguments[_key];
-	      }
-
-	      var argIndex = 0;
-	      var message = 'Warning: ' + format.replace(/%s/g, function () {
-	        return args[argIndex++];
-	      });
-	      if (typeof console !== 'undefined') {
-	        console.error(message);
-	      }
-	      try {
-	        // --- Welcome to debugging React ---
-	        // This error was thrown as a convenience so that you can use this stack
-	        // to find the callsite that caused this warning to fire.
-	        throw new Error(message);
-	      } catch (x) {}
-	    };
-
-	    warning = function warning(condition, format) {
-	      if (format === undefined) {
-	        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-	      }
-
-	      if (format.indexOf('Failed Composite propType: ') === 0) {
-	        return; // Ignore CompositeComponent proptype check.
-	      }
-
-	      if (!condition) {
-	        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-	          args[_key2 - 2] = arguments[_key2];
-	        }
-
-	        printWarning.apply(undefined, [format].concat(args));
-	      }
-	    };
-	  })();
-	}
-
-	module.exports = warning;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 55 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * 
-	 */
-
-	function makeEmptyFunction(arg) {
-	  return function () {
-	    return arg;
-	  };
-	}
-
-	/**
-	 * This function accepts and discards inputs; it has no side effects. This is
-	 * primarily useful idiomatically for overridable function endpoints which
-	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
-	 */
-	var emptyFunction = function emptyFunction() {};
-
-	emptyFunction.thatReturns = makeEmptyFunction;
-	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-	emptyFunction.thatReturnsThis = function () {
-	  return this;
-	};
-	emptyFunction.thatReturnsArgument = function (arg) {
-	  return arg;
-	};
-
-	module.exports = emptyFunction;
-
-/***/ },
-/* 56 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -7038,9 +6727,9 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var invariant = __webpack_require__(44);
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Accumulates items that must not be null or undefined into the first one. This
@@ -7084,9 +6773,9 @@
 	module.exports = accumulateInto;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 57 */
-/***/ function(module, exports) {
+/***/ }),
+/* 51 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7119,9 +6808,9 @@
 
 	module.exports = forEachAccumulated;
 
-/***/ },
-/* 58 */
-/***/ function(module, exports) {
+/***/ }),
+/* 52 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -7159,9 +6848,9 @@
 
 	module.exports = ExecutionEnvironment;
 
-/***/ },
-/* 59 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7177,9 +6866,9 @@
 
 	var _assign = __webpack_require__(4);
 
-	var PooledClass = __webpack_require__(60);
+	var PooledClass = __webpack_require__(54);
 
-	var getTextContentAccessor = __webpack_require__(61);
+	var getTextContentAccessor = __webpack_require__(55);
 
 	/**
 	 * This helper class stores information about text content of a target node,
@@ -7258,9 +6947,9 @@
 
 	module.exports = FallbackCompositionState;
 
-/***/ },
-/* 60 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7275,9 +6964,9 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var invariant = __webpack_require__(44);
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Static poolers. Several custom versions for each potential number of
@@ -7375,9 +7064,9 @@
 	module.exports = PooledClass;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 61 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7391,7 +7080,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(58);
+	var ExecutionEnvironment = __webpack_require__(52);
 
 	var contentKey = null;
 
@@ -7412,9 +7101,9 @@
 
 	module.exports = getTextContentAccessor;
 
-/***/ },
-/* 62 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7428,7 +7117,7 @@
 
 	'use strict';
 
-	var SyntheticEvent = __webpack_require__(63);
+	var SyntheticEvent = __webpack_require__(57);
 
 	/**
 	 * @interface Event
@@ -7452,9 +7141,9 @@
 
 	module.exports = SyntheticCompositionEvent;
 
-/***/ },
-/* 63 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7470,10 +7159,10 @@
 
 	var _assign = __webpack_require__(4);
 
-	var PooledClass = __webpack_require__(60);
+	var PooledClass = __webpack_require__(54);
 
-	var emptyFunction = __webpack_require__(55);
-	var warning = __webpack_require__(54);
+	var emptyFunction = __webpack_require__(12);
+	var warning = __webpack_require__(11);
 
 	var didWarnForAddedNewProperty = false;
 	var isProxySupported = typeof Proxy === 'function';
@@ -7725,9 +7414,9 @@
 	}
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 64 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7741,7 +7430,7 @@
 
 	'use strict';
 
-	var SyntheticEvent = __webpack_require__(63);
+	var SyntheticEvent = __webpack_require__(57);
 
 	/**
 	 * @interface Event
@@ -7766,9 +7455,9 @@
 
 	module.exports = SyntheticInputEvent;
 
-/***/ },
-/* 65 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7782,16 +7471,16 @@
 
 	'use strict';
 
-	var EventPluginHub = __webpack_require__(50);
-	var EventPropagators = __webpack_require__(49);
-	var ExecutionEnvironment = __webpack_require__(58);
-	var ReactDOMComponentTree = __webpack_require__(41);
-	var ReactUpdates = __webpack_require__(66);
-	var SyntheticEvent = __webpack_require__(63);
+	var EventPluginHub = __webpack_require__(46);
+	var EventPropagators = __webpack_require__(45);
+	var ExecutionEnvironment = __webpack_require__(52);
+	var ReactDOMComponentTree = __webpack_require__(38);
+	var ReactUpdates = __webpack_require__(60);
+	var SyntheticEvent = __webpack_require__(57);
 
-	var getEventTarget = __webpack_require__(79);
-	var isEventSupported = __webpack_require__(80);
-	var isTextInputElement = __webpack_require__(81);
+	var getEventTarget = __webpack_require__(73);
+	var isEventSupported = __webpack_require__(74);
+	var isTextInputElement = __webpack_require__(75);
 
 	var eventTypes = {
 	  change: {
@@ -8116,9 +7805,9 @@
 
 	module.exports = ChangeEventPlugin;
 
-/***/ },
-/* 66 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8132,16 +7821,16 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42),
+	var _prodInvariant = __webpack_require__(39),
 	    _assign = __webpack_require__(4);
 
-	var CallbackQueue = __webpack_require__(67);
-	var PooledClass = __webpack_require__(60);
-	var ReactFeatureFlags = __webpack_require__(68);
-	var ReactReconciler = __webpack_require__(69);
-	var Transaction = __webpack_require__(78);
+	var CallbackQueue = __webpack_require__(61);
+	var PooledClass = __webpack_require__(54);
+	var ReactFeatureFlags = __webpack_require__(62);
+	var ReactReconciler = __webpack_require__(63);
+	var Transaction = __webpack_require__(72);
 
-	var invariant = __webpack_require__(44);
+	var invariant = __webpack_require__(8);
 
 	var dirtyComponents = [];
 	var updateBatchNumber = 0;
@@ -8372,9 +8061,9 @@
 	module.exports = ReactUpdates;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 67 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8389,7 +8078,7 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
 	function _classCallCheck(instance, Constructor) {
 	  if (!(instance instanceof Constructor)) {
@@ -8397,9 +8086,9 @@
 	  }
 	}
 
-	var PooledClass = __webpack_require__(60);
+	var PooledClass = __webpack_require__(54);
 
-	var invariant = __webpack_require__(44);
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * A specialized pseudo-event module to help keep track of components waiting to
@@ -8496,9 +8185,9 @@
 	module.exports = PooledClass.addPoolingTo(CallbackQueue);
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 68 */
-/***/ function(module, exports) {
+/***/ }),
+/* 62 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8522,9 +8211,9 @@
 
 	module.exports = ReactFeatureFlags;
 
-/***/ },
-/* 69 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8538,10 +8227,10 @@
 
 	'use strict';
 
-	var ReactRef = __webpack_require__(70);
-	var ReactInstrumentation = __webpack_require__(72);
+	var ReactRef = __webpack_require__(64);
+	var ReactInstrumentation = __webpack_require__(66);
 
-	var warning = __webpack_require__(54);
+	var warning = __webpack_require__(11);
 
 	/**
 	 * Helper to call ReactRef.attachRefs with this composite component, split out
@@ -8695,9 +8384,9 @@
 	module.exports = ReactReconciler;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 70 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8712,9 +8401,9 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var ReactOwner = __webpack_require__(71);
+	var ReactOwner = __webpack_require__(65);
 
 	var ReactRef = {};
 
@@ -8790,9 +8479,9 @@
 
 	module.exports = ReactRef;
 
-/***/ },
-/* 71 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8807,9 +8496,9 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var invariant = __webpack_require__(44);
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * @param {?object} object
@@ -8889,9 +8578,9 @@
 	module.exports = ReactOwner;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 72 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2016-present, Facebook, Inc.
@@ -8911,16 +8600,16 @@
 	var debugTool = null;
 
 	if (process.env.NODE_ENV !== 'production') {
-	  var ReactDebugTool = __webpack_require__(73);
+	  var ReactDebugTool = __webpack_require__(67);
 	  debugTool = ReactDebugTool;
 	}
 
 	module.exports = { debugTool: debugTool };
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 73 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2016-present, Facebook, Inc.
@@ -8935,15 +8624,15 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var ReactInvalidSetStateWarningHook = __webpack_require__(74);
-	var ReactHostOperationHistoryHook = __webpack_require__(75);
+	var ReactInvalidSetStateWarningHook = __webpack_require__(68);
+	var ReactHostOperationHistoryHook = __webpack_require__(69);
 	var ReactComponentTreeHook = __webpack_require__(26);
-	var ExecutionEnvironment = __webpack_require__(58);
+	var ExecutionEnvironment = __webpack_require__(52);
 
-	var performanceNow = __webpack_require__(76);
-	var warning = __webpack_require__(54);
+	var performanceNow = __webpack_require__(70);
+	var warning = __webpack_require__(11);
 
 	var hooks = [];
 	var didHookThrowForEvent = {};
@@ -9284,9 +8973,9 @@
 	module.exports = ReactDebugTool;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 74 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2016-present, Facebook, Inc.
@@ -9301,7 +8990,7 @@
 
 	'use strict';
 
-	var warning = __webpack_require__(54);
+	var warning = __webpack_require__(11);
 
 	if (process.env.NODE_ENV !== 'production') {
 	  var processingChildContext = false;
@@ -9326,9 +9015,9 @@
 	module.exports = ReactInvalidSetStateWarningHook;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 75 */
-/***/ function(module, exports) {
+/***/ }),
+/* 69 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2016-present, Facebook, Inc.
@@ -9364,9 +9053,9 @@
 
 	module.exports = ReactHostOperationHistoryHook;
 
-/***/ },
-/* 76 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -9381,7 +9070,7 @@
 	 * @typechecks
 	 */
 
-	var performance = __webpack_require__(77);
+	var performance = __webpack_require__(71);
 
 	var performanceNow;
 
@@ -9402,9 +9091,9 @@
 
 	module.exports = performanceNow;
 
-/***/ },
-/* 77 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -9419,7 +9108,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(58);
+	var ExecutionEnvironment = __webpack_require__(52);
 
 	var performance;
 
@@ -9429,9 +9118,9 @@
 
 	module.exports = performance || {};
 
-/***/ },
-/* 78 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -9446,9 +9135,9 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var invariant = __webpack_require__(44);
+	var invariant = __webpack_require__(8);
 
 	var OBSERVED_ERROR = {};
 
@@ -9659,9 +9348,9 @@
 	module.exports = TransactionImpl;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 79 */
-/***/ function(module, exports) {
+/***/ }),
+/* 73 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -9698,9 +9387,9 @@
 
 	module.exports = getEventTarget;
 
-/***/ },
-/* 80 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -9714,7 +9403,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(58);
+	var ExecutionEnvironment = __webpack_require__(52);
 
 	var useHasFeature;
 	if (ExecutionEnvironment.canUseDOM) {
@@ -9762,9 +9451,9 @@
 
 	module.exports = isEventSupported;
 
-/***/ },
-/* 81 */
-/***/ function(module, exports) {
+/***/ }),
+/* 75 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -9817,9 +9506,9 @@
 
 	module.exports = isTextInputElement;
 
-/***/ },
-/* 82 */
-/***/ function(module, exports) {
+/***/ }),
+/* 76 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -9847,9 +9536,9 @@
 
 	module.exports = DefaultEventPluginOrder;
 
-/***/ },
-/* 83 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -9863,9 +9552,9 @@
 
 	'use strict';
 
-	var EventPropagators = __webpack_require__(49);
-	var ReactDOMComponentTree = __webpack_require__(41);
-	var SyntheticMouseEvent = __webpack_require__(84);
+	var EventPropagators = __webpack_require__(45);
+	var ReactDOMComponentTree = __webpack_require__(38);
+	var SyntheticMouseEvent = __webpack_require__(78);
 
 	var eventTypes = {
 	  mouseEnter: {
@@ -9951,9 +9640,9 @@
 
 	module.exports = EnterLeaveEventPlugin;
 
-/***/ },
-/* 84 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -9967,10 +9656,10 @@
 
 	'use strict';
 
-	var SyntheticUIEvent = __webpack_require__(85);
-	var ViewportMetrics = __webpack_require__(86);
+	var SyntheticUIEvent = __webpack_require__(79);
+	var ViewportMetrics = __webpack_require__(80);
 
-	var getEventModifierState = __webpack_require__(87);
+	var getEventModifierState = __webpack_require__(81);
 
 	/**
 	 * @interface MouseEvent
@@ -10027,9 +9716,9 @@
 
 	module.exports = SyntheticMouseEvent;
 
-/***/ },
-/* 85 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10043,9 +9732,9 @@
 
 	'use strict';
 
-	var SyntheticEvent = __webpack_require__(63);
+	var SyntheticEvent = __webpack_require__(57);
 
-	var getEventTarget = __webpack_require__(79);
+	var getEventTarget = __webpack_require__(73);
 
 	/**
 	 * @interface UIEvent
@@ -10090,9 +9779,9 @@
 
 	module.exports = SyntheticUIEvent;
 
-/***/ },
-/* 86 */
-/***/ function(module, exports) {
+/***/ }),
+/* 80 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10121,9 +9810,9 @@
 
 	module.exports = ViewportMetrics;
 
-/***/ },
-/* 87 */
-/***/ function(module, exports) {
+/***/ }),
+/* 81 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10168,9 +9857,9 @@
 
 	module.exports = getEventModifierState;
 
-/***/ },
-/* 88 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10184,7 +9873,7 @@
 
 	'use strict';
 
-	var DOMProperty = __webpack_require__(43);
+	var DOMProperty = __webpack_require__(40);
 
 	var MUST_USE_PROPERTY = DOMProperty.injection.MUST_USE_PROPERTY;
 	var HAS_BOOLEAN_VALUE = DOMProperty.injection.HAS_BOOLEAN_VALUE;
@@ -10408,9 +10097,9 @@
 
 	module.exports = HTMLDOMPropertyConfig;
 
-/***/ },
-/* 89 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10424,8 +10113,8 @@
 
 	'use strict';
 
-	var DOMChildrenOperations = __webpack_require__(90);
-	var ReactDOMIDOperations = __webpack_require__(101);
+	var DOMChildrenOperations = __webpack_require__(84);
+	var ReactDOMIDOperations = __webpack_require__(95);
 
 	/**
 	 * Abstracts away all functionality of the reconciler that requires knowledge of
@@ -10442,9 +10131,9 @@
 
 	module.exports = ReactComponentBrowserEnvironment;
 
-/***/ },
-/* 90 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10458,14 +10147,14 @@
 
 	'use strict';
 
-	var DOMLazyTree = __webpack_require__(91);
-	var Danger = __webpack_require__(97);
-	var ReactDOMComponentTree = __webpack_require__(41);
-	var ReactInstrumentation = __webpack_require__(72);
+	var DOMLazyTree = __webpack_require__(85);
+	var Danger = __webpack_require__(91);
+	var ReactDOMComponentTree = __webpack_require__(38);
+	var ReactInstrumentation = __webpack_require__(66);
 
-	var createMicrosoftUnsafeLocalFunction = __webpack_require__(94);
-	var setInnerHTML = __webpack_require__(93);
-	var setTextContent = __webpack_require__(95);
+	var createMicrosoftUnsafeLocalFunction = __webpack_require__(88);
+	var setInnerHTML = __webpack_require__(87);
+	var setTextContent = __webpack_require__(89);
 
 	function getNodeAfter(parentNode, node) {
 	  // Special case for text components, which return [open, close] comments
@@ -10672,9 +10361,9 @@
 	module.exports = DOMChildrenOperations;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 91 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -10688,11 +10377,11 @@
 
 	'use strict';
 
-	var DOMNamespaces = __webpack_require__(92);
-	var setInnerHTML = __webpack_require__(93);
+	var DOMNamespaces = __webpack_require__(86);
+	var setInnerHTML = __webpack_require__(87);
 
-	var createMicrosoftUnsafeLocalFunction = __webpack_require__(94);
-	var setTextContent = __webpack_require__(95);
+	var createMicrosoftUnsafeLocalFunction = __webpack_require__(88);
+	var setTextContent = __webpack_require__(89);
 
 	var ELEMENT_NODE_TYPE = 1;
 	var DOCUMENT_FRAGMENT_NODE_TYPE = 11;
@@ -10794,9 +10483,9 @@
 
 	module.exports = DOMLazyTree;
 
-/***/ },
-/* 92 */
-/***/ function(module, exports) {
+/***/ }),
+/* 86 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10818,9 +10507,9 @@
 
 	module.exports = DOMNamespaces;
 
-/***/ },
-/* 93 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10834,13 +10523,13 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(58);
-	var DOMNamespaces = __webpack_require__(92);
+	var ExecutionEnvironment = __webpack_require__(52);
+	var DOMNamespaces = __webpack_require__(86);
 
 	var WHITESPACE_TEST = /^[ \r\n\t\f]/;
 	var NONVISIBLE_TEST = /<(!--|link|noscript|meta|script|style)[ \r\n\t\f\/>]/;
 
-	var createMicrosoftUnsafeLocalFunction = __webpack_require__(94);
+	var createMicrosoftUnsafeLocalFunction = __webpack_require__(88);
 
 	// SVG temp container for IE lacking innerHTML
 	var reusableSVGContainer;
@@ -10920,9 +10609,9 @@
 
 	module.exports = setInnerHTML;
 
-/***/ },
-/* 94 */
-/***/ function(module, exports) {
+/***/ }),
+/* 88 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10956,9 +10645,9 @@
 
 	module.exports = createMicrosoftUnsafeLocalFunction;
 
-/***/ },
-/* 95 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10972,9 +10661,9 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(58);
-	var escapeTextContentForBrowser = __webpack_require__(96);
-	var setInnerHTML = __webpack_require__(93);
+	var ExecutionEnvironment = __webpack_require__(52);
+	var escapeTextContentForBrowser = __webpack_require__(90);
+	var setInnerHTML = __webpack_require__(87);
 
 	/**
 	 * Set the textContent property of a node, ensuring that whitespace is preserved
@@ -11012,9 +10701,9 @@
 
 	module.exports = setTextContent;
 
-/***/ },
-/* 96 */
-/***/ function(module, exports) {
+/***/ }),
+/* 90 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2016-present, Facebook, Inc.
@@ -11139,9 +10828,9 @@
 
 	module.exports = escapeTextContentForBrowser;
 
-/***/ },
-/* 97 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -11155,14 +10844,14 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var DOMLazyTree = __webpack_require__(91);
-	var ExecutionEnvironment = __webpack_require__(58);
+	var DOMLazyTree = __webpack_require__(85);
+	var ExecutionEnvironment = __webpack_require__(52);
 
-	var createNodesFromMarkup = __webpack_require__(98);
-	var emptyFunction = __webpack_require__(55);
-	var invariant = __webpack_require__(44);
+	var createNodesFromMarkup = __webpack_require__(92);
+	var emptyFunction = __webpack_require__(12);
+	var invariant = __webpack_require__(8);
 
 	var Danger = {
 
@@ -11192,9 +10881,9 @@
 	module.exports = Danger;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 98 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -11211,11 +10900,11 @@
 
 	/*eslint-disable fb-www/unsafe-html*/
 
-	var ExecutionEnvironment = __webpack_require__(58);
+	var ExecutionEnvironment = __webpack_require__(52);
 
-	var createArrayFromMixed = __webpack_require__(99);
-	var getMarkupWrap = __webpack_require__(100);
-	var invariant = __webpack_require__(44);
+	var createArrayFromMixed = __webpack_require__(93);
+	var getMarkupWrap = __webpack_require__(94);
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Dummy container used to render all markup.
@@ -11281,9 +10970,9 @@
 	module.exports = createNodesFromMarkup;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 99 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -11298,9 +10987,9 @@
 	 * @typechecks
 	 */
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var invariant = __webpack_require__(44);
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Convert array-like objects to arrays.
@@ -11415,9 +11104,9 @@
 	module.exports = createArrayFromMixed;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 100 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -11433,9 +11122,9 @@
 
 	/*eslint-disable fb-www/unsafe-html */
 
-	var ExecutionEnvironment = __webpack_require__(58);
+	var ExecutionEnvironment = __webpack_require__(52);
 
-	var invariant = __webpack_require__(44);
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Dummy container used to detect which wraps are necessary.
@@ -11515,9 +11204,9 @@
 	module.exports = getMarkupWrap;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 101 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -11531,8 +11220,8 @@
 
 	'use strict';
 
-	var DOMChildrenOperations = __webpack_require__(90);
-	var ReactDOMComponentTree = __webpack_require__(41);
+	var DOMChildrenOperations = __webpack_require__(84);
+	var ReactDOMComponentTree = __webpack_require__(38);
 
 	/**
 	 * Operations used to process updates to DOM nodes.
@@ -11553,9 +11242,9 @@
 
 	module.exports = ReactDOMIDOperations;
 
-/***/ },
-/* 102 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 96 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -11571,37 +11260,37 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _prodInvariant = __webpack_require__(42),
+	var _prodInvariant = __webpack_require__(39),
 	    _assign = __webpack_require__(4);
 
-	var AutoFocusUtils = __webpack_require__(103);
-	var CSSPropertyOperations = __webpack_require__(105);
-	var DOMLazyTree = __webpack_require__(91);
-	var DOMNamespaces = __webpack_require__(92);
-	var DOMProperty = __webpack_require__(43);
-	var DOMPropertyOperations = __webpack_require__(113);
-	var EventPluginHub = __webpack_require__(50);
-	var EventPluginRegistry = __webpack_require__(51);
-	var ReactBrowserEventEmitter = __webpack_require__(115);
-	var ReactDOMComponentFlags = __webpack_require__(45);
-	var ReactDOMComponentTree = __webpack_require__(41);
-	var ReactDOMInput = __webpack_require__(118);
-	var ReactDOMOption = __webpack_require__(121);
-	var ReactDOMSelect = __webpack_require__(122);
-	var ReactDOMTextarea = __webpack_require__(123);
-	var ReactInstrumentation = __webpack_require__(72);
-	var ReactMultiChild = __webpack_require__(124);
-	var ReactServerRenderingTransaction = __webpack_require__(144);
+	var AutoFocusUtils = __webpack_require__(97);
+	var CSSPropertyOperations = __webpack_require__(99);
+	var DOMLazyTree = __webpack_require__(85);
+	var DOMNamespaces = __webpack_require__(86);
+	var DOMProperty = __webpack_require__(40);
+	var DOMPropertyOperations = __webpack_require__(107);
+	var EventPluginHub = __webpack_require__(46);
+	var EventPluginRegistry = __webpack_require__(47);
+	var ReactBrowserEventEmitter = __webpack_require__(109);
+	var ReactDOMComponentFlags = __webpack_require__(41);
+	var ReactDOMComponentTree = __webpack_require__(38);
+	var ReactDOMInput = __webpack_require__(112);
+	var ReactDOMOption = __webpack_require__(115);
+	var ReactDOMSelect = __webpack_require__(116);
+	var ReactDOMTextarea = __webpack_require__(117);
+	var ReactInstrumentation = __webpack_require__(66);
+	var ReactMultiChild = __webpack_require__(118);
+	var ReactServerRenderingTransaction = __webpack_require__(137);
 
-	var emptyFunction = __webpack_require__(55);
-	var escapeTextContentForBrowser = __webpack_require__(96);
-	var invariant = __webpack_require__(44);
-	var isEventSupported = __webpack_require__(80);
-	var shallowEqual = __webpack_require__(134);
-	var validateDOMNesting = __webpack_require__(147);
-	var warning = __webpack_require__(54);
+	var emptyFunction = __webpack_require__(12);
+	var escapeTextContentForBrowser = __webpack_require__(90);
+	var invariant = __webpack_require__(8);
+	var isEventSupported = __webpack_require__(74);
+	var shallowEqual = __webpack_require__(127);
+	var validateDOMNesting = __webpack_require__(140);
+	var warning = __webpack_require__(11);
 
 	var Flags = ReactDOMComponentFlags;
 	var deleteListener = EventPluginHub.deleteListener;
@@ -12561,9 +12250,9 @@
 	module.exports = ReactDOMComponent;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 103 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12577,9 +12266,9 @@
 
 	'use strict';
 
-	var ReactDOMComponentTree = __webpack_require__(41);
+	var ReactDOMComponentTree = __webpack_require__(38);
 
-	var focusNode = __webpack_require__(104);
+	var focusNode = __webpack_require__(98);
 
 	var AutoFocusUtils = {
 	  focusDOMComponent: function focusDOMComponent() {
@@ -12589,9 +12278,9 @@
 
 	module.exports = AutoFocusUtils;
 
-/***/ },
-/* 104 */
-/***/ function(module, exports) {
+/***/ }),
+/* 98 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -12620,9 +12309,9 @@
 
 	module.exports = focusNode;
 
-/***/ },
-/* 105 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 99 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12636,15 +12325,15 @@
 
 	'use strict';
 
-	var CSSProperty = __webpack_require__(106);
-	var ExecutionEnvironment = __webpack_require__(58);
-	var ReactInstrumentation = __webpack_require__(72);
+	var CSSProperty = __webpack_require__(100);
+	var ExecutionEnvironment = __webpack_require__(52);
+	var ReactInstrumentation = __webpack_require__(66);
 
-	var camelizeStyleName = __webpack_require__(107);
-	var dangerousStyleValue = __webpack_require__(109);
-	var hyphenateStyleName = __webpack_require__(110);
-	var memoizeStringOnly = __webpack_require__(112);
-	var warning = __webpack_require__(54);
+	var camelizeStyleName = __webpack_require__(101);
+	var dangerousStyleValue = __webpack_require__(103);
+	var hyphenateStyleName = __webpack_require__(104);
+	var memoizeStringOnly = __webpack_require__(106);
+	var warning = __webpack_require__(11);
 
 	var processStyleName = memoizeStringOnly(function (styleName) {
 	  return hyphenateStyleName(styleName);
@@ -12834,9 +12523,9 @@
 	module.exports = CSSPropertyOperations;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 106 */
-/***/ function(module, exports) {
+/***/ }),
+/* 100 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12986,9 +12675,9 @@
 
 	module.exports = CSSProperty;
 
-/***/ },
-/* 107 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 101 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -13003,7 +12692,7 @@
 
 	'use strict';
 
-	var camelize = __webpack_require__(108);
+	var camelize = __webpack_require__(102);
 
 	var msPattern = /^-ms-/;
 
@@ -13030,9 +12719,9 @@
 
 	module.exports = camelizeStyleName;
 
-/***/ },
-/* 108 */
-/***/ function(module, exports) {
+/***/ }),
+/* 102 */
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -13066,9 +12755,9 @@
 
 	module.exports = camelize;
 
-/***/ },
-/* 109 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -13082,8 +12771,8 @@
 
 	'use strict';
 
-	var CSSProperty = __webpack_require__(106);
-	var warning = __webpack_require__(54);
+	var CSSProperty = __webpack_require__(100);
+	var warning = __webpack_require__(11);
 
 	var isUnitlessNumber = CSSProperty.isUnitlessNumber;
 	var styleWarnings = {};
@@ -13150,9 +12839,9 @@
 	module.exports = dangerousStyleValue;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 110 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -13167,7 +12856,7 @@
 
 	'use strict';
 
-	var hyphenate = __webpack_require__(111);
+	var hyphenate = __webpack_require__(105);
 
 	var msPattern = /^ms-/;
 
@@ -13193,9 +12882,9 @@
 
 	module.exports = hyphenateStyleName;
 
-/***/ },
-/* 111 */
-/***/ function(module, exports) {
+/***/ }),
+/* 105 */
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -13230,9 +12919,9 @@
 
 	module.exports = hyphenate;
 
-/***/ },
-/* 112 */
-/***/ function(module, exports) {
+/***/ }),
+/* 106 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -13264,9 +12953,9 @@
 
 	module.exports = memoizeStringOnly;
 
-/***/ },
-/* 113 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 107 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -13280,12 +12969,12 @@
 
 	'use strict';
 
-	var DOMProperty = __webpack_require__(43);
-	var ReactDOMComponentTree = __webpack_require__(41);
-	var ReactInstrumentation = __webpack_require__(72);
+	var DOMProperty = __webpack_require__(40);
+	var ReactDOMComponentTree = __webpack_require__(38);
+	var ReactInstrumentation = __webpack_require__(66);
 
-	var quoteAttributeValueForBrowser = __webpack_require__(114);
-	var warning = __webpack_require__(54);
+	var quoteAttributeValueForBrowser = __webpack_require__(108);
+	var warning = __webpack_require__(11);
 
 	var VALID_ATTRIBUTE_NAME_REGEX = new RegExp('^[' + DOMProperty.ATTRIBUTE_NAME_START_CHAR + '][' + DOMProperty.ATTRIBUTE_NAME_CHAR + ']*$');
 	var illegalAttributeNameCache = {};
@@ -13506,9 +13195,9 @@
 	module.exports = DOMPropertyOperations;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 114 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 108 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -13522,7 +13211,7 @@
 
 	'use strict';
 
-	var escapeTextContentForBrowser = __webpack_require__(96);
+	var escapeTextContentForBrowser = __webpack_require__(90);
 
 	/**
 	 * Escapes attribute value to prevent scripting attacks.
@@ -13536,9 +13225,9 @@
 
 	module.exports = quoteAttributeValueForBrowser;
 
-/***/ },
-/* 115 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 109 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -13554,12 +13243,12 @@
 
 	var _assign = __webpack_require__(4);
 
-	var EventPluginRegistry = __webpack_require__(51);
-	var ReactEventEmitterMixin = __webpack_require__(116);
-	var ViewportMetrics = __webpack_require__(86);
+	var EventPluginRegistry = __webpack_require__(47);
+	var ReactEventEmitterMixin = __webpack_require__(110);
+	var ViewportMetrics = __webpack_require__(80);
 
-	var getVendorPrefixedEventName = __webpack_require__(117);
-	var isEventSupported = __webpack_require__(80);
+	var getVendorPrefixedEventName = __webpack_require__(111);
+	var isEventSupported = __webpack_require__(74);
 
 	/**
 	 * Summary of `ReactBrowserEventEmitter` event handling:
@@ -13868,9 +13557,9 @@
 
 	module.exports = ReactBrowserEventEmitter;
 
-/***/ },
-/* 116 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -13884,7 +13573,7 @@
 
 	'use strict';
 
-	var EventPluginHub = __webpack_require__(50);
+	var EventPluginHub = __webpack_require__(46);
 
 	function runEventQueueInBatch(events) {
 	  EventPluginHub.enqueueEvents(events);
@@ -13905,9 +13594,9 @@
 
 	module.exports = ReactEventEmitterMixin;
 
-/***/ },
-/* 117 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 111 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -13921,7 +13610,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(58);
+	var ExecutionEnvironment = __webpack_require__(52);
 
 	/**
 	 * Generate a mapping of standard vendor prefixes using the defined style property and event name.
@@ -14010,9 +13699,9 @@
 
 	module.exports = getVendorPrefixedEventName;
 
-/***/ },
-/* 118 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 112 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -14026,16 +13715,16 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42),
+	var _prodInvariant = __webpack_require__(39),
 	    _assign = __webpack_require__(4);
 
-	var DOMPropertyOperations = __webpack_require__(113);
-	var LinkedValueUtils = __webpack_require__(119);
-	var ReactDOMComponentTree = __webpack_require__(41);
-	var ReactUpdates = __webpack_require__(66);
+	var DOMPropertyOperations = __webpack_require__(107);
+	var LinkedValueUtils = __webpack_require__(113);
+	var ReactDOMComponentTree = __webpack_require__(38);
+	var ReactUpdates = __webpack_require__(60);
 
-	var invariant = __webpack_require__(44);
-	var warning = __webpack_require__(54);
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	var didWarnValueLink = false;
 	var didWarnCheckedLink = false;
@@ -14300,9 +13989,9 @@
 	module.exports = ReactDOMInput;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 119 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 113 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -14316,16 +14005,16 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var ReactPropTypesSecret = __webpack_require__(120);
+	var ReactPropTypesSecret = __webpack_require__(114);
 	var propTypesFactory = __webpack_require__(30);
 
 	var React = __webpack_require__(2);
 	var PropTypes = propTypesFactory(React.isValidElement);
 
-	var invariant = __webpack_require__(44);
-	var warning = __webpack_require__(54);
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	var hasReadOnlyValue = {
 	  'button': true,
@@ -14443,9 +14132,9 @@
 	module.exports = LinkedValueUtils;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 120 */
-/***/ function(module, exports) {
+/***/ }),
+/* 114 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -14464,9 +14153,9 @@
 
 	module.exports = ReactPropTypesSecret;
 
-/***/ },
-/* 121 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 115 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -14483,10 +14172,10 @@
 	var _assign = __webpack_require__(4);
 
 	var React = __webpack_require__(2);
-	var ReactDOMComponentTree = __webpack_require__(41);
-	var ReactDOMSelect = __webpack_require__(122);
+	var ReactDOMComponentTree = __webpack_require__(38);
+	var ReactDOMSelect = __webpack_require__(116);
 
-	var warning = __webpack_require__(54);
+	var warning = __webpack_require__(11);
 	var didWarnInvalidOptionChildren = false;
 
 	function flattenChildren(children) {
@@ -14592,9 +14281,9 @@
 	module.exports = ReactDOMOption;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 122 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 116 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -14610,11 +14299,11 @@
 
 	var _assign = __webpack_require__(4);
 
-	var LinkedValueUtils = __webpack_require__(119);
-	var ReactDOMComponentTree = __webpack_require__(41);
-	var ReactUpdates = __webpack_require__(66);
+	var LinkedValueUtils = __webpack_require__(113);
+	var ReactDOMComponentTree = __webpack_require__(38);
+	var ReactUpdates = __webpack_require__(60);
 
-	var warning = __webpack_require__(54);
+	var warning = __webpack_require__(11);
 
 	var didWarnValueLink = false;
 	var didWarnValueDefaultValue = false;
@@ -14797,9 +14486,9 @@
 	module.exports = ReactDOMSelect;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 123 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -14813,15 +14502,15 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42),
+	var _prodInvariant = __webpack_require__(39),
 	    _assign = __webpack_require__(4);
 
-	var LinkedValueUtils = __webpack_require__(119);
-	var ReactDOMComponentTree = __webpack_require__(41);
-	var ReactUpdates = __webpack_require__(66);
+	var LinkedValueUtils = __webpack_require__(113);
+	var ReactDOMComponentTree = __webpack_require__(38);
+	var ReactUpdates = __webpack_require__(60);
 
-	var invariant = __webpack_require__(44);
-	var warning = __webpack_require__(54);
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	var didWarnValueLink = false;
 	var didWarnValDefaultVal = false;
@@ -14962,9 +14651,9 @@
 	module.exports = ReactDOMTextarea;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 124 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 118 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -14978,19 +14667,19 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var ReactComponentEnvironment = __webpack_require__(125);
-	var ReactInstanceMap = __webpack_require__(126);
-	var ReactInstrumentation = __webpack_require__(72);
+	var ReactComponentEnvironment = __webpack_require__(119);
+	var ReactInstanceMap = __webpack_require__(120);
+	var ReactInstrumentation = __webpack_require__(66);
 
 	var ReactCurrentOwner = __webpack_require__(10);
-	var ReactReconciler = __webpack_require__(69);
-	var ReactChildReconciler = __webpack_require__(127);
+	var ReactReconciler = __webpack_require__(63);
+	var ReactChildReconciler = __webpack_require__(121);
 
-	var emptyFunction = __webpack_require__(55);
-	var flattenChildren = __webpack_require__(143);
-	var invariant = __webpack_require__(44);
+	var emptyFunction = __webpack_require__(12);
+	var flattenChildren = __webpack_require__(136);
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Make an update for markup to be rendered and inserted at a supplied index.
@@ -15417,9 +15106,9 @@
 	module.exports = ReactMultiChild;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 125 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -15434,9 +15123,9 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var invariant = __webpack_require__(44);
+	var invariant = __webpack_require__(8);
 
 	var injected = false;
 
@@ -15468,9 +15157,9 @@
 	module.exports = ReactComponentEnvironment;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 126 */
-/***/ function(module, exports) {
+/***/ }),
+/* 120 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -15520,9 +15209,9 @@
 
 	module.exports = ReactInstanceMap;
 
-/***/ },
-/* 127 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -15536,13 +15225,13 @@
 
 	'use strict';
 
-	var ReactReconciler = __webpack_require__(69);
+	var ReactReconciler = __webpack_require__(63);
 
-	var instantiateReactComponent = __webpack_require__(128);
-	var KeyEscapeUtils = __webpack_require__(139);
-	var shouldUpdateReactComponent = __webpack_require__(135);
-	var traverseAllChildren = __webpack_require__(140);
-	var warning = __webpack_require__(54);
+	var instantiateReactComponent = __webpack_require__(122);
+	var KeyEscapeUtils = __webpack_require__(132);
+	var shouldUpdateReactComponent = __webpack_require__(128);
+	var traverseAllChildren = __webpack_require__(133);
+	var warning = __webpack_require__(11);
 
 	var ReactComponentTreeHook;
 
@@ -15679,9 +15368,9 @@
 	module.exports = ReactChildReconciler;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 128 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -15695,18 +15384,18 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _prodInvariant = __webpack_require__(42),
+	var _prodInvariant = __webpack_require__(39),
 	    _assign = __webpack_require__(4);
 
-	var ReactCompositeComponent = __webpack_require__(129);
-	var ReactEmptyComponent = __webpack_require__(136);
-	var ReactHostComponent = __webpack_require__(137);
+	var ReactCompositeComponent = __webpack_require__(123);
+	var ReactEmptyComponent = __webpack_require__(129);
+	var ReactHostComponent = __webpack_require__(130);
 
-	var getNextDebugID = __webpack_require__(138);
-	var invariant = __webpack_require__(44);
-	var warning = __webpack_require__(54);
+	var getNextDebugID = __webpack_require__(131);
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	// To avoid a cyclic dependency, we create the final class in this module
 	var ReactCompositeComponentWrapper = function ReactCompositeComponentWrapper(element) {
@@ -15815,9 +15504,9 @@
 	module.exports = instantiateReactComponent;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 129 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 123 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -15831,29 +15520,29 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _prodInvariant = __webpack_require__(42),
+	var _prodInvariant = __webpack_require__(39),
 	    _assign = __webpack_require__(4);
 
 	var React = __webpack_require__(2);
-	var ReactComponentEnvironment = __webpack_require__(125);
+	var ReactComponentEnvironment = __webpack_require__(119);
 	var ReactCurrentOwner = __webpack_require__(10);
-	var ReactErrorUtils = __webpack_require__(53);
-	var ReactInstanceMap = __webpack_require__(126);
-	var ReactInstrumentation = __webpack_require__(72);
-	var ReactNodeTypes = __webpack_require__(130);
-	var ReactReconciler = __webpack_require__(69);
+	var ReactErrorUtils = __webpack_require__(49);
+	var ReactInstanceMap = __webpack_require__(120);
+	var ReactInstrumentation = __webpack_require__(66);
+	var ReactNodeTypes = __webpack_require__(124);
+	var ReactReconciler = __webpack_require__(63);
 
 	if (process.env.NODE_ENV !== 'production') {
-	  var checkReactTypeSpec = __webpack_require__(131);
+	  var checkReactTypeSpec = __webpack_require__(125);
 	}
 
-	var emptyObject = __webpack_require__(133);
-	var invariant = __webpack_require__(44);
-	var shallowEqual = __webpack_require__(134);
-	var shouldUpdateReactComponent = __webpack_require__(135);
-	var warning = __webpack_require__(54);
+	var emptyObject = __webpack_require__(20);
+	var invariant = __webpack_require__(8);
+	var shallowEqual = __webpack_require__(127);
+	var shouldUpdateReactComponent = __webpack_require__(128);
+	var warning = __webpack_require__(11);
 
 	var CompositeTypes = {
 	  ImpureClass: 0,
@@ -16724,9 +16413,9 @@
 	module.exports = ReactCompositeComponent;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 130 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 124 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -16741,11 +16430,11 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
 	var React = __webpack_require__(2);
 
-	var invariant = __webpack_require__(44);
+	var invariant = __webpack_require__(8);
 
 	var ReactNodeTypes = {
 	  HOST: 0,
@@ -16769,9 +16458,9 @@
 	module.exports = ReactNodeTypes;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 131 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -16785,15 +16474,15 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var ReactPropTypeLocationNames = __webpack_require__(132);
-	var ReactPropTypesSecret = __webpack_require__(120);
+	var ReactPropTypeLocationNames = __webpack_require__(126);
+	var ReactPropTypesSecret = __webpack_require__(114);
 
-	var invariant = __webpack_require__(44);
-	var warning = __webpack_require__(54);
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	var ReactComponentTreeHook;
 
@@ -16863,9 +16552,9 @@
 	module.exports = checkReactTypeSpec;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 132 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -16893,34 +16582,9 @@
 	module.exports = ReactPropTypeLocationNames;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 133 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright (c) 2013-present, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-
-	'use strict';
-
-	var emptyObject = {};
-
-	if (process.env.NODE_ENV !== 'production') {
-	  Object.freeze(emptyObject);
-	}
-
-	module.exports = emptyObject;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 134 */
-/***/ function(module, exports) {
+/***/ }),
+/* 127 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -16938,7 +16602,7 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 
@@ -16992,9 +16656,9 @@
 
 	module.exports = shallowEqual;
 
-/***/ },
-/* 135 */
-/***/ function(module, exports) {
+/***/ }),
+/* 128 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -17020,7 +16684,7 @@
 	 * @protected
 	 */
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	function shouldUpdateReactComponent(prevElement, nextElement) {
 	  var prevEmpty = prevElement === null || prevElement === false;
@@ -17040,9 +16704,9 @@
 
 	module.exports = shouldUpdateReactComponent;
 
-/***/ },
-/* 136 */
-/***/ function(module, exports) {
+/***/ }),
+/* 129 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -17074,9 +16738,9 @@
 
 	module.exports = ReactEmptyComponent;
 
-/***/ },
-/* 137 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 130 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -17090,9 +16754,9 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var invariant = __webpack_require__(44);
+	var invariant = __webpack_require__(8);
 
 	var genericComponentClass = null;
 	var textComponentClass = null;
@@ -17147,9 +16811,9 @@
 	module.exports = ReactHostComponent;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 138 */
-/***/ function(module, exports) {
+/***/ }),
+/* 131 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -17172,9 +16836,9 @@
 
 	module.exports = getNextDebugID;
 
-/***/ },
-/* 139 */
-/***/ function(module, exports) {
+/***/ }),
+/* 132 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -17235,9 +16899,9 @@
 
 	module.exports = KeyEscapeUtils;
 
-/***/ },
-/* 140 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 133 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -17251,17 +16915,17 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
 	var ReactCurrentOwner = __webpack_require__(10);
-	var REACT_ELEMENT_TYPE = __webpack_require__(141);
+	var REACT_ELEMENT_TYPE = __webpack_require__(134);
 
-	var getIteratorFn = __webpack_require__(142);
-	var invariant = __webpack_require__(44);
-	var KeyEscapeUtils = __webpack_require__(139);
-	var warning = __webpack_require__(54);
+	var getIteratorFn = __webpack_require__(135);
+	var invariant = __webpack_require__(8);
+	var KeyEscapeUtils = __webpack_require__(132);
+	var warning = __webpack_require__(11);
 
 	var SEPARATOR = '.';
 	var SUBSEPARATOR = ':';
@@ -17418,9 +17082,9 @@
 	module.exports = traverseAllChildren;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 141 */
-/***/ function(module, exports) {
+/***/ }),
+/* 134 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -17442,9 +17106,9 @@
 
 	module.exports = REACT_ELEMENT_TYPE;
 
-/***/ },
-/* 142 */
-/***/ function(module, exports) {
+/***/ }),
+/* 135 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -17487,9 +17151,9 @@
 
 	module.exports = getIteratorFn;
 
-/***/ },
-/* 143 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 136 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -17504,11 +17168,11 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var KeyEscapeUtils = __webpack_require__(139);
-	var traverseAllChildren = __webpack_require__(140);
-	var warning = __webpack_require__(54);
+	var KeyEscapeUtils = __webpack_require__(132);
+	var traverseAllChildren = __webpack_require__(133);
+	var warning = __webpack_require__(11);
 
 	var ReactComponentTreeHook;
 
@@ -17570,9 +17234,9 @@
 	module.exports = flattenChildren;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 144 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 137 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -17588,10 +17252,10 @@
 
 	var _assign = __webpack_require__(4);
 
-	var PooledClass = __webpack_require__(60);
-	var Transaction = __webpack_require__(78);
-	var ReactInstrumentation = __webpack_require__(72);
-	var ReactServerUpdateQueue = __webpack_require__(145);
+	var PooledClass = __webpack_require__(54);
+	var Transaction = __webpack_require__(72);
+	var ReactInstrumentation = __webpack_require__(66);
+	var ReactServerUpdateQueue = __webpack_require__(138);
 
 	/**
 	 * Executed within the scope of the `Transaction` instance. Consider these as
@@ -17665,9 +17329,9 @@
 	module.exports = ReactServerRenderingTransaction;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 145 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 138 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -17688,9 +17352,9 @@
 	  }
 	}
 
-	var ReactUpdateQueue = __webpack_require__(146);
+	var ReactUpdateQueue = __webpack_require__(139);
 
-	var warning = __webpack_require__(54);
+	var warning = __webpack_require__(11);
 
 	function warnNoop(publicInstance, callerName) {
 	  if (process.env.NODE_ENV !== 'production') {
@@ -17808,9 +17472,9 @@
 	module.exports = ReactServerUpdateQueue;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 146 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 139 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -17824,17 +17488,17 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
 	var ReactCurrentOwner = __webpack_require__(10);
-	var ReactInstanceMap = __webpack_require__(126);
-	var ReactInstrumentation = __webpack_require__(72);
-	var ReactUpdates = __webpack_require__(66);
+	var ReactInstanceMap = __webpack_require__(120);
+	var ReactInstrumentation = __webpack_require__(66);
+	var ReactUpdates = __webpack_require__(60);
 
-	var invariant = __webpack_require__(44);
-	var warning = __webpack_require__(54);
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	function enqueueUpdate(internalInstance) {
 	  ReactUpdates.enqueueUpdate(internalInstance);
@@ -18051,9 +17715,9 @@
 	module.exports = ReactUpdateQueue;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 147 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 140 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -18069,8 +17733,8 @@
 
 	var _assign = __webpack_require__(4);
 
-	var emptyFunction = __webpack_require__(55);
-	var warning = __webpack_require__(54);
+	var emptyFunction = __webpack_require__(12);
+	var warning = __webpack_require__(11);
 
 	var validateDOMNesting = emptyFunction;
 
@@ -18433,9 +18097,9 @@
 	module.exports = validateDOMNesting;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 148 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 141 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -18451,8 +18115,8 @@
 
 	var _assign = __webpack_require__(4);
 
-	var DOMLazyTree = __webpack_require__(91);
-	var ReactDOMComponentTree = __webpack_require__(41);
+	var DOMLazyTree = __webpack_require__(85);
+	var ReactDOMComponentTree = __webpack_require__(38);
 
 	var ReactDOMEmptyComponent = function ReactDOMEmptyComponent(instantiate) {
 	  // ReactCompositeComponent uses this:
@@ -18497,9 +18161,9 @@
 
 	module.exports = ReactDOMEmptyComponent;
 
-/***/ },
-/* 149 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 142 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -18513,9 +18177,9 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var invariant = __webpack_require__(44);
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Return the lowest common ancestor of A and B, or null if they are in
@@ -18638,9 +18302,9 @@
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 150 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 143 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18654,16 +18318,16 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42),
+	var _prodInvariant = __webpack_require__(39),
 	    _assign = __webpack_require__(4);
 
-	var DOMChildrenOperations = __webpack_require__(90);
-	var DOMLazyTree = __webpack_require__(91);
-	var ReactDOMComponentTree = __webpack_require__(41);
+	var DOMChildrenOperations = __webpack_require__(84);
+	var DOMLazyTree = __webpack_require__(85);
+	var ReactDOMComponentTree = __webpack_require__(38);
 
-	var escapeTextContentForBrowser = __webpack_require__(96);
-	var invariant = __webpack_require__(44);
-	var validateDOMNesting = __webpack_require__(147);
+	var escapeTextContentForBrowser = __webpack_require__(90);
+	var invariant = __webpack_require__(8);
+	var validateDOMNesting = __webpack_require__(140);
 
 	/**
 	 * Text nodes violate a couple assumptions that React makes about components:
@@ -18807,9 +18471,9 @@
 	module.exports = ReactDOMTextComponent;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 151 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 144 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18825,10 +18489,10 @@
 
 	var _assign = __webpack_require__(4);
 
-	var ReactUpdates = __webpack_require__(66);
-	var Transaction = __webpack_require__(78);
+	var ReactUpdates = __webpack_require__(60);
+	var Transaction = __webpack_require__(72);
 
-	var emptyFunction = __webpack_require__(55);
+	var emptyFunction = __webpack_require__(12);
 
 	var RESET_BATCHED_UPDATES = {
 	  initialize: emptyFunction,
@@ -18879,9 +18543,9 @@
 
 	module.exports = ReactDefaultBatchingStrategy;
 
-/***/ },
-/* 152 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 145 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18897,14 +18561,14 @@
 
 	var _assign = __webpack_require__(4);
 
-	var EventListener = __webpack_require__(153);
-	var ExecutionEnvironment = __webpack_require__(58);
-	var PooledClass = __webpack_require__(60);
-	var ReactDOMComponentTree = __webpack_require__(41);
-	var ReactUpdates = __webpack_require__(66);
+	var EventListener = __webpack_require__(146);
+	var ExecutionEnvironment = __webpack_require__(52);
+	var PooledClass = __webpack_require__(54);
+	var ReactDOMComponentTree = __webpack_require__(38);
+	var ReactUpdates = __webpack_require__(60);
 
-	var getEventTarget = __webpack_require__(79);
-	var getUnboundedScrollPosition = __webpack_require__(154);
+	var getEventTarget = __webpack_require__(73);
+	var getUnboundedScrollPosition = __webpack_require__(147);
 
 	/**
 	 * Find the deepest React component completely containing the root of the
@@ -19038,9 +18702,9 @@
 
 	module.exports = ReactEventListener;
 
-/***/ },
-/* 153 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 146 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -19062,7 +18726,7 @@
 	 * @typechecks
 	 */
 
-	var emptyFunction = __webpack_require__(55);
+	var emptyFunction = __webpack_require__(12);
 
 	/**
 	 * Upstream version of event listener. Does not take into account specific
@@ -19127,9 +18791,9 @@
 	module.exports = EventListener;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 154 */
-/***/ function(module, exports) {
+/***/ }),
+/* 147 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -19170,9 +18834,9 @@
 
 	module.exports = getUnboundedScrollPosition;
 
-/***/ },
-/* 155 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 148 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19186,14 +18850,14 @@
 
 	'use strict';
 
-	var DOMProperty = __webpack_require__(43);
-	var EventPluginHub = __webpack_require__(50);
-	var EventPluginUtils = __webpack_require__(52);
-	var ReactComponentEnvironment = __webpack_require__(125);
-	var ReactEmptyComponent = __webpack_require__(136);
-	var ReactBrowserEventEmitter = __webpack_require__(115);
-	var ReactHostComponent = __webpack_require__(137);
-	var ReactUpdates = __webpack_require__(66);
+	var DOMProperty = __webpack_require__(40);
+	var EventPluginHub = __webpack_require__(46);
+	var EventPluginUtils = __webpack_require__(48);
+	var ReactComponentEnvironment = __webpack_require__(119);
+	var ReactEmptyComponent = __webpack_require__(129);
+	var ReactBrowserEventEmitter = __webpack_require__(109);
+	var ReactHostComponent = __webpack_require__(130);
+	var ReactUpdates = __webpack_require__(60);
 
 	var ReactInjection = {
 	  Component: ReactComponentEnvironment.injection,
@@ -19208,9 +18872,9 @@
 
 	module.exports = ReactInjection;
 
-/***/ },
-/* 156 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 149 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19226,13 +18890,13 @@
 
 	var _assign = __webpack_require__(4);
 
-	var CallbackQueue = __webpack_require__(67);
-	var PooledClass = __webpack_require__(60);
-	var ReactBrowserEventEmitter = __webpack_require__(115);
-	var ReactInputSelection = __webpack_require__(157);
-	var ReactInstrumentation = __webpack_require__(72);
-	var Transaction = __webpack_require__(78);
-	var ReactUpdateQueue = __webpack_require__(146);
+	var CallbackQueue = __webpack_require__(61);
+	var PooledClass = __webpack_require__(54);
+	var ReactBrowserEventEmitter = __webpack_require__(109);
+	var ReactInputSelection = __webpack_require__(150);
+	var ReactInstrumentation = __webpack_require__(66);
+	var Transaction = __webpack_require__(72);
+	var ReactUpdateQueue = __webpack_require__(139);
 
 	/**
 	 * Ensures that, when possible, the selection range (currently selected text
@@ -19391,9 +19055,9 @@
 	module.exports = ReactReconcileTransaction;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 157 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 150 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19407,11 +19071,11 @@
 
 	'use strict';
 
-	var ReactDOMSelection = __webpack_require__(158);
+	var ReactDOMSelection = __webpack_require__(151);
 
-	var containsNode = __webpack_require__(160);
-	var focusNode = __webpack_require__(104);
-	var getActiveElement = __webpack_require__(163);
+	var containsNode = __webpack_require__(153);
+	var focusNode = __webpack_require__(98);
+	var getActiveElement = __webpack_require__(156);
 
 	function isInDocument(node) {
 	  return containsNode(document.documentElement, node);
@@ -19519,9 +19183,9 @@
 
 	module.exports = ReactInputSelection;
 
-/***/ },
-/* 158 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 151 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19535,10 +19199,10 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(58);
+	var ExecutionEnvironment = __webpack_require__(52);
 
-	var getNodeForCharacterOffset = __webpack_require__(159);
-	var getTextContentAccessor = __webpack_require__(61);
+	var getNodeForCharacterOffset = __webpack_require__(152);
+	var getTextContentAccessor = __webpack_require__(55);
 
 	/**
 	 * While `isCollapsed` is available on the Selection object and `collapsed`
@@ -19735,9 +19399,9 @@
 
 	module.exports = ReactDOMSelection;
 
-/***/ },
-/* 159 */
-/***/ function(module, exports) {
+/***/ }),
+/* 152 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19813,9 +19477,9 @@
 
 	module.exports = getNodeForCharacterOffset;
 
-/***/ },
-/* 160 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 153 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -19830,7 +19494,7 @@
 	 * 
 	 */
 
-	var isTextNode = __webpack_require__(161);
+	var isTextNode = __webpack_require__(154);
 
 	/*eslint-disable no-bitwise */
 
@@ -19857,9 +19521,9 @@
 
 	module.exports = containsNode;
 
-/***/ },
-/* 161 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 154 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -19874,7 +19538,7 @@
 	 * @typechecks
 	 */
 
-	var isNode = __webpack_require__(162);
+	var isNode = __webpack_require__(155);
 
 	/**
 	 * @param {*} object The object to check.
@@ -19886,9 +19550,9 @@
 
 	module.exports = isTextNode;
 
-/***/ },
-/* 162 */
-/***/ function(module, exports) {
+/***/ }),
+/* 155 */
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -19908,7 +19572,7 @@
 	 * @return {boolean} Whether or not the object is a DOM node.
 	 */
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	function isNode(object) {
 	  var doc = object ? object.ownerDocument || object : document;
@@ -19918,9 +19582,9 @@
 
 	module.exports = isNode;
 
-/***/ },
-/* 163 */
-/***/ function(module, exports) {
+/***/ }),
+/* 156 */
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -19962,9 +19626,9 @@
 
 	module.exports = getActiveElement;
 
-/***/ },
-/* 164 */
-/***/ function(module, exports) {
+/***/ }),
+/* 157 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20268,9 +19932,9 @@
 
 	module.exports = SVGDOMPropertyConfig;
 
-/***/ },
-/* 165 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 158 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20284,15 +19948,15 @@
 
 	'use strict';
 
-	var EventPropagators = __webpack_require__(49);
-	var ExecutionEnvironment = __webpack_require__(58);
-	var ReactDOMComponentTree = __webpack_require__(41);
-	var ReactInputSelection = __webpack_require__(157);
-	var SyntheticEvent = __webpack_require__(63);
+	var EventPropagators = __webpack_require__(45);
+	var ExecutionEnvironment = __webpack_require__(52);
+	var ReactDOMComponentTree = __webpack_require__(38);
+	var ReactInputSelection = __webpack_require__(150);
+	var SyntheticEvent = __webpack_require__(57);
 
-	var getActiveElement = __webpack_require__(163);
-	var isTextInputElement = __webpack_require__(81);
-	var shallowEqual = __webpack_require__(134);
+	var getActiveElement = __webpack_require__(156);
+	var isTextInputElement = __webpack_require__(75);
+	var shallowEqual = __webpack_require__(127);
 
 	var skipSelectionChangeEvent = ExecutionEnvironment.canUseDOM && 'documentMode' in document && document.documentMode <= 11;
 
@@ -20463,9 +20127,9 @@
 
 	module.exports = SelectEventPlugin;
 
-/***/ },
-/* 166 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 159 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20480,26 +20144,26 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var EventListener = __webpack_require__(153);
-	var EventPropagators = __webpack_require__(49);
-	var ReactDOMComponentTree = __webpack_require__(41);
-	var SyntheticAnimationEvent = __webpack_require__(167);
-	var SyntheticClipboardEvent = __webpack_require__(168);
-	var SyntheticEvent = __webpack_require__(63);
-	var SyntheticFocusEvent = __webpack_require__(169);
-	var SyntheticKeyboardEvent = __webpack_require__(170);
-	var SyntheticMouseEvent = __webpack_require__(84);
-	var SyntheticDragEvent = __webpack_require__(173);
-	var SyntheticTouchEvent = __webpack_require__(174);
-	var SyntheticTransitionEvent = __webpack_require__(175);
-	var SyntheticUIEvent = __webpack_require__(85);
-	var SyntheticWheelEvent = __webpack_require__(176);
+	var EventListener = __webpack_require__(146);
+	var EventPropagators = __webpack_require__(45);
+	var ReactDOMComponentTree = __webpack_require__(38);
+	var SyntheticAnimationEvent = __webpack_require__(160);
+	var SyntheticClipboardEvent = __webpack_require__(161);
+	var SyntheticEvent = __webpack_require__(57);
+	var SyntheticFocusEvent = __webpack_require__(162);
+	var SyntheticKeyboardEvent = __webpack_require__(163);
+	var SyntheticMouseEvent = __webpack_require__(78);
+	var SyntheticDragEvent = __webpack_require__(166);
+	var SyntheticTouchEvent = __webpack_require__(167);
+	var SyntheticTransitionEvent = __webpack_require__(168);
+	var SyntheticUIEvent = __webpack_require__(79);
+	var SyntheticWheelEvent = __webpack_require__(169);
 
-	var emptyFunction = __webpack_require__(55);
-	var getEventCharCode = __webpack_require__(171);
-	var invariant = __webpack_require__(44);
+	var emptyFunction = __webpack_require__(12);
+	var getEventCharCode = __webpack_require__(164);
+	var invariant = __webpack_require__(8);
 
 	/**
 	 * Turns
@@ -20696,9 +20360,9 @@
 	module.exports = SimpleEventPlugin;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 167 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 160 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20712,7 +20376,7 @@
 
 	'use strict';
 
-	var SyntheticEvent = __webpack_require__(63);
+	var SyntheticEvent = __webpack_require__(57);
 
 	/**
 	 * @interface Event
@@ -20739,9 +20403,9 @@
 
 	module.exports = SyntheticAnimationEvent;
 
-/***/ },
-/* 168 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 161 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20755,7 +20419,7 @@
 
 	'use strict';
 
-	var SyntheticEvent = __webpack_require__(63);
+	var SyntheticEvent = __webpack_require__(57);
 
 	/**
 	 * @interface Event
@@ -20781,9 +20445,9 @@
 
 	module.exports = SyntheticClipboardEvent;
 
-/***/ },
-/* 169 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 162 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20797,7 +20461,7 @@
 
 	'use strict';
 
-	var SyntheticUIEvent = __webpack_require__(85);
+	var SyntheticUIEvent = __webpack_require__(79);
 
 	/**
 	 * @interface FocusEvent
@@ -20821,9 +20485,9 @@
 
 	module.exports = SyntheticFocusEvent;
 
-/***/ },
-/* 170 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 163 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20837,11 +20501,11 @@
 
 	'use strict';
 
-	var SyntheticUIEvent = __webpack_require__(85);
+	var SyntheticUIEvent = __webpack_require__(79);
 
-	var getEventCharCode = __webpack_require__(171);
-	var getEventKey = __webpack_require__(172);
-	var getEventModifierState = __webpack_require__(87);
+	var getEventCharCode = __webpack_require__(164);
+	var getEventKey = __webpack_require__(165);
+	var getEventModifierState = __webpack_require__(81);
 
 	/**
 	 * @interface KeyboardEvent
@@ -20909,9 +20573,9 @@
 
 	module.exports = SyntheticKeyboardEvent;
 
-/***/ },
-/* 171 */
-/***/ function(module, exports) {
+/***/ }),
+/* 164 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20963,9 +20627,9 @@
 
 	module.exports = getEventCharCode;
 
-/***/ },
-/* 172 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 165 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20979,7 +20643,7 @@
 
 	'use strict';
 
-	var getEventCharCode = __webpack_require__(171);
+	var getEventCharCode = __webpack_require__(164);
 
 	/**
 	 * Normalization of deprecated HTML5 `key` values
@@ -21069,9 +20733,9 @@
 
 	module.exports = getEventKey;
 
-/***/ },
-/* 173 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 166 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -21085,7 +20749,7 @@
 
 	'use strict';
 
-	var SyntheticMouseEvent = __webpack_require__(84);
+	var SyntheticMouseEvent = __webpack_require__(78);
 
 	/**
 	 * @interface DragEvent
@@ -21109,9 +20773,9 @@
 
 	module.exports = SyntheticDragEvent;
 
-/***/ },
-/* 174 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 167 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -21125,9 +20789,9 @@
 
 	'use strict';
 
-	var SyntheticUIEvent = __webpack_require__(85);
+	var SyntheticUIEvent = __webpack_require__(79);
 
-	var getEventModifierState = __webpack_require__(87);
+	var getEventModifierState = __webpack_require__(81);
 
 	/**
 	 * @interface TouchEvent
@@ -21158,9 +20822,9 @@
 
 	module.exports = SyntheticTouchEvent;
 
-/***/ },
-/* 175 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 168 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -21174,7 +20838,7 @@
 
 	'use strict';
 
-	var SyntheticEvent = __webpack_require__(63);
+	var SyntheticEvent = __webpack_require__(57);
 
 	/**
 	 * @interface Event
@@ -21201,9 +20865,9 @@
 
 	module.exports = SyntheticTransitionEvent;
 
-/***/ },
-/* 176 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 169 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -21217,7 +20881,7 @@
 
 	'use strict';
 
-	var SyntheticMouseEvent = __webpack_require__(84);
+	var SyntheticMouseEvent = __webpack_require__(78);
 
 	/**
 	 * @interface WheelEvent
@@ -21259,9 +20923,9 @@
 
 	module.exports = SyntheticWheelEvent;
 
-/***/ },
-/* 177 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 170 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -21275,30 +20939,30 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
-	var DOMLazyTree = __webpack_require__(91);
-	var DOMProperty = __webpack_require__(43);
+	var DOMLazyTree = __webpack_require__(85);
+	var DOMProperty = __webpack_require__(40);
 	var React = __webpack_require__(2);
-	var ReactBrowserEventEmitter = __webpack_require__(115);
+	var ReactBrowserEventEmitter = __webpack_require__(109);
 	var ReactCurrentOwner = __webpack_require__(10);
-	var ReactDOMComponentTree = __webpack_require__(41);
-	var ReactDOMContainerInfo = __webpack_require__(178);
-	var ReactDOMFeatureFlags = __webpack_require__(179);
-	var ReactFeatureFlags = __webpack_require__(68);
-	var ReactInstanceMap = __webpack_require__(126);
-	var ReactInstrumentation = __webpack_require__(72);
-	var ReactMarkupChecksum = __webpack_require__(180);
-	var ReactReconciler = __webpack_require__(69);
-	var ReactUpdateQueue = __webpack_require__(146);
-	var ReactUpdates = __webpack_require__(66);
+	var ReactDOMComponentTree = __webpack_require__(38);
+	var ReactDOMContainerInfo = __webpack_require__(171);
+	var ReactDOMFeatureFlags = __webpack_require__(172);
+	var ReactFeatureFlags = __webpack_require__(62);
+	var ReactInstanceMap = __webpack_require__(120);
+	var ReactInstrumentation = __webpack_require__(66);
+	var ReactMarkupChecksum = __webpack_require__(173);
+	var ReactReconciler = __webpack_require__(63);
+	var ReactUpdateQueue = __webpack_require__(139);
+	var ReactUpdates = __webpack_require__(60);
 
-	var emptyObject = __webpack_require__(133);
-	var instantiateReactComponent = __webpack_require__(128);
-	var invariant = __webpack_require__(44);
-	var setInnerHTML = __webpack_require__(93);
-	var shouldUpdateReactComponent = __webpack_require__(135);
-	var warning = __webpack_require__(54);
+	var emptyObject = __webpack_require__(20);
+	var instantiateReactComponent = __webpack_require__(122);
+	var invariant = __webpack_require__(8);
+	var setInnerHTML = __webpack_require__(87);
+	var shouldUpdateReactComponent = __webpack_require__(128);
+	var warning = __webpack_require__(11);
 
 	var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
 	var ROOT_ATTR_NAME = DOMProperty.ROOT_ATTRIBUTE_NAME;
@@ -21802,9 +21466,9 @@
 	module.exports = ReactMount;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 178 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 171 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -21818,7 +21482,7 @@
 
 	'use strict';
 
-	var validateDOMNesting = __webpack_require__(147);
+	var validateDOMNesting = __webpack_require__(140);
 
 	var DOC_NODE_TYPE = 9;
 
@@ -21840,9 +21504,9 @@
 	module.exports = ReactDOMContainerInfo;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 179 */
-/***/ function(module, exports) {
+/***/ }),
+/* 172 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -21863,9 +21527,9 @@
 
 	module.exports = ReactDOMFeatureFlags;
 
-/***/ },
-/* 180 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 173 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -21879,7 +21543,7 @@
 
 	'use strict';
 
-	var adler32 = __webpack_require__(181);
+	var adler32 = __webpack_require__(174);
 
 	var TAG_END = /\/?>/;
 	var COMMENT_START = /^<\!\-\-/;
@@ -21917,9 +21581,9 @@
 
 	module.exports = ReactMarkupChecksum;
 
-/***/ },
-/* 181 */
-/***/ function(module, exports) {
+/***/ }),
+/* 174 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -21965,9 +21629,9 @@
 
 	module.exports = adler32;
 
-/***/ },
-/* 182 */
-/***/ function(module, exports) {
+/***/ }),
+/* 175 */
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -21983,9 +21647,9 @@
 
 	module.exports = '15.5.4';
 
-/***/ },
-/* 183 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 176 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -21999,15 +21663,15 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(42);
+	var _prodInvariant = __webpack_require__(39);
 
 	var ReactCurrentOwner = __webpack_require__(10);
-	var ReactDOMComponentTree = __webpack_require__(41);
-	var ReactInstanceMap = __webpack_require__(126);
+	var ReactDOMComponentTree = __webpack_require__(38);
+	var ReactInstanceMap = __webpack_require__(120);
 
-	var getHostComponentFromComposite = __webpack_require__(184);
-	var invariant = __webpack_require__(44);
-	var warning = __webpack_require__(54);
+	var getHostComponentFromComposite = __webpack_require__(177);
+	var invariant = __webpack_require__(8);
+	var warning = __webpack_require__(11);
 
 	/**
 	 * Returns the DOM node rendered by this element.
@@ -22048,9 +21712,9 @@
 	module.exports = findDOMNode;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 177 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -22064,7 +21728,7 @@
 
 	'use strict';
 
-	var ReactNodeTypes = __webpack_require__(130);
+	var ReactNodeTypes = __webpack_require__(124);
 
 	function getHostComponentFromComposite(inst) {
 	  var type;
@@ -22082,9 +21746,9 @@
 
 	module.exports = getHostComponentFromComposite;
 
-/***/ },
-/* 185 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 178 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -22098,13 +21762,13 @@
 
 	'use strict';
 
-	var ReactMount = __webpack_require__(177);
+	var ReactMount = __webpack_require__(170);
 
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
-/***/ },
-/* 186 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 179 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -22118,11 +21782,11 @@
 
 	'use strict';
 
-	var DOMProperty = __webpack_require__(43);
-	var EventPluginRegistry = __webpack_require__(51);
+	var DOMProperty = __webpack_require__(40);
+	var EventPluginRegistry = __webpack_require__(47);
 	var ReactComponentTreeHook = __webpack_require__(26);
 
-	var warning = __webpack_require__(54);
+	var warning = __webpack_require__(11);
 
 	if (process.env.NODE_ENV !== 'production') {
 	  var reactProps = {
@@ -22219,9 +21883,9 @@
 	module.exports = ReactDOMUnknownPropertyHook;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 187 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 180 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -22237,7 +21901,7 @@
 
 	var ReactComponentTreeHook = __webpack_require__(26);
 
-	var warning = __webpack_require__(54);
+	var warning = __webpack_require__(11);
 
 	var didWarnValueNull = false;
 
@@ -22267,9 +21931,9 @@
 	module.exports = ReactDOMNullInputValuePropHook;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 188 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 181 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -22283,10 +21947,10 @@
 
 	'use strict';
 
-	var DOMProperty = __webpack_require__(43);
+	var DOMProperty = __webpack_require__(40);
 	var ReactComponentTreeHook = __webpack_require__(26);
 
-	var warning = __webpack_require__(54);
+	var warning = __webpack_require__(11);
 
 	var warnedProperties = {};
 	var rARIA = new RegExp('^(aria)-[' + DOMProperty.ATTRIBUTE_NAME_CHAR + ']*$');
@@ -22365,38 +22029,396 @@
 	module.exports = ReactDOMInvalidARIAHook;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 189 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 182 */
+/***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol?"symbol":typeof obj;};var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _class,_temp;function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&((typeof call==="undefined"?"undefined":_typeof(call))==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+(typeof superClass==="undefined"?"undefined":_typeof(superClass)));}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var React=__webpack_require__(1);var Component=React.Component;var PropTypes=__webpack_require__(190);var getDeviceId=__webpack_require__(192);var havePropsChanged=__webpack_require__(193);// Require adapter to support older browser implementations
-	__webpack_require__(194);// Inline worker.js as a string value of workerBlob.
-	var workerBlob=new Blob(["(function webpackUniversalModuleDefinition(root, factory) {\n\tif(typeof exports === 'object' && typeof module === 'object')\n\t\tmodule.exports = factory();\n\telse if(typeof define === 'function' && define.amd)\n\t\tdefine([], factory);\n\telse if(typeof exports === 'object')\n\t\texports[\"jsQR\"] = factory();\n\telse\n\t\troot[\"jsQR\"] = factory();\n})(this, function() {\nreturn /******/ (function(modules) { // webpackBootstrap\n/******/ \t// The module cache\n/******/ \tvar installedModules = {};\n\n/******/ \t// The require function\n/******/ \tfunction __webpack_require__(moduleId) {\n\n/******/ \t\t// Check if module is in cache\n/******/ \t\tif(installedModules[moduleId])\n/******/ \t\t\treturn installedModules[moduleId].exports;\n\n/******/ \t\t// Create a new module (and put it into the cache)\n/******/ \t\tvar module = installedModules[moduleId] = {\n/******/ \t\t\texports: {},\n/******/ \t\t\tid: moduleId,\n/******/ \t\t\tloaded: false\n/******/ \t\t};\n\n/******/ \t\t// Execute the module function\n/******/ \t\tmodules[moduleId].call(module.exports, module, module.exports, __webpack_require__);\n\n/******/ \t\t// Flag the module as loaded\n/******/ \t\tmodule.loaded = true;\n\n/******/ \t\t// Return the exports of the module\n/******/ \t\treturn module.exports;\n/******/ \t}\n\n\n/******/ \t// expose the modules object (__webpack_modules__)\n/******/ \t__webpack_require__.m = modules;\n\n/******/ \t// expose the module cache\n/******/ \t__webpack_require__.c = installedModules;\n\n/******/ \t// __webpack_public_path__\n/******/ \t__webpack_require__.p = \"\";\n\n/******/ \t// Load entry module and return exports\n/******/ \treturn __webpack_require__(0);\n/******/ })\n/************************************************************************/\n/******/ ([\n/* 0 */\n/***/ function(module, exports, __webpack_require__) {\n\n\t\"use strict\";\r\n\t/// <reference path=\"./common/types.d.ts\" />\r\n\tvar binarizer_1 = __webpack_require__(1);\r\n\tvar locator_1 = __webpack_require__(3);\r\n\tvar extractor_1 = __webpack_require__(4);\r\n\tvar decoder_1 = __webpack_require__(9);\r\n\tvar bitmatrix_1 = __webpack_require__(2);\r\n\tvar binarizeImage = binarizer_1.binarize;\r\n\texports.binarizeImage = binarizeImage;\r\n\tvar locateQRInBinaryImage = locator_1.locate;\r\n\texports.locateQRInBinaryImage = locateQRInBinaryImage;\r\n\tvar extractQRFromBinaryImage = extractor_1.extract;\r\n\texports.extractQRFromBinaryImage = extractQRFromBinaryImage;\r\n\tfunction decodeQR(matrix) {\r\n\t    return byteArrayToString(decoder_1.decode(matrix));\r\n\t}\r\n\texports.decodeQR = decodeQR;\r\n\t// return bytes.reduce((p, b) => p + String.fromCharCode(b), \"\");\r\n\tfunction byteArrayToString(bytes) {\r\n\t    var str = \"\";\r\n\t    if (bytes != null && bytes != undefined) {\r\n\t        for (var i = 0; i < bytes.length; i++) {\r\n\t            str += String.fromCharCode(bytes[i]);\r\n\t        }\r\n\t    }\r\n\t    return str;\r\n\t}\r\n\tfunction createBitMatrix(data, width) {\r\n\t    return new bitmatrix_1.BitMatrix(data, width);\r\n\t}\r\n\texports.createBitMatrix = createBitMatrix;\r\n\tfunction decodeQRFromImage(data, width, height) {\r\n\t    return byteArrayToString(decodeQRFromImageAsByteArray(data, width, height));\r\n\t}\r\n\texports.decodeQRFromImage = decodeQRFromImage;\r\n\tfunction decodeQRFromImageAsByteArray(data, width, height) {\r\n\t    var binarizedImage = binarizeImage(data, width, height);\r\n\t    var location = locator_1.locate(binarizedImage);\r\n\t    if (!location) {\r\n\t        return null;\r\n\t    }\r\n\t    var rawQR = extractor_1.extract(binarizedImage, location);\r\n\t    if (!rawQR) {\r\n\t        return null;\r\n\t    }\r\n\t    return decoder_1.decode(rawQR);\r\n\t}\r\n\texports.decodeQRFromImageAsByteArray = decodeQRFromImageAsByteArray;\r\n\n\n/***/ },\n/* 1 */\n/***/ function(module, exports, __webpack_require__) {\n\n\t\"use strict\";\r\n\tvar bitmatrix_1 = __webpack_require__(2);\r\n\t// Magic Constants\r\n\tvar BLOCK_SIZE_POWER = 3;\r\n\tvar BLOCK_SIZE = 1 << BLOCK_SIZE_POWER;\r\n\tvar BLOCK_SIZE_MASK = BLOCK_SIZE - 1;\r\n\tvar MIN_DYNAMIC_RANGE = 24;\r\n\tfunction calculateBlackPoints(luminances, subWidth, subHeight, width, height) {\r\n\t    var blackPoints = new Array(subHeight);\r\n\t    for (var i = 0; i < subHeight; i++) {\r\n\t        blackPoints[i] = new Array(subWidth);\r\n\t    }\r\n\t    for (var y = 0; y < subHeight; y++) {\r\n\t        var yoffset = y << BLOCK_SIZE_POWER;\r\n\t        var maxYOffset = height - BLOCK_SIZE;\r\n\t        if (yoffset > maxYOffset) {\r\n\t            yoffset = maxYOffset;\r\n\t        }\r\n\t        for (var x = 0; x < subWidth; x++) {\r\n\t            var xoffset = x << BLOCK_SIZE_POWER;\r\n\t            var maxXOffset = width - BLOCK_SIZE;\r\n\t            if (xoffset > maxXOffset) {\r\n\t                xoffset = maxXOffset;\r\n\t            }\r\n\t            var sum = 0;\r\n\t            var min = 0xFF;\r\n\t            var max = 0;\r\n\t            for (var yy = 0, offset = yoffset * width + xoffset; yy < BLOCK_SIZE; yy++, offset += width) {\r\n\t                for (var xx = 0; xx < BLOCK_SIZE; xx++) {\r\n\t                    var pixel = luminances[offset + xx] & 0xFF;\r\n\t                    // still looking for good contrast\r\n\t                    sum += pixel;\r\n\t                    if (pixel < min) {\r\n\t                        min = pixel;\r\n\t                    }\r\n\t                    if (pixel > max) {\r\n\t                        max = pixel;\r\n\t                    }\r\n\t                }\r\n\t                // short-circuit min/max tests once dynamic range is met\r\n\t                if (max - min > MIN_DYNAMIC_RANGE) {\r\n\t                    // finish the rest of the rows quickly\r\n\t                    for (yy++, offset += width; yy < BLOCK_SIZE; yy++, offset += width) {\r\n\t                        for (var xx = 0; xx < BLOCK_SIZE; xx++) {\r\n\t                            sum += luminances[offset + xx] & 0xFF;\r\n\t                        }\r\n\t                    }\r\n\t                }\r\n\t            }\r\n\t            // The default estimate is the average of the values in the block.\r\n\t            var average = sum >> (BLOCK_SIZE_POWER * 2);\r\n\t            if (max - min <= MIN_DYNAMIC_RANGE) {\r\n\t                // If variation within the block is low, assume this is a block with only light or only\r\n\t                // dark pixels. In that case we do not want to use the average, as it would divide this\r\n\t                // low contrast area into black and white pixels, essentially creating data out of noise.\r\n\t                //\r\n\t                // The default assumption is that the block is light/background. Since no estimate for\r\n\t                // the level of dark pixels exists locally, use half the min for the block.\r\n\t                average = min >> 1;\r\n\t                if (y > 0 && x > 0) {\r\n\t                    // Correct the \"white background\" assumption for blocks that have neighbors by comparing\r\n\t                    // the pixels in this block to the previously calculated black points. This is based on\r\n\t                    // the fact that dark barcode symbology is always surrounded by some amount of light\r\n\t                    // background for which reasonable black point estimates were made. The bp estimated at\r\n\t                    // the boundaries is used for the interior.\r\n\t                    // The (min < bp) is arbitrary but works better than other heuristics that were tried.\r\n\t                    var averageNeighborBlackPoint = (blackPoints[y - 1][x] + (2 * blackPoints[y][x - 1]) + blackPoints[y - 1][x - 1]) >> 2;\r\n\t                    if (min < averageNeighborBlackPoint) {\r\n\t                        average = averageNeighborBlackPoint;\r\n\t                    }\r\n\t                }\r\n\t            }\r\n\t            blackPoints[y][x] = average;\r\n\t        }\r\n\t    }\r\n\t    return blackPoints;\r\n\t}\r\n\tfunction calculateThresholdForBlock(luminances, subWidth, subHeight, width, height, blackPoints) {\r\n\t    function cap(value, min, max) {\r\n\t        return value < min ? min : value > max ? max : value;\r\n\t    }\r\n\t    // var outArray = new Array(width * height);\r\n\t    var outMatrix = bitmatrix_1.BitMatrix.createEmpty(width, height);\r\n\t    function thresholdBlock(luminances, xoffset, yoffset, threshold, stride) {\r\n\t        var offset = (yoffset * stride) + xoffset;\r\n\t        for (var y = 0; y < BLOCK_SIZE; y++, offset += stride) {\r\n\t            for (var x = 0; x < BLOCK_SIZE; x++) {\r\n\t                var pixel = luminances[offset + x] & 0xff;\r\n\t                // Comparison needs to be <= so that black == 0 pixels are black even if the threshold is 0.\r\n\t                outMatrix.set(xoffset + x, yoffset + y, pixel <= threshold);\r\n\t            }\r\n\t        }\r\n\t    }\r\n\t    for (var y = 0; y < subHeight; y++) {\r\n\t        var yoffset = y << BLOCK_SIZE_POWER;\r\n\t        var maxYOffset = height - BLOCK_SIZE;\r\n\t        if (yoffset > maxYOffset) {\r\n\t            yoffset = maxYOffset;\r\n\t        }\r\n\t        for (var x = 0; x < subWidth; x++) {\r\n\t            var xoffset = x << BLOCK_SIZE_POWER;\r\n\t            var maxXOffset = width - BLOCK_SIZE;\r\n\t            if (xoffset > maxXOffset) {\r\n\t                xoffset = maxXOffset;\r\n\t            }\r\n\t            var left = cap(x, 2, subWidth - 3);\r\n\t            var top = cap(y, 2, subHeight - 3);\r\n\t            var sum = 0;\r\n\t            for (var z = -2; z <= 2; z++) {\r\n\t                var blackRow = blackPoints[top + z];\r\n\t                sum += blackRow[left - 2];\r\n\t                sum += blackRow[left - 1];\r\n\t                sum += blackRow[left];\r\n\t                sum += blackRow[left + 1];\r\n\t                sum += blackRow[left + 2];\r\n\t            }\r\n\t            var average = sum / 25;\r\n\t            thresholdBlock(luminances, xoffset, yoffset, average, width);\r\n\t        }\r\n\t    }\r\n\t    return outMatrix;\r\n\t}\r\n\tfunction binarize(data, width, height) {\r\n\t    if (data.length !== width * height * 4) {\r\n\t        throw new Error(\"Binarizer data.length != width * height * 4\");\r\n\t    }\r\n\t    var gsArray = new Array(width * height);\r\n\t    for (var x = 0; x < width; x++) {\r\n\t        for (var y = 0; y < height; y++) {\r\n\t            var startIndex = (y * width + x) * 4;\r\n\t            var r = data[startIndex];\r\n\t            var g = data[startIndex + 1];\r\n\t            var b = data[startIndex + 2];\r\n\t            // Magic lumosity constants\r\n\t            var lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;\r\n\t            gsArray[y * width + x] = lum;\r\n\t        }\r\n\t    }\r\n\t    var subWidth = width >> BLOCK_SIZE_POWER;\r\n\t    if ((width & BLOCK_SIZE_MASK) != 0) {\r\n\t        subWidth++;\r\n\t    }\r\n\t    var subHeight = height >> BLOCK_SIZE_POWER;\r\n\t    if ((height & BLOCK_SIZE_MASK) != 0) {\r\n\t        subHeight++;\r\n\t    }\r\n\t    var blackPoints = calculateBlackPoints(gsArray, subWidth, subHeight, width, height);\r\n\t    return calculateThresholdForBlock(gsArray, subWidth, subHeight, width, height, blackPoints);\r\n\t}\r\n\texports.binarize = binarize;\r\n\n\n/***/ },\n/* 2 */\n/***/ function(module, exports) {\n\n\t\"use strict\";\r\n\tvar BitMatrix = (function () {\r\n\t    function BitMatrix(data, width) {\r\n\t        this.width = width;\r\n\t        this.height = data.length / width;\r\n\t        this.data = data;\r\n\t    }\r\n\t    BitMatrix.createEmpty = function (width, height) {\r\n\t        var data = new Array(width * height);\r\n\t        for (var i = 0; i < data.length; i++) {\r\n\t            data[i] = false;\r\n\t        }\r\n\t        return new BitMatrix(data, width);\r\n\t    };\r\n\t    BitMatrix.prototype.get = function (x, y) {\r\n\t        return this.data[y * this.width + x];\r\n\t    };\r\n\t    BitMatrix.prototype.set = function (x, y, v) {\r\n\t        this.data[y * this.width + x] = v;\r\n\t    };\r\n\t    BitMatrix.prototype.copyBit = function (x, y, versionBits) {\r\n\t        return this.get(x, y) ? (versionBits << 1) | 0x1 : versionBits << 1;\r\n\t    };\r\n\t    BitMatrix.prototype.setRegion = function (left, top, width, height) {\r\n\t        var right = left + width;\r\n\t        var bottom = top + height;\r\n\t        for (var y = top; y < bottom; y++) {\r\n\t            for (var x = left; x < right; x++) {\r\n\t                this.set(x, y, true);\r\n\t            }\r\n\t        }\r\n\t    };\r\n\t    BitMatrix.prototype.mirror = function () {\r\n\t        for (var x = 0; x < this.width; x++) {\r\n\t            for (var y = x + 1; y < this.height; y++) {\r\n\t                if (this.get(x, y) != this.get(y, x)) {\r\n\t                    this.set(x, y, !this.get(x, y));\r\n\t                    this.set(y, x, !this.get(y, x));\r\n\t                }\r\n\t            }\r\n\t        }\r\n\t    };\r\n\t    return BitMatrix;\r\n\t}());\r\n\texports.BitMatrix = BitMatrix;\r\n\n\n/***/ },\n/* 3 */\n/***/ function(module, exports) {\n\n\t\"use strict\";\r\n\tvar CENTER_QUORUM = 2;\r\n\tvar MIN_SKIP = 3;\r\n\tvar MAX_MODULES = 57;\r\n\tvar INTEGER_MATH_SHIFT = 8;\r\n\tvar FinderPattern = (function () {\r\n\t    function FinderPattern(x, y, estimatedModuleSize, count) {\r\n\t        this.x = x;\r\n\t        this.y = y;\r\n\t        this.estimatedModuleSize = estimatedModuleSize;\r\n\t        if (count == null) {\r\n\t            this.count = 1;\r\n\t        }\r\n\t        else {\r\n\t            this.count = count;\r\n\t        }\r\n\t    }\r\n\t    FinderPattern.prototype.aboutEquals = function (moduleSize, i, j) {\r\n\t        if (Math.abs(i - this.y) <= moduleSize && Math.abs(j - this.x) <= moduleSize) {\r\n\t            var moduleSizeDiff = Math.abs(moduleSize - this.estimatedModuleSize);\r\n\t            return moduleSizeDiff <= 1.0 || moduleSizeDiff <= this.estimatedModuleSize;\r\n\t        }\r\n\t        return false;\r\n\t    };\r\n\t    FinderPattern.prototype.combineEstimate = function (i, j, newModuleSize) {\r\n\t        var combinedCount = this.count + 1;\r\n\t        var combinedX = (this.count * this.x + j) / combinedCount;\r\n\t        var combinedY = (this.count * this.y + i) / combinedCount;\r\n\t        var combinedModuleSize = (this.count * this.estimatedModuleSize + newModuleSize) / combinedCount;\r\n\t        return new FinderPattern(combinedX, combinedY, combinedModuleSize, combinedCount);\r\n\t    };\r\n\t    return FinderPattern;\r\n\t}());\r\n\tfunction foundPatternCross(stateCount) {\r\n\t    var totalModuleSize = 0;\r\n\t    for (var i = 0; i < 5; i++) {\r\n\t        var count = stateCount[i];\r\n\t        if (count === 0)\r\n\t            return false;\r\n\t        totalModuleSize += count;\r\n\t    }\r\n\t    if (totalModuleSize < 7)\r\n\t        return false;\r\n\t    var moduleSize = (totalModuleSize << INTEGER_MATH_SHIFT) / 7;\r\n\t    var maxVariance = moduleSize / 2;\r\n\t    // Allow less than 50% variance from 1-1-3-1-1 proportions\r\n\t    return Math.abs(moduleSize - (stateCount[0] << INTEGER_MATH_SHIFT)) < maxVariance &&\r\n\t        Math.abs(moduleSize - (stateCount[1] << INTEGER_MATH_SHIFT)) < maxVariance &&\r\n\t        Math.abs(3 * moduleSize - (stateCount[2] << INTEGER_MATH_SHIFT)) < 3 * maxVariance &&\r\n\t        Math.abs(moduleSize - (stateCount[3] << INTEGER_MATH_SHIFT)) < maxVariance &&\r\n\t        Math.abs(moduleSize - (stateCount[4] << INTEGER_MATH_SHIFT)) < maxVariance;\r\n\t}\r\n\tfunction centerFromEnd(stateCount, end) {\r\n\t    var result = (end - stateCount[4] - stateCount[3]) - stateCount[2] / 2;\r\n\t    // Fix this.\r\n\t    if (result !== result) {\r\n\t        return null;\r\n\t    }\r\n\t    return result;\r\n\t}\r\n\tfunction distance(pattern1, pattern2) {\r\n\t    var a = pattern1.x - pattern2.x;\r\n\t    var b = pattern1.y - pattern2.y;\r\n\t    return Math.sqrt(a * a + b * b);\r\n\t}\r\n\tfunction crossProductZ(pointA, pointB, pointC) {\r\n\t    var bX = pointB.x;\r\n\t    var bY = pointB.y;\r\n\t    return ((pointC.x - bX) * (pointA.y - bY)) - ((pointC.y - bY) * (pointA.x - bX));\r\n\t}\r\n\tfunction ReorderFinderPattern(patterns) {\r\n\t    // Find distances between pattern centers\r\n\t    var zeroOneDistance = distance(patterns[0], patterns[1]);\r\n\t    var oneTwoDistance = distance(patterns[1], patterns[2]);\r\n\t    var zeroTwoDistance = distance(patterns[0], patterns[2]);\r\n\t    var pointA, pointB, pointC;\r\n\t    // Assume one closest to other two is B; A and C will just be guesses at first\r\n\t    if (oneTwoDistance >= zeroOneDistance && oneTwoDistance >= zeroTwoDistance) {\r\n\t        pointB = patterns[0];\r\n\t        pointA = patterns[1];\r\n\t        pointC = patterns[2];\r\n\t    }\r\n\t    else if (zeroTwoDistance >= oneTwoDistance && zeroTwoDistance >= zeroOneDistance) {\r\n\t        pointB = patterns[1];\r\n\t        pointA = patterns[0];\r\n\t        pointC = patterns[2];\r\n\t    }\r\n\t    else {\r\n\t        pointB = patterns[2];\r\n\t        pointA = patterns[0];\r\n\t        pointC = patterns[1];\r\n\t    }\r\n\t    // Use cross product to figure out whether A and C are correct or flipped.\r\n\t    // This asks whether BC x BA has a positive z component, which is the arrangement\r\n\t    // we want for A, B, C. If it's negative, then we've got it flipped around and\r\n\t    // should swap A and C.\r\n\t    if (crossProductZ(pointA, pointB, pointC) < 0) {\r\n\t        var temp = pointA;\r\n\t        pointA = pointC;\r\n\t        pointC = temp;\r\n\t    }\r\n\t    return {\r\n\t        bottomLeft: { x: pointA.x, y: pointA.y },\r\n\t        topLeft: { x: pointB.x, y: pointB.y },\r\n\t        topRight: { x: pointC.x, y: pointC.y }\r\n\t    };\r\n\t}\r\n\tfunction locate(matrix) {\r\n\t    // Global state :(\r\n\t    var possibleCenters = [];\r\n\t    var hasSkipped = false;\r\n\t    function get(x, y) {\r\n\t        x = Math.floor(x);\r\n\t        y = Math.floor(y);\r\n\t        return matrix.get(x, y);\r\n\t    }\r\n\t    // Methods\r\n\t    function crossCheckDiagonal(startI, centerJ, maxCount, originalStateCountTotal) {\r\n\t        var maxI = matrix.height;\r\n\t        var maxJ = matrix.width;\r\n\t        var stateCount = [0, 0, 0, 0, 0];\r\n\t        // Start counting up, left from center finding black center mass\r\n\t        var i = 0;\r\n\t        while (startI - i >= 0 && get(centerJ - i, startI - i)) {\r\n\t            stateCount[2]++;\r\n\t            i++;\r\n\t        }\r\n\t        if ((startI - i < 0) || (centerJ - i < 0)) {\r\n\t            return false;\r\n\t        }\r\n\t        // Continue up, left finding white space\r\n\t        while ((startI - i >= 0) && (centerJ - i >= 0) && !get(centerJ - i, startI - i) && stateCount[1] <= maxCount) {\r\n\t            stateCount[1]++;\r\n\t            i++;\r\n\t        }\r\n\t        // If already too many modules in this state or ran off the edge:\r\n\t        if ((startI - i < 0) || (centerJ - i < 0) || stateCount[1] > maxCount) {\r\n\t            return false;\r\n\t        }\r\n\t        // Continue up, left finding black border\r\n\t        while ((startI - i >= 0) && (centerJ - i >= 0) && get(centerJ - i, startI - i) && stateCount[0] <= maxCount) {\r\n\t            stateCount[0]++;\r\n\t            i++;\r\n\t        }\r\n\t        if (stateCount[0] > maxCount) {\r\n\t            return false;\r\n\t        }\r\n\t        // Now also count down, right from center\r\n\t        i = 1;\r\n\t        while ((startI + i < maxI) && (centerJ + i < maxJ) && get(centerJ + i, startI + i)) {\r\n\t            stateCount[2]++;\r\n\t            i++;\r\n\t        }\r\n\t        // Ran off the edge?\r\n\t        if ((startI + i >= maxI) || (centerJ + i >= maxJ)) {\r\n\t            return false;\r\n\t        }\r\n\t        while ((startI + i < maxI) && (centerJ + i < maxJ) && !get(centerJ + i, startI + i) && stateCount[3] < maxCount) {\r\n\t            stateCount[3]++;\r\n\t            i++;\r\n\t        }\r\n\t        if ((startI + i >= maxI) || (centerJ + i >= maxJ) || stateCount[3] >= maxCount) {\r\n\t            return false;\r\n\t        }\r\n\t        while ((startI + i < maxI) && (centerJ + i < maxJ) && get(centerJ + i, startI + i) && stateCount[4] < maxCount) {\r\n\t            stateCount[4]++;\r\n\t            i++;\r\n\t        }\r\n\t        if (stateCount[4] >= maxCount) {\r\n\t            return false;\r\n\t        }\r\n\t        // If we found a finder-pattern-like section, but its size is more than 100% different than\r\n\t        // the original, assume it's a false positive\r\n\t        var stateCountTotal = stateCount[0] + stateCount[1] + stateCount[2] + stateCount[3] + stateCount[4];\r\n\t        return Math.abs(stateCountTotal - originalStateCountTotal) < 2 * originalStateCountTotal &&\r\n\t            foundPatternCross(stateCount);\r\n\t    }\r\n\t    function crossCheckVertical(startI, centerJ, maxCount, originalStateCountTotal) {\r\n\t        var maxI = matrix.height;\r\n\t        var stateCount = [0, 0, 0, 0, 0];\r\n\t        // Start counting up from center\r\n\t        var i = startI;\r\n\t        while (i >= 0 && get(centerJ, i)) {\r\n\t            stateCount[2]++;\r\n\t            i--;\r\n\t        }\r\n\t        if (i < 0) {\r\n\t            return null;\r\n\t        }\r\n\t        while (i >= 0 && !get(centerJ, i) && stateCount[1] <= maxCount) {\r\n\t            stateCount[1]++;\r\n\t            i--;\r\n\t        }\r\n\t        // If already too many modules in this state or ran off the edge:\r\n\t        if (i < 0 || stateCount[1] > maxCount) {\r\n\t            return null;\r\n\t        }\r\n\t        while (i >= 0 && get(centerJ, i) && stateCount[0] <= maxCount) {\r\n\t            stateCount[0]++;\r\n\t            i--;\r\n\t        }\r\n\t        if (stateCount[0] > maxCount) {\r\n\t            return null;\r\n\t        }\r\n\t        // Now also count down from center\r\n\t        i = startI + 1;\r\n\t        while (i < maxI && get(centerJ, i)) {\r\n\t            stateCount[2]++;\r\n\t            i++;\r\n\t        }\r\n\t        if (i == maxI) {\r\n\t            return null;\r\n\t        }\r\n\t        while (i < maxI && !get(centerJ, i) && stateCount[3] < maxCount) {\r\n\t            stateCount[3]++;\r\n\t            i++;\r\n\t        }\r\n\t        if (i == maxI || stateCount[3] >= maxCount) {\r\n\t            return null;\r\n\t        }\r\n\t        while (i < maxI && get(centerJ, i) && stateCount[4] < maxCount) {\r\n\t            stateCount[4]++;\r\n\t            i++;\r\n\t        }\r\n\t        if (stateCount[4] >= maxCount) {\r\n\t            return null;\r\n\t        }\r\n\t        // If we found a finder-pattern-like section, but its size is more than 40% different than\r\n\t        // the original, assume it's a false positive\r\n\t        var stateCountTotal = stateCount[0] + stateCount[1] + stateCount[2] + stateCount[3] + stateCount[4];\r\n\t        if (5 * Math.abs(stateCountTotal - originalStateCountTotal) >= 2 * originalStateCountTotal) {\r\n\t            return null;\r\n\t        }\r\n\t        return foundPatternCross(stateCount) ? centerFromEnd(stateCount, i) : null;\r\n\t    }\r\n\t    function haveMultiplyConfirmedCenters() {\r\n\t        var confirmedCount = 0;\r\n\t        var totalModuleSize = 0;\r\n\t        var max = possibleCenters.length;\r\n\t        possibleCenters.forEach(function (pattern) {\r\n\t            if (pattern.count >= CENTER_QUORUM) {\r\n\t                confirmedCount++;\r\n\t                totalModuleSize += pattern.estimatedModuleSize;\r\n\t            }\r\n\t        });\r\n\t        if (confirmedCount < 3) {\r\n\t            return false;\r\n\t        }\r\n\t        // OK, we have at least 3 confirmed centers, but, it's possible that one is a \"false positive\"\r\n\t        // and that we need to keep looking. We detect this by asking if the estimated module sizes\r\n\t        // vary too much. We arbitrarily say that when the total deviation from average exceeds\r\n\t        // 5% of the total module size estimates, it's too much.\r\n\t        var average = totalModuleSize / max;\r\n\t        var totalDeviation = 0;\r\n\t        for (var i = 0; i < max; i++) {\r\n\t            var pattern = possibleCenters[i];\r\n\t            totalDeviation += Math.abs(pattern.estimatedModuleSize - average);\r\n\t        }\r\n\t        return totalDeviation <= 0.05 * totalModuleSize;\r\n\t    }\r\n\t    function crossCheckHorizontal(startJ, centerI, maxCount, originalStateCountTotal) {\r\n\t        var maxJ = matrix.width;\r\n\t        var stateCount = [0, 0, 0, 0, 0];\r\n\t        var j = startJ;\r\n\t        while (j >= 0 && get(j, centerI)) {\r\n\t            stateCount[2]++;\r\n\t            j--;\r\n\t        }\r\n\t        if (j < 0) {\r\n\t            return null;\r\n\t        }\r\n\t        while (j >= 0 && !get(j, centerI) && stateCount[1] <= maxCount) {\r\n\t            stateCount[1]++;\r\n\t            j--;\r\n\t        }\r\n\t        if (j < 0 || stateCount[1] > maxCount) {\r\n\t            return null;\r\n\t        }\r\n\t        while (j >= 0 && get(j, centerI) && stateCount[0] <= maxCount) {\r\n\t            stateCount[0]++;\r\n\t            j--;\r\n\t        }\r\n\t        if (stateCount[0] > maxCount) {\r\n\t            return null;\r\n\t        }\r\n\t        j = startJ + 1;\r\n\t        while (j < maxJ && get(j, centerI)) {\r\n\t            stateCount[2]++;\r\n\t            j++;\r\n\t        }\r\n\t        if (j == maxJ) {\r\n\t            return null;\r\n\t        }\r\n\t        while (j < maxJ && !get(j, centerI) && stateCount[3] < maxCount) {\r\n\t            stateCount[3]++;\r\n\t            j++;\r\n\t        }\r\n\t        if (j == maxJ || stateCount[3] >= maxCount) {\r\n\t            return null;\r\n\t        }\r\n\t        while (j < maxJ && get(j, centerI) && stateCount[4] < maxCount) {\r\n\t            stateCount[4]++;\r\n\t            j++;\r\n\t        }\r\n\t        if (stateCount[4] >= maxCount) {\r\n\t            return null;\r\n\t        }\r\n\t        // If we found a finder-pattern-like section, but its size is significantly different than\r\n\t        // the original, assume it's a false positive\r\n\t        var stateCountTotal = stateCount[0] + stateCount[1] + stateCount[2] + stateCount[3] + stateCount[4];\r\n\t        if (5 * Math.abs(stateCountTotal - originalStateCountTotal) >= originalStateCountTotal) {\r\n\t            return null;\r\n\t        }\r\n\t        return foundPatternCross(stateCount) ? centerFromEnd(stateCount, j) : null;\r\n\t    }\r\n\t    function handlePossibleCenter(stateCount, i, j, pureBarcode) {\r\n\t        var stateCountTotal = stateCount[0] + stateCount[1] + stateCount[2] + stateCount[3] + stateCount[4];\r\n\t        var centerJ = centerFromEnd(stateCount, j);\r\n\t        if (centerJ == null)\r\n\t            return false;\r\n\t        var centerI = crossCheckVertical(i, Math.floor(centerJ), stateCount[2], stateCountTotal);\r\n\t        if (centerI != null) {\r\n\t            // Re-cross check\r\n\t            centerJ = crossCheckHorizontal(Math.floor(centerJ), Math.floor(centerI), stateCount[2], stateCountTotal);\r\n\t            if (centerJ != null && (!pureBarcode || crossCheckDiagonal(Math.floor(centerI), Math.floor(centerJ), stateCount[2], stateCountTotal))) {\r\n\t                var estimatedModuleSize = stateCountTotal / 7;\r\n\t                var found = false;\r\n\t                for (var index = 0; index < possibleCenters.length; index++) {\r\n\t                    var center = possibleCenters[index];\r\n\t                    // Look for about the same center and module size:\r\n\t                    if (center.aboutEquals(estimatedModuleSize, centerI, centerJ)) {\r\n\t                        possibleCenters.splice(index, 1, center.combineEstimate(centerI, centerJ, estimatedModuleSize));\r\n\t                        found = true;\r\n\t                        break;\r\n\t                    }\r\n\t                }\r\n\t                if (!found) {\r\n\t                    // var point = new FinderPattern(centerJ.Value, centerI.Value, estimatedModuleSize);\r\n\t                    var point = new FinderPattern(centerJ, centerI, estimatedModuleSize);\r\n\t                    possibleCenters.push(point);\r\n\t                }\r\n\t                return true;\r\n\t            }\r\n\t        }\r\n\t        return false;\r\n\t    }\r\n\t    function findRowSkip() {\r\n\t        var max = possibleCenters.length;\r\n\t        if (max <= 1) {\r\n\t            return 0;\r\n\t        }\r\n\t        var firstConfirmedCenter = null;\r\n\t        possibleCenters.forEach(function (center) {\r\n\t            if (center.count >= CENTER_QUORUM) {\r\n\t                if (firstConfirmedCenter == null) {\r\n\t                    firstConfirmedCenter = center;\r\n\t                }\r\n\t                else {\r\n\t                    // We have two confirmed centers\r\n\t                    // How far down can we skip before resuming looking for the next\r\n\t                    // pattern? In the worst case, only the difference between the\r\n\t                    // difference in the x / y coordinates of the two centers.\r\n\t                    // This is the case where you find top left last.\r\n\t                    hasSkipped = true;\r\n\t                    //UPGRADE_WARNING: Data types in Visual C# might be different.  Verify the accuracy of narrowing conversions. \"ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?index='!DefaultContextWindowIndex'&keyword='jlca1042'\"\r\n\t                    return Math.floor(Math.abs(firstConfirmedCenter.x - center.x) - Math.abs(firstConfirmedCenter.y - center.y)) / 2;\r\n\t                }\r\n\t            }\r\n\t        });\r\n\t        return 0;\r\n\t    }\r\n\t    function selectBestPatterns() {\r\n\t        var startSize = possibleCenters.length;\r\n\t        if (startSize < 3) {\r\n\t            // Couldn't find enough finder patterns\r\n\t            return null;\r\n\t        }\r\n\t        // Filter outlier possibilities whose module size is too different\r\n\t        if (startSize > 3) {\r\n\t            // But we can only afford to do so if we have at least 4 possibilities to choose from\r\n\t            var totalModuleSize = 0;\r\n\t            var square = 0;\r\n\t            possibleCenters.forEach(function (center) {\r\n\t                var size = center.estimatedModuleSize;\r\n\t                totalModuleSize += size;\r\n\t                square += size * size;\r\n\t            });\r\n\t            var average = totalModuleSize / startSize;\r\n\t            var stdDev = Math.sqrt(square / startSize - average * average);\r\n\t            //possibleCenters.Sort(new FurthestFromAverageComparator(average));\r\n\t            possibleCenters.sort(function (x, y) {\r\n\t                var dA = Math.abs(y.estimatedModuleSize - average);\r\n\t                var dB = Math.abs(x.estimatedModuleSize - average);\r\n\t                return dA < dB ? -1 : dA == dB ? 0 : 1;\r\n\t            });\r\n\t            var limit = Math.max(0.2 * average, stdDev);\r\n\t            for (var i = 0; i < possibleCenters.length && possibleCenters.length > 3; i++) {\r\n\t                var pattern = possibleCenters[i];\r\n\t                if (Math.abs(pattern.estimatedModuleSize - average) > limit) {\r\n\t                    possibleCenters.splice(i, 1);\r\n\t                    ///possibleCenters.RemoveAt(i);\r\n\t                    i--;\r\n\t                }\r\n\t            }\r\n\t        }\r\n\t        if (possibleCenters.length > 3) {\r\n\t            // Throw away all but those first size candidate points we found.\r\n\t            var totalModuleSize = 0;\r\n\t            possibleCenters.forEach(function (possibleCenter) {\r\n\t                totalModuleSize += possibleCenter.estimatedModuleSize;\r\n\t            });\r\n\t            var average = totalModuleSize / possibleCenters.length;\r\n\t            // possibleCenters.Sort(new CenterComparator(average));\r\n\t            possibleCenters.sort(function (x, y) {\r\n\t                if (y.count === x.count) {\r\n\t                    var dA = Math.abs(y.estimatedModuleSize - average);\r\n\t                    var dB = Math.abs(x.estimatedModuleSize - average);\r\n\t                    return dA < dB ? 1 : dA == dB ? 0 : -1;\r\n\t                }\r\n\t                return y.count - x.count;\r\n\t            });\r\n\t            //possibleCenters.subList(3, possibleCenters.Count).clear();\r\n\t            ///possibleCenters = possibleCenters.GetRange(0, 3);\r\n\t            possibleCenters = possibleCenters.slice(0, 3);\r\n\t        }\r\n\t        return [possibleCenters[0], possibleCenters[1], possibleCenters[2]];\r\n\t    }\r\n\t    var pureBarcode = false;\r\n\t    var maxI = matrix.height;\r\n\t    var maxJ = matrix.width;\r\n\t    var iSkip = Math.floor((3 * maxI) / (4 * MAX_MODULES));\r\n\t    if (iSkip < MIN_SKIP || false) {\r\n\t        iSkip = MIN_SKIP;\r\n\t    }\r\n\t    var done = false;\r\n\t    var stateCount = [0, 0, 0, 0, 0];\r\n\t    for (var i = iSkip - 1; i < maxI && !done; i += iSkip) {\r\n\t        stateCount = [0, 0, 0, 0, 0];\r\n\t        var currentState = 0;\r\n\t        for (var j = 0; j < maxJ; j++) {\r\n\t            if (get(j, i)) {\r\n\t                // Black pixel\r\n\t                if ((currentState & 1) === 1) {\r\n\t                    currentState++;\r\n\t                }\r\n\t                stateCount[currentState]++;\r\n\t            }\r\n\t            else {\r\n\t                // White pixel\r\n\t                if ((currentState & 1) === 0) {\r\n\t                    // Counting black pixels\r\n\t                    if (currentState === 4) {\r\n\t                        // A winner?\r\n\t                        if (foundPatternCross(stateCount)) {\r\n\t                            // Yes\r\n\t                            var confirmed = handlePossibleCenter(stateCount, i, j, pureBarcode);\r\n\t                            if (confirmed) {\r\n\t                                // Start examining every other line. Checking each line turned out to be too\r\n\t                                // expensive and didn't improve performance.\r\n\t                                iSkip = 2;\r\n\t                                if (hasSkipped) {\r\n\t                                    done = haveMultiplyConfirmedCenters();\r\n\t                                }\r\n\t                                else {\r\n\t                                    var rowSkip = findRowSkip();\r\n\t                                    if (rowSkip > stateCount[2]) {\r\n\t                                        // Skip rows between row of lower confirmed center\r\n\t                                        // and top of presumed third confirmed center\r\n\t                                        // but back up a bit to get a full chance of detecting\r\n\t                                        // it, entire width of center of finder pattern\r\n\t                                        // Skip by rowSkip, but back off by stateCount[2] (size of last center\r\n\t                                        // of pattern we saw) to be conservative, and also back off by iSkip which\r\n\t                                        // is about to be re-added\r\n\t                                        i += rowSkip - stateCount[2] - iSkip;\r\n\t                                        j = maxJ - 1;\r\n\t                                    }\r\n\t                                }\r\n\t                            }\r\n\t                            else {\r\n\t                                stateCount = [stateCount[2], stateCount[3], stateCount[4], 1, 0];\r\n\t                                currentState = 3;\r\n\t                                continue;\r\n\t                            }\r\n\t                            // Clear state to start looking again\r\n\t                            stateCount = [0, 0, 0, 0, 0];\r\n\t                            currentState = 0;\r\n\t                        }\r\n\t                        else {\r\n\t                            stateCount = [stateCount[2], stateCount[3], stateCount[4], 1, 0];\r\n\t                            currentState = 3;\r\n\t                        }\r\n\t                    }\r\n\t                    else {\r\n\t                        // Should I really have copy/pasted this fuckery?\r\n\t                        stateCount[++currentState]++;\r\n\t                    }\r\n\t                }\r\n\t                else {\r\n\t                    // Counting the white pixels\r\n\t                    stateCount[currentState]++;\r\n\t                }\r\n\t            }\r\n\t        }\r\n\t        if (foundPatternCross(stateCount)) {\r\n\t            var confirmed = handlePossibleCenter(stateCount, i, maxJ, pureBarcode);\r\n\t            if (confirmed) {\r\n\t                iSkip = stateCount[0];\r\n\t                if (hasSkipped) {\r\n\t                    // Found a third one\r\n\t                    done = haveMultiplyConfirmedCenters();\r\n\t                }\r\n\t            }\r\n\t        }\r\n\t    }\r\n\t    var patternInfo = selectBestPatterns();\r\n\t    if (!patternInfo)\r\n\t        return null;\r\n\t    return ReorderFinderPattern(patternInfo);\r\n\t}\r\n\texports.locate = locate;\r\n\n\n/***/ },\n/* 4 */\n/***/ function(module, exports, __webpack_require__) {\n\n\t\"use strict\";\r\n\t/// <reference path=\"../common/types.d.ts\" />\r\n\tvar alignment_finder_1 = __webpack_require__(5);\r\n\tvar perspective_transform_1 = __webpack_require__(7);\r\n\tvar version_1 = __webpack_require__(8);\r\n\tvar bitmatrix_1 = __webpack_require__(2);\r\n\tvar helpers_1 = __webpack_require__(6);\r\n\tfunction checkAndNudgePoints(width, height, points) {\r\n\t    // Check and nudge points from start until we see some that are OK:\r\n\t    var nudged = true;\r\n\t    for (var offset = 0; offset < points.length && nudged; offset += 2) {\r\n\t        var x = Math.floor(points[offset]);\r\n\t        var y = Math.floor(points[offset + 1]);\r\n\t        if (x < -1 || x > width || y < -1 || y > height) {\r\n\t            throw new Error();\r\n\t        }\r\n\t        nudged = false;\r\n\t        if (x == -1) {\r\n\t            points[offset] = 0;\r\n\t            nudged = true;\r\n\t        }\r\n\t        else if (x == width) {\r\n\t            points[offset] = width - 1;\r\n\t            nudged = true;\r\n\t        }\r\n\t        if (y == -1) {\r\n\t            points[offset + 1] = 0;\r\n\t            nudged = true;\r\n\t        }\r\n\t        else if (y == height) {\r\n\t            points[offset + 1] = height - 1;\r\n\t            nudged = true;\r\n\t        }\r\n\t    }\r\n\t    // Check and nudge points from end:\r\n\t    nudged = true;\r\n\t    for (var offset = points.length - 2; offset >= 0 && nudged; offset -= 2) {\r\n\t        var x = Math.floor(points[offset]);\r\n\t        var y = Math.floor(points[offset + 1]);\r\n\t        if (x < -1 || x > width || y < -1 || y > height) {\r\n\t            throw new Error();\r\n\t        }\r\n\t        nudged = false;\r\n\t        if (x == -1) {\r\n\t            points[offset] = 0;\r\n\t            nudged = true;\r\n\t        }\r\n\t        else if (x == width) {\r\n\t            points[offset] = width - 1;\r\n\t            nudged = true;\r\n\t        }\r\n\t        if (y == -1) {\r\n\t            points[offset + 1] = 0;\r\n\t            nudged = true;\r\n\t        }\r\n\t        else if (y == height) {\r\n\t            points[offset + 1] = height - 1;\r\n\t            nudged = true;\r\n\t        }\r\n\t    }\r\n\t    return points;\r\n\t}\r\n\tfunction bitArrayFromImage(image, dimension, transform) {\r\n\t    if (dimension <= 0) {\r\n\t        return null;\r\n\t    }\r\n\t    var bits = bitmatrix_1.BitMatrix.createEmpty(dimension, dimension);\r\n\t    var points = new Array(dimension << 1);\r\n\t    for (var y = 0; y < dimension; y++) {\r\n\t        var max = points.length;\r\n\t        var iValue = y + 0.5;\r\n\t        for (var x = 0; x < max; x += 2) {\r\n\t            points[x] = (x >> 1) + 0.5;\r\n\t            points[x + 1] = iValue;\r\n\t        }\r\n\t        points = perspective_transform_1.transformPoints(transform, points);\r\n\t        // Quick check to see if points transformed to something inside the image;\r\n\t        // sufficient to check the endpoints\r\n\t        try {\r\n\t            var nudgedPoints = checkAndNudgePoints(image.width, image.height, points);\r\n\t        }\r\n\t        catch (e) {\r\n\t            return null;\r\n\t        }\r\n\t        // try {\r\n\t        for (var x = 0; x < max; x += 2) {\r\n\t            bits.set(x >> 1, y, image.get(Math.floor(nudgedPoints[x]), Math.floor(nudgedPoints[x + 1])));\r\n\t        }\r\n\t    }\r\n\t    return bits;\r\n\t}\r\n\tfunction createTransform(topLeft, topRight, bottomLeft, alignmentPattern, dimension) {\r\n\t    var dimMinusThree = dimension - 3.5;\r\n\t    var bottomRightX;\r\n\t    var bottomRightY;\r\n\t    var sourceBottomRightX;\r\n\t    var sourceBottomRightY;\r\n\t    if (alignmentPattern != null) {\r\n\t        bottomRightX = alignmentPattern.x;\r\n\t        bottomRightY = alignmentPattern.y;\r\n\t        sourceBottomRightX = sourceBottomRightY = dimMinusThree - 3;\r\n\t    }\r\n\t    else {\r\n\t        // Don't have an alignment pattern, just make up the bottom-right point\r\n\t        bottomRightX = (topRight.x - topLeft.x) + bottomLeft.x;\r\n\t        bottomRightY = (topRight.y - topLeft.y) + bottomLeft.y;\r\n\t        sourceBottomRightX = sourceBottomRightY = dimMinusThree;\r\n\t    }\r\n\t    return perspective_transform_1.quadrilateralToQuadrilateral(3.5, 3.5, dimMinusThree, 3.5, sourceBottomRightX, sourceBottomRightY, 3.5, dimMinusThree, topLeft.x, topLeft.y, topRight.x, topRight.y, bottomRightX, bottomRightY, bottomLeft.x, bottomLeft.y);\r\n\t}\r\n\t// Taken from 6th grade algebra\r\n\tfunction distance(x1, y1, x2, y2) {\r\n\t    return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));\r\n\t}\r\n\t// Attempts to locate an alignment pattern in a limited region of the image, which is guessed to contain it.\r\n\t// overallEstModuleSize - estimated module size so far\r\n\t// estAlignmentX        - coordinate of center of area probably containing alignment pattern\r\n\t// estAlignmentY        - y coordinate of above</param>\r\n\t// allowanceFactor      - number of pixels in all directions to search from the center</param>\r\n\tfunction findAlignmentInRegion(overallEstModuleSize, estAlignmentX, estAlignmentY, allowanceFactor, image) {\r\n\t    estAlignmentX = Math.floor(estAlignmentX);\r\n\t    estAlignmentY = Math.floor(estAlignmentY);\r\n\t    // Look for an alignment pattern (3 modules in size) around where it should be\r\n\t    var allowance = Math.floor(allowanceFactor * overallEstModuleSize);\r\n\t    var alignmentAreaLeftX = Math.max(0, estAlignmentX - allowance);\r\n\t    var alignmentAreaRightX = Math.min(image.width, estAlignmentX + allowance);\r\n\t    if (alignmentAreaRightX - alignmentAreaLeftX < overallEstModuleSize * 3) {\r\n\t        return null;\r\n\t    }\r\n\t    var alignmentAreaTopY = Math.max(0, estAlignmentY - allowance);\r\n\t    var alignmentAreaBottomY = Math.min(image.height - 1, estAlignmentY + allowance);\r\n\t    return alignment_finder_1.findAlignment(alignmentAreaLeftX, alignmentAreaTopY, alignmentAreaRightX - alignmentAreaLeftX, alignmentAreaBottomY - alignmentAreaTopY, overallEstModuleSize, image);\r\n\t}\r\n\t// Computes the dimension (number of modules on a size) of the QR Code based on the position of the finder\r\n\t// patterns and estimated module size.\r\n\tfunction computeDimension(topLeft, topRight, bottomLeft, moduleSize) {\r\n\t    var tltrCentersDimension = Math.round(distance(topLeft.x, topLeft.y, topRight.x, topRight.y) / moduleSize);\r\n\t    var tlblCentersDimension = Math.round(distance(topLeft.x, topLeft.y, bottomLeft.x, bottomLeft.y) / moduleSize);\r\n\t    var dimension = ((tltrCentersDimension + tlblCentersDimension) >> 1) + 7;\r\n\t    switch (dimension & 0x03) {\r\n\t        // mod 4\r\n\t        case 0:\r\n\t            dimension++;\r\n\t            break;\r\n\t        // 1? do nothing\r\n\t        case 2:\r\n\t            dimension--;\r\n\t            break;\r\n\t    }\r\n\t    return dimension;\r\n\t}\r\n\t// Deduces version information purely from QR Code dimensions.\r\n\t// http://chan.catiewayne.com/z/src/131044167276.jpg\r\n\tfunction getProvisionalVersionForDimension(dimension) {\r\n\t    if (dimension % 4 != 1) {\r\n\t        return null;\r\n\t    }\r\n\t    var versionNumber = (dimension - 17) >> 2;\r\n\t    if (versionNumber < 1 || versionNumber > 40) {\r\n\t        return null;\r\n\t    }\r\n\t    return version_1.getVersionForNumber(versionNumber);\r\n\t}\r\n\t// This method traces a line from a point in the image, in the direction towards another point.\r\n\t// It begins in a black region, and keeps going until it finds white, then black, then white again.\r\n\t// It reports the distance from the start to this point.</p>\r\n\t//\r\n\t// This is used when figuring out how wide a finder pattern is, when the finder pattern\r\n\t// may be skewed or rotated.\r\n\tfunction sizeOfBlackWhiteBlackRun(fromX, fromY, toX, toY, image) {\r\n\t    fromX = Math.floor(fromX);\r\n\t    fromY = Math.floor(fromY);\r\n\t    toX = Math.floor(toX);\r\n\t    toY = Math.floor(toY);\r\n\t    // Mild variant of Bresenham's algorithm;\r\n\t    // see http://en.wikipedia.org/wiki/Bresenham's_line_algorithm\r\n\t    var steep = Math.abs(toY - fromY) > Math.abs(toX - fromX);\r\n\t    if (steep) {\r\n\t        var temp = fromX;\r\n\t        fromX = fromY;\r\n\t        fromY = temp;\r\n\t        temp = toX;\r\n\t        toX = toY;\r\n\t        toY = temp;\r\n\t    }\r\n\t    var dx = Math.abs(toX - fromX);\r\n\t    var dy = Math.abs(toY - fromY);\r\n\t    var error = -dx >> 1;\r\n\t    var xstep = fromX < toX ? 1 : -1;\r\n\t    var ystep = fromY < toY ? 1 : -1;\r\n\t    // In black pixels, looking for white, first or second time.\r\n\t    var state = 0;\r\n\t    // Loop up until x == toX, but not beyond\r\n\t    var xLimit = toX + xstep;\r\n\t    for (var x = fromX, y = fromY; x != xLimit; x += xstep) {\r\n\t        var realX = steep ? y : x;\r\n\t        var realY = steep ? x : y;\r\n\t        // Does current pixel mean we have moved white to black or vice versa?\r\n\t        // Scanning black in state 0,2 and white in state 1, so if we find the wrong\r\n\t        // color, advance to next state or end if we are in state 2 already\r\n\t        if ((state == 1) === image.get(realX, realY)) {\r\n\t            if (state == 2) {\r\n\t                return distance(x, y, fromX, fromY);\r\n\t            }\r\n\t            state++;\r\n\t        }\r\n\t        error += dy;\r\n\t        if (error > 0) {\r\n\t            if (y == toY) {\r\n\t                break;\r\n\t            }\r\n\t            y += ystep;\r\n\t            error -= dx;\r\n\t        }\r\n\t    }\r\n\t    // Found black-white-black; give the benefit of the doubt that the next pixel outside the image\r\n\t    // is \"white\" so this last point at (toX+xStep,toY) is the right ending. This is really a\r\n\t    // small approximation; (toX+xStep,toY+yStep) might be really correct. Ignore this.\r\n\t    if (state == 2) {\r\n\t        return distance(toX + xstep, toY, fromX, fromY);\r\n\t    }\r\n\t    // else we didn't find even black-white-black; no estimate is really possible\r\n\t    return NaN;\r\n\t}\r\n\t// Computes the total width of a finder pattern by looking for a black-white-black run from the center\r\n\t// in the direction of another point (another finder pattern center), and in the opposite direction too.\r\n\tfunction sizeOfBlackWhiteBlackRunBothWays(fromX, fromY, toX, toY, image) {\r\n\t    var result = sizeOfBlackWhiteBlackRun(fromX, fromY, toX, toY, image);\r\n\t    // Now count other way -- don't run off image though of course\r\n\t    var scale = 1;\r\n\t    var otherToX = fromX - (toX - fromX);\r\n\t    if (otherToX < 0) {\r\n\t        scale = fromX / (fromX - otherToX);\r\n\t        otherToX = 0;\r\n\t    }\r\n\t    else if (otherToX >= image.width) {\r\n\t        scale = (image.width - 1 - fromX) / (otherToX - fromX);\r\n\t        otherToX = image.width - 1;\r\n\t    }\r\n\t    var otherToY = (fromY - (toY - fromY) * scale);\r\n\t    scale = 1;\r\n\t    if (otherToY < 0) {\r\n\t        scale = fromY / (fromY - otherToY);\r\n\t        otherToY = 0;\r\n\t    }\r\n\t    else if (otherToY >= image.height) {\r\n\t        scale = (image.height - 1 - fromY) / (otherToY - fromY);\r\n\t        otherToY = image.height - 1;\r\n\t    }\r\n\t    otherToX = (fromX + (otherToX - fromX) * scale);\r\n\t    result += sizeOfBlackWhiteBlackRun(fromX, fromY, otherToX, otherToY, image);\r\n\t    return result - 1; // -1 because we counted the middle pixel twice\r\n\t}\r\n\tfunction calculateModuleSizeOneWay(pattern, otherPattern, image) {\r\n\t    var moduleSizeEst1 = sizeOfBlackWhiteBlackRunBothWays(pattern.x, pattern.y, otherPattern.x, otherPattern.y, image);\r\n\t    var moduleSizeEst2 = sizeOfBlackWhiteBlackRunBothWays(otherPattern.x, otherPattern.y, pattern.x, pattern.y, image);\r\n\t    if (helpers_1.isNaN(moduleSizeEst1)) {\r\n\t        return moduleSizeEst2 / 7;\r\n\t    }\r\n\t    if (helpers_1.isNaN(moduleSizeEst2)) {\r\n\t        return moduleSizeEst1 / 7;\r\n\t    }\r\n\t    // Average them, and divide by 7 since we've counted the width of 3 black modules,\r\n\t    // and 1 white and 1 black module on either side. Ergo, divide sum by 14.\r\n\t    return (moduleSizeEst1 + moduleSizeEst2) / 14;\r\n\t}\r\n\t// Computes an average estimated module size based on estimated derived from the positions of the three finder patterns.\r\n\tfunction calculateModuleSize(topLeft, topRight, bottomLeft, image) {\r\n\t    return (calculateModuleSizeOneWay(topLeft, topRight, image) + calculateModuleSizeOneWay(topLeft, bottomLeft, image)) / 2;\r\n\t}\r\n\tfunction extract(image, location) {\r\n\t    var moduleSize = calculateModuleSize(location.topLeft, location.topRight, location.bottomLeft, image);\r\n\t    if (moduleSize < 1) {\r\n\t        return null;\r\n\t    }\r\n\t    var dimension = computeDimension(location.topLeft, location.topRight, location.bottomLeft, moduleSize);\r\n\t    if (!dimension) {\r\n\t        return null;\r\n\t    }\r\n\t    var provisionalVersion = getProvisionalVersionForDimension(dimension);\r\n\t    if (provisionalVersion == null) {\r\n\t        return null;\r\n\t    }\r\n\t    var modulesBetweenFPCenters = provisionalVersion.getDimensionForVersion() - 7;\r\n\t    var alignmentPattern = null;\r\n\t    // Anything above version 1 has an alignment pattern\r\n\t    if (provisionalVersion.alignmentPatternCenters.length > 0) {\r\n\t        // Guess where a \"bottom right\" finder pattern would have been\r\n\t        var bottomRightX = location.topRight.x - location.topLeft.x + location.bottomLeft.x;\r\n\t        var bottomRightY = location.topRight.y - location.topLeft.y + location.bottomLeft.y;\r\n\t        // Estimate that alignment pattern is closer by 3 modules\r\n\t        // from \"bottom right\" to known top left location\r\n\t        var correctionToTopLeft = 1 - 3 / modulesBetweenFPCenters;\r\n\t        var estAlignmentX = location.topLeft.x + correctionToTopLeft * (bottomRightX - location.topLeft.x);\r\n\t        var estAlignmentY = location.topLeft.y + correctionToTopLeft * (bottomRightY - location.topLeft.y);\r\n\t        // Kind of arbitrary -- expand search radius before giving up\r\n\t        for (var i = 4; i <= 16; i <<= 1) {\r\n\t            alignmentPattern = findAlignmentInRegion(moduleSize, estAlignmentX, estAlignmentY, i, image);\r\n\t            if (!alignmentPattern) {\r\n\t                continue;\r\n\t            }\r\n\t            break;\r\n\t        }\r\n\t    }\r\n\t    var transform = createTransform(location.topLeft, location.topRight, location.bottomLeft, alignmentPattern, dimension);\r\n\t    return bitArrayFromImage(image, dimension, transform);\r\n\t}\r\n\texports.extract = extract;\r\n\n\n/***/ },\n/* 5 */\n/***/ function(module, exports, __webpack_require__) {\n\n\t\"use strict\";\r\n\tvar helpers_1 = __webpack_require__(6);\r\n\tfunction aboutEquals(center, moduleSize, i, j) {\r\n\t    if (Math.abs(i - center.y) <= moduleSize && Math.abs(j - center.x) <= moduleSize) {\r\n\t        var moduleSizeDiff = Math.abs(moduleSize - center.estimatedModuleSize);\r\n\t        return moduleSizeDiff <= 1 || moduleSizeDiff <= center.estimatedModuleSize;\r\n\t    }\r\n\t    return false;\r\n\t}\r\n\tfunction combineEstimate(center, i, j, newModuleSize) {\r\n\t    var combinedX = (center.x + j) / 2;\r\n\t    var combinedY = (center.y + i) / 2;\r\n\t    var combinedModuleSize = (center.estimatedModuleSize + newModuleSize) / 2;\r\n\t    return { x: combinedX, y: combinedY, estimatedModuleSize: combinedModuleSize };\r\n\t}\r\n\t// returns true if the proportions of the counts is close enough to the 1/1/1 ratios used by alignment\r\n\t// patterns to be considered a match\r\n\tfunction foundPatternCross(stateCount, moduleSize) {\r\n\t    var maxVariance = moduleSize / 2;\r\n\t    for (var i = 0; i < 3; i++) {\r\n\t        if (Math.abs(moduleSize - stateCount[i]) >= maxVariance) {\r\n\t            return false;\r\n\t        }\r\n\t    }\r\n\t    return true;\r\n\t}\r\n\t// Given a count of black/white/black pixels just seen and an end position,\r\n\t// figures the location of the center of this black/white/black run.\r\n\tfunction centerFromEnd(stateCount, end) {\r\n\t    var result = (end - stateCount[2]) - stateCount[1] / 2;\r\n\t    if (helpers_1.isNaN(result)) {\r\n\t        return null;\r\n\t    }\r\n\t    return result;\r\n\t}\r\n\t// After a horizontal scan finds a potential alignment pattern, this method\r\n\t// \"cross-checks\" by scanning down vertically through the center of the possible\r\n\t// alignment pattern to see if the same proportion is detected.</p>\r\n\t//\r\n\t// startI - row where an alignment pattern was detected</param>\r\n\t// centerJ - center of the section that appears to cross an alignment pattern</param>\r\n\t// maxCount - maximum reasonable number of modules that should be observed in any reading state, based\r\n\t//   on the results of the horizontal scan</param>\r\n\t// originalStateCountTotal - The original state count total\r\n\tfunction crossCheckVertical(startI, centerJ, maxCount, originalStateCountTotal, moduleSize, image) {\r\n\t    var maxI = image.height;\r\n\t    var stateCount = [0, 0, 0];\r\n\t    // Start counting up from center\r\n\t    var i = startI;\r\n\t    while (i >= 0 && image.get(centerJ, i) && stateCount[1] <= maxCount) {\r\n\t        stateCount[1]++;\r\n\t        i--;\r\n\t    }\r\n\t    // If already too many modules in this state or ran off the edge:\r\n\t    if (i < 0 || stateCount[1] > maxCount) {\r\n\t        return null;\r\n\t    }\r\n\t    while (i >= 0 && !image.get(centerJ, i) && stateCount[0] <= maxCount) {\r\n\t        stateCount[0]++;\r\n\t        i--;\r\n\t    }\r\n\t    if (stateCount[0] > maxCount) {\r\n\t        return null;\r\n\t    }\r\n\t    // Now also count down from center\r\n\t    i = startI + 1;\r\n\t    while (i < maxI && image.get(centerJ, i) && stateCount[1] <= maxCount) {\r\n\t        stateCount[1]++;\r\n\t        i++;\r\n\t    }\r\n\t    if (i == maxI || stateCount[1] > maxCount) {\r\n\t        return null;\r\n\t    }\r\n\t    while (i < maxI && !image.get(centerJ, i) && stateCount[2] <= maxCount) {\r\n\t        stateCount[2]++;\r\n\t        i++;\r\n\t    }\r\n\t    if (stateCount[2] > maxCount) {\r\n\t        return null;\r\n\t    }\r\n\t    var stateCountTotal = stateCount[0] + stateCount[1] + stateCount[2];\r\n\t    if (5 * Math.abs(stateCountTotal - originalStateCountTotal) >= 2 * originalStateCountTotal) {\r\n\t        return null;\r\n\t    }\r\n\t    return foundPatternCross(stateCount, moduleSize) ? centerFromEnd(stateCount, i) : null;\r\n\t}\r\n\tfunction findAlignment(startX, startY, width, height, moduleSize, image) {\r\n\t    // Global State :(\r\n\t    var possibleCenters = [];\r\n\t    // This is called when a horizontal scan finds a possible alignment pattern. It will\r\n\t    // cross check with a vertical scan, and if successful, will see if this pattern had been\r\n\t    // found on a previous horizontal scan. If so, we consider it confirmed and conclude we have\r\n\t    // found the alignment pattern.</p>\r\n\t    //\r\n\t    // stateCount - reading state module counts from horizontal scan\r\n\t    // i - where alignment pattern may be found\r\n\t    // j - end of possible alignment pattern in row\r\n\t    function handlePossibleCenter(stateCount, i, j, moduleSize) {\r\n\t        var stateCountTotal = stateCount[0] + stateCount[1] + stateCount[2];\r\n\t        var centerJ = centerFromEnd(stateCount, j);\r\n\t        if (centerJ == null) {\r\n\t            return null;\r\n\t        }\r\n\t        var centerI = crossCheckVertical(i, Math.floor(centerJ), 2 * stateCount[1], stateCountTotal, moduleSize, image);\r\n\t        if (centerI != null) {\r\n\t            var estimatedModuleSize = (stateCount[0] + stateCount[1] + stateCount[2]) / 3;\r\n\t            for (var i2 in possibleCenters) {\r\n\t                var center = possibleCenters[i2];\r\n\t                // Look for about the same center and module size:\r\n\t                if (aboutEquals(center, estimatedModuleSize, centerI, centerJ)) {\r\n\t                    return combineEstimate(center, centerI, centerJ, estimatedModuleSize);\r\n\t                }\r\n\t            }\r\n\t            // Hadn't found this before; save it\r\n\t            var point = { x: centerJ, y: centerI, estimatedModuleSize: estimatedModuleSize };\r\n\t            possibleCenters.push(point);\r\n\t        }\r\n\t        return null;\r\n\t    }\r\n\t    var maxJ = startX + width;\r\n\t    var middleI = startY + (height >> 1);\r\n\t    // We are looking for black/white/black modules in 1:1:1 ratio;\r\n\t    // this tracks the number of black/white/black modules seen so far\r\n\t    var stateCount = [0, 0, 0]; // WTF\r\n\t    for (var iGen = 0; iGen < height; iGen++) {\r\n\t        // Search from middle outwards\r\n\t        var i = middleI + ((iGen & 0x01) == 0 ? ((iGen + 1) >> 1) : -((iGen + 1) >> 1));\r\n\t        stateCount[0] = 0;\r\n\t        stateCount[1] = 0;\r\n\t        stateCount[2] = 0;\r\n\t        var j = startX;\r\n\t        // Burn off leading white pixels before anything else; if we start in the middle of\r\n\t        // a white run, it doesn't make sense to count its length, since we don't know if the\r\n\t        // white run continued to the left of the start point\r\n\t        while (j < maxJ && !image.get(j, i)) {\r\n\t            j++;\r\n\t        }\r\n\t        var currentState = 0;\r\n\t        while (j < maxJ) {\r\n\t            if (image.get(j, i)) {\r\n\t                // Black pixel\r\n\t                if (currentState == 1) {\r\n\t                    // Counting black pixels\r\n\t                    stateCount[currentState]++;\r\n\t                }\r\n\t                else {\r\n\t                    // Counting white pixels\r\n\t                    if (currentState == 2) {\r\n\t                        // A winner?\r\n\t                        if (foundPatternCross(stateCount, moduleSize)) {\r\n\t                            // Yes\r\n\t                            confirmed = handlePossibleCenter(stateCount, i, j, moduleSize);\r\n\t                            if (confirmed != null) {\r\n\t                                return confirmed;\r\n\t                            }\r\n\t                        }\r\n\t                        stateCount[0] = stateCount[2];\r\n\t                        stateCount[1] = 1;\r\n\t                        stateCount[2] = 0;\r\n\t                        currentState = 1;\r\n\t                    }\r\n\t                    else {\r\n\t                        stateCount[++currentState]++;\r\n\t                    }\r\n\t                }\r\n\t            }\r\n\t            else {\r\n\t                // White pixel\r\n\t                if (currentState == 1) {\r\n\t                    // Counting black pixels\r\n\t                    currentState++;\r\n\t                }\r\n\t                stateCount[currentState]++;\r\n\t            }\r\n\t            j++;\r\n\t        }\r\n\t        if (foundPatternCross(stateCount, moduleSize)) {\r\n\t            var confirmed = handlePossibleCenter(stateCount, i, moduleSize, maxJ);\r\n\t            if (confirmed != null) {\r\n\t                return confirmed;\r\n\t            }\r\n\t        }\r\n\t    }\r\n\t    // Hmm, nothing we saw was observed and confirmed twice. If we had\r\n\t    // any guess at all, return it.\r\n\t    if (possibleCenters.length != 0) {\r\n\t        return possibleCenters[0];\r\n\t    }\r\n\t    return null;\r\n\t}\r\n\texports.findAlignment = findAlignment;\r\n\n\n/***/ },\n/* 6 */\n/***/ function(module, exports) {\n\n\t\"use strict\";\r\n\tvar BITS_SET_IN_HALF_BYTE = [0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4];\r\n\tfunction numBitsDiffering(a, b) {\r\n\t    a ^= b; // a now has a 1 bit exactly where its bit differs with b's\r\n\t    // Count bits set quickly with a series of lookups:\r\n\t    return BITS_SET_IN_HALF_BYTE[a & 0x0F] +\r\n\t        BITS_SET_IN_HALF_BYTE[((a >> 4) & 0x0F)] +\r\n\t        BITS_SET_IN_HALF_BYTE[((a >> 8) & 0x0F)] +\r\n\t        BITS_SET_IN_HALF_BYTE[((a >> 12) & 0x0F)] +\r\n\t        BITS_SET_IN_HALF_BYTE[((a >> 16) & 0x0F)] +\r\n\t        BITS_SET_IN_HALF_BYTE[((a >> 20) & 0x0F)] +\r\n\t        BITS_SET_IN_HALF_BYTE[((a >> 24) & 0x0F)] +\r\n\t        BITS_SET_IN_HALF_BYTE[((a >> 28) & 0x0F)];\r\n\t}\r\n\texports.numBitsDiffering = numBitsDiffering;\r\n\t// Taken from underscore JS\r\n\tfunction isNaN(obj) {\r\n\t    return Object.prototype.toString.call(obj) === '[object Number]' && obj !== +obj;\r\n\t}\r\n\texports.isNaN = isNaN;\r\n\n\n/***/ },\n/* 7 */\n/***/ function(module, exports) {\n\n\t/// <reference path=\"../common/types.d.ts\" />\r\n\t\"use strict\";\r\n\tfunction squareToQuadrilateral(x0, y0, x1, y1, x2, y2, x3, y3) {\r\n\t    var dx3 = x0 - x1 + x2 - x3;\r\n\t    var dy3 = y0 - y1 + y2 - y3;\r\n\t    if (dx3 == 0 && dy3 == 0) {\r\n\t        // Affine\r\n\t        return {\r\n\t            a11: x1 - x0,\r\n\t            a21: x2 - x1,\r\n\t            a31: x0,\r\n\t            a12: y1 - y0,\r\n\t            a22: y2 - y1,\r\n\t            a32: y0,\r\n\t            a13: 0,\r\n\t            a23: 0,\r\n\t            a33: 1\r\n\t        };\r\n\t    }\r\n\t    else {\r\n\t        var dx1 = x1 - x2;\r\n\t        var dx2 = x3 - x2;\r\n\t        var dy1 = y1 - y2;\r\n\t        var dy2 = y3 - y2;\r\n\t        var denominator = dx1 * dy2 - dx2 * dy1;\r\n\t        var a13 = (dx3 * dy2 - dx2 * dy3) / denominator;\r\n\t        var a23 = (dx1 * dy3 - dx3 * dy1) / denominator;\r\n\t        return {\r\n\t            a11: x1 - x0 + a13 * x1,\r\n\t            a21: x3 - x0 + a23 * x3,\r\n\t            a31: x0,\r\n\t            a12: y1 - y0 + a13 * y1,\r\n\t            a22: y3 - y0 + a23 * y3,\r\n\t            a32: y0,\r\n\t            a13: a13,\r\n\t            a23: a23,\r\n\t            a33: 1\r\n\t        };\r\n\t    }\r\n\t}\r\n\tfunction buildAdjoint(i) {\r\n\t    return {\r\n\t        a11: i.a22 * i.a33 - i.a23 * i.a32,\r\n\t        a21: i.a23 * i.a31 - i.a21 * i.a33,\r\n\t        a31: i.a21 * i.a32 - i.a22 * i.a31,\r\n\t        a12: i.a13 * i.a32 - i.a12 * i.a33,\r\n\t        a22: i.a11 * i.a33 - i.a13 * i.a31,\r\n\t        a32: i.a12 * i.a31 - i.a11 * i.a32,\r\n\t        a13: i.a12 * i.a23 - i.a13 * i.a22,\r\n\t        a23: i.a13 * i.a21 - i.a11 * i.a23,\r\n\t        a33: i.a11 * i.a22 - i.a12 * i.a21\r\n\t    };\r\n\t}\r\n\tfunction times(a, b) {\r\n\t    return {\r\n\t        a11: a.a11 * b.a11 + a.a21 * b.a12 + a.a31 * b.a13,\r\n\t        a21: a.a11 * b.a21 + a.a21 * b.a22 + a.a31 * b.a23,\r\n\t        a31: a.a11 * b.a31 + a.a21 * b.a32 + a.a31 * b.a33,\r\n\t        a12: a.a12 * b.a11 + a.a22 * b.a12 + a.a32 * b.a13,\r\n\t        a22: a.a12 * b.a21 + a.a22 * b.a22 + a.a32 * b.a23,\r\n\t        a32: a.a12 * b.a31 + a.a22 * b.a32 + a.a32 * b.a33,\r\n\t        a13: a.a13 * b.a11 + a.a23 * b.a12 + a.a33 * b.a13,\r\n\t        a23: a.a13 * b.a21 + a.a23 * b.a22 + a.a33 * b.a23,\r\n\t        a33: a.a13 * b.a31 + a.a23 * b.a32 + a.a33 * b.a33\r\n\t    };\r\n\t}\r\n\tfunction quadrilateralToSquare(x0, y0, x1, y1, x2, y2, x3, y3) {\r\n\t    // Here, the adjoint serves as the inverse:\r\n\t    return buildAdjoint(squareToQuadrilateral(x0, y0, x1, y1, x2, y2, x3, y3));\r\n\t}\r\n\tfunction transformPoints(transform, points) {\r\n\t    var max = points.length;\r\n\t    var a11 = transform.a11;\r\n\t    var a12 = transform.a12;\r\n\t    var a13 = transform.a13;\r\n\t    var a21 = transform.a21;\r\n\t    var a22 = transform.a22;\r\n\t    var a23 = transform.a23;\r\n\t    var a31 = transform.a31;\r\n\t    var a32 = transform.a32;\r\n\t    var a33 = transform.a33;\r\n\t    for (var i = 0; i < max; i += 2) {\r\n\t        var x = points[i];\r\n\t        var y = points[i + 1];\r\n\t        var denominator = a13 * x + a23 * y + a33;\r\n\t        points[i] = (a11 * x + a21 * y + a31) / denominator;\r\n\t        points[i + 1] = (a12 * x + a22 * y + a32) / denominator;\r\n\t    }\r\n\t    return points;\r\n\t}\r\n\texports.transformPoints = transformPoints;\r\n\tfunction quadrilateralToQuadrilateral(x0, y0, x1, y1, x2, y2, x3, y3, x0p, y0p, x1p, y1p, x2p, y2p, x3p, y3p) {\r\n\t    var qToS = quadrilateralToSquare(x0, y0, x1, y1, x2, y2, x3, y3);\r\n\t    var sToQ = squareToQuadrilateral(x0p, y0p, x1p, y1p, x2p, y2p, x3p, y3p);\r\n\t    return times(sToQ, qToS);\r\n\t}\r\n\texports.quadrilateralToQuadrilateral = quadrilateralToQuadrilateral;\r\n\n\n/***/ },\n/* 8 */\n/***/ function(module, exports, __webpack_require__) {\n\n\t\"use strict\";\r\n\tvar helpers_1 = __webpack_require__(6);\r\n\tvar VERSION_DECODE_INFO = [\r\n\t    0x07C94, 0x085BC, 0x09A99, 0x0A4D3, 0x0BBF6,\r\n\t    0x0C762, 0x0D847, 0x0E60D, 0x0F928, 0x10B78,\r\n\t    0x1145D, 0x12A17, 0x13532, 0x149A6, 0x15683,\r\n\t    0x168C9, 0x177EC, 0x18EC4, 0x191E1, 0x1AFAB,\r\n\t    0x1B08E, 0x1CC1A, 0x1D33F, 0x1ED75, 0x1F250,\r\n\t    0x209D5, 0x216F0, 0x228BA, 0x2379F, 0x24B0B,\r\n\t    0x2542E, 0x26A64, 0x27541, 0x28C69,\r\n\t];\r\n\tvar ECB = (function () {\r\n\t    function ECB(_count, _dataCodewords) {\r\n\t        this.count = _count;\r\n\t        this.dataCodewords = _dataCodewords;\r\n\t    }\r\n\t    return ECB;\r\n\t}());\r\n\tvar ECBlocks = (function () {\r\n\t    function ECBlocks(_ecCodewordsPerBlock) {\r\n\t        var _ecBlocks = [];\r\n\t        for (var _i = 1; _i < arguments.length; _i++) {\r\n\t            _ecBlocks[_i - 1] = arguments[_i];\r\n\t        }\r\n\t        this.ecCodewordsPerBlock = _ecCodewordsPerBlock;\r\n\t        this.ecBlocks = _ecBlocks;\r\n\t    }\r\n\t    ECBlocks.prototype.getNumBlocks = function () {\r\n\t        return this.ecBlocks.reduce(function (a, b) { return (a + b.count); }, 0);\r\n\t    };\r\n\t    ECBlocks.prototype.getTotalECCodewords = function () {\r\n\t        return this.ecCodewordsPerBlock * this.getNumBlocks();\r\n\t    };\r\n\t    return ECBlocks;\r\n\t}());\r\n\tvar Version = (function () {\r\n\t    function Version(_versionNumber, _alignmentPatternCenters) {\r\n\t        var _ecBlocks = [];\r\n\t        for (var _i = 2; _i < arguments.length; _i++) {\r\n\t            _ecBlocks[_i - 2] = arguments[_i];\r\n\t        }\r\n\t        this.versionNumber = _versionNumber;\r\n\t        this.alignmentPatternCenters = _alignmentPatternCenters;\r\n\t        this.ecBlocks = _ecBlocks;\r\n\t        var total = 0;\r\n\t        var ecCodewords = this.ecBlocks[0].ecCodewordsPerBlock;\r\n\t        var ecbArray = this.ecBlocks[0].ecBlocks;\r\n\t        ecbArray.forEach(function (ecBlock) {\r\n\t            total += ecBlock.count * (ecBlock.dataCodewords + ecCodewords);\r\n\t        });\r\n\t        this.totalCodewords = total;\r\n\t    }\r\n\t    Version.prototype.getDimensionForVersion = function () {\r\n\t        return 17 + 4 * this.versionNumber;\r\n\t    };\r\n\t    Version.prototype.getECBlocksForLevel = function (ecLevel) {\r\n\t        return this.ecBlocks[ecLevel.ordinal];\r\n\t    };\r\n\t    Version.decodeVersionInformation = function (versionBits) {\r\n\t        var bestDifference = Infinity;\r\n\t        var bestVersion = 0;\r\n\t        for (var i = 0; i < VERSION_DECODE_INFO.length; i++) {\r\n\t            var targetVersion = VERSION_DECODE_INFO[i];\r\n\t            // Do the version info bits match exactly? done.\r\n\t            if (targetVersion == versionBits) {\r\n\t                return getVersionForNumber(i + 7);\r\n\t            }\r\n\t            // Otherwise see if this is the closest to a real version info bit string\r\n\t            // we have seen so far\r\n\t            var bitsDifference = helpers_1.numBitsDiffering(versionBits, targetVersion);\r\n\t            if (bitsDifference < bestDifference) {\r\n\t                bestVersion = i + 7;\r\n\t                bestDifference = bitsDifference;\r\n\t            }\r\n\t        }\r\n\t        // We can tolerate up to 3 bits of error since no two version info codewords will\r\n\t        // differ in less than 8 bits.\r\n\t        if (bestDifference <= 3) {\r\n\t            return getVersionForNumber(bestVersion);\r\n\t        }\r\n\t        // If we didn't find a close enough match, fail\r\n\t        return null;\r\n\t    };\r\n\t    return Version;\r\n\t}());\r\n\texports.Version = Version;\r\n\tvar VERSIONS = [\r\n\t    new Version(1, [], new ECBlocks(7, new ECB(1, 19)), new ECBlocks(10, new ECB(1, 16)), new ECBlocks(13, new ECB(1, 13)), new ECBlocks(17, new ECB(1, 9))),\r\n\t    new Version(2, [6, 18], new ECBlocks(10, new ECB(1, 34)), new ECBlocks(16, new ECB(1, 28)), new ECBlocks(22, new ECB(1, 22)), new ECBlocks(28, new ECB(1, 16))),\r\n\t    new Version(3, [6, 22], new ECBlocks(15, new ECB(1, 55)), new ECBlocks(26, new ECB(1, 44)), new ECBlocks(18, new ECB(2, 17)), new ECBlocks(22, new ECB(2, 13))),\r\n\t    new Version(4, [6, 26], new ECBlocks(20, new ECB(1, 80)), new ECBlocks(18, new ECB(2, 32)), new ECBlocks(26, new ECB(2, 24)), new ECBlocks(16, new ECB(4, 9))),\r\n\t    new Version(5, [6, 30], new ECBlocks(26, new ECB(1, 108)), new ECBlocks(24, new ECB(2, 43)), new ECBlocks(18, new ECB(2, 15), new ECB(2, 16)), new ECBlocks(22, new ECB(2, 11), new ECB(2, 12))),\r\n\t    new Version(6, [6, 34], new ECBlocks(18, new ECB(2, 68)), new ECBlocks(16, new ECB(4, 27)), new ECBlocks(24, new ECB(4, 19)), new ECBlocks(28, new ECB(4, 15))),\r\n\t    new Version(7, [6, 22, 38], new ECBlocks(20, new ECB(2, 78)), new ECBlocks(18, new ECB(4, 31)), new ECBlocks(18, new ECB(2, 14), new ECB(4, 15)), new ECBlocks(26, new ECB(4, 13), new ECB(1, 14))),\r\n\t    new Version(8, [6, 24, 42], new ECBlocks(24, new ECB(2, 97)), new ECBlocks(22, new ECB(2, 38), new ECB(2, 39)), new ECBlocks(22, new ECB(4, 18), new ECB(2, 19)), new ECBlocks(26, new ECB(4, 14), new ECB(2, 15))),\r\n\t    new Version(9, [6, 26, 46], new ECBlocks(30, new ECB(2, 116)), new ECBlocks(22, new ECB(3, 36), new ECB(2, 37)), new ECBlocks(20, new ECB(4, 16), new ECB(4, 17)), new ECBlocks(24, new ECB(4, 12), new ECB(4, 13))),\r\n\t    new Version(10, [6, 28, 50], new ECBlocks(18, new ECB(2, 68), new ECB(2, 69)), new ECBlocks(26, new ECB(4, 43), new ECB(1, 44)), new ECBlocks(24, new ECB(6, 19), new ECB(2, 20)), new ECBlocks(28, new ECB(6, 15), new ECB(2, 16))),\r\n\t    new Version(11, [6, 30, 54], new ECBlocks(20, new ECB(4, 81)), new ECBlocks(30, new ECB(1, 50), new ECB(4, 51)), new ECBlocks(28, new ECB(4, 22), new ECB(4, 23)), new ECBlocks(24, new ECB(3, 12), new ECB(8, 13))),\r\n\t    new Version(12, [6, 32, 58], new ECBlocks(24, new ECB(2, 92), new ECB(2, 93)), new ECBlocks(22, new ECB(6, 36), new ECB(2, 37)), new ECBlocks(26, new ECB(4, 20), new ECB(6, 21)), new ECBlocks(28, new ECB(7, 14), new ECB(4, 15))),\r\n\t    new Version(13, [6, 34, 62], new ECBlocks(26, new ECB(4, 107)), new ECBlocks(22, new ECB(8, 37), new ECB(1, 38)), new ECBlocks(24, new ECB(8, 20), new ECB(4, 21)), new ECBlocks(22, new ECB(12, 11), new ECB(4, 12))),\r\n\t    new Version(14, [6, 26, 46, 66], new ECBlocks(30, new ECB(3, 115), new ECB(1, 116)), new ECBlocks(24, new ECB(4, 40), new ECB(5, 41)), new ECBlocks(20, new ECB(11, 16), new ECB(5, 17)), new ECBlocks(24, new ECB(11, 12), new ECB(5, 13))),\r\n\t    new Version(15, [6, 26, 48, 70], new ECBlocks(22, new ECB(5, 87), new ECB(1, 88)), new ECBlocks(24, new ECB(5, 41), new ECB(5, 42)), new ECBlocks(30, new ECB(5, 24), new ECB(7, 25)), new ECBlocks(24, new ECB(11, 12), new ECB(7, 13))),\r\n\t    new Version(16, [6, 26, 50, 74], new ECBlocks(24, new ECB(5, 98), new ECB(1, 99)), new ECBlocks(28, new ECB(7, 45), new ECB(3, 46)), new ECBlocks(24, new ECB(15, 19), new ECB(2, 20)), new ECBlocks(30, new ECB(3, 15), new ECB(13, 16))),\r\n\t    new Version(17, [6, 30, 54, 78], new ECBlocks(28, new ECB(1, 107), new ECB(5, 108)), new ECBlocks(28, new ECB(10, 46), new ECB(1, 47)), new ECBlocks(28, new ECB(1, 22), new ECB(15, 23)), new ECBlocks(28, new ECB(2, 14), new ECB(17, 15))),\r\n\t    new Version(18, [6, 30, 56, 82], new ECBlocks(30, new ECB(5, 120), new ECB(1, 121)), new ECBlocks(26, new ECB(9, 43), new ECB(4, 44)), new ECBlocks(28, new ECB(17, 22), new ECB(1, 23)), new ECBlocks(28, new ECB(2, 14), new ECB(19, 15))),\r\n\t    new Version(19, [6, 30, 58, 86], new ECBlocks(28, new ECB(3, 113), new ECB(4, 114)), new ECBlocks(26, new ECB(3, 44), new ECB(11, 45)), new ECBlocks(26, new ECB(17, 21), new ECB(4, 22)), new ECBlocks(26, new ECB(9, 13), new ECB(16, 14))),\r\n\t    new Version(20, [6, 34, 62, 90], new ECBlocks(28, new ECB(3, 107), new ECB(5, 108)), new ECBlocks(26, new ECB(3, 41), new ECB(13, 42)), new ECBlocks(30, new ECB(15, 24), new ECB(5, 25)), new ECBlocks(28, new ECB(15, 15), new ECB(10, 16))),\r\n\t    new Version(21, [6, 28, 50, 72, 94], new ECBlocks(28, new ECB(4, 116), new ECB(4, 117)), new ECBlocks(26, new ECB(17, 42)), new ECBlocks(28, new ECB(17, 22), new ECB(6, 23)), new ECBlocks(30, new ECB(19, 16), new ECB(6, 17))),\r\n\t    new Version(22, [6, 26, 50, 74, 98], new ECBlocks(28, new ECB(2, 111), new ECB(7, 112)), new ECBlocks(28, new ECB(17, 46)), new ECBlocks(30, new ECB(7, 24), new ECB(16, 25)), new ECBlocks(24, new ECB(34, 13))),\r\n\t    new Version(23, [6, 30, 54, 74, 102], new ECBlocks(30, new ECB(4, 121), new ECB(5, 122)), new ECBlocks(28, new ECB(4, 47), new ECB(14, 48)), new ECBlocks(30, new ECB(11, 24), new ECB(14, 25)), new ECBlocks(30, new ECB(16, 15), new ECB(14, 16))),\r\n\t    new Version(24, [6, 28, 54, 80, 106], new ECBlocks(30, new ECB(6, 117), new ECB(4, 118)), new ECBlocks(28, new ECB(6, 45), new ECB(14, 46)), new ECBlocks(30, new ECB(11, 24), new ECB(16, 25)), new ECBlocks(30, new ECB(30, 16), new ECB(2, 17))),\r\n\t    new Version(25, [6, 32, 58, 84, 110], new ECBlocks(26, new ECB(8, 106), new ECB(4, 107)), new ECBlocks(28, new ECB(8, 47), new ECB(13, 48)), new ECBlocks(30, new ECB(7, 24), new ECB(22, 25)), new ECBlocks(30, new ECB(22, 15), new ECB(13, 16))),\r\n\t    new Version(26, [6, 30, 58, 86, 114], new ECBlocks(28, new ECB(10, 114), new ECB(2, 115)), new ECBlocks(28, new ECB(19, 46), new ECB(4, 47)), new ECBlocks(28, new ECB(28, 22), new ECB(6, 23)), new ECBlocks(30, new ECB(33, 16), new ECB(4, 17))),\r\n\t    new Version(27, [6, 34, 62, 90, 118], new ECBlocks(30, new ECB(8, 122), new ECB(4, 123)), new ECBlocks(28, new ECB(22, 45), new ECB(3, 46)), new ECBlocks(30, new ECB(8, 23), new ECB(26, 24)), new ECBlocks(30, new ECB(12, 15), new ECB(28, 16))),\r\n\t    new Version(28, [6, 26, 50, 74, 98, 122], new ECBlocks(30, new ECB(3, 117), new ECB(10, 118)), new ECBlocks(28, new ECB(3, 45), new ECB(23, 46)), new ECBlocks(30, new ECB(4, 24), new ECB(31, 25)), new ECBlocks(30, new ECB(11, 15), new ECB(31, 16))),\r\n\t    new Version(29, [6, 30, 54, 78, 102, 126], new ECBlocks(30, new ECB(7, 116), new ECB(7, 117)), new ECBlocks(28, new ECB(21, 45), new ECB(7, 46)), new ECBlocks(30, new ECB(1, 23), new ECB(37, 24)), new ECBlocks(30, new ECB(19, 15), new ECB(26, 16))),\r\n\t    new Version(30, [6, 26, 52, 78, 104, 130], new ECBlocks(30, new ECB(5, 115), new ECB(10, 116)), new ECBlocks(28, new ECB(19, 47), new ECB(10, 48)), new ECBlocks(30, new ECB(15, 24), new ECB(25, 25)), new ECBlocks(30, new ECB(23, 15), new ECB(25, 16))),\r\n\t    new Version(31, [6, 30, 56, 82, 108, 134], new ECBlocks(30, new ECB(13, 115), new ECB(3, 116)), new ECBlocks(28, new ECB(2, 46), new ECB(29, 47)), new ECBlocks(30, new ECB(42, 24), new ECB(1, 25)), new ECBlocks(30, new ECB(23, 15), new ECB(28, 16))),\r\n\t    new Version(32, [6, 34, 60, 86, 112, 138], new ECBlocks(30, new ECB(17, 115)), new ECBlocks(28, new ECB(10, 46), new ECB(23, 47)), new ECBlocks(30, new ECB(10, 24), new ECB(35, 25)), new ECBlocks(30, new ECB(19, 15), new ECB(35, 16))),\r\n\t    new Version(33, [6, 30, 58, 86, 114, 142], new ECBlocks(30, new ECB(17, 115), new ECB(1, 116)), new ECBlocks(28, new ECB(14, 46), new ECB(21, 47)), new ECBlocks(30, new ECB(29, 24), new ECB(19, 25)), new ECBlocks(30, new ECB(11, 15), new ECB(46, 16))),\r\n\t    new Version(34, [6, 34, 62, 90, 118, 146], new ECBlocks(30, new ECB(13, 115), new ECB(6, 116)), new ECBlocks(28, new ECB(14, 46), new ECB(23, 47)), new ECBlocks(30, new ECB(44, 24), new ECB(7, 25)), new ECBlocks(30, new ECB(59, 16), new ECB(1, 17))),\r\n\t    new Version(35, [6, 30, 54, 78, 102, 126, 150], new ECBlocks(30, new ECB(12, 121), new ECB(7, 122)), new ECBlocks(28, new ECB(12, 47), new ECB(26, 48)), new ECBlocks(30, new ECB(39, 24), new ECB(14, 25)), new ECBlocks(30, new ECB(22, 15), new ECB(41, 16))),\r\n\t    new Version(36, [6, 24, 50, 76, 102, 128, 154], new ECBlocks(30, new ECB(6, 121), new ECB(14, 122)), new ECBlocks(28, new ECB(6, 47), new ECB(34, 48)), new ECBlocks(30, new ECB(46, 24), new ECB(10, 25)), new ECBlocks(30, new ECB(2, 15), new ECB(64, 16))),\r\n\t    new Version(37, [6, 28, 54, 80, 106, 132, 158], new ECBlocks(30, new ECB(17, 122), new ECB(4, 123)), new ECBlocks(28, new ECB(29, 46), new ECB(14, 47)), new ECBlocks(30, new ECB(49, 24), new ECB(10, 25)), new ECBlocks(30, new ECB(24, 15), new ECB(46, 16))),\r\n\t    new Version(38, [6, 32, 58, 84, 110, 136, 162], new ECBlocks(30, new ECB(4, 122), new ECB(18, 123)), new ECBlocks(28, new ECB(13, 46), new ECB(32, 47)), new ECBlocks(30, new ECB(48, 24), new ECB(14, 25)), new ECBlocks(30, new ECB(42, 15), new ECB(32, 16))),\r\n\t    new Version(39, [6, 26, 54, 82, 110, 138, 166], new ECBlocks(30, new ECB(20, 117), new ECB(4, 118)), new ECBlocks(28, new ECB(40, 47), new ECB(7, 48)), new ECBlocks(30, new ECB(43, 24), new ECB(22, 25)), new ECBlocks(30, new ECB(10, 15), new ECB(67, 16))),\r\n\t    new Version(40, [6, 30, 58, 86, 114, 142, 170], new ECBlocks(30, new ECB(19, 118), new ECB(6, 119)), new ECBlocks(28, new ECB(18, 47), new ECB(31, 48)), new ECBlocks(30, new ECB(34, 24), new ECB(34, 25)), new ECBlocks(30, new ECB(20, 15), new ECB(61, 16))),\r\n\t];\r\n\tfunction getVersionForNumber(versionNumber) {\r\n\t    if (versionNumber < 1 || versionNumber > 40) {\r\n\t        throw new Error(\"Invalid version number \" + versionNumber);\r\n\t    }\r\n\t    return VERSIONS[versionNumber - 1];\r\n\t}\r\n\texports.getVersionForNumber = getVersionForNumber;\r\n\n\n/***/ },\n/* 9 */\n/***/ function(module, exports, __webpack_require__) {\n\n\t\"use strict\";\r\n\tvar bitmatrix_1 = __webpack_require__(2);\r\n\tvar decodeqrdata_1 = __webpack_require__(10);\r\n\tvar helpers_1 = __webpack_require__(6);\r\n\tvar reedsolomon_1 = __webpack_require__(12);\r\n\tvar version_1 = __webpack_require__(8);\r\n\tvar FORMAT_INFO_MASK_QR = 0x5412;\r\n\tvar FORMAT_INFO_DECODE_LOOKUP = [\r\n\t    [0x5412, 0x00],\r\n\t    [0x5125, 0x01],\r\n\t    [0x5E7C, 0x02],\r\n\t    [0x5B4B, 0x03],\r\n\t    [0x45F9, 0x04],\r\n\t    [0x40CE, 0x05],\r\n\t    [0x4F97, 0x06],\r\n\t    [0x4AA0, 0x07],\r\n\t    [0x77C4, 0x08],\r\n\t    [0x72F3, 0x09],\r\n\t    [0x7DAA, 0x0A],\r\n\t    [0x789D, 0x0B],\r\n\t    [0x662F, 0x0C],\r\n\t    [0x6318, 0x0D],\r\n\t    [0x6C41, 0x0E],\r\n\t    [0x6976, 0x0F],\r\n\t    [0x1689, 0x10],\r\n\t    [0x13BE, 0x11],\r\n\t    [0x1CE7, 0x12],\r\n\t    [0x19D0, 0x13],\r\n\t    [0x0762, 0x14],\r\n\t    [0x0255, 0x15],\r\n\t    [0x0D0C, 0x16],\r\n\t    [0x083B, 0x17],\r\n\t    [0x355F, 0x18],\r\n\t    [0x3068, 0x19],\r\n\t    [0x3F31, 0x1A],\r\n\t    [0x3A06, 0x1B],\r\n\t    [0x24B4, 0x1C],\r\n\t    [0x2183, 0x1D],\r\n\t    [0x2EDA, 0x1E],\r\n\t    [0x2BED, 0x1F],\r\n\t];\r\n\tvar DATA_MASKS = [\r\n\t    function (i, j) { return ((i + j) & 0x01) === 0; },\r\n\t    function (i, j) { return (i & 0x01) === 0; },\r\n\t    function (i, j) { return j % 3 == 0; },\r\n\t    function (i, j) { return (i + j) % 3 === 0; },\r\n\t    function (i, j) { return (((i >> 1) + (j / 3)) & 0x01) === 0; },\r\n\t    function (i, j) { return ((i * j) & 0x01) + ((i * j) % 3) === 0; },\r\n\t    function (i, j) { return ((((i * j) & 0x01) + ((i * j) % 3)) & 0x01) === 0; },\r\n\t    function (i, j) { return ((((i + j) & 0x01) + ((i * j) % 3)) & 0x01) === 0; },\r\n\t];\r\n\tvar ERROR_CORRECTION_LEVELS = [\r\n\t    { ordinal: 1, bits: 0x00, name: \"M\" },\r\n\t    { ordinal: 0, bits: 0x01, name: \"L\" },\r\n\t    { ordinal: 3, bits: 0x02, name: \"H\" },\r\n\t    { ordinal: 2, bits: 0x03, name: \"Q\" },\r\n\t];\r\n\tfunction buildFunctionPattern(version) {\r\n\t    var dimension = version.getDimensionForVersion();\r\n\t    var emptyArray = new Array(dimension * dimension);\r\n\t    for (var i = 0; i < emptyArray.length; i++) {\r\n\t        emptyArray[i] = false;\r\n\t    }\r\n\t    var bitMatrix = new bitmatrix_1.BitMatrix(emptyArray, dimension);\r\n\t    ///BitMatrix bitMatrix = new BitMatrix(dimension);\r\n\t    // Top left finder pattern + separator + format\r\n\t    bitMatrix.setRegion(0, 0, 9, 9);\r\n\t    // Top right finder pattern + separator + format\r\n\t    bitMatrix.setRegion(dimension - 8, 0, 8, 9);\r\n\t    // Bottom left finder pattern + separator + format\r\n\t    bitMatrix.setRegion(0, dimension - 8, 9, 8);\r\n\t    // Alignment patterns\r\n\t    var max = version.alignmentPatternCenters.length;\r\n\t    for (var x = 0; x < max; x++) {\r\n\t        var i = version.alignmentPatternCenters[x] - 2;\r\n\t        for (var y = 0; y < max; y++) {\r\n\t            if ((x == 0 && (y == 0 || y == max - 1)) || (x == max - 1 && y == 0)) {\r\n\t                // No alignment patterns near the three finder paterns\r\n\t                continue;\r\n\t            }\r\n\t            bitMatrix.setRegion(version.alignmentPatternCenters[y] - 2, i, 5, 5);\r\n\t        }\r\n\t    }\r\n\t    // Vertical timing pattern\r\n\t    bitMatrix.setRegion(6, 9, 1, dimension - 17);\r\n\t    // Horizontal timing pattern\r\n\t    bitMatrix.setRegion(9, 6, dimension - 17, 1);\r\n\t    if (version.versionNumber > 6) {\r\n\t        // Version info, top right\r\n\t        bitMatrix.setRegion(dimension - 11, 0, 3, 6);\r\n\t        // Version info, bottom left\r\n\t        bitMatrix.setRegion(0, dimension - 11, 6, 3);\r\n\t    }\r\n\t    return bitMatrix;\r\n\t}\r\n\tfunction readCodewords(matrix, version, formatInfo) {\r\n\t    // Get the data mask for the format used in this QR Code. This will exclude\r\n\t    // some bits from reading as we wind through the bit matrix.\r\n\t    var dataMask = DATA_MASKS[formatInfo.dataMask];\r\n\t    var dimension = matrix.height;\r\n\t    var funcPattern = buildFunctionPattern(version);\r\n\t    var readingUp = true;\r\n\t    var result = [];\r\n\t    var resultOffset = 0;\r\n\t    var currentByte = 0;\r\n\t    var bitsRead = 0;\r\n\t    // Read columns in pairs, from right to left\r\n\t    for (var j = dimension - 1; j > 0; j -= 2) {\r\n\t        if (j == 6) {\r\n\t            // Skip whole column with vertical alignment pattern;\r\n\t            // saves time and makes the other code proceed more cleanly\r\n\t            j--;\r\n\t        }\r\n\t        // Read alternatingly from bottom to top then top to bottom\r\n\t        for (var count = 0; count < dimension; count++) {\r\n\t            var i = readingUp ? dimension - 1 - count : count;\r\n\t            for (var col = 0; col < 2; col++) {\r\n\t                // Ignore bits covered by the function pattern\r\n\t                if (!funcPattern.get(j - col, i)) {\r\n\t                    // Read a bit\r\n\t                    bitsRead++;\r\n\t                    currentByte <<= 1;\r\n\t                    if (matrix.get(j - col, i) !== dataMask(i, j - col)) {\r\n\t                        currentByte |= 1;\r\n\t                    }\r\n\t                    // If we've made a whole byte, save it off\r\n\t                    if (bitsRead == 8) {\r\n\t                        result[resultOffset++] = currentByte & 0xFF;\r\n\t                        bitsRead = 0;\r\n\t                        currentByte = 0;\r\n\t                    }\r\n\t                }\r\n\t            }\r\n\t        }\r\n\t        readingUp = !readingUp; // switch directions\r\n\t    }\r\n\t    if (resultOffset != version.totalCodewords) {\r\n\t        return null;\r\n\t    }\r\n\t    return result;\r\n\t}\r\n\tfunction readVersion(matrix) {\r\n\t    var dimension = matrix.height;\r\n\t    var provisionalVersion = (dimension - 17) >> 2;\r\n\t    if (provisionalVersion <= 6) {\r\n\t        return version_1.getVersionForNumber(provisionalVersion);\r\n\t    }\r\n\t    // Read top-right version info: 3 wide by 6 tall\r\n\t    var versionBits = 0;\r\n\t    var ijMin = dimension - 11;\r\n\t    for (var j = 5; j >= 0; j--) {\r\n\t        for (var i = dimension - 9; i >= ijMin; i--) {\r\n\t            versionBits = matrix.copyBit(i, j, versionBits);\r\n\t        }\r\n\t    }\r\n\t    var parsedVersion = version_1.Version.decodeVersionInformation(versionBits);\r\n\t    if (parsedVersion != null && parsedVersion.getDimensionForVersion() == dimension) {\r\n\t        return parsedVersion;\r\n\t    }\r\n\t    // Hmm, failed. Try bottom left: 6 wide by 3 tall\r\n\t    versionBits = 0;\r\n\t    for (var i = 5; i >= 0; i--) {\r\n\t        for (var j = dimension - 9; j >= ijMin; j--) {\r\n\t            versionBits = matrix.copyBit(i, j, versionBits);\r\n\t        }\r\n\t    }\r\n\t    parsedVersion = version_1.Version.decodeVersionInformation(versionBits);\r\n\t    if (parsedVersion != null && parsedVersion.getDimensionForVersion() == dimension) {\r\n\t        return parsedVersion;\r\n\t    }\r\n\t    return null;\r\n\t}\r\n\tfunction newFormatInformation(formatInfo) {\r\n\t    return {\r\n\t        errorCorrectionLevel: ERROR_CORRECTION_LEVELS[(formatInfo >> 3) & 0x03],\r\n\t        dataMask: formatInfo & 0x07\r\n\t    };\r\n\t}\r\n\tfunction doDecodeFormatInformation(maskedFormatInfo1, maskedFormatInfo2) {\r\n\t    // Find the int in FORMAT_INFO_DECODE_LOOKUP with fewest bits differing\r\n\t    var bestDifference = Infinity;\r\n\t    var bestFormatInfo = 0;\r\n\t    for (var i = 0; i < FORMAT_INFO_DECODE_LOOKUP.length; i++) {\r\n\t        var decodeInfo = FORMAT_INFO_DECODE_LOOKUP[i];\r\n\t        var targetInfo = decodeInfo[0];\r\n\t        if (targetInfo == maskedFormatInfo1 || targetInfo == maskedFormatInfo2) {\r\n\t            // Found an exact match\r\n\t            return newFormatInformation(decodeInfo[1]);\r\n\t        }\r\n\t        var bitsDifference = helpers_1.numBitsDiffering(maskedFormatInfo1, targetInfo);\r\n\t        if (bitsDifference < bestDifference) {\r\n\t            bestFormatInfo = decodeInfo[1];\r\n\t            bestDifference = bitsDifference;\r\n\t        }\r\n\t        if (maskedFormatInfo1 != maskedFormatInfo2) {\r\n\t            // also try the other option\r\n\t            bitsDifference = helpers_1.numBitsDiffering(maskedFormatInfo2, targetInfo);\r\n\t            if (bitsDifference < bestDifference) {\r\n\t                bestFormatInfo = decodeInfo[1];\r\n\t                bestDifference = bitsDifference;\r\n\t            }\r\n\t        }\r\n\t    }\r\n\t    // Hamming distance of the 32 masked codes is 7, by construction, so <= 3 bits\r\n\t    // differing means we found a match\r\n\t    if (bestDifference <= 3)\r\n\t        return newFormatInformation(bestFormatInfo);\r\n\t    return null;\r\n\t}\r\n\tfunction decodeFormatInformation(maskedFormatInfo1, maskedFormatInfo2) {\r\n\t    var formatInfo = doDecodeFormatInformation(maskedFormatInfo1, maskedFormatInfo2);\r\n\t    if (formatInfo) {\r\n\t        return formatInfo;\r\n\t    }\r\n\t    // Should return null, but, some QR codes apparently\r\n\t    // do not mask this info. Try again by actually masking the pattern\r\n\t    // first\r\n\t    return doDecodeFormatInformation(maskedFormatInfo1 ^ FORMAT_INFO_MASK_QR, maskedFormatInfo2 ^ FORMAT_INFO_MASK_QR);\r\n\t}\r\n\tfunction readFormatInformation(matrix) {\r\n\t    // Read top-left format info bits\r\n\t    var formatInfoBits1 = 0;\r\n\t    for (var i = 0; i < 6; i++) {\r\n\t        formatInfoBits1 = matrix.copyBit(i, 8, formatInfoBits1);\r\n\t    }\r\n\t    // .. and skip a bit in the timing pattern ...\r\n\t    formatInfoBits1 = matrix.copyBit(7, 8, formatInfoBits1);\r\n\t    formatInfoBits1 = matrix.copyBit(8, 8, formatInfoBits1);\r\n\t    formatInfoBits1 = matrix.copyBit(8, 7, formatInfoBits1);\r\n\t    // .. and skip a bit in the timing pattern ...\r\n\t    for (var j = 5; j >= 0; j--) {\r\n\t        formatInfoBits1 = matrix.copyBit(8, j, formatInfoBits1);\r\n\t    }\r\n\t    // Read the top-right/bottom-left pattern too\r\n\t    var dimension = matrix.height;\r\n\t    var formatInfoBits2 = 0;\r\n\t    var jMin = dimension - 7;\r\n\t    for (var j = dimension - 1; j >= jMin; j--) {\r\n\t        formatInfoBits2 = matrix.copyBit(8, j, formatInfoBits2);\r\n\t    }\r\n\t    for (var i = dimension - 8; i < dimension; i++) {\r\n\t        formatInfoBits2 = matrix.copyBit(i, 8, formatInfoBits2);\r\n\t    }\r\n\t    // parsedFormatInfo = FormatInformation.decodeFormatInformation(formatInfoBits1, formatInfoBits2);\r\n\t    var parsedFormatInfo = decodeFormatInformation(formatInfoBits1, formatInfoBits2);\r\n\t    if (parsedFormatInfo != null) {\r\n\t        return parsedFormatInfo;\r\n\t    }\r\n\t    return null;\r\n\t}\r\n\tfunction getDataBlocks(rawCodewords, version, ecLevel) {\r\n\t    if (rawCodewords.length != version.totalCodewords) {\r\n\t        throw new Error(\"Invalid number of codewords for version; got \" + rawCodewords.length + \" expected \" + version.totalCodewords);\r\n\t    }\r\n\t    // Figure out the number and size of data blocks used by this version and\r\n\t    // error correction level\r\n\t    var ecBlocks = version.getECBlocksForLevel(ecLevel);\r\n\t    // First count the total number of data blocks\r\n\t    var totalBlocks = 0;\r\n\t    var ecBlockArray = ecBlocks.ecBlocks;\r\n\t    ecBlockArray.forEach(function (ecBlock) {\r\n\t        totalBlocks += ecBlock.count;\r\n\t    });\r\n\t    // Now establish DataBlocks of the appropriate size and number of data codewords\r\n\t    var result = new Array(totalBlocks);\r\n\t    var numResultBlocks = 0;\r\n\t    ecBlockArray.forEach(function (ecBlock) {\r\n\t        for (var i = 0; i < ecBlock.count; i++) {\r\n\t            var numDataCodewords = ecBlock.dataCodewords;\r\n\t            var numBlockCodewords = ecBlocks.ecCodewordsPerBlock + numDataCodewords;\r\n\t            result[numResultBlocks++] = { numDataCodewords: numDataCodewords, codewords: new Array(numBlockCodewords) };\r\n\t        }\r\n\t    });\r\n\t    // All blocks have the same amount of data, except that the last n\r\n\t    // (where n may be 0) have 1 more byte. Figure out where these start.\r\n\t    var shorterBlocksTotalCodewords = result[0].codewords.length;\r\n\t    var longerBlocksStartAt = result.length - 1;\r\n\t    while (longerBlocksStartAt >= 0) {\r\n\t        var numCodewords = result[longerBlocksStartAt].codewords.length;\r\n\t        if (numCodewords == shorterBlocksTotalCodewords) {\r\n\t            break;\r\n\t        }\r\n\t        longerBlocksStartAt--;\r\n\t    }\r\n\t    longerBlocksStartAt++;\r\n\t    var shorterBlocksNumDataCodewords = shorterBlocksTotalCodewords - ecBlocks.ecCodewordsPerBlock;\r\n\t    // The last elements of result may be 1 element longer;\r\n\t    // first fill out as many elements as all of them have\r\n\t    var rawCodewordsOffset = 0;\r\n\t    for (var i = 0; i < shorterBlocksNumDataCodewords; i++) {\r\n\t        for (var j = 0; j < numResultBlocks; j++) {\r\n\t            result[j].codewords[i] = rawCodewords[rawCodewordsOffset++];\r\n\t        }\r\n\t    }\r\n\t    // Fill out the last data block in the longer ones\r\n\t    for (var j = longerBlocksStartAt; j < numResultBlocks; j++) {\r\n\t        result[j].codewords[shorterBlocksNumDataCodewords] = rawCodewords[rawCodewordsOffset++];\r\n\t    }\r\n\t    // Now add in error correction blocks\r\n\t    var max = result[0].codewords.length;\r\n\t    for (var i = shorterBlocksNumDataCodewords; i < max; i++) {\r\n\t        for (var j = 0; j < numResultBlocks; j++) {\r\n\t            var iOffset = j < longerBlocksStartAt ? i : i + 1;\r\n\t            result[j].codewords[iOffset] = rawCodewords[rawCodewordsOffset++];\r\n\t        }\r\n\t    }\r\n\t    return result;\r\n\t}\r\n\tfunction correctErrors(codewordBytes, numDataCodewords) {\r\n\t    var rsDecoder = new reedsolomon_1.ReedSolomonDecoder();\r\n\t    var numCodewords = codewordBytes.length;\r\n\t    // First read into an array of ints\r\n\t    var codewordsInts = new Array(numCodewords);\r\n\t    for (var i = 0; i < numCodewords; i++) {\r\n\t        codewordsInts[i] = codewordBytes[i] & 0xFF;\r\n\t    }\r\n\t    var numECCodewords = codewordBytes.length - numDataCodewords;\r\n\t    if (!rsDecoder.decode(codewordsInts, numECCodewords))\r\n\t        return false;\r\n\t    // Copy back into array of bytes -- only need to worry about the bytes that were data\r\n\t    // We don't care about errors in the error-correction codewords\r\n\t    for (var i = 0; i < numDataCodewords; i++) {\r\n\t        codewordBytes[i] = codewordsInts[i];\r\n\t    }\r\n\t    return true;\r\n\t}\r\n\tfunction decodeMatrix(matrix) {\r\n\t    var version = readVersion(matrix);\r\n\t    if (!version) {\r\n\t        return null;\r\n\t    }\r\n\t    var formatInfo = readFormatInformation(matrix);\r\n\t    if (!formatInfo) {\r\n\t        return null;\r\n\t    }\r\n\t    var ecLevel = formatInfo.errorCorrectionLevel;\r\n\t    // Read codewords\r\n\t    var codewords = readCodewords(matrix, version, formatInfo);\r\n\t    if (!codewords) {\r\n\t        return null;\r\n\t    }\r\n\t    // Separate into data blocks\r\n\t    var dataBlocks = getDataBlocks(codewords, version, ecLevel);\r\n\t    // Count total number of data bytes\r\n\t    var totalBytes = 0;\r\n\t    dataBlocks.forEach(function (dataBlock) {\r\n\t        totalBytes += dataBlock.numDataCodewords;\r\n\t    });\r\n\t    var resultBytes = new Array(totalBytes);\r\n\t    var resultOffset = 0;\r\n\t    // Error-correct and copy data blocks together into a stream of bytes\r\n\t    for (var _i = 0, dataBlocks_1 = dataBlocks; _i < dataBlocks_1.length; _i++) {\r\n\t        var dataBlock = dataBlocks_1[_i];\r\n\t        var codewordBytes = dataBlock.codewords;\r\n\t        var numDataCodewords = dataBlock.numDataCodewords;\r\n\t        if (!correctErrors(codewordBytes, numDataCodewords))\r\n\t            return null;\r\n\t        for (var i = 0; i < numDataCodewords; i++) {\r\n\t            resultBytes[resultOffset++] = codewordBytes[i];\r\n\t        }\r\n\t    }\r\n\t    return decodeqrdata_1.decodeQRdata(resultBytes, version.versionNumber, ecLevel.name);\r\n\t}\r\n\tfunction decode(matrix) {\r\n\t    if (matrix == null) {\r\n\t        return null;\r\n\t    }\r\n\t    var result = decodeMatrix(matrix);\r\n\t    if (result) {\r\n\t        return result;\r\n\t    }\r\n\t    // Decoding didn't work, try mirroring the QR\r\n\t    matrix.mirror();\r\n\t    return decodeMatrix(matrix);\r\n\t}\r\n\texports.decode = decode;\r\n\n\n/***/ },\n/* 10 */\n/***/ function(module, exports, __webpack_require__) {\n\n\t\"use strict\";\r\n\tvar bitstream_1 = __webpack_require__(11);\r\n\tfunction toAlphaNumericByte(value) {\r\n\t    var ALPHANUMERIC_CHARS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B',\r\n\t        'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',\r\n\t        'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',\r\n\t        ' ', '$', '%', '*', '+', '-', '.', '/', ':'];\r\n\t    if (value >= ALPHANUMERIC_CHARS.length) {\r\n\t        throw new Error(\"Could not decode alphanumeric char\");\r\n\t    }\r\n\t    return ALPHANUMERIC_CHARS[value].charCodeAt(0);\r\n\t}\r\n\tvar Mode = (function () {\r\n\t    function Mode(characterCountBitsForVersions, bits) {\r\n\t        this.characterCountBitsForVersions = characterCountBitsForVersions;\r\n\t        this.bits = bits;\r\n\t    }\r\n\t    Mode.prototype.getCharacterCountBits = function (version) {\r\n\t        if (this.characterCountBitsForVersions == null) {\r\n\t            throw new Error(\"Character count doesn't apply to this mode\");\r\n\t        }\r\n\t        var offset;\r\n\t        if (version <= 9) {\r\n\t            offset = 0;\r\n\t        }\r\n\t        else if (version <= 26) {\r\n\t            offset = 1;\r\n\t        }\r\n\t        else {\r\n\t            offset = 2;\r\n\t        }\r\n\t        return this.characterCountBitsForVersions[offset];\r\n\t    };\r\n\t    return Mode;\r\n\t}());\r\n\tvar TERMINATOR_MODE = new Mode([0, 0, 0], 0x00); // Not really a mod...\r\n\tvar NUMERIC_MODE = new Mode([10, 12, 14], 0x01);\r\n\tvar ALPHANUMERIC_MODE = new Mode([9, 11, 13], 0x02);\r\n\tvar STRUCTURED_APPEND_MODE = new Mode([0, 0, 0], 0x03); // Not supported\r\n\tvar BYTE_MODE = new Mode([8, 16, 16], 0x04);\r\n\tvar ECI_MODE = new Mode(null, 0x07); // character counts don't apply\r\n\tvar KANJI_MODE = new Mode([8, 10, 12], 0x08);\r\n\tvar FNC1_FIRST_POSITION_MODE = new Mode(null, 0x05);\r\n\tvar FNC1_SECOND_POSITION_MODE = new Mode(null, 0x09);\r\n\tvar HANZI_MODE = new Mode([8, 10, 12], 0x0D);\r\n\tfunction modeForBits(bits) {\r\n\t    switch (bits) {\r\n\t        case 0x0:\r\n\t            return TERMINATOR_MODE;\r\n\t        case 0x1:\r\n\t            return NUMERIC_MODE;\r\n\t        case 0x2:\r\n\t            return ALPHANUMERIC_MODE;\r\n\t        case 0x3:\r\n\t            return STRUCTURED_APPEND_MODE;\r\n\t        case 0x4:\r\n\t            return BYTE_MODE;\r\n\t        case 0x5:\r\n\t            return FNC1_FIRST_POSITION_MODE;\r\n\t        case 0x7:\r\n\t            return ECI_MODE;\r\n\t        case 0x8:\r\n\t            return KANJI_MODE;\r\n\t        case 0x9:\r\n\t            return FNC1_SECOND_POSITION_MODE;\r\n\t        case 0xD:\r\n\t            // 0xD is defined in GBT 18284-2000, may not be supported in foreign country\r\n\t            return HANZI_MODE;\r\n\t        default:\r\n\t            throw new Error(\"Couldn't decode mode from byte array\");\r\n\t    }\r\n\t}\r\n\tfunction parseECIValue(bits) {\r\n\t    var firstByte = bits.readBits(8);\r\n\t    if ((firstByte & 0x80) == 0) {\r\n\t        // just one byte\r\n\t        return firstByte & 0x7F;\r\n\t    }\r\n\t    if ((firstByte & 0xC0) == 0x80) {\r\n\t        // two bytes\r\n\t        var secondByte = bits.readBits(8);\r\n\t        return ((firstByte & 0x3F) << 8) | secondByte;\r\n\t    }\r\n\t    if ((firstByte & 0xE0) == 0xC0) {\r\n\t        // three bytes\r\n\t        var secondThirdBytes = bits.readBits(16);\r\n\t        return ((firstByte & 0x1F) << 16) | secondThirdBytes;\r\n\t    }\r\n\t    throw new Error(\"Bad ECI bits starting with byte \" + firstByte);\r\n\t}\r\n\tfunction decodeHanziSegment(bits, result, count) {\r\n\t    // Don't crash trying to read more bits than we have available.\r\n\t    if (count * 13 > bits.available()) {\r\n\t        return false;\r\n\t    }\r\n\t    // Each character will require 2 bytes. Read the characters as 2-byte pairs\r\n\t    // and decode as GB2312 afterwards\r\n\t    var buffer = new Array(2 * count);\r\n\t    var offset = 0;\r\n\t    while (count > 0) {\r\n\t        // Each 13 bits encodes a 2-byte character\r\n\t        var twoBytes = bits.readBits(13);\r\n\t        var assembledTwoBytes = (Math.floor(twoBytes / 0x060) << 8) | (twoBytes % 0x060);\r\n\t        if (assembledTwoBytes < 0x003BF) {\r\n\t            // In the 0xA1A1 to 0xAAFE range\r\n\t            assembledTwoBytes += 0x0A1A1;\r\n\t        }\r\n\t        else {\r\n\t            // In the 0xB0A1 to 0xFAFE range\r\n\t            assembledTwoBytes += 0x0A6A1;\r\n\t        }\r\n\t        buffer[offset] = ((assembledTwoBytes >> 8) & 0xFF);\r\n\t        buffer[offset + 1] = (assembledTwoBytes & 0xFF);\r\n\t        offset += 2;\r\n\t        count--;\r\n\t    }\r\n\t    result.val = buffer;\r\n\t    return true;\r\n\t}\r\n\tfunction decodeNumericSegment(bits, result, count) {\r\n\t    // Read three digits at a time\r\n\t    while (count >= 3) {\r\n\t        // Each 10 bits encodes three digits\r\n\t        if (bits.available() < 10) {\r\n\t            return false;\r\n\t        }\r\n\t        var threeDigitsBits = bits.readBits(10);\r\n\t        if (threeDigitsBits >= 1000) {\r\n\t            return false;\r\n\t        }\r\n\t        result.val.push(toAlphaNumericByte(Math.floor(threeDigitsBits / 100)));\r\n\t        result.val.push(toAlphaNumericByte(Math.floor(threeDigitsBits / 10) % 10));\r\n\t        result.val.push(toAlphaNumericByte(threeDigitsBits % 10));\r\n\t        count -= 3;\r\n\t    }\r\n\t    if (count == 2) {\r\n\t        // Two digits left over to read, encoded in 7 bits\r\n\t        if (bits.available() < 7) {\r\n\t            return false;\r\n\t        }\r\n\t        var twoDigitsBits = bits.readBits(7);\r\n\t        if (twoDigitsBits >= 100) {\r\n\t            return false;\r\n\t        }\r\n\t        result.val.push(toAlphaNumericByte(Math.floor(twoDigitsBits / 10)));\r\n\t        result.val.push(toAlphaNumericByte(twoDigitsBits % 10));\r\n\t    }\r\n\t    else if (count == 1) {\r\n\t        // One digit left over to read\r\n\t        if (bits.available() < 4) {\r\n\t            return false;\r\n\t        }\r\n\t        var digitBits = bits.readBits(4);\r\n\t        if (digitBits >= 10) {\r\n\t            return false;\r\n\t        }\r\n\t        result.val.push(toAlphaNumericByte(digitBits));\r\n\t    }\r\n\t    return true;\r\n\t}\r\n\tfunction decodeAlphanumericSegment(bits, result, count, fc1InEffect) {\r\n\t    // Read two characters at a time\r\n\t    var start = result.val.length;\r\n\t    while (count > 1) {\r\n\t        if (bits.available() < 11) {\r\n\t            return false;\r\n\t        }\r\n\t        var nextTwoCharsBits = bits.readBits(11);\r\n\t        result.val.push(toAlphaNumericByte(Math.floor(nextTwoCharsBits / 45)));\r\n\t        result.val.push(toAlphaNumericByte(nextTwoCharsBits % 45));\r\n\t        count -= 2;\r\n\t    }\r\n\t    if (count == 1) {\r\n\t        // special case: one character left\r\n\t        if (bits.available() < 6) {\r\n\t            return false;\r\n\t        }\r\n\t        result.val.push(toAlphaNumericByte(bits.readBits(6)));\r\n\t    }\r\n\t    // See section 6.4.8.1, 6.4.8.2\r\n\t    if (fc1InEffect) {\r\n\t        // We need to massage the result a bit if in an FNC1 mode:\r\n\t        for (var i = start; i < result.val.length; i++) {\r\n\t            if (result.val[i] == '%'.charCodeAt(0)) {\r\n\t                if (i < result.val.length - 1 && result.val[i + 1] == '%'.charCodeAt(0)) {\r\n\t                    // %% is rendered as %\r\n\t                    result.val = result.val.slice(0, i + 1).concat(result.val.slice(i + 2));\r\n\t                }\r\n\t                else {\r\n\t                    // In alpha mode, % should be converted to FNC1 separator 0x1D\r\n\t                    // THIS IS ALMOST CERTAINLY INVALID\r\n\t                    result.val[i] = 0x1D;\r\n\t                }\r\n\t            }\r\n\t        }\r\n\t    }\r\n\t    return true;\r\n\t}\r\n\tfunction decodeByteSegment(bits, result, count) {\r\n\t    // Don't crash trying to read more bits than we have available.\r\n\t    if (count << 3 > bits.available()) {\r\n\t        return false;\r\n\t    }\r\n\t    var readBytes = new Array(count);\r\n\t    for (var i = 0; i < count; i++) {\r\n\t        readBytes[i] = bits.readBits(8);\r\n\t    }\r\n\t    Array.prototype.push.apply(result.val, readBytes);\r\n\t    return true;\r\n\t}\r\n\tvar GB2312_SUBSET = 1;\r\n\t// Takes in a byte array, a qr version number and an error correction level.\r\n\t// Returns decoded data.\r\n\tfunction decodeQRdata(data, version, ecl) {\r\n\t    var symbolSequence = -1;\r\n\t    var parityData = -1;\r\n\t    var bits = new bitstream_1.BitStream(data);\r\n\t    var result = { val: [] }; // Have to pass this around so functions can share a reference to a number[]\r\n\t    var fc1InEffect = false;\r\n\t    var mode;\r\n\t    while (mode != TERMINATOR_MODE) {\r\n\t        // While still another segment to read...\r\n\t        if (bits.available() < 4) {\r\n\t            // OK, assume we're done. Really, a TERMINATOR mode should have been recorded here\r\n\t            mode = TERMINATOR_MODE;\r\n\t        }\r\n\t        else {\r\n\t            mode = modeForBits(bits.readBits(4)); // mode is encoded by 4 bits\r\n\t        }\r\n\t        if (mode != TERMINATOR_MODE) {\r\n\t            if (mode == FNC1_FIRST_POSITION_MODE || mode == FNC1_SECOND_POSITION_MODE) {\r\n\t                // We do little with FNC1 except alter the parsed result a bit according to the spec\r\n\t                fc1InEffect = true;\r\n\t            }\r\n\t            else if (mode == STRUCTURED_APPEND_MODE) {\r\n\t                if (bits.available() < 16) {\r\n\t                    return null;\r\n\t                }\r\n\t                // not really supported; but sequence number and parity is added later to the result metadata\r\n\t                // Read next 8 bits (symbol sequence #) and 8 bits (parity data), then continue\r\n\t                symbolSequence = bits.readBits(8);\r\n\t                parityData = bits.readBits(8);\r\n\t            }\r\n\t            else if (mode == ECI_MODE) {\r\n\t                // Ignore since we don't do character encoding in JS\r\n\t                var value = parseECIValue(bits);\r\n\t                if (value < 0 || value > 30) {\r\n\t                    return null;\r\n\t                }\r\n\t            }\r\n\t            else {\r\n\t                // First handle Hanzi mode which does not start with character count\r\n\t                if (mode == HANZI_MODE) {\r\n\t                    //chinese mode contains a sub set indicator right after mode indicator\r\n\t                    var subset = bits.readBits(4);\r\n\t                    var countHanzi = bits.readBits(mode.getCharacterCountBits(version));\r\n\t                    if (subset == GB2312_SUBSET) {\r\n\t                        if (!decodeHanziSegment(bits, result, countHanzi)) {\r\n\t                            return null;\r\n\t                        }\r\n\t                    }\r\n\t                }\r\n\t                else {\r\n\t                    // \"Normal\" QR code modes:\r\n\t                    // How many characters will follow, encoded in this mode?\r\n\t                    var count = bits.readBits(mode.getCharacterCountBits(version));\r\n\t                    if (mode == NUMERIC_MODE) {\r\n\t                        if (!decodeNumericSegment(bits, result, count)) {\r\n\t                            return null;\r\n\t                        }\r\n\t                    }\r\n\t                    else if (mode == ALPHANUMERIC_MODE) {\r\n\t                        if (!decodeAlphanumericSegment(bits, result, count, fc1InEffect)) {\r\n\t                            return null;\r\n\t                        }\r\n\t                    }\r\n\t                    else if (mode == BYTE_MODE) {\r\n\t                        if (!decodeByteSegment(bits, result, count)) {\r\n\t                            return null;\r\n\t                        }\r\n\t                    }\r\n\t                    else if (mode == KANJI_MODE) {\r\n\t                    }\r\n\t                    else {\r\n\t                        return null;\r\n\t                    }\r\n\t                }\r\n\t            }\r\n\t        }\r\n\t    }\r\n\t    return result.val;\r\n\t}\r\n\texports.decodeQRdata = decodeQRdata;\r\n\n\n/***/ },\n/* 11 */\n/***/ function(module, exports) {\n\n\t\"use strict\";\r\n\tvar BitStream = (function () {\r\n\t    function BitStream(bytes) {\r\n\t        this.byteOffset = 0;\r\n\t        this.bitOffset = 0;\r\n\t        this.bytes = bytes;\r\n\t    }\r\n\t    BitStream.prototype.readBits = function (numBits) {\r\n\t        if (numBits < 1 || numBits > 32 || numBits > this.available()) {\r\n\t            throw new Error(\"Cannot read \" + numBits.toString() + \" bits\");\r\n\t        }\r\n\t        var result = 0;\r\n\t        // First, read remainder from current byte\r\n\t        if (this.bitOffset > 0) {\r\n\t            var bitsLeft = 8 - this.bitOffset;\r\n\t            var toRead = numBits < bitsLeft ? numBits : bitsLeft;\r\n\t            var bitsToNotRead = bitsLeft - toRead;\r\n\t            var mask = (0xFF >> (8 - toRead)) << bitsToNotRead;\r\n\t            result = (this.bytes[this.byteOffset] & mask) >> bitsToNotRead;\r\n\t            numBits -= toRead;\r\n\t            this.bitOffset += toRead;\r\n\t            if (this.bitOffset == 8) {\r\n\t                this.bitOffset = 0;\r\n\t                this.byteOffset++;\r\n\t            }\r\n\t        }\r\n\t        // Next read whole bytes\r\n\t        if (numBits > 0) {\r\n\t            while (numBits >= 8) {\r\n\t                result = (result << 8) | (this.bytes[this.byteOffset] & 0xFF);\r\n\t                this.byteOffset++;\r\n\t                numBits -= 8;\r\n\t            }\r\n\t            // Finally read a partial byte\r\n\t            if (numBits > 0) {\r\n\t                var bitsToNotRead = 8 - numBits;\r\n\t                var mask = (0xFF >> bitsToNotRead) << bitsToNotRead;\r\n\t                result = (result << numBits) | ((this.bytes[this.byteOffset] & mask) >> bitsToNotRead);\r\n\t                this.bitOffset += numBits;\r\n\t            }\r\n\t        }\r\n\t        return result;\r\n\t    };\r\n\t    BitStream.prototype.available = function () {\r\n\t        return 8 * (this.bytes.length - this.byteOffset) - this.bitOffset;\r\n\t    };\r\n\t    return BitStream;\r\n\t}());\r\n\texports.BitStream = BitStream;\r\n\n\n/***/ },\n/* 12 */\n/***/ function(module, exports) {\n\n\t\"use strict\";\r\n\tvar ReedSolomonDecoder = (function () {\r\n\t    function ReedSolomonDecoder() {\r\n\t        this.field = new GenericGF(0x011D, 256, 0); // x^8 + x^4 + x^3 + x^2 + 1\r\n\t    }\r\n\t    ReedSolomonDecoder.prototype.decode = function (received, twoS) {\r\n\t        var poly = new GenericGFPoly(this.field, received);\r\n\t        var syndromeCoefficients = new Array(twoS);\r\n\t        var noError = true;\r\n\t        for (var i = 0; i < twoS; i++) {\r\n\t            var evaluation = poly.evaluateAt(this.field.exp(i + this.field.generatorBase));\r\n\t            syndromeCoefficients[syndromeCoefficients.length - 1 - i] = evaluation;\r\n\t            if (evaluation != 0) {\r\n\t                noError = false;\r\n\t            }\r\n\t        }\r\n\t        if (noError) {\r\n\t            return true;\r\n\t        }\r\n\t        var syndrome = new GenericGFPoly(this.field, syndromeCoefficients);\r\n\t        var sigmaOmega = this.runEuclideanAlgorithm(this.field.buildMonomial(twoS, 1), syndrome, twoS);\r\n\t        if (sigmaOmega == null)\r\n\t            return false;\r\n\t        var sigma = sigmaOmega[0];\r\n\t        var errorLocations = this.findErrorLocations(sigma);\r\n\t        if (errorLocations == null)\r\n\t            return false;\r\n\t        var omega = sigmaOmega[1];\r\n\t        var errorMagnitudes = this.findErrorMagnitudes(omega, errorLocations);\r\n\t        for (var i = 0; i < errorLocations.length; i++) {\r\n\t            var position = received.length - 1 - this.field.log(errorLocations[i]);\r\n\t            if (position < 0) {\r\n\t                // throw new ReedSolomonException(\"Bad error location\");\r\n\t                return false;\r\n\t            }\r\n\t            received[position] = GenericGF.addOrSubtract(received[position], errorMagnitudes[i]);\r\n\t        }\r\n\t        return true;\r\n\t    };\r\n\t    ReedSolomonDecoder.prototype.runEuclideanAlgorithm = function (a, b, R) {\r\n\t        // Assume a's degree is >= b's\r\n\t        if (a.degree() < b.degree()) {\r\n\t            var temp = a;\r\n\t            a = b;\r\n\t            b = temp;\r\n\t        }\r\n\t        var rLast = a;\r\n\t        var r = b;\r\n\t        var tLast = this.field.zero;\r\n\t        var t = this.field.one;\r\n\t        // Run Euclidean algorithm until r's degree is less than R/2\r\n\t        while (r.degree() >= R / 2) {\r\n\t            var rLastLast = rLast;\r\n\t            var tLastLast = tLast;\r\n\t            rLast = r;\r\n\t            tLast = t;\r\n\t            // Divide rLastLast by rLast, with quotient in q and remainder in r\r\n\t            if (rLast.isZero()) {\r\n\t                // Oops, Euclidean algorithm already terminated?\r\n\t                // throw new ReedSolomonException(\"r_{i-1} was zero\");\r\n\t                return null;\r\n\t            }\r\n\t            r = rLastLast;\r\n\t            var q = this.field.zero;\r\n\t            var denominatorLeadingTerm = rLast.getCoefficient(rLast.degree());\r\n\t            var dltInverse = this.field.inverse(denominatorLeadingTerm);\r\n\t            while (r.degree() >= rLast.degree() && !r.isZero()) {\r\n\t                var degreeDiff = r.degree() - rLast.degree();\r\n\t                var scale = this.field.multiply(r.getCoefficient(r.degree()), dltInverse);\r\n\t                q = q.addOrSubtract(this.field.buildMonomial(degreeDiff, scale));\r\n\t                r = r.addOrSubtract(rLast.multiplyByMonomial(degreeDiff, scale));\r\n\t            }\r\n\t            t = q.multiplyPoly(tLast).addOrSubtract(tLastLast);\r\n\t            if (r.degree() >= rLast.degree()) {\r\n\t                // throw new IllegalStateException(\"Division algorithm failed to reduce polynomial?\");\r\n\t                return null;\r\n\t            }\r\n\t        }\r\n\t        var sigmaTildeAtZero = t.getCoefficient(0);\r\n\t        if (sigmaTildeAtZero == 0) {\r\n\t            // throw new ReedSolomonException(\"sigmaTilde(0) was zero\");\r\n\t            return null;\r\n\t        }\r\n\t        var inverse = this.field.inverse(sigmaTildeAtZero);\r\n\t        var sigma = t.multiply(inverse);\r\n\t        var omega = r.multiply(inverse);\r\n\t        return [sigma, omega];\r\n\t    };\r\n\t    ReedSolomonDecoder.prototype.findErrorLocations = function (errorLocator) {\r\n\t        // This is a direct application of Chien's search\r\n\t        var numErrors = errorLocator.degree();\r\n\t        if (numErrors == 1) {\r\n\t            // shortcut\r\n\t            return [errorLocator.getCoefficient(1)];\r\n\t        }\r\n\t        var result = new Array(numErrors);\r\n\t        var e = 0;\r\n\t        for (var i = 1; i < this.field.size && e < numErrors; i++) {\r\n\t            if (errorLocator.evaluateAt(i) == 0) {\r\n\t                result[e] = this.field.inverse(i);\r\n\t                e++;\r\n\t            }\r\n\t        }\r\n\t        if (e != numErrors) {\r\n\t            // throw new ReedSolomonException(\"Error locator degree does not match number of roots\");\r\n\t            return null;\r\n\t        }\r\n\t        return result;\r\n\t    };\r\n\t    ReedSolomonDecoder.prototype.findErrorMagnitudes = function (errorEvaluator, errorLocations) {\r\n\t        // This is directly applying Forney's Formula\r\n\t        var s = errorLocations.length;\r\n\t        var result = new Array(s);\r\n\t        for (var i = 0; i < s; i++) {\r\n\t            var xiInverse = this.field.inverse(errorLocations[i]);\r\n\t            var denominator = 1;\r\n\t            for (var j = 0; j < s; j++) {\r\n\t                if (i != j) {\r\n\t                    //denominator = field.multiply(denominator,\r\n\t                    //    GenericGF.addOrSubtract(1, field.multiply(errorLocations[j], xiInverse)));\r\n\t                    // Above should work but fails on some Apple and Linux JDKs due to a Hotspot bug.\r\n\t                    // Below is a funny-looking workaround from Steven Parkes\r\n\t                    var term = this.field.multiply(errorLocations[j], xiInverse);\r\n\t                    var termPlus1 = (term & 0x1) == 0 ? term | 1 : term & ~1;\r\n\t                    denominator = this.field.multiply(denominator, termPlus1);\r\n\t                }\r\n\t            }\r\n\t            result[i] = this.field.multiply(errorEvaluator.evaluateAt(xiInverse), this.field.inverse(denominator));\r\n\t            if (this.field.generatorBase != 0) {\r\n\t                result[i] = this.field.multiply(result[i], xiInverse);\r\n\t            }\r\n\t        }\r\n\t        return result;\r\n\t    };\r\n\t    return ReedSolomonDecoder;\r\n\t}());\r\n\texports.ReedSolomonDecoder = ReedSolomonDecoder;\r\n\tvar GenericGFPoly = (function () {\r\n\t    function GenericGFPoly(field, coefficients) {\r\n\t        if (coefficients.length == 0) {\r\n\t            throw new Error(\"No coefficients.\");\r\n\t        }\r\n\t        this.field = field;\r\n\t        var coefficientsLength = coefficients.length;\r\n\t        if (coefficientsLength > 1 && coefficients[0] == 0) {\r\n\t            // Leading term must be non-zero for anything except the constant polynomial \"0\"\r\n\t            var firstNonZero = 1;\r\n\t            while (firstNonZero < coefficientsLength && coefficients[firstNonZero] == 0) {\r\n\t                firstNonZero++;\r\n\t            }\r\n\t            if (firstNonZero == coefficientsLength) {\r\n\t                this.coefficients = field.zero.coefficients;\r\n\t            }\r\n\t            else {\r\n\t                this.coefficients = new Array(coefficientsLength - firstNonZero);\r\n\t                /*Array.Copy(coefficients,       // Source array\r\n\t                  firstNonZero,              // Source index\r\n\t                  this.coefficients,         // Destination array\r\n\t                  0,                         // Destination index\r\n\t                  this.coefficients.length); // length*/\r\n\t                for (var i = 0; i < this.coefficients.length; i++) {\r\n\t                    this.coefficients[i] = coefficients[firstNonZero + i];\r\n\t                }\r\n\t            }\r\n\t        }\r\n\t        else {\r\n\t            this.coefficients = coefficients;\r\n\t        }\r\n\t    }\r\n\t    GenericGFPoly.prototype.evaluateAt = function (a) {\r\n\t        var result = 0;\r\n\t        if (a == 0) {\r\n\t            // Just return the x^0 coefficient\r\n\t            return this.getCoefficient(0);\r\n\t        }\r\n\t        var size = this.coefficients.length;\r\n\t        if (a == 1) {\r\n\t            // Just the sum of the coefficients\r\n\t            this.coefficients.forEach(function (coefficient) {\r\n\t                result = GenericGF.addOrSubtract(result, coefficient);\r\n\t            });\r\n\t            return result;\r\n\t        }\r\n\t        result = this.coefficients[0];\r\n\t        for (var i = 1; i < size; i++) {\r\n\t            result = GenericGF.addOrSubtract(this.field.multiply(a, result), this.coefficients[i]);\r\n\t        }\r\n\t        return result;\r\n\t    };\r\n\t    GenericGFPoly.prototype.getCoefficient = function (degree) {\r\n\t        return this.coefficients[this.coefficients.length - 1 - degree];\r\n\t    };\r\n\t    GenericGFPoly.prototype.degree = function () {\r\n\t        return this.coefficients.length - 1;\r\n\t    };\r\n\t    GenericGFPoly.prototype.isZero = function () {\r\n\t        return this.coefficients[0] == 0;\r\n\t    };\r\n\t    GenericGFPoly.prototype.addOrSubtract = function (other) {\r\n\t        /* TODO, fix this.\r\n\t        if (!this.field.Equals(other.field))\r\n\t        {\r\n\t          throw new Error(\"GenericGFPolys do not have same GenericGF field\");\r\n\t        }*/\r\n\t        if (this.isZero()) {\r\n\t            return other;\r\n\t        }\r\n\t        if (other.isZero()) {\r\n\t            return this;\r\n\t        }\r\n\t        var smallerCoefficients = this.coefficients;\r\n\t        var largerCoefficients = other.coefficients;\r\n\t        if (smallerCoefficients.length > largerCoefficients.length) {\r\n\t            var temp = smallerCoefficients;\r\n\t            smallerCoefficients = largerCoefficients;\r\n\t            largerCoefficients = temp;\r\n\t        }\r\n\t        var sumDiff = new Array(largerCoefficients.length);\r\n\t        var lengthDiff = largerCoefficients.length - smallerCoefficients.length;\r\n\t        // Copy high-order terms only found in higher-degree polynomial's coefficients\r\n\t        ///Array.Copy(largerCoefficients, 0, sumDiff, 0, lengthDiff);\r\n\t        for (var i = 0; i < lengthDiff; i++) {\r\n\t            sumDiff[i] = largerCoefficients[i];\r\n\t        }\r\n\t        for (var i = lengthDiff; i < largerCoefficients.length; i++) {\r\n\t            sumDiff[i] = GenericGF.addOrSubtract(smallerCoefficients[i - lengthDiff], largerCoefficients[i]);\r\n\t        }\r\n\t        return new GenericGFPoly(this.field, sumDiff);\r\n\t    };\r\n\t    GenericGFPoly.prototype.multiply = function (scalar) {\r\n\t        if (scalar == 0) {\r\n\t            return this.field.zero;\r\n\t        }\r\n\t        if (scalar == 1) {\r\n\t            return this;\r\n\t        }\r\n\t        var size = this.coefficients.length;\r\n\t        var product = new Array(size);\r\n\t        for (var i = 0; i < size; i++) {\r\n\t            product[i] = this.field.multiply(this.coefficients[i], scalar);\r\n\t        }\r\n\t        return new GenericGFPoly(this.field, product);\r\n\t    };\r\n\t    GenericGFPoly.prototype.multiplyPoly = function (other) {\r\n\t        /* TODO Fix this.\r\n\t        if (!field.Equals(other.field))\r\n\t        {\r\n\t          throw new Error(\"GenericGFPolys do not have same GenericGF field\");\r\n\t        }*/\r\n\t        if (this.isZero() || other.isZero()) {\r\n\t            return this.field.zero;\r\n\t        }\r\n\t        var aCoefficients = this.coefficients;\r\n\t        var aLength = aCoefficients.length;\r\n\t        var bCoefficients = other.coefficients;\r\n\t        var bLength = bCoefficients.length;\r\n\t        var product = new Array(aLength + bLength - 1);\r\n\t        for (var i = 0; i < aLength; i++) {\r\n\t            var aCoeff = aCoefficients[i];\r\n\t            for (var j = 0; j < bLength; j++) {\r\n\t                product[i + j] = GenericGF.addOrSubtract(product[i + j], this.field.multiply(aCoeff, bCoefficients[j]));\r\n\t            }\r\n\t        }\r\n\t        return new GenericGFPoly(this.field, product);\r\n\t    };\r\n\t    GenericGFPoly.prototype.multiplyByMonomial = function (degree, coefficient) {\r\n\t        if (degree < 0) {\r\n\t            throw new Error(\"Invalid degree less than 0\");\r\n\t        }\r\n\t        if (coefficient == 0) {\r\n\t            return this.field.zero;\r\n\t        }\r\n\t        var size = this.coefficients.length;\r\n\t        var product = new Array(size + degree);\r\n\t        for (var i = 0; i < size; i++) {\r\n\t            product[i] = this.field.multiply(this.coefficients[i], coefficient);\r\n\t        }\r\n\t        return new GenericGFPoly(this.field, product);\r\n\t    };\r\n\t    return GenericGFPoly;\r\n\t}());\r\n\tvar GenericGF = (function () {\r\n\t    function GenericGF(primitive, size, genBase) {\r\n\t        // ok.\r\n\t        this.INITIALIZATION_THRESHOLD = 0;\r\n\t        this.initialized = false;\r\n\t        this.primitive = primitive;\r\n\t        this.size = size;\r\n\t        this.generatorBase = genBase;\r\n\t        if (size <= this.INITIALIZATION_THRESHOLD) {\r\n\t            this.initialize();\r\n\t        }\r\n\t    }\r\n\t    GenericGF.prototype.initialize = function () {\r\n\t        this.expTable = new Array(this.size);\r\n\t        this.logTable = new Array(this.size);\r\n\t        var x = 1;\r\n\t        for (var i = 0; i < this.size; i++) {\r\n\t            this.expTable[i] = x;\r\n\t            x <<= 1; // x = x * 2; we're assuming the generator alpha is 2\r\n\t            if (x >= this.size) {\r\n\t                x ^= this.primitive;\r\n\t                x &= this.size - 1;\r\n\t            }\r\n\t        }\r\n\t        for (var i = 0; i < this.size - 1; i++) {\r\n\t            this.logTable[this.expTable[i]] = i;\r\n\t        }\r\n\t        // logTable[0] == 0 but this should never be used\r\n\t        this.zero = new GenericGFPoly(this, [0]);\r\n\t        this.one = new GenericGFPoly(this, [1]);\r\n\t        this.initialized = true;\r\n\t    };\r\n\t    GenericGF.addOrSubtract = function (a, b) {\r\n\t        return a ^ b;\r\n\t    };\r\n\t    GenericGF.prototype.checkInit = function () {\r\n\t        if (!this.initialized)\r\n\t            this.initialize();\r\n\t    };\r\n\t    GenericGF.prototype.multiply = function (a, b) {\r\n\t        this.checkInit();\r\n\t        if (a == 0 || b == 0) {\r\n\t            return 0;\r\n\t        }\r\n\t        return this.expTable[(this.logTable[a] + this.logTable[b]) % (this.size - 1)];\r\n\t    };\r\n\t    GenericGF.prototype.exp = function (a) {\r\n\t        this.checkInit();\r\n\t        return this.expTable[a];\r\n\t    };\r\n\t    GenericGF.prototype.log = function (a) {\r\n\t        this.checkInit();\r\n\t        if (a == 0) {\r\n\t            throw new Error(\"Can't take log(0)\");\r\n\t        }\r\n\t        return this.logTable[a];\r\n\t    };\r\n\t    GenericGF.prototype.inverse = function (a) {\r\n\t        this.checkInit();\r\n\t        if (a == 0) {\r\n\t            throw new Error(\"Can't invert 0\");\r\n\t        }\r\n\t        return this.expTable[this.size - this.logTable[a] - 1];\r\n\t    };\r\n\t    GenericGF.prototype.buildMonomial = function (degree, coefficient) {\r\n\t        this.checkInit();\r\n\t        if (degree < 0) {\r\n\t            throw new Error(\"Invalid monomial degree less than 0\");\r\n\t        }\r\n\t        if (coefficient == 0) {\r\n\t            return this.zero;\r\n\t        }\r\n\t        var coefficients = new Array(degree + 1);\r\n\t        coefficients[0] = coefficient;\r\n\t        return new GenericGFPoly(this, coefficients);\r\n\t    };\r\n\t    return GenericGF;\r\n\t}());\r\n\n\n/***/ }\n/******/ ])\n});\n;\n// jsQR is concatenated by gulp\n\nself.addEventListener('message', function(e) {\n  var decoded = jsQR.decodeQRFromImage(\n    e.data.data,\n    e.data.width,\n    e.data.height\n  )\n  postMessage(decoded)\n})\n"],{type:'application/javascript'});// Props that are allowed to change dynamicly
-	var propsKeys=['delay','legacyMode','facingMode'];module.exports=(_temp=_class=function(_Component){_inherits(Reader,_Component);function Reader(props){_classCallCheck(this,Reader);// Bind function to the class
-	var _this=_possibleConstructorReturn(this,(Reader.__proto__||Object.getPrototypeOf(Reader)).call(this,props));_this.els={};_this.initiate=_this.initiate.bind(_this);_this.initiateLegacyMode=_this.initiateLegacyMode.bind(_this);_this.check=_this.check.bind(_this);_this.handleVideo=_this.handleVideo.bind(_this);_this.handleLoadStart=_this.handleLoadStart.bind(_this);_this.handleInputChange=_this.handleInputChange.bind(_this);_this.clearComponent=_this.clearComponent.bind(_this);_this.handleReaderLoad=_this.handleReaderLoad.bind(_this);_this.openImageDialog=_this.openImageDialog.bind(_this);_this.handleWorkerMessage=_this.handleWorkerMessage.bind(_this);_this.setRefFactory=_this.setRefFactory.bind(_this);return _this;}_createClass(Reader,[{key:'componentDidMount',value:function componentDidMount(){// Initiate web worker execute handler according to mode.
-	this.worker=new Worker(URL.createObjectURL(workerBlob));this.worker.onmessage=this.handleWorkerMessage;if(!this.props.legacyMode){this.initiate();}else{this.initiateLegacyMode();}}},{key:'componentWillReceiveProps',value:function componentWillReceiveProps(nextProps){// React according to change in props
-	var changedProps=havePropsChanged(this.props,nextProps,propsKeys);var _iteratorNormalCompletion=true;var _didIteratorError=false;var _iteratorError=undefined;try{for(var _iterator=changedProps[Symbol.iterator](),_step;!(_iteratorNormalCompletion=(_step=_iterator.next()).done);_iteratorNormalCompletion=true){var prop=_step.value;if(prop=='facingMode'){this.clearComponent();this.initiate(nextProps);break;}else if(prop=='delay'){if(this.props.delay==false){this.timeout=setTimeout(this.check,this.props.delay);}else if(nextProps.delay==false){clearTimeout(this.timeout);}}else if(prop=='legacyMode'){if(this.props.legacyMode&&!nextProps.legacyMode){this.clearComponent();this.initiate(nextProps);}else{this.clearComponent();this.componentDidUpdate=this.initiateLegacyMode;}break;}}}catch(err){_didIteratorError=true;_iteratorError=err;}finally{try{if(!_iteratorNormalCompletion&&_iterator.return){_iterator.return();}}finally{if(_didIteratorError){throw _iteratorError;}}}}},{key:'shouldComponentUpdate',value:function shouldComponentUpdate(nextProps){// Only render when the `propsKeys` have changed.
-	var changedProps=havePropsChanged(this.props,nextProps,propsKeys);return changedProps.length>0;}},{key:'componentWillUnmount',value:function componentWillUnmount(){// Stop web-worker and clear the component
-	if(this.worker){this.worker.terminate();this.worker=undefined;}this.clearComponent();}},{key:'clearComponent',value:function clearComponent(){// Remove all event listeners and variables
-	if(this.timeout){clearTimeout(this.timeout);this.timeout=undefined;}if(this.stopCamera){this.stopCamera();}if(this.reader){this.reader.removeEventListener('load',this.handleReaderLoad);}if(this.els.img){this.els.img.removeEventListener('load',this.check);}}},{key:'initiate',value:function initiate(){var props=arguments.length>0&&arguments[0]!==undefined?arguments[0]:this.props;var onError=props.onError,facingMode=props.facingMode;getDeviceId(facingMode).then(function(deviceId){return navigator.mediaDevices.getUserMedia({video:{deviceId:deviceId,facingMode:facingMode=='rear'?'environment':'user',width:{min:360,ideal:1280,max:1920},height:{min:240,ideal:720,max:1080}}});}).then(this.handleVideo).catch(onError);}},{key:'handleVideo',value:function handleVideo(stream){var preview=this.els.preview;// Handle different browser implementations of `createObjectURL`
-	if(window.URL.createObjectURL){preview.src=window.URL.createObjectURL(stream);}else if(window.webkitURL){preview.src=window.webkitURL.createObjectURL(stream);}else if(preview.mozSrcObject!==undefined){preview.mozSrcObject=stream;}else{preview.src=stream;}var streamTrack=stream.getTracks()[0];// Assign `stopCamera` so the track can be stopped once component is cleared
-	this.stopCamera=streamTrack.stop.bind(streamTrack);preview.addEventListener('loadstart',this.handleLoadStart);}},{key:'handleLoadStart',value:function handleLoadStart(){var _props=this.props,delay=_props.delay,onLoad=_props.onLoad;var preview=this.els.preview;preview.play();if(typeof onLoad=='function'){onLoad();}if(typeof delay=='number'){this.timeout=setTimeout(this.check,delay);}// Some browsers call loadstart continuously
-	preview.removeEventListener('loadstart',this.handleLoadStart);}},{key:'check',value:function check(){var _props2=this.props,legacyMode=_props2.legacyMode,maxImageSize=_props2.maxImageSize,delay=_props2.delay;var _els=this.els,preview=_els.preview,canvas=_els.canvas,img=_els.img;// Get image/video dimensions
-	var width=Math.floor(legacyMode?img.naturalWidth:preview.videoWidth);var height=Math.floor(legacyMode?img.naturalHeight:preview.videoHeight);if(legacyMode){// Downscale image to `maxImageSize`
-	var ratio=1.1;while((width>height?width:height)>maxImageSize){width=Math.floor(width/ratio);height=Math.floor(height/ratio);}}canvas.width=width;canvas.height=height;var previewIsPlaying=preview&&preview.readyState===preview.HAVE_ENOUGH_DATA;if(legacyMode||previewIsPlaying){var ctx=canvas.getContext('2d');ctx.drawImage(legacyMode?img:preview,0,0,width,height);var imageData=ctx.getImageData(0,0,width,height);// Send data to web-worker
-	this.worker.postMessage(imageData);}else{// Preview not ready -> check later
-	this.timeout=setTimeout(this.check,delay);}}},{key:'handleWorkerMessage',value:function handleWorkerMessage(e){var _props3=this.props,onScan=_props3.onScan,legacyMode=_props3.legacyMode,delay=_props3.delay;var decoded=e.data;onScan(decoded||null);if(!legacyMode&&typeof delay=='number'&&this.worker){this.timeout=setTimeout(this.check,delay);}}},{key:'initiateLegacyMode',value:function initiateLegacyMode(){this.reader=new FileReader();this.reader.addEventListener('load',this.handleReaderLoad);this.els.img.addEventListener('load',this.check,false);// Reset componentDidUpdate
-	this.componentDidUpdate=undefined;if(typeof this.props.onLoad=='function'){this.props.onLoad();}}},{key:'handleInputChange',value:function handleInputChange(e){var selectedImg=e.target.files[0];this.reader.readAsDataURL(selectedImg);}},{key:'handleReaderLoad',value:function handleReaderLoad(e){// Set selected image blob as img source
-	this.els.img.src=e.target.result;}},{key:'openImageDialog',value:function openImageDialog(){// Function to be executed by parent in user action context to trigger img file uploader
-	this.els.input.click();}},{key:'setRefFactory',value:function setRefFactory(key){var _this2=this;return function(element){_this2.els[key]=element;};}},{key:'render',value:function render(){var hiddenStyle={display:'none'};var previewStyle=_extends({display:'block',objectFit:'contain'},this.props.style);return React.createElement('section',null,this.props.legacyMode?React.createElement('div',null,React.createElement('input',{style:hiddenStyle,type:'file',accept:'image/*',ref:this.setRefFactory('input'),onChange:this.handleInputChange}),React.createElement('img',{style:previewStyle,ref:this.setRefFactory('img')})):React.createElement('video',{style:previewStyle,ref:this.setRefFactory('preview')}),React.createElement('canvas',{style:hiddenStyle,ref:this.setRefFactory('canvas')}));}}]);return Reader;}(Component),_class.propTypes={onScan:PropTypes.func.isRequired,onError:PropTypes.func.isRequired,onLoad:PropTypes.func,delay:PropTypes.oneOfType([PropTypes.number,PropTypes.bool]),facingMode:PropTypes.string,legacyMode:PropTypes.bool,maxImageSize:PropTypes.number,style:PropTypes.object},_class.defaultProps={delay:500,style:{},maxImageSize:1500},_temp);
+	'use strict';
 
-/***/ },
-/* 190 */
-/***/ function(module, exports, __webpack_require__) {
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var _extends = Object.assign || function (target) {
+	  for (var i = 1; i < arguments.length; i++) {
+	    var source = arguments[i];for (var key in source) {
+	      if (Object.prototype.hasOwnProperty.call(source, key)) {
+	        target[key] = source[key];
+	      }
+	    }
+	  }return target;
+	};
+
+	var _createClass = function () {
+	  function defineProperties(target, props) {
+	    for (var i = 0; i < props.length; i++) {
+	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
+	    }
+	  }return function (Constructor, protoProps, staticProps) {
+	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
+	  };
+	}();
+
+	var _class, _temp;
+
+	function _classCallCheck(instance, Constructor) {
+	  if (!(instance instanceof Constructor)) {
+	    throw new TypeError("Cannot call a class as a function");
+	  }
+	}
+
+	function _possibleConstructorReturn(self, call) {
+	  if (!self) {
+	    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
+	}
+
+	function _inherits(subClass, superClass) {
+	  if (typeof superClass !== "function" && superClass !== null) {
+	    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
+	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	}
+
+	var React = __webpack_require__(1);
+	var Component = React.Component;
+
+	var PropTypes = __webpack_require__(183);
+	var getDeviceId = __webpack_require__(185);
+	var havePropsChanged = __webpack_require__(187
+
+	// Require adapter to support older browser implementations
+	);__webpack_require__(188
+
+	// Inline worker.js as a string value of workerBlob.
+	);var workerBlob = new Blob(["(function webpackUniversalModuleDefinition(root, factory) {\n\tif(typeof exports === 'object' && typeof module === 'object')\n\t\tmodule.exports = factory();\n\telse if(typeof define === 'function' && define.amd)\n\t\tdefine([], factory);\n\telse if(typeof exports === 'object')\n\t\texports[\"jsQR\"] = factory();\n\telse\n\t\troot[\"jsQR\"] = factory();\n})(this, function() {\nreturn /******/ (function(modules) { // webpackBootstrap\n/******/ \t// The module cache\n/******/ \tvar installedModules = {};\n\n/******/ \t// The require function\n/******/ \tfunction __webpack_require__(moduleId) {\n\n/******/ \t\t// Check if module is in cache\n/******/ \t\tif(installedModules[moduleId])\n/******/ \t\t\treturn installedModules[moduleId].exports;\n\n/******/ \t\t// Create a new module (and put it into the cache)\n/******/ \t\tvar module = installedModules[moduleId] = {\n/******/ \t\t\texports: {},\n/******/ \t\t\tid: moduleId,\n/******/ \t\t\tloaded: false\n/******/ \t\t};\n\n/******/ \t\t// Execute the module function\n/******/ \t\tmodules[moduleId].call(module.exports, module, module.exports, __webpack_require__);\n\n/******/ \t\t// Flag the module as loaded\n/******/ \t\tmodule.loaded = true;\n\n/******/ \t\t// Return the exports of the module\n/******/ \t\treturn module.exports;\n/******/ \t}\n\n\n/******/ \t// expose the modules object (__webpack_modules__)\n/******/ \t__webpack_require__.m = modules;\n\n/******/ \t// expose the module cache\n/******/ \t__webpack_require__.c = installedModules;\n\n/******/ \t// __webpack_public_path__\n/******/ \t__webpack_require__.p = \"\";\n\n/******/ \t// Load entry module and return exports\n/******/ \treturn __webpack_require__(0);\n/******/ })\n/************************************************************************/\n/******/ ([\n/* 0 */\n/***/ (function(module, exports, __webpack_require__) {\n\n\t\"use strict\";\n\t/// <reference path=\"./common/types.d.ts\" />\n\tvar binarizer_1 = __webpack_require__(1);\n\tvar locator_1 = __webpack_require__(3);\n\tvar extractor_1 = __webpack_require__(4);\n\tvar decoder_1 = __webpack_require__(9);\n\tvar bitmatrix_1 = __webpack_require__(2);\n\tvar binarizeImage = binarizer_1.binarize;\n\texports.binarizeImage = binarizeImage;\n\tvar locateQRInBinaryImage = locator_1.locate;\n\texports.locateQRInBinaryImage = locateQRInBinaryImage;\n\tvar extractQRFromBinaryImage = extractor_1.extract;\n\texports.extractQRFromBinaryImage = extractQRFromBinaryImage;\n\tfunction decodeQR(matrix) {\n\t    return byteArrayToString(decoder_1.decode(matrix));\n\t}\n\texports.decodeQR = decodeQR;\n\t// return bytes.reduce((p, b) => p + String.fromCharCode(b), \"\");\n\tfunction byteArrayToString(bytes) {\n\t    var str = \"\";\n\t    if (bytes != null && bytes != undefined) {\n\t        for (var i = 0; i < bytes.length; i++) {\n\t            str += String.fromCharCode(bytes[i]);\n\t        }\n\t    }\n\t    return str;\n\t}\n\tfunction createBitMatrix(data, width) {\n\t    var intArr = new Uint8Array(data.length);\n\t    for (var i = 0; i < data.length; i++) {\n\t        intArr[i] = data[i] ? 1 : 0;\n\t    }\n\t    return new bitmatrix_1.BitMatrix(intArr, width);\n\t}\n\texports.createBitMatrix = createBitMatrix;\n\tfunction decodeQRFromImage(data, width, height) {\n\t    return byteArrayToString(decodeQRFromImageAsByteArray(data, width, height));\n\t}\n\texports.decodeQRFromImage = decodeQRFromImage;\n\tfunction decodeQRFromImageAsByteArray(data, width, height) {\n\t    var binarizedImage = binarizeImage(data, width, height);\n\t    var location = locator_1.locate(binarizedImage);\n\t    if (!location) {\n\t        return null;\n\t    }\n\t    var rawQR = extractor_1.extract(binarizedImage, location);\n\t    if (!rawQR) {\n\t        return null;\n\t    }\n\t    return decoder_1.decode(rawQR);\n\t}\n\texports.decodeQRFromImageAsByteArray = decodeQRFromImageAsByteArray;\n\n\n/***/ }),\n/* 1 */\n/***/ (function(module, exports, __webpack_require__) {\n\n\t\"use strict\";\n\tvar bitmatrix_1 = __webpack_require__(2);\n\t// Magic Constants\n\tvar BLOCK_SIZE_POWER = 3;\n\tvar BLOCK_SIZE = 1 << BLOCK_SIZE_POWER;\n\tvar BLOCK_SIZE_MASK = BLOCK_SIZE - 1;\n\tvar MIN_DYNAMIC_RANGE = 24;\n\tfunction calculateBlackPoints(luminances, subWidth, subHeight, width, height) {\n\t    var blackPoints = new Array(subHeight);\n\t    for (var i = 0; i < subHeight; i++) {\n\t        blackPoints[i] = new Uint8ClampedArray(subWidth);\n\t    }\n\t    for (var y = 0; y < subHeight; y++) {\n\t        var yoffset = y << BLOCK_SIZE_POWER;\n\t        var maxYOffset = height - BLOCK_SIZE;\n\t        if (yoffset > maxYOffset) {\n\t            yoffset = maxYOffset;\n\t        }\n\t        for (var x = 0; x < subWidth; x++) {\n\t            var xoffset = x << BLOCK_SIZE_POWER;\n\t            var maxXOffset = width - BLOCK_SIZE;\n\t            if (xoffset > maxXOffset) {\n\t                xoffset = maxXOffset;\n\t            }\n\t            var sum = 0;\n\t            var min = 0xFF;\n\t            var max = 0;\n\t            for (var yy = 0, offset = yoffset * width + xoffset; yy < BLOCK_SIZE; yy++, offset += width) {\n\t                for (var xx = 0; xx < BLOCK_SIZE; xx++) {\n\t                    var pixel = luminances[offset + xx] & 0xFF;\n\t                    // still looking for good contrast\n\t                    sum += pixel;\n\t                    if (pixel < min) {\n\t                        min = pixel;\n\t                    }\n\t                    if (pixel > max) {\n\t                        max = pixel;\n\t                    }\n\t                }\n\t                // short-circuit min/max tests once dynamic range is met\n\t                if (max - min > MIN_DYNAMIC_RANGE) {\n\t                    // finish the rest of the rows quickly\n\t                    for (yy++, offset += width; yy < BLOCK_SIZE; yy++, offset += width) {\n\t                        for (var xx = 0; xx < BLOCK_SIZE; xx++) {\n\t                            sum += luminances[offset + xx] & 0xFF;\n\t                        }\n\t                    }\n\t                }\n\t            }\n\t            // The default estimate is the average of the values in the block.\n\t            var average = sum >> (BLOCK_SIZE_POWER * 2);\n\t            if (max - min <= MIN_DYNAMIC_RANGE) {\n\t                // If variation within the block is low, assume this is a block with only light or only\n\t                // dark pixels. In that case we do not want to use the average, as it would divide this\n\t                // low contrast area into black and white pixels, essentially creating data out of noise.\n\t                //\n\t                // The default assumption is that the block is light/background. Since no estimate for\n\t                // the level of dark pixels exists locally, use half the min for the block.\n\t                average = min >> 1;\n\t                if (y > 0 && x > 0) {\n\t                    // Correct the \"white background\" assumption for blocks that have neighbors by comparing\n\t                    // the pixels in this block to the previously calculated black points. This is based on\n\t                    // the fact that dark barcode symbology is always surrounded by some amount of light\n\t                    // background for which reasonable black point estimates were made. The bp estimated at\n\t                    // the boundaries is used for the interior.\n\t                    // The (min < bp) is arbitrary but works better than other heuristics that were tried.\n\t                    var averageNeighborBlackPoint = (blackPoints[y - 1][x] + (2 * blackPoints[y][x - 1]) + blackPoints[y - 1][x - 1]) >> 2;\n\t                    if (min < averageNeighborBlackPoint) {\n\t                        average = averageNeighborBlackPoint;\n\t                    }\n\t                }\n\t            }\n\t            blackPoints[y][x] = average;\n\t        }\n\t    }\n\t    return blackPoints;\n\t}\n\tfunction calculateThresholdForBlock(luminances, subWidth, subHeight, width, height, blackPoints) {\n\t    function cap(value, min, max) {\n\t        return value < min ? min : value > max ? max : value;\n\t    }\n\t    // var outArray = new Array(width * height);\n\t    var outMatrix = bitmatrix_1.BitMatrix.createEmpty(width, height);\n\t    function thresholdBlock(luminances, xoffset, yoffset, threshold, stride) {\n\t        var offset = (yoffset * stride) + xoffset;\n\t        for (var y = 0; y < BLOCK_SIZE; y++, offset += stride) {\n\t            for (var x = 0; x < BLOCK_SIZE; x++) {\n\t                var pixel = luminances[offset + x] & 0xff;\n\t                // Comparison needs to be <= so that black == 0 pixels are black even if the threshold is 0.\n\t                outMatrix.set(xoffset + x, yoffset + y, pixel <= threshold);\n\t            }\n\t        }\n\t    }\n\t    for (var y = 0; y < subHeight; y++) {\n\t        var yoffset = y << BLOCK_SIZE_POWER;\n\t        var maxYOffset = height - BLOCK_SIZE;\n\t        if (yoffset > maxYOffset) {\n\t            yoffset = maxYOffset;\n\t        }\n\t        for (var x = 0; x < subWidth; x++) {\n\t            var xoffset = x << BLOCK_SIZE_POWER;\n\t            var maxXOffset = width - BLOCK_SIZE;\n\t            if (xoffset > maxXOffset) {\n\t                xoffset = maxXOffset;\n\t            }\n\t            var left = cap(x, 2, subWidth - 3);\n\t            var top = cap(y, 2, subHeight - 3);\n\t            var sum = 0;\n\t            for (var z = -2; z <= 2; z++) {\n\t                var blackRow = blackPoints[top + z];\n\t                sum += blackRow[left - 2];\n\t                sum += blackRow[left - 1];\n\t                sum += blackRow[left];\n\t                sum += blackRow[left + 1];\n\t                sum += blackRow[left + 2];\n\t            }\n\t            var average = sum / 25;\n\t            thresholdBlock(luminances, xoffset, yoffset, average, width);\n\t        }\n\t    }\n\t    return outMatrix;\n\t}\n\tfunction binarize(data, width, height) {\n\t    if (data.length !== width * height * 4) {\n\t        throw new Error(\"Binarizer data.length != width * height * 4\");\n\t    }\n\t    var gsArray = new Uint8ClampedArray(width * height);\n\t    for (var x = 0; x < width; x++) {\n\t        for (var y = 0; y < height; y++) {\n\t            var startIndex = (y * width + x) * 4;\n\t            var r = data[startIndex];\n\t            var g = data[startIndex + 1];\n\t            var b = data[startIndex + 2];\n\t            // Magic lumosity constants\n\t            var lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;\n\t            gsArray[y * width + x] = lum;\n\t        }\n\t    }\n\t    var subWidth = width >> BLOCK_SIZE_POWER;\n\t    if ((width & BLOCK_SIZE_MASK) != 0) {\n\t        subWidth++;\n\t    }\n\t    var subHeight = height >> BLOCK_SIZE_POWER;\n\t    if ((height & BLOCK_SIZE_MASK) != 0) {\n\t        subHeight++;\n\t    }\n\t    var blackPoints = calculateBlackPoints(gsArray, subWidth, subHeight, width, height);\n\t    return calculateThresholdForBlock(gsArray, subWidth, subHeight, width, height, blackPoints);\n\t}\n\texports.binarize = binarize;\n\n\n/***/ }),\n/* 2 */\n/***/ (function(module, exports) {\n\n\t\"use strict\";\n\tvar BitMatrix = (function () {\n\t    function BitMatrix(data, width) {\n\t        this.width = width;\n\t        this.height = data.length / width;\n\t        this.data = data;\n\t    }\n\t    BitMatrix.createEmpty = function (width, height) {\n\t        var data = new Uint8Array(width * height);\n\t        return new BitMatrix(data, width);\n\t    };\n\t    BitMatrix.prototype.get = function (x, y) {\n\t        return !!this.data[y * this.width + x];\n\t    };\n\t    BitMatrix.prototype.set = function (x, y, v) {\n\t        this.data[y * this.width + x] = v ? 1 : 0;\n\t    };\n\t    BitMatrix.prototype.copyBit = function (x, y, versionBits) {\n\t        return this.get(x, y) ? (versionBits << 1) | 0x1 : versionBits << 1;\n\t    };\n\t    BitMatrix.prototype.setRegion = function (left, top, width, height) {\n\t        var right = left + width;\n\t        var bottom = top + height;\n\t        for (var y = top; y < bottom; y++) {\n\t            for (var x = left; x < right; x++) {\n\t                this.set(x, y, true);\n\t            }\n\t        }\n\t    };\n\t    BitMatrix.prototype.mirror = function () {\n\t        for (var x = 0; x < this.width; x++) {\n\t            for (var y = x + 1; y < this.height; y++) {\n\t                if (this.get(x, y) != this.get(y, x)) {\n\t                    this.set(x, y, !this.get(x, y));\n\t                    this.set(y, x, !this.get(y, x));\n\t                }\n\t            }\n\t        }\n\t    };\n\t    return BitMatrix;\n\t}());\n\texports.BitMatrix = BitMatrix;\n\n\n/***/ }),\n/* 3 */\n/***/ (function(module, exports) {\n\n\t\"use strict\";\n\tvar CENTER_QUORUM = 2;\n\tvar MIN_SKIP = 3;\n\tvar MAX_MODULES = 57;\n\tvar INTEGER_MATH_SHIFT = 8;\n\tvar FinderPattern = (function () {\n\t    function FinderPattern(x, y, estimatedModuleSize, count) {\n\t        this.x = x;\n\t        this.y = y;\n\t        this.estimatedModuleSize = estimatedModuleSize;\n\t        if (count == null) {\n\t            this.count = 1;\n\t        }\n\t        else {\n\t            this.count = count;\n\t        }\n\t    }\n\t    FinderPattern.prototype.aboutEquals = function (moduleSize, i, j) {\n\t        if (Math.abs(i - this.y) <= moduleSize && Math.abs(j - this.x) <= moduleSize) {\n\t            var moduleSizeDiff = Math.abs(moduleSize - this.estimatedModuleSize);\n\t            return moduleSizeDiff <= 1.0 || moduleSizeDiff <= this.estimatedModuleSize;\n\t        }\n\t        return false;\n\t    };\n\t    FinderPattern.prototype.combineEstimate = function (i, j, newModuleSize) {\n\t        var combinedCount = this.count + 1;\n\t        var combinedX = (this.count * this.x + j) / combinedCount;\n\t        var combinedY = (this.count * this.y + i) / combinedCount;\n\t        var combinedModuleSize = (this.count * this.estimatedModuleSize + newModuleSize) / combinedCount;\n\t        return new FinderPattern(combinedX, combinedY, combinedModuleSize, combinedCount);\n\t    };\n\t    return FinderPattern;\n\t}());\n\tfunction foundPatternCross(stateCount) {\n\t    var totalModuleSize = 0;\n\t    for (var i = 0; i < 5; i++) {\n\t        var count = stateCount[i];\n\t        if (count === 0)\n\t            return false;\n\t        totalModuleSize += count;\n\t    }\n\t    if (totalModuleSize < 7)\n\t        return false;\n\t    var moduleSize = (totalModuleSize << INTEGER_MATH_SHIFT) / 7;\n\t    var maxVariance = moduleSize / 2;\n\t    // Allow less than 50% variance from 1-1-3-1-1 proportions\n\t    return Math.abs(moduleSize - (stateCount[0] << INTEGER_MATH_SHIFT)) < maxVariance &&\n\t        Math.abs(moduleSize - (stateCount[1] << INTEGER_MATH_SHIFT)) < maxVariance &&\n\t        Math.abs(3 * moduleSize - (stateCount[2] << INTEGER_MATH_SHIFT)) < 3 * maxVariance &&\n\t        Math.abs(moduleSize - (stateCount[3] << INTEGER_MATH_SHIFT)) < maxVariance &&\n\t        Math.abs(moduleSize - (stateCount[4] << INTEGER_MATH_SHIFT)) < maxVariance;\n\t}\n\tfunction centerFromEnd(stateCount, end) {\n\t    var result = (end - stateCount[4] - stateCount[3]) - stateCount[2] / 2;\n\t    // Fix this.\n\t    if (result !== result) {\n\t        return null;\n\t    }\n\t    return result;\n\t}\n\tfunction distance(pattern1, pattern2) {\n\t    var a = pattern1.x - pattern2.x;\n\t    var b = pattern1.y - pattern2.y;\n\t    return Math.sqrt(a * a + b * b);\n\t}\n\tfunction crossProductZ(pointA, pointB, pointC) {\n\t    var bX = pointB.x;\n\t    var bY = pointB.y;\n\t    return ((pointC.x - bX) * (pointA.y - bY)) - ((pointC.y - bY) * (pointA.x - bX));\n\t}\n\tfunction ReorderFinderPattern(patterns) {\n\t    // Find distances between pattern centers\n\t    var zeroOneDistance = distance(patterns[0], patterns[1]);\n\t    var oneTwoDistance = distance(patterns[1], patterns[2]);\n\t    var zeroTwoDistance = distance(patterns[0], patterns[2]);\n\t    var pointA, pointB, pointC;\n\t    // Assume one closest to other two is B; A and C will just be guesses at first\n\t    if (oneTwoDistance >= zeroOneDistance && oneTwoDistance >= zeroTwoDistance) {\n\t        pointB = patterns[0];\n\t        pointA = patterns[1];\n\t        pointC = patterns[2];\n\t    }\n\t    else if (zeroTwoDistance >= oneTwoDistance && zeroTwoDistance >= zeroOneDistance) {\n\t        pointB = patterns[1];\n\t        pointA = patterns[0];\n\t        pointC = patterns[2];\n\t    }\n\t    else {\n\t        pointB = patterns[2];\n\t        pointA = patterns[0];\n\t        pointC = patterns[1];\n\t    }\n\t    // Use cross product to figure out whether A and C are correct or flipped.\n\t    // This asks whether BC x BA has a positive z component, which is the arrangement\n\t    // we want for A, B, C. If it's negative, then we've got it flipped around and\n\t    // should swap A and C.\n\t    if (crossProductZ(pointA, pointB, pointC) < 0) {\n\t        var temp = pointA;\n\t        pointA = pointC;\n\t        pointC = temp;\n\t    }\n\t    return {\n\t        bottomLeft: { x: pointA.x, y: pointA.y },\n\t        topLeft: { x: pointB.x, y: pointB.y },\n\t        topRight: { x: pointC.x, y: pointC.y }\n\t    };\n\t}\n\tfunction locate(matrix) {\n\t    // Global state :(\n\t    var possibleCenters = [];\n\t    var hasSkipped = false;\n\t    function get(x, y) {\n\t        x = Math.floor(x);\n\t        y = Math.floor(y);\n\t        return matrix.get(x, y);\n\t    }\n\t    // Methods\n\t    function crossCheckDiagonal(startI, centerJ, maxCount, originalStateCountTotal) {\n\t        var maxI = matrix.height;\n\t        var maxJ = matrix.width;\n\t        var stateCount = [0, 0, 0, 0, 0];\n\t        // Start counting up, left from center finding black center mass\n\t        var i = 0;\n\t        while (startI - i >= 0 && get(centerJ - i, startI - i)) {\n\t            stateCount[2]++;\n\t            i++;\n\t        }\n\t        if ((startI - i < 0) || (centerJ - i < 0)) {\n\t            return false;\n\t        }\n\t        // Continue up, left finding white space\n\t        while ((startI - i >= 0) && (centerJ - i >= 0) && !get(centerJ - i, startI - i) && stateCount[1] <= maxCount) {\n\t            stateCount[1]++;\n\t            i++;\n\t        }\n\t        // If already too many modules in this state or ran off the edge:\n\t        if ((startI - i < 0) || (centerJ - i < 0) || stateCount[1] > maxCount) {\n\t            return false;\n\t        }\n\t        // Continue up, left finding black border\n\t        while ((startI - i >= 0) && (centerJ - i >= 0) && get(centerJ - i, startI - i) && stateCount[0] <= maxCount) {\n\t            stateCount[0]++;\n\t            i++;\n\t        }\n\t        if (stateCount[0] > maxCount) {\n\t            return false;\n\t        }\n\t        // Now also count down, right from center\n\t        i = 1;\n\t        while ((startI + i < maxI) && (centerJ + i < maxJ) && get(centerJ + i, startI + i)) {\n\t            stateCount[2]++;\n\t            i++;\n\t        }\n\t        // Ran off the edge?\n\t        if ((startI + i >= maxI) || (centerJ + i >= maxJ)) {\n\t            return false;\n\t        }\n\t        while ((startI + i < maxI) && (centerJ + i < maxJ) && !get(centerJ + i, startI + i) && stateCount[3] < maxCount) {\n\t            stateCount[3]++;\n\t            i++;\n\t        }\n\t        if ((startI + i >= maxI) || (centerJ + i >= maxJ) || stateCount[3] >= maxCount) {\n\t            return false;\n\t        }\n\t        while ((startI + i < maxI) && (centerJ + i < maxJ) && get(centerJ + i, startI + i) && stateCount[4] < maxCount) {\n\t            stateCount[4]++;\n\t            i++;\n\t        }\n\t        if (stateCount[4] >= maxCount) {\n\t            return false;\n\t        }\n\t        // If we found a finder-pattern-like section, but its size is more than 100% different than\n\t        // the original, assume it's a false positive\n\t        var stateCountTotal = stateCount[0] + stateCount[1] + stateCount[2] + stateCount[3] + stateCount[4];\n\t        return Math.abs(stateCountTotal - originalStateCountTotal) < 2 * originalStateCountTotal &&\n\t            foundPatternCross(stateCount);\n\t    }\n\t    function crossCheckVertical(startI, centerJ, maxCount, originalStateCountTotal) {\n\t        var maxI = matrix.height;\n\t        var stateCount = [0, 0, 0, 0, 0];\n\t        // Start counting up from center\n\t        var i = startI;\n\t        while (i >= 0 && get(centerJ, i)) {\n\t            stateCount[2]++;\n\t            i--;\n\t        }\n\t        if (i < 0) {\n\t            return null;\n\t        }\n\t        while (i >= 0 && !get(centerJ, i) && stateCount[1] <= maxCount) {\n\t            stateCount[1]++;\n\t            i--;\n\t        }\n\t        // If already too many modules in this state or ran off the edge:\n\t        if (i < 0 || stateCount[1] > maxCount) {\n\t            return null;\n\t        }\n\t        while (i >= 0 && get(centerJ, i) && stateCount[0] <= maxCount) {\n\t            stateCount[0]++;\n\t            i--;\n\t        }\n\t        if (stateCount[0] > maxCount) {\n\t            return null;\n\t        }\n\t        // Now also count down from center\n\t        i = startI + 1;\n\t        while (i < maxI && get(centerJ, i)) {\n\t            stateCount[2]++;\n\t            i++;\n\t        }\n\t        if (i == maxI) {\n\t            return null;\n\t        }\n\t        while (i < maxI && !get(centerJ, i) && stateCount[3] < maxCount) {\n\t            stateCount[3]++;\n\t            i++;\n\t        }\n\t        if (i == maxI || stateCount[3] >= maxCount) {\n\t            return null;\n\t        }\n\t        while (i < maxI && get(centerJ, i) && stateCount[4] < maxCount) {\n\t            stateCount[4]++;\n\t            i++;\n\t        }\n\t        if (stateCount[4] >= maxCount) {\n\t            return null;\n\t        }\n\t        // If we found a finder-pattern-like section, but its size is more than 40% different than\n\t        // the original, assume it's a false positive\n\t        var stateCountTotal = stateCount[0] + stateCount[1] + stateCount[2] + stateCount[3] + stateCount[4];\n\t        if (5 * Math.abs(stateCountTotal - originalStateCountTotal) >= 2 * originalStateCountTotal) {\n\t            return null;\n\t        }\n\t        return foundPatternCross(stateCount) ? centerFromEnd(stateCount, i) : null;\n\t    }\n\t    function haveMultiplyConfirmedCenters() {\n\t        var confirmedCount = 0;\n\t        var totalModuleSize = 0;\n\t        var max = possibleCenters.length;\n\t        possibleCenters.forEach(function (pattern) {\n\t            if (pattern.count >= CENTER_QUORUM) {\n\t                confirmedCount++;\n\t                totalModuleSize += pattern.estimatedModuleSize;\n\t            }\n\t        });\n\t        if (confirmedCount < 3) {\n\t            return false;\n\t        }\n\t        // OK, we have at least 3 confirmed centers, but, it's possible that one is a \"false positive\"\n\t        // and that we need to keep looking. We detect this by asking if the estimated module sizes\n\t        // vary too much. We arbitrarily say that when the total deviation from average exceeds\n\t        // 5% of the total module size estimates, it's too much.\n\t        var average = totalModuleSize / max;\n\t        var totalDeviation = 0;\n\t        for (var i = 0; i < max; i++) {\n\t            var pattern = possibleCenters[i];\n\t            totalDeviation += Math.abs(pattern.estimatedModuleSize - average);\n\t        }\n\t        return totalDeviation <= 0.05 * totalModuleSize;\n\t    }\n\t    function crossCheckHorizontal(startJ, centerI, maxCount, originalStateCountTotal) {\n\t        var maxJ = matrix.width;\n\t        var stateCount = [0, 0, 0, 0, 0];\n\t        var j = startJ;\n\t        while (j >= 0 && get(j, centerI)) {\n\t            stateCount[2]++;\n\t            j--;\n\t        }\n\t        if (j < 0) {\n\t            return null;\n\t        }\n\t        while (j >= 0 && !get(j, centerI) && stateCount[1] <= maxCount) {\n\t            stateCount[1]++;\n\t            j--;\n\t        }\n\t        if (j < 0 || stateCount[1] > maxCount) {\n\t            return null;\n\t        }\n\t        while (j >= 0 && get(j, centerI) && stateCount[0] <= maxCount) {\n\t            stateCount[0]++;\n\t            j--;\n\t        }\n\t        if (stateCount[0] > maxCount) {\n\t            return null;\n\t        }\n\t        j = startJ + 1;\n\t        while (j < maxJ && get(j, centerI)) {\n\t            stateCount[2]++;\n\t            j++;\n\t        }\n\t        if (j == maxJ) {\n\t            return null;\n\t        }\n\t        while (j < maxJ && !get(j, centerI) && stateCount[3] < maxCount) {\n\t            stateCount[3]++;\n\t            j++;\n\t        }\n\t        if (j == maxJ || stateCount[3] >= maxCount) {\n\t            return null;\n\t        }\n\t        while (j < maxJ && get(j, centerI) && stateCount[4] < maxCount) {\n\t            stateCount[4]++;\n\t            j++;\n\t        }\n\t        if (stateCount[4] >= maxCount) {\n\t            return null;\n\t        }\n\t        // If we found a finder-pattern-like section, but its size is significantly different than\n\t        // the original, assume it's a false positive\n\t        var stateCountTotal = stateCount[0] + stateCount[1] + stateCount[2] + stateCount[3] + stateCount[4];\n\t        if (5 * Math.abs(stateCountTotal - originalStateCountTotal) >= originalStateCountTotal) {\n\t            return null;\n\t        }\n\t        return foundPatternCross(stateCount) ? centerFromEnd(stateCount, j) : null;\n\t    }\n\t    function handlePossibleCenter(stateCount, i, j, pureBarcode) {\n\t        var stateCountTotal = stateCount[0] + stateCount[1] + stateCount[2] + stateCount[3] + stateCount[4];\n\t        var centerJ = centerFromEnd(stateCount, j);\n\t        if (centerJ == null)\n\t            return false;\n\t        var centerI = crossCheckVertical(i, Math.floor(centerJ), stateCount[2], stateCountTotal);\n\t        if (centerI != null) {\n\t            // Re-cross check\n\t            centerJ = crossCheckHorizontal(Math.floor(centerJ), Math.floor(centerI), stateCount[2], stateCountTotal);\n\t            if (centerJ != null && (!pureBarcode || crossCheckDiagonal(Math.floor(centerI), Math.floor(centerJ), stateCount[2], stateCountTotal))) {\n\t                var estimatedModuleSize = stateCountTotal / 7;\n\t                var found = false;\n\t                for (var index = 0; index < possibleCenters.length; index++) {\n\t                    var center = possibleCenters[index];\n\t                    // Look for about the same center and module size:\n\t                    if (center.aboutEquals(estimatedModuleSize, centerI, centerJ)) {\n\t                        possibleCenters.splice(index, 1, center.combineEstimate(centerI, centerJ, estimatedModuleSize));\n\t                        found = true;\n\t                        break;\n\t                    }\n\t                }\n\t                if (!found) {\n\t                    // var point = new FinderPattern(centerJ.Value, centerI.Value, estimatedModuleSize);\n\t                    var point = new FinderPattern(centerJ, centerI, estimatedModuleSize);\n\t                    possibleCenters.push(point);\n\t                }\n\t                return true;\n\t            }\n\t        }\n\t        return false;\n\t    }\n\t    function findRowSkip() {\n\t        var max = possibleCenters.length;\n\t        if (max <= 1) {\n\t            return 0;\n\t        }\n\t        var firstConfirmedCenter = null;\n\t        possibleCenters.forEach(function (center) {\n\t            if (center.count >= CENTER_QUORUM) {\n\t                if (firstConfirmedCenter == null) {\n\t                    firstConfirmedCenter = center;\n\t                }\n\t                else {\n\t                    // We have two confirmed centers\n\t                    // How far down can we skip before resuming looking for the next\n\t                    // pattern? In the worst case, only the difference between the\n\t                    // difference in the x / y coordinates of the two centers.\n\t                    // This is the case where you find top left last.\n\t                    hasSkipped = true;\n\t                    //UPGRADE_WARNING: Data types in Visual C# might be different.  Verify the accuracy of narrowing conversions. \"ms-help://MS.VSCC.v80/dv_commoner/local/redirect.htm?index='!DefaultContextWindowIndex'&keyword='jlca1042'\"\n\t                    return Math.floor(Math.abs(firstConfirmedCenter.x - center.x) - Math.abs(firstConfirmedCenter.y - center.y)) / 2;\n\t                }\n\t            }\n\t        });\n\t        return 0;\n\t    }\n\t    function selectBestPatterns() {\n\t        var startSize = possibleCenters.length;\n\t        if (startSize < 3) {\n\t            // Couldn't find enough finder patterns\n\t            return null;\n\t        }\n\t        // Filter outlier possibilities whose module size is too different\n\t        if (startSize > 3) {\n\t            // But we can only afford to do so if we have at least 4 possibilities to choose from\n\t            var totalModuleSize = 0;\n\t            var square = 0;\n\t            possibleCenters.forEach(function (center) {\n\t                var size = center.estimatedModuleSize;\n\t                totalModuleSize += size;\n\t                square += size * size;\n\t            });\n\t            var average = totalModuleSize / startSize;\n\t            var stdDev = Math.sqrt(square / startSize - average * average);\n\t            //possibleCenters.Sort(new FurthestFromAverageComparator(average));\n\t            possibleCenters.sort(function (x, y) {\n\t                var dA = Math.abs(y.estimatedModuleSize - average);\n\t                var dB = Math.abs(x.estimatedModuleSize - average);\n\t                return dA < dB ? -1 : dA == dB ? 0 : 1;\n\t            });\n\t            var limit = Math.max(0.2 * average, stdDev);\n\t            for (var i = 0; i < possibleCenters.length && possibleCenters.length > 3; i++) {\n\t                var pattern = possibleCenters[i];\n\t                if (Math.abs(pattern.estimatedModuleSize - average) > limit) {\n\t                    possibleCenters.splice(i, 1);\n\t                    ///possibleCenters.RemoveAt(i);\n\t                    i--;\n\t                }\n\t            }\n\t        }\n\t        if (possibleCenters.length > 3) {\n\t            // Throw away all but those first size candidate points we found.\n\t            var totalModuleSize = 0;\n\t            possibleCenters.forEach(function (possibleCenter) {\n\t                totalModuleSize += possibleCenter.estimatedModuleSize;\n\t            });\n\t            var average = totalModuleSize / possibleCenters.length;\n\t            // possibleCenters.Sort(new CenterComparator(average));\n\t            possibleCenters.sort(function (x, y) {\n\t                if (y.count === x.count) {\n\t                    var dA = Math.abs(y.estimatedModuleSize - average);\n\t                    var dB = Math.abs(x.estimatedModuleSize - average);\n\t                    return dA < dB ? 1 : dA == dB ? 0 : -1;\n\t                }\n\t                return y.count - x.count;\n\t            });\n\t            //possibleCenters.subList(3, possibleCenters.Count).clear();\n\t            ///possibleCenters = possibleCenters.GetRange(0, 3);\n\t            possibleCenters = possibleCenters.slice(0, 3);\n\t        }\n\t        return [possibleCenters[0], possibleCenters[1], possibleCenters[2]];\n\t    }\n\t    var pureBarcode = false;\n\t    var maxI = matrix.height;\n\t    var maxJ = matrix.width;\n\t    var iSkip = Math.floor((3 * maxI) / (4 * MAX_MODULES));\n\t    if (iSkip < MIN_SKIP || false) {\n\t        iSkip = MIN_SKIP;\n\t    }\n\t    var done = false;\n\t    var stateCount = [0, 0, 0, 0, 0];\n\t    for (var i = iSkip - 1; i < maxI && !done; i += iSkip) {\n\t        stateCount = [0, 0, 0, 0, 0];\n\t        var currentState = 0;\n\t        for (var j = 0; j < maxJ; j++) {\n\t            if (get(j, i)) {\n\t                // Black pixel\n\t                if ((currentState & 1) === 1) {\n\t                    currentState++;\n\t                }\n\t                stateCount[currentState]++;\n\t            }\n\t            else {\n\t                // White pixel\n\t                if ((currentState & 1) === 0) {\n\t                    // Counting black pixels\n\t                    if (currentState === 4) {\n\t                        // A winner?\n\t                        if (foundPatternCross(stateCount)) {\n\t                            // Yes\n\t                            var confirmed = handlePossibleCenter(stateCount, i, j, pureBarcode);\n\t                            if (confirmed) {\n\t                                // Start examining every other line. Checking each line turned out to be too\n\t                                // expensive and didn't improve performance.\n\t                                iSkip = 2;\n\t                                if (hasSkipped) {\n\t                                    done = haveMultiplyConfirmedCenters();\n\t                                }\n\t                                else {\n\t                                    var rowSkip = findRowSkip();\n\t                                    if (rowSkip > stateCount[2]) {\n\t                                        // Skip rows between row of lower confirmed center\n\t                                        // and top of presumed third confirmed center\n\t                                        // but back up a bit to get a full chance of detecting\n\t                                        // it, entire width of center of finder pattern\n\t                                        // Skip by rowSkip, but back off by stateCount[2] (size of last center\n\t                                        // of pattern we saw) to be conservative, and also back off by iSkip which\n\t                                        // is about to be re-added\n\t                                        i += rowSkip - stateCount[2] - iSkip;\n\t                                        j = maxJ - 1;\n\t                                    }\n\t                                }\n\t                            }\n\t                            else {\n\t                                stateCount = [stateCount[2], stateCount[3], stateCount[4], 1, 0];\n\t                                currentState = 3;\n\t                                continue;\n\t                            }\n\t                            // Clear state to start looking again\n\t                            stateCount = [0, 0, 0, 0, 0];\n\t                            currentState = 0;\n\t                        }\n\t                        else {\n\t                            stateCount = [stateCount[2], stateCount[3], stateCount[4], 1, 0];\n\t                            currentState = 3;\n\t                        }\n\t                    }\n\t                    else {\n\t                        // Should I really have copy/pasted this fuckery?\n\t                        stateCount[++currentState]++;\n\t                    }\n\t                }\n\t                else {\n\t                    // Counting the white pixels\n\t                    stateCount[currentState]++;\n\t                }\n\t            }\n\t        }\n\t        if (foundPatternCross(stateCount)) {\n\t            var confirmed = handlePossibleCenter(stateCount, i, maxJ, pureBarcode);\n\t            if (confirmed) {\n\t                iSkip = stateCount[0];\n\t                if (hasSkipped) {\n\t                    // Found a third one\n\t                    done = haveMultiplyConfirmedCenters();\n\t                }\n\t            }\n\t        }\n\t    }\n\t    var patternInfo = selectBestPatterns();\n\t    if (!patternInfo)\n\t        return null;\n\t    return ReorderFinderPattern(patternInfo);\n\t}\n\texports.locate = locate;\n\n\n/***/ }),\n/* 4 */\n/***/ (function(module, exports, __webpack_require__) {\n\n\t\"use strict\";\n\t/// <reference path=\"../common/types.d.ts\" />\n\tvar alignment_finder_1 = __webpack_require__(5);\n\tvar perspective_transform_1 = __webpack_require__(7);\n\tvar version_1 = __webpack_require__(8);\n\tvar bitmatrix_1 = __webpack_require__(2);\n\tvar helpers_1 = __webpack_require__(6);\n\tfunction checkAndNudgePoints(width, height, points) {\n\t    // Check and nudge points from start until we see some that are OK:\n\t    var nudged = true;\n\t    for (var offset = 0; offset < points.length && nudged; offset += 2) {\n\t        var x = Math.floor(points[offset]);\n\t        var y = Math.floor(points[offset + 1]);\n\t        if (x < -1 || x > width || y < -1 || y > height) {\n\t            throw new Error();\n\t        }\n\t        nudged = false;\n\t        if (x == -1) {\n\t            points[offset] = 0;\n\t            nudged = true;\n\t        }\n\t        else if (x == width) {\n\t            points[offset] = width - 1;\n\t            nudged = true;\n\t        }\n\t        if (y == -1) {\n\t            points[offset + 1] = 0;\n\t            nudged = true;\n\t        }\n\t        else if (y == height) {\n\t            points[offset + 1] = height - 1;\n\t            nudged = true;\n\t        }\n\t    }\n\t    // Check and nudge points from end:\n\t    nudged = true;\n\t    for (var offset = points.length - 2; offset >= 0 && nudged; offset -= 2) {\n\t        var x = Math.floor(points[offset]);\n\t        var y = Math.floor(points[offset + 1]);\n\t        if (x < -1 || x > width || y < -1 || y > height) {\n\t            throw new Error();\n\t        }\n\t        nudged = false;\n\t        if (x == -1) {\n\t            points[offset] = 0;\n\t            nudged = true;\n\t        }\n\t        else if (x == width) {\n\t            points[offset] = width - 1;\n\t            nudged = true;\n\t        }\n\t        if (y == -1) {\n\t            points[offset + 1] = 0;\n\t            nudged = true;\n\t        }\n\t        else if (y == height) {\n\t            points[offset + 1] = height - 1;\n\t            nudged = true;\n\t        }\n\t    }\n\t    return points;\n\t}\n\tfunction bitArrayFromImage(image, dimension, transform) {\n\t    if (dimension <= 0) {\n\t        return null;\n\t    }\n\t    var bits = bitmatrix_1.BitMatrix.createEmpty(dimension, dimension);\n\t    var points = new Float32Array(dimension << 1);\n\t    for (var y = 0; y < dimension; y++) {\n\t        var max = points.length;\n\t        var iValue = y + 0.5;\n\t        for (var x = 0; x < max; x += 2) {\n\t            points[x] = (x >> 1) + 0.5;\n\t            points[x + 1] = iValue;\n\t        }\n\t        points = perspective_transform_1.transformPoints(transform, points);\n\t        // Quick check to see if points transformed to something inside the image;\n\t        // sufficient to check the endpoints\n\t        try {\n\t            var nudgedPoints = checkAndNudgePoints(image.width, image.height, points);\n\t        }\n\t        catch (e) {\n\t            return null;\n\t        }\n\t        // try {\n\t        for (var x = 0; x < max; x += 2) {\n\t            bits.set(x >> 1, y, image.get(Math.floor(nudgedPoints[x]), Math.floor(nudgedPoints[x + 1])));\n\t        }\n\t    }\n\t    return bits;\n\t}\n\tfunction createTransform(topLeft, topRight, bottomLeft, alignmentPattern, dimension) {\n\t    var dimMinusThree = dimension - 3.5;\n\t    var bottomRightX;\n\t    var bottomRightY;\n\t    var sourceBottomRightX;\n\t    var sourceBottomRightY;\n\t    if (alignmentPattern != null) {\n\t        bottomRightX = alignmentPattern.x;\n\t        bottomRightY = alignmentPattern.y;\n\t        sourceBottomRightX = sourceBottomRightY = dimMinusThree - 3;\n\t    }\n\t    else {\n\t        // Don't have an alignment pattern, just make up the bottom-right point\n\t        bottomRightX = (topRight.x - topLeft.x) + bottomLeft.x;\n\t        bottomRightY = (topRight.y - topLeft.y) + bottomLeft.y;\n\t        sourceBottomRightX = sourceBottomRightY = dimMinusThree;\n\t    }\n\t    return perspective_transform_1.quadrilateralToQuadrilateral(3.5, 3.5, dimMinusThree, 3.5, sourceBottomRightX, sourceBottomRightY, 3.5, dimMinusThree, topLeft.x, topLeft.y, topRight.x, topRight.y, bottomRightX, bottomRightY, bottomLeft.x, bottomLeft.y);\n\t}\n\t// Taken from 6th grade algebra\n\tfunction distance(x1, y1, x2, y2) {\n\t    return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));\n\t}\n\t// Attempts to locate an alignment pattern in a limited region of the image, which is guessed to contain it.\n\t// overallEstModuleSize - estimated module size so far\n\t// estAlignmentX        - coordinate of center of area probably containing alignment pattern\n\t// estAlignmentY        - y coordinate of above</param>\n\t// allowanceFactor      - number of pixels in all directions to search from the center</param>\n\tfunction findAlignmentInRegion(overallEstModuleSize, estAlignmentX, estAlignmentY, allowanceFactor, image) {\n\t    estAlignmentX = Math.floor(estAlignmentX);\n\t    estAlignmentY = Math.floor(estAlignmentY);\n\t    // Look for an alignment pattern (3 modules in size) around where it should be\n\t    var allowance = Math.floor(allowanceFactor * overallEstModuleSize);\n\t    var alignmentAreaLeftX = Math.max(0, estAlignmentX - allowance);\n\t    var alignmentAreaRightX = Math.min(image.width, estAlignmentX + allowance);\n\t    if (alignmentAreaRightX - alignmentAreaLeftX < overallEstModuleSize * 3) {\n\t        return null;\n\t    }\n\t    var alignmentAreaTopY = Math.max(0, estAlignmentY - allowance);\n\t    var alignmentAreaBottomY = Math.min(image.height - 1, estAlignmentY + allowance);\n\t    return alignment_finder_1.findAlignment(alignmentAreaLeftX, alignmentAreaTopY, alignmentAreaRightX - alignmentAreaLeftX, alignmentAreaBottomY - alignmentAreaTopY, overallEstModuleSize, image);\n\t}\n\t// Computes the dimension (number of modules on a size) of the QR Code based on the position of the finder\n\t// patterns and estimated module size.\n\tfunction computeDimension(topLeft, topRight, bottomLeft, moduleSize) {\n\t    var tltrCentersDimension = Math.round(distance(topLeft.x, topLeft.y, topRight.x, topRight.y) / moduleSize);\n\t    var tlblCentersDimension = Math.round(distance(topLeft.x, topLeft.y, bottomLeft.x, bottomLeft.y) / moduleSize);\n\t    var dimension = ((tltrCentersDimension + tlblCentersDimension) >> 1) + 7;\n\t    switch (dimension & 0x03) {\n\t        // mod 4\n\t        case 0:\n\t            dimension++;\n\t            break;\n\t        // 1? do nothing\n\t        case 2:\n\t            dimension--;\n\t            break;\n\t    }\n\t    return dimension;\n\t}\n\t// Deduces version information purely from QR Code dimensions.\n\t// http://chan.catiewayne.com/z/src/131044167276.jpg\n\tfunction getProvisionalVersionForDimension(dimension) {\n\t    if (dimension % 4 != 1) {\n\t        return null;\n\t    }\n\t    var versionNumber = (dimension - 17) >> 2;\n\t    if (versionNumber < 1 || versionNumber > 40) {\n\t        return null;\n\t    }\n\t    return version_1.getVersionForNumber(versionNumber);\n\t}\n\t// This method traces a line from a point in the image, in the direction towards another point.\n\t// It begins in a black region, and keeps going until it finds white, then black, then white again.\n\t// It reports the distance from the start to this point.</p>\n\t//\n\t// This is used when figuring out how wide a finder pattern is, when the finder pattern\n\t// may be skewed or rotated.\n\tfunction sizeOfBlackWhiteBlackRun(fromX, fromY, toX, toY, image) {\n\t    fromX = Math.floor(fromX);\n\t    fromY = Math.floor(fromY);\n\t    toX = Math.floor(toX);\n\t    toY = Math.floor(toY);\n\t    // Mild variant of Bresenham's algorithm;\n\t    // see http://en.wikipedia.org/wiki/Bresenham's_line_algorithm\n\t    var steep = Math.abs(toY - fromY) > Math.abs(toX - fromX);\n\t    if (steep) {\n\t        var temp = fromX;\n\t        fromX = fromY;\n\t        fromY = temp;\n\t        temp = toX;\n\t        toX = toY;\n\t        toY = temp;\n\t    }\n\t    var dx = Math.abs(toX - fromX);\n\t    var dy = Math.abs(toY - fromY);\n\t    var error = -dx >> 1;\n\t    var xstep = fromX < toX ? 1 : -1;\n\t    var ystep = fromY < toY ? 1 : -1;\n\t    // In black pixels, looking for white, first or second time.\n\t    var state = 0;\n\t    // Loop up until x == toX, but not beyond\n\t    var xLimit = toX + xstep;\n\t    for (var x = fromX, y = fromY; x != xLimit; x += xstep) {\n\t        var realX = steep ? y : x;\n\t        var realY = steep ? x : y;\n\t        // Does current pixel mean we have moved white to black or vice versa?\n\t        // Scanning black in state 0,2 and white in state 1, so if we find the wrong\n\t        // color, advance to next state or end if we are in state 2 already\n\t        if ((state == 1) === image.get(realX, realY)) {\n\t            if (state == 2) {\n\t                return distance(x, y, fromX, fromY);\n\t            }\n\t            state++;\n\t        }\n\t        error += dy;\n\t        if (error > 0) {\n\t            if (y == toY) {\n\t                break;\n\t            }\n\t            y += ystep;\n\t            error -= dx;\n\t        }\n\t    }\n\t    // Found black-white-black; give the benefit of the doubt that the next pixel outside the image\n\t    // is \"white\" so this last point at (toX+xStep,toY) is the right ending. This is really a\n\t    // small approximation; (toX+xStep,toY+yStep) might be really correct. Ignore this.\n\t    if (state == 2) {\n\t        return distance(toX + xstep, toY, fromX, fromY);\n\t    }\n\t    // else we didn't find even black-white-black; no estimate is really possible\n\t    return NaN;\n\t}\n\t// Computes the total width of a finder pattern by looking for a black-white-black run from the center\n\t// in the direction of another point (another finder pattern center), and in the opposite direction too.\n\tfunction sizeOfBlackWhiteBlackRunBothWays(fromX, fromY, toX, toY, image) {\n\t    var result = sizeOfBlackWhiteBlackRun(fromX, fromY, toX, toY, image);\n\t    // Now count other way -- don't run off image though of course\n\t    var scale = 1;\n\t    var otherToX = fromX - (toX - fromX);\n\t    if (otherToX < 0) {\n\t        scale = fromX / (fromX - otherToX);\n\t        otherToX = 0;\n\t    }\n\t    else if (otherToX >= image.width) {\n\t        scale = (image.width - 1 - fromX) / (otherToX - fromX);\n\t        otherToX = image.width - 1;\n\t    }\n\t    var otherToY = (fromY - (toY - fromY) * scale);\n\t    scale = 1;\n\t    if (otherToY < 0) {\n\t        scale = fromY / (fromY - otherToY);\n\t        otherToY = 0;\n\t    }\n\t    else if (otherToY >= image.height) {\n\t        scale = (image.height - 1 - fromY) / (otherToY - fromY);\n\t        otherToY = image.height - 1;\n\t    }\n\t    otherToX = (fromX + (otherToX - fromX) * scale);\n\t    result += sizeOfBlackWhiteBlackRun(fromX, fromY, otherToX, otherToY, image);\n\t    return result - 1; // -1 because we counted the middle pixel twice\n\t}\n\tfunction calculateModuleSizeOneWay(pattern, otherPattern, image) {\n\t    var moduleSizeEst1 = sizeOfBlackWhiteBlackRunBothWays(pattern.x, pattern.y, otherPattern.x, otherPattern.y, image);\n\t    var moduleSizeEst2 = sizeOfBlackWhiteBlackRunBothWays(otherPattern.x, otherPattern.y, pattern.x, pattern.y, image);\n\t    if (helpers_1.isNaN(moduleSizeEst1)) {\n\t        return moduleSizeEst2 / 7;\n\t    }\n\t    if (helpers_1.isNaN(moduleSizeEst2)) {\n\t        return moduleSizeEst1 / 7;\n\t    }\n\t    // Average them, and divide by 7 since we've counted the width of 3 black modules,\n\t    // and 1 white and 1 black module on either side. Ergo, divide sum by 14.\n\t    return (moduleSizeEst1 + moduleSizeEst2) / 14;\n\t}\n\t// Computes an average estimated module size based on estimated derived from the positions of the three finder patterns.\n\tfunction calculateModuleSize(topLeft, topRight, bottomLeft, image) {\n\t    return (calculateModuleSizeOneWay(topLeft, topRight, image) + calculateModuleSizeOneWay(topLeft, bottomLeft, image)) / 2;\n\t}\n\tfunction extract(image, location) {\n\t    var moduleSize = calculateModuleSize(location.topLeft, location.topRight, location.bottomLeft, image);\n\t    if (moduleSize < 1) {\n\t        return null;\n\t    }\n\t    var dimension = computeDimension(location.topLeft, location.topRight, location.bottomLeft, moduleSize);\n\t    if (!dimension) {\n\t        return null;\n\t    }\n\t    var provisionalVersion = getProvisionalVersionForDimension(dimension);\n\t    if (provisionalVersion == null) {\n\t        return null;\n\t    }\n\t    var modulesBetweenFPCenters = provisionalVersion.getDimensionForVersion() - 7;\n\t    var alignmentPattern = null;\n\t    // Anything above version 1 has an alignment pattern\n\t    if (provisionalVersion.alignmentPatternCenters.length > 0) {\n\t        // Guess where a \"bottom right\" finder pattern would have been\n\t        var bottomRightX = location.topRight.x - location.topLeft.x + location.bottomLeft.x;\n\t        var bottomRightY = location.topRight.y - location.topLeft.y + location.bottomLeft.y;\n\t        // Estimate that alignment pattern is closer by 3 modules\n\t        // from \"bottom right\" to known top left location\n\t        var correctionToTopLeft = 1 - 3 / modulesBetweenFPCenters;\n\t        var estAlignmentX = location.topLeft.x + correctionToTopLeft * (bottomRightX - location.topLeft.x);\n\t        var estAlignmentY = location.topLeft.y + correctionToTopLeft * (bottomRightY - location.topLeft.y);\n\t        // Kind of arbitrary -- expand search radius before giving up\n\t        for (var i = 4; i <= 16; i <<= 1) {\n\t            alignmentPattern = findAlignmentInRegion(moduleSize, estAlignmentX, estAlignmentY, i, image);\n\t            if (!alignmentPattern) {\n\t                continue;\n\t            }\n\t            break;\n\t        }\n\t    }\n\t    var transform = createTransform(location.topLeft, location.topRight, location.bottomLeft, alignmentPattern, dimension);\n\t    return bitArrayFromImage(image, dimension, transform);\n\t}\n\texports.extract = extract;\n\n\n/***/ }),\n/* 5 */\n/***/ (function(module, exports, __webpack_require__) {\n\n\t\"use strict\";\n\tvar helpers_1 = __webpack_require__(6);\n\tfunction aboutEquals(center, moduleSize, i, j) {\n\t    if (Math.abs(i - center.y) <= moduleSize && Math.abs(j - center.x) <= moduleSize) {\n\t        var moduleSizeDiff = Math.abs(moduleSize - center.estimatedModuleSize);\n\t        return moduleSizeDiff <= 1 || moduleSizeDiff <= center.estimatedModuleSize;\n\t    }\n\t    return false;\n\t}\n\tfunction combineEstimate(center, i, j, newModuleSize) {\n\t    var combinedX = (center.x + j) / 2;\n\t    var combinedY = (center.y + i) / 2;\n\t    var combinedModuleSize = (center.estimatedModuleSize + newModuleSize) / 2;\n\t    return { x: combinedX, y: combinedY, estimatedModuleSize: combinedModuleSize };\n\t}\n\t// returns true if the proportions of the counts is close enough to the 1/1/1 ratios used by alignment\n\t// patterns to be considered a match\n\tfunction foundPatternCross(stateCount, moduleSize) {\n\t    var maxVariance = moduleSize / 2;\n\t    for (var i = 0; i < 3; i++) {\n\t        if (Math.abs(moduleSize - stateCount[i]) >= maxVariance) {\n\t            return false;\n\t        }\n\t    }\n\t    return true;\n\t}\n\t// Given a count of black/white/black pixels just seen and an end position,\n\t// figures the location of the center of this black/white/black run.\n\tfunction centerFromEnd(stateCount, end) {\n\t    var result = (end - stateCount[2]) - stateCount[1] / 2;\n\t    if (helpers_1.isNaN(result)) {\n\t        return null;\n\t    }\n\t    return result;\n\t}\n\t// After a horizontal scan finds a potential alignment pattern, this method\n\t// \"cross-checks\" by scanning down vertically through the center of the possible\n\t// alignment pattern to see if the same proportion is detected.</p>\n\t//\n\t// startI - row where an alignment pattern was detected</param>\n\t// centerJ - center of the section that appears to cross an alignment pattern</param>\n\t// maxCount - maximum reasonable number of modules that should be observed in any reading state, based\n\t//   on the results of the horizontal scan</param>\n\t// originalStateCountTotal - The original state count total\n\tfunction crossCheckVertical(startI, centerJ, maxCount, originalStateCountTotal, moduleSize, image) {\n\t    var maxI = image.height;\n\t    var stateCount = [0, 0, 0];\n\t    // Start counting up from center\n\t    var i = startI;\n\t    while (i >= 0 && image.get(centerJ, i) && stateCount[1] <= maxCount) {\n\t        stateCount[1]++;\n\t        i--;\n\t    }\n\t    // If already too many modules in this state or ran off the edge:\n\t    if (i < 0 || stateCount[1] > maxCount) {\n\t        return null;\n\t    }\n\t    while (i >= 0 && !image.get(centerJ, i) && stateCount[0] <= maxCount) {\n\t        stateCount[0]++;\n\t        i--;\n\t    }\n\t    if (stateCount[0] > maxCount) {\n\t        return null;\n\t    }\n\t    // Now also count down from center\n\t    i = startI + 1;\n\t    while (i < maxI && image.get(centerJ, i) && stateCount[1] <= maxCount) {\n\t        stateCount[1]++;\n\t        i++;\n\t    }\n\t    if (i == maxI || stateCount[1] > maxCount) {\n\t        return null;\n\t    }\n\t    while (i < maxI && !image.get(centerJ, i) && stateCount[2] <= maxCount) {\n\t        stateCount[2]++;\n\t        i++;\n\t    }\n\t    if (stateCount[2] > maxCount) {\n\t        return null;\n\t    }\n\t    var stateCountTotal = stateCount[0] + stateCount[1] + stateCount[2];\n\t    if (5 * Math.abs(stateCountTotal - originalStateCountTotal) >= 2 * originalStateCountTotal) {\n\t        return null;\n\t    }\n\t    return foundPatternCross(stateCount, moduleSize) ? centerFromEnd(stateCount, i) : null;\n\t}\n\tfunction findAlignment(startX, startY, width, height, moduleSize, image) {\n\t    // Global State :(\n\t    var possibleCenters = [];\n\t    // This is called when a horizontal scan finds a possible alignment pattern. It will\n\t    // cross check with a vertical scan, and if successful, will see if this pattern had been\n\t    // found on a previous horizontal scan. If so, we consider it confirmed and conclude we have\n\t    // found the alignment pattern.</p>\n\t    //\n\t    // stateCount - reading state module counts from horizontal scan\n\t    // i - where alignment pattern may be found\n\t    // j - end of possible alignment pattern in row\n\t    function handlePossibleCenter(stateCount, i, j, moduleSize) {\n\t        var stateCountTotal = stateCount[0] + stateCount[1] + stateCount[2];\n\t        var centerJ = centerFromEnd(stateCount, j);\n\t        if (centerJ == null) {\n\t            return null;\n\t        }\n\t        var centerI = crossCheckVertical(i, Math.floor(centerJ), 2 * stateCount[1], stateCountTotal, moduleSize, image);\n\t        if (centerI != null) {\n\t            var estimatedModuleSize = (stateCount[0] + stateCount[1] + stateCount[2]) / 3;\n\t            for (var i2 in possibleCenters) {\n\t                var center = possibleCenters[i2];\n\t                // Look for about the same center and module size:\n\t                if (aboutEquals(center, estimatedModuleSize, centerI, centerJ)) {\n\t                    return combineEstimate(center, centerI, centerJ, estimatedModuleSize);\n\t                }\n\t            }\n\t            // Hadn't found this before; save it\n\t            var point = { x: centerJ, y: centerI, estimatedModuleSize: estimatedModuleSize };\n\t            possibleCenters.push(point);\n\t        }\n\t        return null;\n\t    }\n\t    var maxJ = startX + width;\n\t    var middleI = startY + (height >> 1);\n\t    // We are looking for black/white/black modules in 1:1:1 ratio;\n\t    // this tracks the number of black/white/black modules seen so far\n\t    var stateCount = [0, 0, 0]; // WTF\n\t    for (var iGen = 0; iGen < height; iGen++) {\n\t        // Search from middle outwards\n\t        var i = middleI + ((iGen & 0x01) == 0 ? ((iGen + 1) >> 1) : -((iGen + 1) >> 1));\n\t        stateCount[0] = 0;\n\t        stateCount[1] = 0;\n\t        stateCount[2] = 0;\n\t        var j = startX;\n\t        // Burn off leading white pixels before anything else; if we start in the middle of\n\t        // a white run, it doesn't make sense to count its length, since we don't know if the\n\t        // white run continued to the left of the start point\n\t        while (j < maxJ && !image.get(j, i)) {\n\t            j++;\n\t        }\n\t        var currentState = 0;\n\t        while (j < maxJ) {\n\t            if (image.get(j, i)) {\n\t                // Black pixel\n\t                if (currentState == 1) {\n\t                    // Counting black pixels\n\t                    stateCount[currentState]++;\n\t                }\n\t                else {\n\t                    // Counting white pixels\n\t                    if (currentState == 2) {\n\t                        // A winner?\n\t                        if (foundPatternCross(stateCount, moduleSize)) {\n\t                            // Yes\n\t                            confirmed = handlePossibleCenter(stateCount, i, j, moduleSize);\n\t                            if (confirmed != null) {\n\t                                return confirmed;\n\t                            }\n\t                        }\n\t                        stateCount[0] = stateCount[2];\n\t                        stateCount[1] = 1;\n\t                        stateCount[2] = 0;\n\t                        currentState = 1;\n\t                    }\n\t                    else {\n\t                        stateCount[++currentState]++;\n\t                    }\n\t                }\n\t            }\n\t            else {\n\t                // White pixel\n\t                if (currentState == 1) {\n\t                    // Counting black pixels\n\t                    currentState++;\n\t                }\n\t                stateCount[currentState]++;\n\t            }\n\t            j++;\n\t        }\n\t        if (foundPatternCross(stateCount, moduleSize)) {\n\t            var confirmed = handlePossibleCenter(stateCount, i, moduleSize, maxJ);\n\t            if (confirmed != null) {\n\t                return confirmed;\n\t            }\n\t        }\n\t    }\n\t    // Hmm, nothing we saw was observed and confirmed twice. If we had\n\t    // any guess at all, return it.\n\t    if (possibleCenters.length != 0) {\n\t        return possibleCenters[0];\n\t    }\n\t    return null;\n\t}\n\texports.findAlignment = findAlignment;\n\n\n/***/ }),\n/* 6 */\n/***/ (function(module, exports) {\n\n\t\"use strict\";\n\tvar BITS_SET_IN_HALF_BYTE = [0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4];\n\tfunction numBitsDiffering(a, b) {\n\t    a ^= b; // a now has a 1 bit exactly where its bit differs with b's\n\t    // Count bits set quickly with a series of lookups:\n\t    return BITS_SET_IN_HALF_BYTE[a & 0x0F] +\n\t        BITS_SET_IN_HALF_BYTE[((a >> 4) & 0x0F)] +\n\t        BITS_SET_IN_HALF_BYTE[((a >> 8) & 0x0F)] +\n\t        BITS_SET_IN_HALF_BYTE[((a >> 12) & 0x0F)] +\n\t        BITS_SET_IN_HALF_BYTE[((a >> 16) & 0x0F)] +\n\t        BITS_SET_IN_HALF_BYTE[((a >> 20) & 0x0F)] +\n\t        BITS_SET_IN_HALF_BYTE[((a >> 24) & 0x0F)] +\n\t        BITS_SET_IN_HALF_BYTE[((a >> 28) & 0x0F)];\n\t}\n\texports.numBitsDiffering = numBitsDiffering;\n\t// Taken from underscore JS\n\tfunction isNaN(obj) {\n\t    return Object.prototype.toString.call(obj) === '[object Number]' && obj !== +obj;\n\t}\n\texports.isNaN = isNaN;\n\n\n/***/ }),\n/* 7 */\n/***/ (function(module, exports) {\n\n\t/// <reference path=\"../common/types.d.ts\" />\n\t\"use strict\";\n\tfunction squareToQuadrilateral(x0, y0, x1, y1, x2, y2, x3, y3) {\n\t    var dx3 = x0 - x1 + x2 - x3;\n\t    var dy3 = y0 - y1 + y2 - y3;\n\t    if (dx3 == 0 && dy3 == 0) {\n\t        // Affine\n\t        return {\n\t            a11: x1 - x0,\n\t            a21: x2 - x1,\n\t            a31: x0,\n\t            a12: y1 - y0,\n\t            a22: y2 - y1,\n\t            a32: y0,\n\t            a13: 0,\n\t            a23: 0,\n\t            a33: 1\n\t        };\n\t    }\n\t    else {\n\t        var dx1 = x1 - x2;\n\t        var dx2 = x3 - x2;\n\t        var dy1 = y1 - y2;\n\t        var dy2 = y3 - y2;\n\t        var denominator = dx1 * dy2 - dx2 * dy1;\n\t        var a13 = (dx3 * dy2 - dx2 * dy3) / denominator;\n\t        var a23 = (dx1 * dy3 - dx3 * dy1) / denominator;\n\t        return {\n\t            a11: x1 - x0 + a13 * x1,\n\t            a21: x3 - x0 + a23 * x3,\n\t            a31: x0,\n\t            a12: y1 - y0 + a13 * y1,\n\t            a22: y3 - y0 + a23 * y3,\n\t            a32: y0,\n\t            a13: a13,\n\t            a23: a23,\n\t            a33: 1\n\t        };\n\t    }\n\t}\n\tfunction buildAdjoint(i) {\n\t    return {\n\t        a11: i.a22 * i.a33 - i.a23 * i.a32,\n\t        a21: i.a23 * i.a31 - i.a21 * i.a33,\n\t        a31: i.a21 * i.a32 - i.a22 * i.a31,\n\t        a12: i.a13 * i.a32 - i.a12 * i.a33,\n\t        a22: i.a11 * i.a33 - i.a13 * i.a31,\n\t        a32: i.a12 * i.a31 - i.a11 * i.a32,\n\t        a13: i.a12 * i.a23 - i.a13 * i.a22,\n\t        a23: i.a13 * i.a21 - i.a11 * i.a23,\n\t        a33: i.a11 * i.a22 - i.a12 * i.a21\n\t    };\n\t}\n\tfunction times(a, b) {\n\t    return {\n\t        a11: a.a11 * b.a11 + a.a21 * b.a12 + a.a31 * b.a13,\n\t        a21: a.a11 * b.a21 + a.a21 * b.a22 + a.a31 * b.a23,\n\t        a31: a.a11 * b.a31 + a.a21 * b.a32 + a.a31 * b.a33,\n\t        a12: a.a12 * b.a11 + a.a22 * b.a12 + a.a32 * b.a13,\n\t        a22: a.a12 * b.a21 + a.a22 * b.a22 + a.a32 * b.a23,\n\t        a32: a.a12 * b.a31 + a.a22 * b.a32 + a.a32 * b.a33,\n\t        a13: a.a13 * b.a11 + a.a23 * b.a12 + a.a33 * b.a13,\n\t        a23: a.a13 * b.a21 + a.a23 * b.a22 + a.a33 * b.a23,\n\t        a33: a.a13 * b.a31 + a.a23 * b.a32 + a.a33 * b.a33\n\t    };\n\t}\n\tfunction quadrilateralToSquare(x0, y0, x1, y1, x2, y2, x3, y3) {\n\t    // Here, the adjoint serves as the inverse:\n\t    return buildAdjoint(squareToQuadrilateral(x0, y0, x1, y1, x2, y2, x3, y3));\n\t}\n\tfunction transformPoints(transform, points) {\n\t    var max = points.length;\n\t    var a11 = transform.a11;\n\t    var a12 = transform.a12;\n\t    var a13 = transform.a13;\n\t    var a21 = transform.a21;\n\t    var a22 = transform.a22;\n\t    var a23 = transform.a23;\n\t    var a31 = transform.a31;\n\t    var a32 = transform.a32;\n\t    var a33 = transform.a33;\n\t    for (var i = 0; i < max; i += 2) {\n\t        var x = points[i];\n\t        var y = points[i + 1];\n\t        var denominator = a13 * x + a23 * y + a33;\n\t        points[i] = (a11 * x + a21 * y + a31) / denominator;\n\t        points[i + 1] = (a12 * x + a22 * y + a32) / denominator;\n\t    }\n\t    return points;\n\t}\n\texports.transformPoints = transformPoints;\n\tfunction quadrilateralToQuadrilateral(x0, y0, x1, y1, x2, y2, x3, y3, x0p, y0p, x1p, y1p, x2p, y2p, x3p, y3p) {\n\t    var qToS = quadrilateralToSquare(x0, y0, x1, y1, x2, y2, x3, y3);\n\t    var sToQ = squareToQuadrilateral(x0p, y0p, x1p, y1p, x2p, y2p, x3p, y3p);\n\t    return times(sToQ, qToS);\n\t}\n\texports.quadrilateralToQuadrilateral = quadrilateralToQuadrilateral;\n\n\n/***/ }),\n/* 8 */\n/***/ (function(module, exports, __webpack_require__) {\n\n\t\"use strict\";\n\tvar helpers_1 = __webpack_require__(6);\n\tvar VERSION_DECODE_INFO = [\n\t    0x07C94, 0x085BC, 0x09A99, 0x0A4D3, 0x0BBF6,\n\t    0x0C762, 0x0D847, 0x0E60D, 0x0F928, 0x10B78,\n\t    0x1145D, 0x12A17, 0x13532, 0x149A6, 0x15683,\n\t    0x168C9, 0x177EC, 0x18EC4, 0x191E1, 0x1AFAB,\n\t    0x1B08E, 0x1CC1A, 0x1D33F, 0x1ED75, 0x1F250,\n\t    0x209D5, 0x216F0, 0x228BA, 0x2379F, 0x24B0B,\n\t    0x2542E, 0x26A64, 0x27541, 0x28C69,\n\t];\n\tvar ECB = (function () {\n\t    function ECB(_count, _dataCodewords) {\n\t        this.count = _count;\n\t        this.dataCodewords = _dataCodewords;\n\t    }\n\t    return ECB;\n\t}());\n\tvar ECBlocks = (function () {\n\t    function ECBlocks(_ecCodewordsPerBlock) {\n\t        var _ecBlocks = [];\n\t        for (var _i = 1; _i < arguments.length; _i++) {\n\t            _ecBlocks[_i - 1] = arguments[_i];\n\t        }\n\t        this.ecCodewordsPerBlock = _ecCodewordsPerBlock;\n\t        this.ecBlocks = _ecBlocks;\n\t    }\n\t    ECBlocks.prototype.getNumBlocks = function () {\n\t        return this.ecBlocks.reduce(function (a, b) { return (a + b.count); }, 0);\n\t    };\n\t    ECBlocks.prototype.getTotalECCodewords = function () {\n\t        return this.ecCodewordsPerBlock * this.getNumBlocks();\n\t    };\n\t    return ECBlocks;\n\t}());\n\tvar Version = (function () {\n\t    function Version(_versionNumber, _alignmentPatternCenters) {\n\t        var _ecBlocks = [];\n\t        for (var _i = 2; _i < arguments.length; _i++) {\n\t            _ecBlocks[_i - 2] = arguments[_i];\n\t        }\n\t        this.versionNumber = _versionNumber;\n\t        this.alignmentPatternCenters = _alignmentPatternCenters;\n\t        this.ecBlocks = _ecBlocks;\n\t        var total = 0;\n\t        var ecCodewords = this.ecBlocks[0].ecCodewordsPerBlock;\n\t        var ecbArray = this.ecBlocks[0].ecBlocks;\n\t        ecbArray.forEach(function (ecBlock) {\n\t            total += ecBlock.count * (ecBlock.dataCodewords + ecCodewords);\n\t        });\n\t        this.totalCodewords = total;\n\t    }\n\t    Version.prototype.getDimensionForVersion = function () {\n\t        return 17 + 4 * this.versionNumber;\n\t    };\n\t    Version.prototype.getECBlocksForLevel = function (ecLevel) {\n\t        return this.ecBlocks[ecLevel.ordinal];\n\t    };\n\t    Version.decodeVersionInformation = function (versionBits) {\n\t        var bestDifference = Infinity;\n\t        var bestVersion = 0;\n\t        for (var i = 0; i < VERSION_DECODE_INFO.length; i++) {\n\t            var targetVersion = VERSION_DECODE_INFO[i];\n\t            // Do the version info bits match exactly? done.\n\t            if (targetVersion == versionBits) {\n\t                return getVersionForNumber(i + 7);\n\t            }\n\t            // Otherwise see if this is the closest to a real version info bit string\n\t            // we have seen so far\n\t            var bitsDifference = helpers_1.numBitsDiffering(versionBits, targetVersion);\n\t            if (bitsDifference < bestDifference) {\n\t                bestVersion = i + 7;\n\t                bestDifference = bitsDifference;\n\t            }\n\t        }\n\t        // We can tolerate up to 3 bits of error since no two version info codewords will\n\t        // differ in less than 8 bits.\n\t        if (bestDifference <= 3) {\n\t            return getVersionForNumber(bestVersion);\n\t        }\n\t        // If we didn't find a close enough match, fail\n\t        return null;\n\t    };\n\t    return Version;\n\t}());\n\texports.Version = Version;\n\tvar VERSIONS = [\n\t    new Version(1, [], new ECBlocks(7, new ECB(1, 19)), new ECBlocks(10, new ECB(1, 16)), new ECBlocks(13, new ECB(1, 13)), new ECBlocks(17, new ECB(1, 9))),\n\t    new Version(2, [6, 18], new ECBlocks(10, new ECB(1, 34)), new ECBlocks(16, new ECB(1, 28)), new ECBlocks(22, new ECB(1, 22)), new ECBlocks(28, new ECB(1, 16))),\n\t    new Version(3, [6, 22], new ECBlocks(15, new ECB(1, 55)), new ECBlocks(26, new ECB(1, 44)), new ECBlocks(18, new ECB(2, 17)), new ECBlocks(22, new ECB(2, 13))),\n\t    new Version(4, [6, 26], new ECBlocks(20, new ECB(1, 80)), new ECBlocks(18, new ECB(2, 32)), new ECBlocks(26, new ECB(2, 24)), new ECBlocks(16, new ECB(4, 9))),\n\t    new Version(5, [6, 30], new ECBlocks(26, new ECB(1, 108)), new ECBlocks(24, new ECB(2, 43)), new ECBlocks(18, new ECB(2, 15), new ECB(2, 16)), new ECBlocks(22, new ECB(2, 11), new ECB(2, 12))),\n\t    new Version(6, [6, 34], new ECBlocks(18, new ECB(2, 68)), new ECBlocks(16, new ECB(4, 27)), new ECBlocks(24, new ECB(4, 19)), new ECBlocks(28, new ECB(4, 15))),\n\t    new Version(7, [6, 22, 38], new ECBlocks(20, new ECB(2, 78)), new ECBlocks(18, new ECB(4, 31)), new ECBlocks(18, new ECB(2, 14), new ECB(4, 15)), new ECBlocks(26, new ECB(4, 13), new ECB(1, 14))),\n\t    new Version(8, [6, 24, 42], new ECBlocks(24, new ECB(2, 97)), new ECBlocks(22, new ECB(2, 38), new ECB(2, 39)), new ECBlocks(22, new ECB(4, 18), new ECB(2, 19)), new ECBlocks(26, new ECB(4, 14), new ECB(2, 15))),\n\t    new Version(9, [6, 26, 46], new ECBlocks(30, new ECB(2, 116)), new ECBlocks(22, new ECB(3, 36), new ECB(2, 37)), new ECBlocks(20, new ECB(4, 16), new ECB(4, 17)), new ECBlocks(24, new ECB(4, 12), new ECB(4, 13))),\n\t    new Version(10, [6, 28, 50], new ECBlocks(18, new ECB(2, 68), new ECB(2, 69)), new ECBlocks(26, new ECB(4, 43), new ECB(1, 44)), new ECBlocks(24, new ECB(6, 19), new ECB(2, 20)), new ECBlocks(28, new ECB(6, 15), new ECB(2, 16))),\n\t    new Version(11, [6, 30, 54], new ECBlocks(20, new ECB(4, 81)), new ECBlocks(30, new ECB(1, 50), new ECB(4, 51)), new ECBlocks(28, new ECB(4, 22), new ECB(4, 23)), new ECBlocks(24, new ECB(3, 12), new ECB(8, 13))),\n\t    new Version(12, [6, 32, 58], new ECBlocks(24, new ECB(2, 92), new ECB(2, 93)), new ECBlocks(22, new ECB(6, 36), new ECB(2, 37)), new ECBlocks(26, new ECB(4, 20), new ECB(6, 21)), new ECBlocks(28, new ECB(7, 14), new ECB(4, 15))),\n\t    new Version(13, [6, 34, 62], new ECBlocks(26, new ECB(4, 107)), new ECBlocks(22, new ECB(8, 37), new ECB(1, 38)), new ECBlocks(24, new ECB(8, 20), new ECB(4, 21)), new ECBlocks(22, new ECB(12, 11), new ECB(4, 12))),\n\t    new Version(14, [6, 26, 46, 66], new ECBlocks(30, new ECB(3, 115), new ECB(1, 116)), new ECBlocks(24, new ECB(4, 40), new ECB(5, 41)), new ECBlocks(20, new ECB(11, 16), new ECB(5, 17)), new ECBlocks(24, new ECB(11, 12), new ECB(5, 13))),\n\t    new Version(15, [6, 26, 48, 70], new ECBlocks(22, new ECB(5, 87), new ECB(1, 88)), new ECBlocks(24, new ECB(5, 41), new ECB(5, 42)), new ECBlocks(30, new ECB(5, 24), new ECB(7, 25)), new ECBlocks(24, new ECB(11, 12), new ECB(7, 13))),\n\t    new Version(16, [6, 26, 50, 74], new ECBlocks(24, new ECB(5, 98), new ECB(1, 99)), new ECBlocks(28, new ECB(7, 45), new ECB(3, 46)), new ECBlocks(24, new ECB(15, 19), new ECB(2, 20)), new ECBlocks(30, new ECB(3, 15), new ECB(13, 16))),\n\t    new Version(17, [6, 30, 54, 78], new ECBlocks(28, new ECB(1, 107), new ECB(5, 108)), new ECBlocks(28, new ECB(10, 46), new ECB(1, 47)), new ECBlocks(28, new ECB(1, 22), new ECB(15, 23)), new ECBlocks(28, new ECB(2, 14), new ECB(17, 15))),\n\t    new Version(18, [6, 30, 56, 82], new ECBlocks(30, new ECB(5, 120), new ECB(1, 121)), new ECBlocks(26, new ECB(9, 43), new ECB(4, 44)), new ECBlocks(28, new ECB(17, 22), new ECB(1, 23)), new ECBlocks(28, new ECB(2, 14), new ECB(19, 15))),\n\t    new Version(19, [6, 30, 58, 86], new ECBlocks(28, new ECB(3, 113), new ECB(4, 114)), new ECBlocks(26, new ECB(3, 44), new ECB(11, 45)), new ECBlocks(26, new ECB(17, 21), new ECB(4, 22)), new ECBlocks(26, new ECB(9, 13), new ECB(16, 14))),\n\t    new Version(20, [6, 34, 62, 90], new ECBlocks(28, new ECB(3, 107), new ECB(5, 108)), new ECBlocks(26, new ECB(3, 41), new ECB(13, 42)), new ECBlocks(30, new ECB(15, 24), new ECB(5, 25)), new ECBlocks(28, new ECB(15, 15), new ECB(10, 16))),\n\t    new Version(21, [6, 28, 50, 72, 94], new ECBlocks(28, new ECB(4, 116), new ECB(4, 117)), new ECBlocks(26, new ECB(17, 42)), new ECBlocks(28, new ECB(17, 22), new ECB(6, 23)), new ECBlocks(30, new ECB(19, 16), new ECB(6, 17))),\n\t    new Version(22, [6, 26, 50, 74, 98], new ECBlocks(28, new ECB(2, 111), new ECB(7, 112)), new ECBlocks(28, new ECB(17, 46)), new ECBlocks(30, new ECB(7, 24), new ECB(16, 25)), new ECBlocks(24, new ECB(34, 13))),\n\t    new Version(23, [6, 30, 54, 74, 102], new ECBlocks(30, new ECB(4, 121), new ECB(5, 122)), new ECBlocks(28, new ECB(4, 47), new ECB(14, 48)), new ECBlocks(30, new ECB(11, 24), new ECB(14, 25)), new ECBlocks(30, new ECB(16, 15), new ECB(14, 16))),\n\t    new Version(24, [6, 28, 54, 80, 106], new ECBlocks(30, new ECB(6, 117), new ECB(4, 118)), new ECBlocks(28, new ECB(6, 45), new ECB(14, 46)), new ECBlocks(30, new ECB(11, 24), new ECB(16, 25)), new ECBlocks(30, new ECB(30, 16), new ECB(2, 17))),\n\t    new Version(25, [6, 32, 58, 84, 110], new ECBlocks(26, new ECB(8, 106), new ECB(4, 107)), new ECBlocks(28, new ECB(8, 47), new ECB(13, 48)), new ECBlocks(30, new ECB(7, 24), new ECB(22, 25)), new ECBlocks(30, new ECB(22, 15), new ECB(13, 16))),\n\t    new Version(26, [6, 30, 58, 86, 114], new ECBlocks(28, new ECB(10, 114), new ECB(2, 115)), new ECBlocks(28, new ECB(19, 46), new ECB(4, 47)), new ECBlocks(28, new ECB(28, 22), new ECB(6, 23)), new ECBlocks(30, new ECB(33, 16), new ECB(4, 17))),\n\t    new Version(27, [6, 34, 62, 90, 118], new ECBlocks(30, new ECB(8, 122), new ECB(4, 123)), new ECBlocks(28, new ECB(22, 45), new ECB(3, 46)), new ECBlocks(30, new ECB(8, 23), new ECB(26, 24)), new ECBlocks(30, new ECB(12, 15), new ECB(28, 16))),\n\t    new Version(28, [6, 26, 50, 74, 98, 122], new ECBlocks(30, new ECB(3, 117), new ECB(10, 118)), new ECBlocks(28, new ECB(3, 45), new ECB(23, 46)), new ECBlocks(30, new ECB(4, 24), new ECB(31, 25)), new ECBlocks(30, new ECB(11, 15), new ECB(31, 16))),\n\t    new Version(29, [6, 30, 54, 78, 102, 126], new ECBlocks(30, new ECB(7, 116), new ECB(7, 117)), new ECBlocks(28, new ECB(21, 45), new ECB(7, 46)), new ECBlocks(30, new ECB(1, 23), new ECB(37, 24)), new ECBlocks(30, new ECB(19, 15), new ECB(26, 16))),\n\t    new Version(30, [6, 26, 52, 78, 104, 130], new ECBlocks(30, new ECB(5, 115), new ECB(10, 116)), new ECBlocks(28, new ECB(19, 47), new ECB(10, 48)), new ECBlocks(30, new ECB(15, 24), new ECB(25, 25)), new ECBlocks(30, new ECB(23, 15), new ECB(25, 16))),\n\t    new Version(31, [6, 30, 56, 82, 108, 134], new ECBlocks(30, new ECB(13, 115), new ECB(3, 116)), new ECBlocks(28, new ECB(2, 46), new ECB(29, 47)), new ECBlocks(30, new ECB(42, 24), new ECB(1, 25)), new ECBlocks(30, new ECB(23, 15), new ECB(28, 16))),\n\t    new Version(32, [6, 34, 60, 86, 112, 138], new ECBlocks(30, new ECB(17, 115)), new ECBlocks(28, new ECB(10, 46), new ECB(23, 47)), new ECBlocks(30, new ECB(10, 24), new ECB(35, 25)), new ECBlocks(30, new ECB(19, 15), new ECB(35, 16))),\n\t    new Version(33, [6, 30, 58, 86, 114, 142], new ECBlocks(30, new ECB(17, 115), new ECB(1, 116)), new ECBlocks(28, new ECB(14, 46), new ECB(21, 47)), new ECBlocks(30, new ECB(29, 24), new ECB(19, 25)), new ECBlocks(30, new ECB(11, 15), new ECB(46, 16))),\n\t    new Version(34, [6, 34, 62, 90, 118, 146], new ECBlocks(30, new ECB(13, 115), new ECB(6, 116)), new ECBlocks(28, new ECB(14, 46), new ECB(23, 47)), new ECBlocks(30, new ECB(44, 24), new ECB(7, 25)), new ECBlocks(30, new ECB(59, 16), new ECB(1, 17))),\n\t    new Version(35, [6, 30, 54, 78, 102, 126, 150], new ECBlocks(30, new ECB(12, 121), new ECB(7, 122)), new ECBlocks(28, new ECB(12, 47), new ECB(26, 48)), new ECBlocks(30, new ECB(39, 24), new ECB(14, 25)), new ECBlocks(30, new ECB(22, 15), new ECB(41, 16))),\n\t    new Version(36, [6, 24, 50, 76, 102, 128, 154], new ECBlocks(30, new ECB(6, 121), new ECB(14, 122)), new ECBlocks(28, new ECB(6, 47), new ECB(34, 48)), new ECBlocks(30, new ECB(46, 24), new ECB(10, 25)), new ECBlocks(30, new ECB(2, 15), new ECB(64, 16))),\n\t    new Version(37, [6, 28, 54, 80, 106, 132, 158], new ECBlocks(30, new ECB(17, 122), new ECB(4, 123)), new ECBlocks(28, new ECB(29, 46), new ECB(14, 47)), new ECBlocks(30, new ECB(49, 24), new ECB(10, 25)), new ECBlocks(30, new ECB(24, 15), new ECB(46, 16))),\n\t    new Version(38, [6, 32, 58, 84, 110, 136, 162], new ECBlocks(30, new ECB(4, 122), new ECB(18, 123)), new ECBlocks(28, new ECB(13, 46), new ECB(32, 47)), new ECBlocks(30, new ECB(48, 24), new ECB(14, 25)), new ECBlocks(30, new ECB(42, 15), new ECB(32, 16))),\n\t    new Version(39, [6, 26, 54, 82, 110, 138, 166], new ECBlocks(30, new ECB(20, 117), new ECB(4, 118)), new ECBlocks(28, new ECB(40, 47), new ECB(7, 48)), new ECBlocks(30, new ECB(43, 24), new ECB(22, 25)), new ECBlocks(30, new ECB(10, 15), new ECB(67, 16))),\n\t    new Version(40, [6, 30, 58, 86, 114, 142, 170], new ECBlocks(30, new ECB(19, 118), new ECB(6, 119)), new ECBlocks(28, new ECB(18, 47), new ECB(31, 48)), new ECBlocks(30, new ECB(34, 24), new ECB(34, 25)), new ECBlocks(30, new ECB(20, 15), new ECB(61, 16))),\n\t];\n\tfunction getVersionForNumber(versionNumber) {\n\t    if (versionNumber < 1 || versionNumber > 40) {\n\t        throw new Error(\"Invalid version number \" + versionNumber);\n\t    }\n\t    return VERSIONS[versionNumber - 1];\n\t}\n\texports.getVersionForNumber = getVersionForNumber;\n\n\n/***/ }),\n/* 9 */\n/***/ (function(module, exports, __webpack_require__) {\n\n\t\"use strict\";\n\tvar bitmatrix_1 = __webpack_require__(2);\n\tvar decodeqrdata_1 = __webpack_require__(10);\n\tvar helpers_1 = __webpack_require__(6);\n\tvar reedsolomon_1 = __webpack_require__(12);\n\tvar version_1 = __webpack_require__(8);\n\tvar FORMAT_INFO_MASK_QR = 0x5412;\n\tvar FORMAT_INFO_DECODE_LOOKUP = [\n\t    [0x5412, 0x00],\n\t    [0x5125, 0x01],\n\t    [0x5E7C, 0x02],\n\t    [0x5B4B, 0x03],\n\t    [0x45F9, 0x04],\n\t    [0x40CE, 0x05],\n\t    [0x4F97, 0x06],\n\t    [0x4AA0, 0x07],\n\t    [0x77C4, 0x08],\n\t    [0x72F3, 0x09],\n\t    [0x7DAA, 0x0A],\n\t    [0x789D, 0x0B],\n\t    [0x662F, 0x0C],\n\t    [0x6318, 0x0D],\n\t    [0x6C41, 0x0E],\n\t    [0x6976, 0x0F],\n\t    [0x1689, 0x10],\n\t    [0x13BE, 0x11],\n\t    [0x1CE7, 0x12],\n\t    [0x19D0, 0x13],\n\t    [0x0762, 0x14],\n\t    [0x0255, 0x15],\n\t    [0x0D0C, 0x16],\n\t    [0x083B, 0x17],\n\t    [0x355F, 0x18],\n\t    [0x3068, 0x19],\n\t    [0x3F31, 0x1A],\n\t    [0x3A06, 0x1B],\n\t    [0x24B4, 0x1C],\n\t    [0x2183, 0x1D],\n\t    [0x2EDA, 0x1E],\n\t    [0x2BED, 0x1F],\n\t];\n\tvar DATA_MASKS = [\n\t    function (i, j) { return ((i + j) & 0x01) === 0; },\n\t    function (i, j) { return (i & 0x01) === 0; },\n\t    function (i, j) { return j % 3 == 0; },\n\t    function (i, j) { return (i + j) % 3 === 0; },\n\t    function (i, j) { return (((i >> 1) + (j / 3)) & 0x01) === 0; },\n\t    function (i, j) { return ((i * j) & 0x01) + ((i * j) % 3) === 0; },\n\t    function (i, j) { return ((((i * j) & 0x01) + ((i * j) % 3)) & 0x01) === 0; },\n\t    function (i, j) { return ((((i + j) & 0x01) + ((i * j) % 3)) & 0x01) === 0; },\n\t];\n\tvar ERROR_CORRECTION_LEVELS = [\n\t    { ordinal: 1, bits: 0x00, name: \"M\" },\n\t    { ordinal: 0, bits: 0x01, name: \"L\" },\n\t    { ordinal: 3, bits: 0x02, name: \"H\" },\n\t    { ordinal: 2, bits: 0x03, name: \"Q\" },\n\t];\n\tfunction buildFunctionPattern(version) {\n\t    var dimension = version.getDimensionForVersion();\n\t    var emptyArray = new Uint8Array(dimension * dimension);\n\t    var bitMatrix = new bitmatrix_1.BitMatrix(emptyArray, dimension);\n\t    ///BitMatrix bitMatrix = new BitMatrix(dimension);\n\t    // Top left finder pattern + separator + format\n\t    bitMatrix.setRegion(0, 0, 9, 9);\n\t    // Top right finder pattern + separator + format\n\t    bitMatrix.setRegion(dimension - 8, 0, 8, 9);\n\t    // Bottom left finder pattern + separator + format\n\t    bitMatrix.setRegion(0, dimension - 8, 9, 8);\n\t    // Alignment patterns\n\t    var max = version.alignmentPatternCenters.length;\n\t    for (var x = 0; x < max; x++) {\n\t        var i = version.alignmentPatternCenters[x] - 2;\n\t        for (var y = 0; y < max; y++) {\n\t            if ((x == 0 && (y == 0 || y == max - 1)) || (x == max - 1 && y == 0)) {\n\t                // No alignment patterns near the three finder paterns\n\t                continue;\n\t            }\n\t            bitMatrix.setRegion(version.alignmentPatternCenters[y] - 2, i, 5, 5);\n\t        }\n\t    }\n\t    // Vertical timing pattern\n\t    bitMatrix.setRegion(6, 9, 1, dimension - 17);\n\t    // Horizontal timing pattern\n\t    bitMatrix.setRegion(9, 6, dimension - 17, 1);\n\t    if (version.versionNumber > 6) {\n\t        // Version info, top right\n\t        bitMatrix.setRegion(dimension - 11, 0, 3, 6);\n\t        // Version info, bottom left\n\t        bitMatrix.setRegion(0, dimension - 11, 6, 3);\n\t    }\n\t    return bitMatrix;\n\t}\n\tfunction readCodewords(matrix, version, formatInfo) {\n\t    // Get the data mask for the format used in this QR Code. This will exclude\n\t    // some bits from reading as we wind through the bit matrix.\n\t    var dataMask = DATA_MASKS[formatInfo.dataMask];\n\t    var dimension = matrix.height;\n\t    var funcPattern = buildFunctionPattern(version);\n\t    var readingUp = true;\n\t    var result = [];\n\t    var resultOffset = 0;\n\t    var currentByte = 0;\n\t    var bitsRead = 0;\n\t    // Read columns in pairs, from right to left\n\t    for (var j = dimension - 1; j > 0; j -= 2) {\n\t        if (j == 6) {\n\t            // Skip whole column with vertical alignment pattern;\n\t            // saves time and makes the other code proceed more cleanly\n\t            j--;\n\t        }\n\t        // Read alternatingly from bottom to top then top to bottom\n\t        for (var count = 0; count < dimension; count++) {\n\t            var i = readingUp ? dimension - 1 - count : count;\n\t            for (var col = 0; col < 2; col++) {\n\t                // Ignore bits covered by the function pattern\n\t                if (!funcPattern.get(j - col, i)) {\n\t                    // Read a bit\n\t                    bitsRead++;\n\t                    currentByte <<= 1;\n\t                    if (matrix.get(j - col, i) !== dataMask(i, j - col)) {\n\t                        currentByte |= 1;\n\t                    }\n\t                    // If we've made a whole byte, save it off\n\t                    if (bitsRead == 8) {\n\t                        result[resultOffset++] = currentByte & 0xFF;\n\t                        bitsRead = 0;\n\t                        currentByte = 0;\n\t                    }\n\t                }\n\t            }\n\t        }\n\t        readingUp = !readingUp; // switch directions\n\t    }\n\t    if (resultOffset != version.totalCodewords) {\n\t        return null;\n\t    }\n\t    return result;\n\t}\n\tfunction readVersion(matrix) {\n\t    var dimension = matrix.height;\n\t    var provisionalVersion = (dimension - 17) >> 2;\n\t    if (provisionalVersion <= 6) {\n\t        return version_1.getVersionForNumber(provisionalVersion);\n\t    }\n\t    // Read top-right version info: 3 wide by 6 tall\n\t    var versionBits = 0;\n\t    var ijMin = dimension - 11;\n\t    for (var j = 5; j >= 0; j--) {\n\t        for (var i = dimension - 9; i >= ijMin; i--) {\n\t            versionBits = matrix.copyBit(i, j, versionBits);\n\t        }\n\t    }\n\t    var parsedVersion = version_1.Version.decodeVersionInformation(versionBits);\n\t    if (parsedVersion != null && parsedVersion.getDimensionForVersion() == dimension) {\n\t        return parsedVersion;\n\t    }\n\t    // Hmm, failed. Try bottom left: 6 wide by 3 tall\n\t    versionBits = 0;\n\t    for (var i = 5; i >= 0; i--) {\n\t        for (var j = dimension - 9; j >= ijMin; j--) {\n\t            versionBits = matrix.copyBit(i, j, versionBits);\n\t        }\n\t    }\n\t    parsedVersion = version_1.Version.decodeVersionInformation(versionBits);\n\t    if (parsedVersion != null && parsedVersion.getDimensionForVersion() == dimension) {\n\t        return parsedVersion;\n\t    }\n\t    return null;\n\t}\n\tfunction newFormatInformation(formatInfo) {\n\t    return {\n\t        errorCorrectionLevel: ERROR_CORRECTION_LEVELS[(formatInfo >> 3) & 0x03],\n\t        dataMask: formatInfo & 0x07\n\t    };\n\t}\n\tfunction doDecodeFormatInformation(maskedFormatInfo1, maskedFormatInfo2) {\n\t    // Find the int in FORMAT_INFO_DECODE_LOOKUP with fewest bits differing\n\t    var bestDifference = Infinity;\n\t    var bestFormatInfo = 0;\n\t    for (var i = 0; i < FORMAT_INFO_DECODE_LOOKUP.length; i++) {\n\t        var decodeInfo = FORMAT_INFO_DECODE_LOOKUP[i];\n\t        var targetInfo = decodeInfo[0];\n\t        if (targetInfo == maskedFormatInfo1 || targetInfo == maskedFormatInfo2) {\n\t            // Found an exact match\n\t            return newFormatInformation(decodeInfo[1]);\n\t        }\n\t        var bitsDifference = helpers_1.numBitsDiffering(maskedFormatInfo1, targetInfo);\n\t        if (bitsDifference < bestDifference) {\n\t            bestFormatInfo = decodeInfo[1];\n\t            bestDifference = bitsDifference;\n\t        }\n\t        if (maskedFormatInfo1 != maskedFormatInfo2) {\n\t            // also try the other option\n\t            bitsDifference = helpers_1.numBitsDiffering(maskedFormatInfo2, targetInfo);\n\t            if (bitsDifference < bestDifference) {\n\t                bestFormatInfo = decodeInfo[1];\n\t                bestDifference = bitsDifference;\n\t            }\n\t        }\n\t    }\n\t    // Hamming distance of the 32 masked codes is 7, by construction, so <= 3 bits\n\t    // differing means we found a match\n\t    if (bestDifference <= 3)\n\t        return newFormatInformation(bestFormatInfo);\n\t    return null;\n\t}\n\tfunction decodeFormatInformation(maskedFormatInfo1, maskedFormatInfo2) {\n\t    var formatInfo = doDecodeFormatInformation(maskedFormatInfo1, maskedFormatInfo2);\n\t    if (formatInfo) {\n\t        return formatInfo;\n\t    }\n\t    // Should return null, but, some QR codes apparently\n\t    // do not mask this info. Try again by actually masking the pattern\n\t    // first\n\t    return doDecodeFormatInformation(maskedFormatInfo1 ^ FORMAT_INFO_MASK_QR, maskedFormatInfo2 ^ FORMAT_INFO_MASK_QR);\n\t}\n\tfunction readFormatInformation(matrix) {\n\t    // Read top-left format info bits\n\t    var formatInfoBits1 = 0;\n\t    for (var i = 0; i < 6; i++) {\n\t        formatInfoBits1 = matrix.copyBit(i, 8, formatInfoBits1);\n\t    }\n\t    // .. and skip a bit in the timing pattern ...\n\t    formatInfoBits1 = matrix.copyBit(7, 8, formatInfoBits1);\n\t    formatInfoBits1 = matrix.copyBit(8, 8, formatInfoBits1);\n\t    formatInfoBits1 = matrix.copyBit(8, 7, formatInfoBits1);\n\t    // .. and skip a bit in the timing pattern ...\n\t    for (var j = 5; j >= 0; j--) {\n\t        formatInfoBits1 = matrix.copyBit(8, j, formatInfoBits1);\n\t    }\n\t    // Read the top-right/bottom-left pattern too\n\t    var dimension = matrix.height;\n\t    var formatInfoBits2 = 0;\n\t    var jMin = dimension - 7;\n\t    for (var j = dimension - 1; j >= jMin; j--) {\n\t        formatInfoBits2 = matrix.copyBit(8, j, formatInfoBits2);\n\t    }\n\t    for (var i = dimension - 8; i < dimension; i++) {\n\t        formatInfoBits2 = matrix.copyBit(i, 8, formatInfoBits2);\n\t    }\n\t    // parsedFormatInfo = FormatInformation.decodeFormatInformation(formatInfoBits1, formatInfoBits2);\n\t    var parsedFormatInfo = decodeFormatInformation(formatInfoBits1, formatInfoBits2);\n\t    if (parsedFormatInfo != null) {\n\t        return parsedFormatInfo;\n\t    }\n\t    return null;\n\t}\n\tfunction getDataBlocks(rawCodewords, version, ecLevel) {\n\t    if (rawCodewords.length != version.totalCodewords) {\n\t        throw new Error(\"Invalid number of codewords for version; got \" + rawCodewords.length + \" expected \" + version.totalCodewords);\n\t    }\n\t    // Figure out the number and size of data blocks used by this version and\n\t    // error correction level\n\t    var ecBlocks = version.getECBlocksForLevel(ecLevel);\n\t    // First count the total number of data blocks\n\t    var totalBlocks = 0;\n\t    var ecBlockArray = ecBlocks.ecBlocks;\n\t    ecBlockArray.forEach(function (ecBlock) {\n\t        totalBlocks += ecBlock.count;\n\t    });\n\t    // Now establish DataBlocks of the appropriate size and number of data codewords\n\t    var result = new Array(totalBlocks);\n\t    var numResultBlocks = 0;\n\t    ecBlockArray.forEach(function (ecBlock) {\n\t        for (var i = 0; i < ecBlock.count; i++) {\n\t            var numDataCodewords = ecBlock.dataCodewords;\n\t            var numBlockCodewords = ecBlocks.ecCodewordsPerBlock + numDataCodewords;\n\t            result[numResultBlocks++] = { numDataCodewords: numDataCodewords, codewords: new Array(numBlockCodewords) };\n\t        }\n\t    });\n\t    // All blocks have the same amount of data, except that the last n\n\t    // (where n may be 0) have 1 more byte. Figure out where these start.\n\t    var shorterBlocksTotalCodewords = result[0].codewords.length;\n\t    var longerBlocksStartAt = result.length - 1;\n\t    while (longerBlocksStartAt >= 0) {\n\t        var numCodewords = result[longerBlocksStartAt].codewords.length;\n\t        if (numCodewords == shorterBlocksTotalCodewords) {\n\t            break;\n\t        }\n\t        longerBlocksStartAt--;\n\t    }\n\t    longerBlocksStartAt++;\n\t    var shorterBlocksNumDataCodewords = shorterBlocksTotalCodewords - ecBlocks.ecCodewordsPerBlock;\n\t    // The last elements of result may be 1 element longer;\n\t    // first fill out as many elements as all of them have\n\t    var rawCodewordsOffset = 0;\n\t    for (var i = 0; i < shorterBlocksNumDataCodewords; i++) {\n\t        for (var j = 0; j < numResultBlocks; j++) {\n\t            result[j].codewords[i] = rawCodewords[rawCodewordsOffset++];\n\t        }\n\t    }\n\t    // Fill out the last data block in the longer ones\n\t    for (var j = longerBlocksStartAt; j < numResultBlocks; j++) {\n\t        result[j].codewords[shorterBlocksNumDataCodewords] = rawCodewords[rawCodewordsOffset++];\n\t    }\n\t    // Now add in error correction blocks\n\t    var max = result[0].codewords.length;\n\t    for (var i = shorterBlocksNumDataCodewords; i < max; i++) {\n\t        for (var j = 0; j < numResultBlocks; j++) {\n\t            var iOffset = j < longerBlocksStartAt ? i : i + 1;\n\t            result[j].codewords[iOffset] = rawCodewords[rawCodewordsOffset++];\n\t        }\n\t    }\n\t    return result;\n\t}\n\tfunction correctErrors(codewordBytes, numDataCodewords) {\n\t    var rsDecoder = new reedsolomon_1.ReedSolomonDecoder();\n\t    var numCodewords = codewordBytes.length;\n\t    // First read into an array of ints\n\t    var codewordsInts = new Array(numCodewords);\n\t    for (var i = 0; i < numCodewords; i++) {\n\t        codewordsInts[i] = codewordBytes[i] & 0xFF;\n\t    }\n\t    var numECCodewords = codewordBytes.length - numDataCodewords;\n\t    if (!rsDecoder.decode(codewordsInts, numECCodewords))\n\t        return false;\n\t    // Copy back into array of bytes -- only need to worry about the bytes that were data\n\t    // We don't care about errors in the error-correction codewords\n\t    for (var i = 0; i < numDataCodewords; i++) {\n\t        codewordBytes[i] = codewordsInts[i];\n\t    }\n\t    return true;\n\t}\n\tfunction decodeMatrix(matrix) {\n\t    var version = readVersion(matrix);\n\t    if (!version) {\n\t        return null;\n\t    }\n\t    var formatInfo = readFormatInformation(matrix);\n\t    if (!formatInfo) {\n\t        return null;\n\t    }\n\t    var ecLevel = formatInfo.errorCorrectionLevel;\n\t    // Read codewords\n\t    var codewords = readCodewords(matrix, version, formatInfo);\n\t    if (!codewords) {\n\t        return null;\n\t    }\n\t    // Separate into data blocks\n\t    var dataBlocks = getDataBlocks(codewords, version, ecLevel);\n\t    // Count total number of data bytes\n\t    var totalBytes = 0;\n\t    dataBlocks.forEach(function (dataBlock) {\n\t        totalBytes += dataBlock.numDataCodewords;\n\t    });\n\t    var resultBytes = new Uint8ClampedArray(totalBytes);\n\t    var resultOffset = 0;\n\t    // Error-correct and copy data blocks together into a stream of bytes\n\t    for (var _i = 0, dataBlocks_1 = dataBlocks; _i < dataBlocks_1.length; _i++) {\n\t        var dataBlock = dataBlocks_1[_i];\n\t        var codewordBytes = dataBlock.codewords;\n\t        var numDataCodewords = dataBlock.numDataCodewords;\n\t        if (!correctErrors(codewordBytes, numDataCodewords))\n\t            return null;\n\t        for (var i = 0; i < numDataCodewords; i++) {\n\t            resultBytes[resultOffset++] = codewordBytes[i];\n\t        }\n\t    }\n\t    return decodeqrdata_1.decodeQRdata(resultBytes, version.versionNumber, ecLevel.name);\n\t}\n\tfunction decode(matrix) {\n\t    if (matrix == null) {\n\t        return null;\n\t    }\n\t    var result = decodeMatrix(matrix);\n\t    if (result) {\n\t        return result;\n\t    }\n\t    // Decoding didn't work, try mirroring the QR\n\t    matrix.mirror();\n\t    return decodeMatrix(matrix);\n\t}\n\texports.decode = decode;\n\n\n/***/ }),\n/* 10 */\n/***/ (function(module, exports, __webpack_require__) {\n\n\t\"use strict\";\n\tvar bitstream_1 = __webpack_require__(11);\n\tfunction toAlphaNumericByte(value) {\n\t    var ALPHANUMERIC_CHARS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B',\n\t        'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',\n\t        'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',\n\t        ' ', '$', '%', '*', '+', '-', '.', '/', ':'];\n\t    if (value >= ALPHANUMERIC_CHARS.length) {\n\t        throw new Error(\"Could not decode alphanumeric char\");\n\t    }\n\t    return ALPHANUMERIC_CHARS[value].charCodeAt(0);\n\t}\n\tvar Mode = (function () {\n\t    function Mode(characterCountBitsForVersions, bits) {\n\t        this.characterCountBitsForVersions = characterCountBitsForVersions;\n\t        this.bits = bits;\n\t    }\n\t    Mode.prototype.getCharacterCountBits = function (version) {\n\t        if (this.characterCountBitsForVersions == null) {\n\t            throw new Error(\"Character count doesn't apply to this mode\");\n\t        }\n\t        var offset;\n\t        if (version <= 9) {\n\t            offset = 0;\n\t        }\n\t        else if (version <= 26) {\n\t            offset = 1;\n\t        }\n\t        else {\n\t            offset = 2;\n\t        }\n\t        return this.characterCountBitsForVersions[offset];\n\t    };\n\t    return Mode;\n\t}());\n\tvar TERMINATOR_MODE = new Mode([0, 0, 0], 0x00); // Not really a mod...\n\tvar NUMERIC_MODE = new Mode([10, 12, 14], 0x01);\n\tvar ALPHANUMERIC_MODE = new Mode([9, 11, 13], 0x02);\n\tvar STRUCTURED_APPEND_MODE = new Mode([0, 0, 0], 0x03); // Not supported\n\tvar BYTE_MODE = new Mode([8, 16, 16], 0x04);\n\tvar ECI_MODE = new Mode(null, 0x07); // character counts don't apply\n\tvar KANJI_MODE = new Mode([8, 10, 12], 0x08);\n\tvar FNC1_FIRST_POSITION_MODE = new Mode(null, 0x05);\n\tvar FNC1_SECOND_POSITION_MODE = new Mode(null, 0x09);\n\tvar HANZI_MODE = new Mode([8, 10, 12], 0x0D);\n\tfunction modeForBits(bits) {\n\t    switch (bits) {\n\t        case 0x0:\n\t            return TERMINATOR_MODE;\n\t        case 0x1:\n\t            return NUMERIC_MODE;\n\t        case 0x2:\n\t            return ALPHANUMERIC_MODE;\n\t        case 0x3:\n\t            return STRUCTURED_APPEND_MODE;\n\t        case 0x4:\n\t            return BYTE_MODE;\n\t        case 0x5:\n\t            return FNC1_FIRST_POSITION_MODE;\n\t        case 0x7:\n\t            return ECI_MODE;\n\t        case 0x8:\n\t            return KANJI_MODE;\n\t        case 0x9:\n\t            return FNC1_SECOND_POSITION_MODE;\n\t        case 0xD:\n\t            // 0xD is defined in GBT 18284-2000, may not be supported in foreign country\n\t            return HANZI_MODE;\n\t        default:\n\t            throw new Error(\"Couldn't decode mode from byte array\");\n\t    }\n\t}\n\tfunction parseECIValue(bits) {\n\t    var firstByte = bits.readBits(8);\n\t    if ((firstByte & 0x80) == 0) {\n\t        // just one byte\n\t        return firstByte & 0x7F;\n\t    }\n\t    if ((firstByte & 0xC0) == 0x80) {\n\t        // two bytes\n\t        var secondByte = bits.readBits(8);\n\t        return ((firstByte & 0x3F) << 8) | secondByte;\n\t    }\n\t    if ((firstByte & 0xE0) == 0xC0) {\n\t        // three bytes\n\t        var secondThirdBytes = bits.readBits(16);\n\t        return ((firstByte & 0x1F) << 16) | secondThirdBytes;\n\t    }\n\t    throw new Error(\"Bad ECI bits starting with byte \" + firstByte);\n\t}\n\tfunction decodeHanziSegment(bits, result, count) {\n\t    // Don't crash trying to read more bits than we have available.\n\t    if (count * 13 > bits.available()) {\n\t        return false;\n\t    }\n\t    // Each character will require 2 bytes. Read the characters as 2-byte pairs\n\t    // and decode as GB2312 afterwards\n\t    var buffer = new Array(2 * count);\n\t    var offset = 0;\n\t    while (count > 0) {\n\t        // Each 13 bits encodes a 2-byte character\n\t        var twoBytes = bits.readBits(13);\n\t        var assembledTwoBytes = (Math.floor(twoBytes / 0x060) << 8) | (twoBytes % 0x060);\n\t        if (assembledTwoBytes < 0x003BF) {\n\t            // In the 0xA1A1 to 0xAAFE range\n\t            assembledTwoBytes += 0x0A1A1;\n\t        }\n\t        else {\n\t            // In the 0xB0A1 to 0xFAFE range\n\t            assembledTwoBytes += 0x0A6A1;\n\t        }\n\t        buffer[offset] = ((assembledTwoBytes >> 8) & 0xFF);\n\t        buffer[offset + 1] = (assembledTwoBytes & 0xFF);\n\t        offset += 2;\n\t        count--;\n\t    }\n\t    result.val = buffer;\n\t    return true;\n\t}\n\tfunction decodeNumericSegment(bits, result, count) {\n\t    // Read three digits at a time\n\t    while (count >= 3) {\n\t        // Each 10 bits encodes three digits\n\t        if (bits.available() < 10) {\n\t            return false;\n\t        }\n\t        var threeDigitsBits = bits.readBits(10);\n\t        if (threeDigitsBits >= 1000) {\n\t            return false;\n\t        }\n\t        result.val.push(toAlphaNumericByte(Math.floor(threeDigitsBits / 100)));\n\t        result.val.push(toAlphaNumericByte(Math.floor(threeDigitsBits / 10) % 10));\n\t        result.val.push(toAlphaNumericByte(threeDigitsBits % 10));\n\t        count -= 3;\n\t    }\n\t    if (count == 2) {\n\t        // Two digits left over to read, encoded in 7 bits\n\t        if (bits.available() < 7) {\n\t            return false;\n\t        }\n\t        var twoDigitsBits = bits.readBits(7);\n\t        if (twoDigitsBits >= 100) {\n\t            return false;\n\t        }\n\t        result.val.push(toAlphaNumericByte(Math.floor(twoDigitsBits / 10)));\n\t        result.val.push(toAlphaNumericByte(twoDigitsBits % 10));\n\t    }\n\t    else if (count == 1) {\n\t        // One digit left over to read\n\t        if (bits.available() < 4) {\n\t            return false;\n\t        }\n\t        var digitBits = bits.readBits(4);\n\t        if (digitBits >= 10) {\n\t            return false;\n\t        }\n\t        result.val.push(toAlphaNumericByte(digitBits));\n\t    }\n\t    return true;\n\t}\n\tfunction decodeAlphanumericSegment(bits, result, count, fc1InEffect) {\n\t    // Read two characters at a time\n\t    var start = result.val.length;\n\t    while (count > 1) {\n\t        if (bits.available() < 11) {\n\t            return false;\n\t        }\n\t        var nextTwoCharsBits = bits.readBits(11);\n\t        result.val.push(toAlphaNumericByte(Math.floor(nextTwoCharsBits / 45)));\n\t        result.val.push(toAlphaNumericByte(nextTwoCharsBits % 45));\n\t        count -= 2;\n\t    }\n\t    if (count == 1) {\n\t        // special case: one character left\n\t        if (bits.available() < 6) {\n\t            return false;\n\t        }\n\t        result.val.push(toAlphaNumericByte(bits.readBits(6)));\n\t    }\n\t    // See section 6.4.8.1, 6.4.8.2\n\t    if (fc1InEffect) {\n\t        // We need to massage the result a bit if in an FNC1 mode:\n\t        for (var i = start; i < result.val.length; i++) {\n\t            if (result.val[i] == '%'.charCodeAt(0)) {\n\t                if (i < result.val.length - 1 && result.val[i + 1] == '%'.charCodeAt(0)) {\n\t                    // %% is rendered as %\n\t                    result.val = result.val.slice(0, i + 1).concat(result.val.slice(i + 2));\n\t                }\n\t                else {\n\t                    // In alpha mode, % should be converted to FNC1 separator 0x1D\n\t                    // THIS IS ALMOST CERTAINLY INVALID\n\t                    result.val[i] = 0x1D;\n\t                }\n\t            }\n\t        }\n\t    }\n\t    return true;\n\t}\n\tfunction decodeByteSegment(bits, result, count) {\n\t    // Don't crash trying to read more bits than we have available.\n\t    if (count << 3 > bits.available()) {\n\t        return false;\n\t    }\n\t    var readBytes = new Uint32Array(count);\n\t    for (var i = 0; i < count; i++) {\n\t        readBytes[i] = bits.readBits(8);\n\t    }\n\t    Array.prototype.push.apply(result.val, readBytes);\n\t    return true;\n\t}\n\tvar GB2312_SUBSET = 1;\n\t// Takes in a byte array, a qr version number and an error correction level.\n\t// Returns decoded data.\n\tfunction decodeQRdata(data, version, ecl) {\n\t    var symbolSequence = -1;\n\t    var parityData = -1;\n\t    var bits = new bitstream_1.BitStream(data);\n\t    var result = { val: [] }; // Have to pass this around so functions can share a reference to a number[]\n\t    var fc1InEffect = false;\n\t    var mode;\n\t    while (mode != TERMINATOR_MODE) {\n\t        // While still another segment to read...\n\t        if (bits.available() < 4) {\n\t            // OK, assume we're done. Really, a TERMINATOR mode should have been recorded here\n\t            mode = TERMINATOR_MODE;\n\t        }\n\t        else {\n\t            mode = modeForBits(bits.readBits(4)); // mode is encoded by 4 bits\n\t        }\n\t        if (mode != TERMINATOR_MODE) {\n\t            if (mode == FNC1_FIRST_POSITION_MODE || mode == FNC1_SECOND_POSITION_MODE) {\n\t                // We do little with FNC1 except alter the parsed result a bit according to the spec\n\t                fc1InEffect = true;\n\t            }\n\t            else if (mode == STRUCTURED_APPEND_MODE) {\n\t                if (bits.available() < 16) {\n\t                    return null;\n\t                }\n\t                // not really supported; but sequence number and parity is added later to the result metadata\n\t                // Read next 8 bits (symbol sequence #) and 8 bits (parity data), then continue\n\t                symbolSequence = bits.readBits(8);\n\t                parityData = bits.readBits(8);\n\t            }\n\t            else if (mode == ECI_MODE) {\n\t                // Ignore since we don't do character encoding in JS\n\t                var value = parseECIValue(bits);\n\t                if (value < 0 || value > 30) {\n\t                    return null;\n\t                }\n\t            }\n\t            else {\n\t                // First handle Hanzi mode which does not start with character count\n\t                if (mode == HANZI_MODE) {\n\t                    //chinese mode contains a sub set indicator right after mode indicator\n\t                    var subset = bits.readBits(4);\n\t                    var countHanzi = bits.readBits(mode.getCharacterCountBits(version));\n\t                    if (subset == GB2312_SUBSET) {\n\t                        if (!decodeHanziSegment(bits, result, countHanzi)) {\n\t                            return null;\n\t                        }\n\t                    }\n\t                }\n\t                else {\n\t                    // \"Normal\" QR code modes:\n\t                    // How many characters will follow, encoded in this mode?\n\t                    var count = bits.readBits(mode.getCharacterCountBits(version));\n\t                    if (mode == NUMERIC_MODE) {\n\t                        if (!decodeNumericSegment(bits, result, count)) {\n\t                            return null;\n\t                        }\n\t                    }\n\t                    else if (mode == ALPHANUMERIC_MODE) {\n\t                        if (!decodeAlphanumericSegment(bits, result, count, fc1InEffect)) {\n\t                            return null;\n\t                        }\n\t                    }\n\t                    else if (mode == BYTE_MODE) {\n\t                        if (!decodeByteSegment(bits, result, count)) {\n\t                            return null;\n\t                        }\n\t                    }\n\t                    else if (mode == KANJI_MODE) {\n\t                    }\n\t                    else {\n\t                        return null;\n\t                    }\n\t                }\n\t            }\n\t        }\n\t    }\n\t    return result.val;\n\t}\n\texports.decodeQRdata = decodeQRdata;\n\n\n/***/ }),\n/* 11 */\n/***/ (function(module, exports) {\n\n\t\"use strict\";\n\tvar BitStream = (function () {\n\t    function BitStream(bytes) {\n\t        this.byteOffset = 0;\n\t        this.bitOffset = 0;\n\t        this.bytes = bytes;\n\t    }\n\t    BitStream.prototype.readBits = function (numBits) {\n\t        if (numBits < 1 || numBits > 32 || numBits > this.available()) {\n\t            throw new Error(\"Cannot read \" + numBits.toString() + \" bits\");\n\t        }\n\t        var result = 0;\n\t        // First, read remainder from current byte\n\t        if (this.bitOffset > 0) {\n\t            var bitsLeft = 8 - this.bitOffset;\n\t            var toRead = numBits < bitsLeft ? numBits : bitsLeft;\n\t            var bitsToNotRead = bitsLeft - toRead;\n\t            var mask = (0xFF >> (8 - toRead)) << bitsToNotRead;\n\t            result = (this.bytes[this.byteOffset] & mask) >> bitsToNotRead;\n\t            numBits -= toRead;\n\t            this.bitOffset += toRead;\n\t            if (this.bitOffset == 8) {\n\t                this.bitOffset = 0;\n\t                this.byteOffset++;\n\t            }\n\t        }\n\t        // Next read whole bytes\n\t        if (numBits > 0) {\n\t            while (numBits >= 8) {\n\t                result = (result << 8) | (this.bytes[this.byteOffset] & 0xFF);\n\t                this.byteOffset++;\n\t                numBits -= 8;\n\t            }\n\t            // Finally read a partial byte\n\t            if (numBits > 0) {\n\t                var bitsToNotRead = 8 - numBits;\n\t                var mask = (0xFF >> bitsToNotRead) << bitsToNotRead;\n\t                result = (result << numBits) | ((this.bytes[this.byteOffset] & mask) >> bitsToNotRead);\n\t                this.bitOffset += numBits;\n\t            }\n\t        }\n\t        return result;\n\t    };\n\t    BitStream.prototype.available = function () {\n\t        return 8 * (this.bytes.length - this.byteOffset) - this.bitOffset;\n\t    };\n\t    return BitStream;\n\t}());\n\texports.BitStream = BitStream;\n\n\n/***/ }),\n/* 12 */\n/***/ (function(module, exports) {\n\n\t\"use strict\";\n\tvar ReedSolomonDecoder = (function () {\n\t    function ReedSolomonDecoder() {\n\t        this.field = new GenericGF(0x011D, 256, 0); // x^8 + x^4 + x^3 + x^2 + 1\n\t    }\n\t    ReedSolomonDecoder.prototype.decode = function (received, twoS) {\n\t        var poly = new GenericGFPoly(this.field, received);\n\t        var syndromeCoefficients = new Array(twoS);\n\t        var noError = true;\n\t        for (var i = 0; i < twoS; i++) {\n\t            var evaluation = poly.evaluateAt(this.field.exp(i + this.field.generatorBase));\n\t            syndromeCoefficients[syndromeCoefficients.length - 1 - i] = evaluation;\n\t            if (evaluation != 0) {\n\t                noError = false;\n\t            }\n\t        }\n\t        if (noError) {\n\t            return true;\n\t        }\n\t        var syndrome = new GenericGFPoly(this.field, syndromeCoefficients);\n\t        var sigmaOmega = this.runEuclideanAlgorithm(this.field.buildMonomial(twoS, 1), syndrome, twoS);\n\t        if (sigmaOmega == null)\n\t            return false;\n\t        var sigma = sigmaOmega[0];\n\t        var errorLocations = this.findErrorLocations(sigma);\n\t        if (errorLocations == null)\n\t            return false;\n\t        var omega = sigmaOmega[1];\n\t        var errorMagnitudes = this.findErrorMagnitudes(omega, errorLocations);\n\t        for (var i = 0; i < errorLocations.length; i++) {\n\t            var position = received.length - 1 - this.field.log(errorLocations[i]);\n\t            if (position < 0) {\n\t                // throw new ReedSolomonException(\"Bad error location\");\n\t                return false;\n\t            }\n\t            received[position] = GenericGF.addOrSubtract(received[position], errorMagnitudes[i]);\n\t        }\n\t        return true;\n\t    };\n\t    ReedSolomonDecoder.prototype.runEuclideanAlgorithm = function (a, b, R) {\n\t        // Assume a's degree is >= b's\n\t        if (a.degree() < b.degree()) {\n\t            var temp = a;\n\t            a = b;\n\t            b = temp;\n\t        }\n\t        var rLast = a;\n\t        var r = b;\n\t        var tLast = this.field.zero;\n\t        var t = this.field.one;\n\t        // Run Euclidean algorithm until r's degree is less than R/2\n\t        while (r.degree() >= R / 2) {\n\t            var rLastLast = rLast;\n\t            var tLastLast = tLast;\n\t            rLast = r;\n\t            tLast = t;\n\t            // Divide rLastLast by rLast, with quotient in q and remainder in r\n\t            if (rLast.isZero()) {\n\t                // Oops, Euclidean algorithm already terminated?\n\t                // throw new ReedSolomonException(\"r_{i-1} was zero\");\n\t                return null;\n\t            }\n\t            r = rLastLast;\n\t            var q = this.field.zero;\n\t            var denominatorLeadingTerm = rLast.getCoefficient(rLast.degree());\n\t            var dltInverse = this.field.inverse(denominatorLeadingTerm);\n\t            while (r.degree() >= rLast.degree() && !r.isZero()) {\n\t                var degreeDiff = r.degree() - rLast.degree();\n\t                var scale = this.field.multiply(r.getCoefficient(r.degree()), dltInverse);\n\t                q = q.addOrSubtract(this.field.buildMonomial(degreeDiff, scale));\n\t                r = r.addOrSubtract(rLast.multiplyByMonomial(degreeDiff, scale));\n\t            }\n\t            t = q.multiplyPoly(tLast).addOrSubtract(tLastLast);\n\t            if (r.degree() >= rLast.degree()) {\n\t                // throw new IllegalStateException(\"Division algorithm failed to reduce polynomial?\");\n\t                return null;\n\t            }\n\t        }\n\t        var sigmaTildeAtZero = t.getCoefficient(0);\n\t        if (sigmaTildeAtZero == 0) {\n\t            // throw new ReedSolomonException(\"sigmaTilde(0) was zero\");\n\t            return null;\n\t        }\n\t        var inverse = this.field.inverse(sigmaTildeAtZero);\n\t        var sigma = t.multiply(inverse);\n\t        var omega = r.multiply(inverse);\n\t        return [sigma, omega];\n\t    };\n\t    ReedSolomonDecoder.prototype.findErrorLocations = function (errorLocator) {\n\t        // This is a direct application of Chien's search\n\t        var numErrors = errorLocator.degree();\n\t        if (numErrors == 1) {\n\t            // shortcut\n\t            return [errorLocator.getCoefficient(1)];\n\t        }\n\t        var result = new Array(numErrors);\n\t        var e = 0;\n\t        for (var i = 1; i < this.field.size && e < numErrors; i++) {\n\t            if (errorLocator.evaluateAt(i) == 0) {\n\t                result[e] = this.field.inverse(i);\n\t                e++;\n\t            }\n\t        }\n\t        if (e != numErrors) {\n\t            // throw new ReedSolomonException(\"Error locator degree does not match number of roots\");\n\t            return null;\n\t        }\n\t        return result;\n\t    };\n\t    ReedSolomonDecoder.prototype.findErrorMagnitudes = function (errorEvaluator, errorLocations) {\n\t        // This is directly applying Forney's Formula\n\t        var s = errorLocations.length;\n\t        var result = new Array(s);\n\t        for (var i = 0; i < s; i++) {\n\t            var xiInverse = this.field.inverse(errorLocations[i]);\n\t            var denominator = 1;\n\t            for (var j = 0; j < s; j++) {\n\t                if (i != j) {\n\t                    //denominator = field.multiply(denominator,\n\t                    //    GenericGF.addOrSubtract(1, field.multiply(errorLocations[j], xiInverse)));\n\t                    // Above should work but fails on some Apple and Linux JDKs due to a Hotspot bug.\n\t                    // Below is a funny-looking workaround from Steven Parkes\n\t                    var term = this.field.multiply(errorLocations[j], xiInverse);\n\t                    var termPlus1 = (term & 0x1) == 0 ? term | 1 : term & ~1;\n\t                    denominator = this.field.multiply(denominator, termPlus1);\n\t                }\n\t            }\n\t            result[i] = this.field.multiply(errorEvaluator.evaluateAt(xiInverse), this.field.inverse(denominator));\n\t            if (this.field.generatorBase != 0) {\n\t                result[i] = this.field.multiply(result[i], xiInverse);\n\t            }\n\t        }\n\t        return result;\n\t    };\n\t    return ReedSolomonDecoder;\n\t}());\n\texports.ReedSolomonDecoder = ReedSolomonDecoder;\n\tvar GenericGFPoly = (function () {\n\t    function GenericGFPoly(field, coefficients) {\n\t        if (coefficients.length == 0) {\n\t            throw new Error(\"No coefficients.\");\n\t        }\n\t        this.field = field;\n\t        var coefficientsLength = coefficients.length;\n\t        if (coefficientsLength > 1 && coefficients[0] == 0) {\n\t            // Leading term must be non-zero for anything except the constant polynomial \"0\"\n\t            var firstNonZero = 1;\n\t            while (firstNonZero < coefficientsLength && coefficients[firstNonZero] == 0) {\n\t                firstNonZero++;\n\t            }\n\t            if (firstNonZero == coefficientsLength) {\n\t                this.coefficients = field.zero.coefficients;\n\t            }\n\t            else {\n\t                this.coefficients = new Array(coefficientsLength - firstNonZero);\n\t                /*Array.Copy(coefficients,       // Source array\n\t                  firstNonZero,              // Source index\n\t                  this.coefficients,         // Destination array\n\t                  0,                         // Destination index\n\t                  this.coefficients.length); // length*/\n\t                for (var i = 0; i < this.coefficients.length; i++) {\n\t                    this.coefficients[i] = coefficients[firstNonZero + i];\n\t                }\n\t            }\n\t        }\n\t        else {\n\t            this.coefficients = coefficients;\n\t        }\n\t    }\n\t    GenericGFPoly.prototype.evaluateAt = function (a) {\n\t        var result = 0;\n\t        if (a == 0) {\n\t            // Just return the x^0 coefficient\n\t            return this.getCoefficient(0);\n\t        }\n\t        var size = this.coefficients.length;\n\t        if (a == 1) {\n\t            // Just the sum of the coefficients\n\t            this.coefficients.forEach(function (coefficient) {\n\t                result = GenericGF.addOrSubtract(result, coefficient);\n\t            });\n\t            return result;\n\t        }\n\t        result = this.coefficients[0];\n\t        for (var i = 1; i < size; i++) {\n\t            result = GenericGF.addOrSubtract(this.field.multiply(a, result), this.coefficients[i]);\n\t        }\n\t        return result;\n\t    };\n\t    GenericGFPoly.prototype.getCoefficient = function (degree) {\n\t        return this.coefficients[this.coefficients.length - 1 - degree];\n\t    };\n\t    GenericGFPoly.prototype.degree = function () {\n\t        return this.coefficients.length - 1;\n\t    };\n\t    GenericGFPoly.prototype.isZero = function () {\n\t        return this.coefficients[0] == 0;\n\t    };\n\t    GenericGFPoly.prototype.addOrSubtract = function (other) {\n\t        /* TODO, fix this.\n\t        if (!this.field.Equals(other.field))\n\t        {\n\t          throw new Error(\"GenericGFPolys do not have same GenericGF field\");\n\t        }*/\n\t        if (this.isZero()) {\n\t            return other;\n\t        }\n\t        if (other.isZero()) {\n\t            return this;\n\t        }\n\t        var smallerCoefficients = this.coefficients;\n\t        var largerCoefficients = other.coefficients;\n\t        if (smallerCoefficients.length > largerCoefficients.length) {\n\t            var temp = smallerCoefficients;\n\t            smallerCoefficients = largerCoefficients;\n\t            largerCoefficients = temp;\n\t        }\n\t        var sumDiff = new Array(largerCoefficients.length);\n\t        var lengthDiff = largerCoefficients.length - smallerCoefficients.length;\n\t        // Copy high-order terms only found in higher-degree polynomial's coefficients\n\t        ///Array.Copy(largerCoefficients, 0, sumDiff, 0, lengthDiff);\n\t        for (var i = 0; i < lengthDiff; i++) {\n\t            sumDiff[i] = largerCoefficients[i];\n\t        }\n\t        for (var i = lengthDiff; i < largerCoefficients.length; i++) {\n\t            sumDiff[i] = GenericGF.addOrSubtract(smallerCoefficients[i - lengthDiff], largerCoefficients[i]);\n\t        }\n\t        return new GenericGFPoly(this.field, sumDiff);\n\t    };\n\t    GenericGFPoly.prototype.multiply = function (scalar) {\n\t        if (scalar == 0) {\n\t            return this.field.zero;\n\t        }\n\t        if (scalar == 1) {\n\t            return this;\n\t        }\n\t        var size = this.coefficients.length;\n\t        var product = new Array(size);\n\t        for (var i = 0; i < size; i++) {\n\t            product[i] = this.field.multiply(this.coefficients[i], scalar);\n\t        }\n\t        return new GenericGFPoly(this.field, product);\n\t    };\n\t    GenericGFPoly.prototype.multiplyPoly = function (other) {\n\t        /* TODO Fix this.\n\t        if (!field.Equals(other.field))\n\t        {\n\t          throw new Error(\"GenericGFPolys do not have same GenericGF field\");\n\t        }*/\n\t        if (this.isZero() || other.isZero()) {\n\t            return this.field.zero;\n\t        }\n\t        var aCoefficients = this.coefficients;\n\t        var aLength = aCoefficients.length;\n\t        var bCoefficients = other.coefficients;\n\t        var bLength = bCoefficients.length;\n\t        var product = new Array(aLength + bLength - 1);\n\t        for (var i = 0; i < aLength; i++) {\n\t            var aCoeff = aCoefficients[i];\n\t            for (var j = 0; j < bLength; j++) {\n\t                product[i + j] = GenericGF.addOrSubtract(product[i + j], this.field.multiply(aCoeff, bCoefficients[j]));\n\t            }\n\t        }\n\t        return new GenericGFPoly(this.field, product);\n\t    };\n\t    GenericGFPoly.prototype.multiplyByMonomial = function (degree, coefficient) {\n\t        if (degree < 0) {\n\t            throw new Error(\"Invalid degree less than 0\");\n\t        }\n\t        if (coefficient == 0) {\n\t            return this.field.zero;\n\t        }\n\t        var size = this.coefficients.length;\n\t        var product = new Array(size + degree);\n\t        for (var i = 0; i < size; i++) {\n\t            product[i] = this.field.multiply(this.coefficients[i], coefficient);\n\t        }\n\t        return new GenericGFPoly(this.field, product);\n\t    };\n\t    return GenericGFPoly;\n\t}());\n\tvar GenericGF = (function () {\n\t    function GenericGF(primitive, size, genBase) {\n\t        // ok.\n\t        this.INITIALIZATION_THRESHOLD = 0;\n\t        this.initialized = false;\n\t        this.primitive = primitive;\n\t        this.size = size;\n\t        this.generatorBase = genBase;\n\t        if (size <= this.INITIALIZATION_THRESHOLD) {\n\t            this.initialize();\n\t        }\n\t    }\n\t    GenericGF.prototype.initialize = function () {\n\t        this.expTable = new Array(this.size);\n\t        this.logTable = new Array(this.size);\n\t        var x = 1;\n\t        for (var i = 0; i < this.size; i++) {\n\t            this.expTable[i] = x;\n\t            x <<= 1; // x = x * 2; we're assuming the generator alpha is 2\n\t            if (x >= this.size) {\n\t                x ^= this.primitive;\n\t                x &= this.size - 1;\n\t            }\n\t        }\n\t        for (var i = 0; i < this.size - 1; i++) {\n\t            this.logTable[this.expTable[i]] = i;\n\t        }\n\t        // logTable[0] == 0 but this should never be used\n\t        this.zero = new GenericGFPoly(this, [0]);\n\t        this.one = new GenericGFPoly(this, [1]);\n\t        this.initialized = true;\n\t    };\n\t    GenericGF.addOrSubtract = function (a, b) {\n\t        return a ^ b;\n\t    };\n\t    GenericGF.prototype.checkInit = function () {\n\t        if (!this.initialized)\n\t            this.initialize();\n\t    };\n\t    GenericGF.prototype.multiply = function (a, b) {\n\t        this.checkInit();\n\t        if (a == 0 || b == 0) {\n\t            return 0;\n\t        }\n\t        return this.expTable[(this.logTable[a] + this.logTable[b]) % (this.size - 1)];\n\t    };\n\t    GenericGF.prototype.exp = function (a) {\n\t        this.checkInit();\n\t        return this.expTable[a];\n\t    };\n\t    GenericGF.prototype.log = function (a) {\n\t        this.checkInit();\n\t        if (a == 0) {\n\t            throw new Error(\"Can't take log(0)\");\n\t        }\n\t        return this.logTable[a];\n\t    };\n\t    GenericGF.prototype.inverse = function (a) {\n\t        this.checkInit();\n\t        if (a == 0) {\n\t            throw new Error(\"Can't invert 0\");\n\t        }\n\t        return this.expTable[this.size - this.logTable[a] - 1];\n\t    };\n\t    GenericGF.prototype.buildMonomial = function (degree, coefficient) {\n\t        this.checkInit();\n\t        if (degree < 0) {\n\t            throw new Error(\"Invalid monomial degree less than 0\");\n\t        }\n\t        if (coefficient == 0) {\n\t            return this.zero;\n\t        }\n\t        var coefficients = new Array(degree + 1);\n\t        coefficients[0] = coefficient;\n\t        return new GenericGFPoly(this, coefficients);\n\t    };\n\t    return GenericGF;\n\t}());\n\n\n/***/ })\n/******/ ])\n});\n;\n// jsQR is concatenated by gulp\n\nself.addEventListener('message', function(e) {\n  var decoded = jsQR.decodeQRFromImage(\n    e.data.data,\n    e.data.width,\n    e.data.height\n  )\n  postMessage(decoded)\n})\n"], {
+	  type: 'application/javascript'
+	});
+
+	// Props that are allowed to change dynamicly
+	var propsKeys = ['delay', 'legacyMode', 'facingMode'];
+
+	module.exports = (_temp = _class = function (_Component) {
+	  _inherits(Reader, _Component);
+
+	  function Reader(props) {
+	    _classCallCheck(this, Reader);
+
+	    // Bind function to the class
+	    var _this = _possibleConstructorReturn(this, (Reader.__proto__ || Object.getPrototypeOf(Reader)).call(this, props));
+
+	    _this.els = {};
+	    _this.initiate = _this.initiate.bind(_this);
+	    _this.initiateLegacyMode = _this.initiateLegacyMode.bind(_this);
+	    _this.check = _this.check.bind(_this);
+	    _this.handleVideo = _this.handleVideo.bind(_this);
+	    _this.handleLoadStart = _this.handleLoadStart.bind(_this);
+	    _this.handleInputChange = _this.handleInputChange.bind(_this);
+	    _this.clearComponent = _this.clearComponent.bind(_this);
+	    _this.handleReaderLoad = _this.handleReaderLoad.bind(_this);
+	    _this.openImageDialog = _this.openImageDialog.bind(_this);
+	    _this.handleWorkerMessage = _this.handleWorkerMessage.bind(_this);
+	    _this.setRefFactory = _this.setRefFactory.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(Reader, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // Initiate web worker execute handler according to mode.
+	      this.worker = new Worker(URL.createObjectURL(workerBlob));
+	      this.worker.onmessage = this.handleWorkerMessage;
+
+	      if (!this.props.legacyMode) {
+	        this.initiate();
+	      } else {
+	        this.initiateLegacyMode();
+	      }
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      // React according to change in props
+	      var changedProps = havePropsChanged(this.props, nextProps, propsKeys);
+
+	      var _iteratorNormalCompletion = true;
+	      var _didIteratorError = false;
+	      var _iteratorError = undefined;
+
+	      try {
+	        for (var _iterator = changedProps[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	          var prop = _step.value;
+
+	          if (prop == 'facingMode') {
+	            this.clearComponent();
+	            this.initiate(nextProps);
+	            break;
+	          } else if (prop == 'delay') {
+	            if (this.props.delay == false && !nextProps.legacyMode) {
+	              this.timeout = setTimeout(this.check, nextProps.delay);
+	            }
+	            if (nextProps.delay == false) {
+	              clearTimeout(this.timeout);
+	            }
+	          } else if (prop == 'legacyMode') {
+	            if (this.props.legacyMode && !nextProps.legacyMode) {
+	              this.clearComponent();
+	              this.initiate(nextProps);
+	            } else {
+	              this.clearComponent();
+	              this.componentDidUpdate = this.initiateLegacyMode;
+	            }
+	            break;
+	          }
+	        }
+	      } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	      } finally {
+	        try {
+	          if (!_iteratorNormalCompletion && _iterator.return) {
+	            _iterator.return();
+	          }
+	        } finally {
+	          if (_didIteratorError) {
+	            throw _iteratorError;
+	          }
+	        }
+	      }
+	    }
+	  }, {
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps) {
+	      // Only render when the `propsKeys` have changed.
+	      var changedProps = havePropsChanged(this.props, nextProps, propsKeys);
+	      return changedProps.length > 0;
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      // Stop web-worker and clear the component
+	      if (this.worker) {
+	        this.worker.terminate();
+	        this.worker = undefined;
+	      }
+	      this.clearComponent();
+	    }
+	  }, {
+	    key: 'clearComponent',
+	    value: function clearComponent() {
+	      // Remove all event listeners and variables
+	      if (this.timeout) {
+	        clearTimeout(this.timeout);
+	        this.timeout = undefined;
+	      }
+	      if (this.stopCamera) {
+	        this.stopCamera();
+	      }
+	      if (this.reader) {
+	        this.reader.removeEventListener('load', this.handleReaderLoad);
+	      }
+	      if (this.els.img) {
+	        this.els.img.removeEventListener('load', this.check);
+	      }
+	    }
+	  }, {
+	    key: 'initiate',
+	    value: function initiate() {
+	      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
+	      var onError = props.onError,
+	          facingMode = props.facingMode;
+
+	      getDeviceId(facingMode).then(function (deviceId) {
+	        return navigator.mediaDevices.getUserMedia({
+	          video: {
+	            deviceId: deviceId,
+	            facingMode: facingMode == 'rear' ? 'environment' : 'user',
+	            width: { min: 360, ideal: 1280, max: 1920 },
+	            height: { min: 240, ideal: 720, max: 1080 }
+	          }
+	        });
+	      }).then(this.handleVideo).catch(onError);
+	    }
+	  }, {
+	    key: 'handleVideo',
+	    value: function handleVideo(stream) {
+	      var preview = this.els.preview;
+
+	      // Handle different browser implementations of `createObjectURL`
+
+	      if (window.URL.createObjectURL) {
+	        preview.src = window.URL.createObjectURL(stream);
+	      } else if (window.webkitURL) {
+	        preview.src = window.webkitURL.createObjectURL(stream);
+	      } else if (preview.mozSrcObject !== undefined) {
+	        preview.mozSrcObject = stream;
+	      } else {
+	        preview.src = stream;
+	      }
+
+	      var streamTrack = stream.getTracks()[0];
+	      // Assign `stopCamera` so the track can be stopped once component is cleared
+	      this.stopCamera = streamTrack.stop.bind(streamTrack);
+
+	      preview.addEventListener('loadstart', this.handleLoadStart);
+	    }
+	  }, {
+	    key: 'handleLoadStart',
+	    value: function handleLoadStart() {
+	      var _props = this.props,
+	          delay = _props.delay,
+	          onLoad = _props.onLoad;
+
+	      var preview = this.els.preview;
+	      preview.play();
+
+	      if (typeof onLoad == 'function') {
+	        onLoad();
+	      }
+
+	      if (typeof delay == 'number') {
+	        this.timeout = setTimeout(this.check, delay);
+	      }
+
+	      // Some browsers call loadstart continuously
+	      preview.removeEventListener('loadstart', this.handleLoadStart);
+	    }
+	  }, {
+	    key: 'check',
+	    value: function check() {
+	      var _props2 = this.props,
+	          legacyMode = _props2.legacyMode,
+	          maxImageSize = _props2.maxImageSize,
+	          delay = _props2.delay;
+	      var _els = this.els,
+	          preview = _els.preview,
+	          canvas = _els.canvas,
+	          img = _els.img;
+
+	      // Get image/video dimensions
+
+	      var width = Math.floor(legacyMode ? img.naturalWidth : preview.videoWidth);
+	      var height = Math.floor(legacyMode ? img.naturalHeight : preview.videoHeight);
+
+	      if (legacyMode) {
+	        // Downscale image to `maxImageSize`
+	        var ratio = 1.1;
+	        while ((width > height ? width : height) > maxImageSize) {
+	          width = Math.floor(width / ratio);
+	          height = Math.floor(height / ratio);
+	        }
+	      }
+
+	      canvas.width = width;
+	      canvas.height = height;
+
+	      var previewIsPlaying = preview && preview.readyState === preview.HAVE_ENOUGH_DATA;
+
+	      if (legacyMode || previewIsPlaying) {
+	        var ctx = canvas.getContext('2d');
+	        ctx.drawImage(legacyMode ? img : preview, 0, 0, width, height);
+
+	        var imageData = ctx.getImageData(0, 0, width, height
+	        // Send data to web-worker
+	        );this.worker.postMessage(imageData);
+	      } else {
+	        // Preview not ready -> check later
+	        this.timeout = setTimeout(this.check, delay);
+	      }
+	    }
+	  }, {
+	    key: 'handleWorkerMessage',
+	    value: function handleWorkerMessage(e) {
+	      var _props3 = this.props,
+	          onScan = _props3.onScan,
+	          legacyMode = _props3.legacyMode,
+	          delay = _props3.delay;
+
+	      var decoded = e.data;
+
+	      onScan(decoded || null);
+
+	      if (!legacyMode && typeof delay == 'number' && this.worker) {
+	        this.timeout = setTimeout(this.check, delay);
+	      }
+	    }
+	  }, {
+	    key: 'initiateLegacyMode',
+	    value: function initiateLegacyMode() {
+	      this.reader = new FileReader();
+	      this.reader.addEventListener('load', this.handleReaderLoad);
+	      this.els.img.addEventListener('load', this.check, false
+
+	      // Reset componentDidUpdate
+	      );this.componentDidUpdate = undefined;
+
+	      if (typeof this.props.onLoad == 'function') {
+	        this.props.onLoad();
+	      }
+	    }
+	  }, {
+	    key: 'handleInputChange',
+	    value: function handleInputChange(e) {
+	      var selectedImg = e.target.files[0];
+	      this.reader.readAsDataURL(selectedImg);
+	    }
+	  }, {
+	    key: 'handleReaderLoad',
+	    value: function handleReaderLoad(e) {
+	      // Set selected image blob as img source
+	      this.els.img.src = e.target.result;
+	    }
+	  }, {
+	    key: 'openImageDialog',
+	    value: function openImageDialog() {
+	      // Function to be executed by parent in user action context to trigger img file uploader
+	      this.els.input.click();
+	    }
+	  }, {
+	    key: 'setRefFactory',
+	    value: function setRefFactory(key) {
+	      var _this2 = this;
+
+	      return function (element) {
+	        _this2.els[key] = element;
+	      };
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var hiddenStyle = { display: 'none' };
+	      var previewStyle = _extends({
+	        display: 'block',
+	        objectFit: 'contain'
+	      }, this.props.style);
+
+	      return React.createElement('section', { className: this.props.className }, this.props.legacyMode ? React.createElement('div', null, React.createElement('input', {
+	        style: hiddenStyle,
+	        type: 'file',
+	        accept: 'image/*',
+	        ref: this.setRefFactory('input'),
+	        onChange: this.handleInputChange
+	      }), React.createElement('img', { style: previewStyle, ref: this.setRefFactory('img') })) : React.createElement('video', { style: previewStyle, ref: this.setRefFactory('preview') }), React.createElement('canvas', { style: hiddenStyle, ref: this.setRefFactory('canvas') }));
+	    }
+	  }]);
+
+	  return Reader;
+	}(Component), _class.propTypes = {
+	  onScan: PropTypes.func.isRequired,
+	  onError: PropTypes.func.isRequired,
+	  onLoad: PropTypes.func,
+	  delay: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+	  facingMode: PropTypes.string,
+	  legacyMode: PropTypes.bool,
+	  maxImageSize: PropTypes.number,
+	  style: PropTypes.object,
+	  className: PropTypes.string
+	}, _class.defaultProps = { delay: 500, style: {}, maxImageSize: 1500 }, _temp);
+
+/***/ }),
+/* 183 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -22421,13 +22443,13 @@
 	} else {
 	  // By explicitly using `prop-types` you are opting into new production behavior.
 	  // http://fb.me/prop-types-in-prod
-	  module.exports = __webpack_require__(191)();
+	  module.exports = __webpack_require__(184)();
 	}
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
-/* 191 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 184 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -22440,19 +22462,24 @@
 
 	'use strict';
 
-	var emptyFunction = __webpack_require__(32);
-	var invariant = __webpack_require__(33);
+	var emptyFunction = __webpack_require__(12);
+	var invariant = __webpack_require__(8);
+	var ReactPropTypesSecret = __webpack_require__(32);
 
 	module.exports = function () {
-	  // Important!
-	  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
-	  function shim() {
+	  function shim(props, propName, componentName, location, propFullName, secret) {
+	    if (secret === ReactPropTypesSecret) {
+	      // It is still safe when called from React.
+	      return;
+	    }
 	    invariant(false, 'Calling PropTypes validators directly is not supported by the `prop-types` package. ' + 'Use PropTypes.checkPropTypes() to call them. ' + 'Read more at http://fb.me/use-check-prop-types');
 	  };
 	  shim.isRequired = shim;
 	  function getShim() {
 	    return shim;
 	  };
+	  // Important!
+	  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
 	  var ReactPropTypes = {
 	    array: shim,
 	    bool: shim,
@@ -22479,23 +22506,32 @@
 	  return ReactPropTypes;
 	};
 
-/***/ },
-/* 192 */
-/***/ function(module, exports) {
+/***/ }),
+/* 185 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	var _require = __webpack_require__(186),
+	    NoVideoInputDevicesError = _require.NoVideoInputDevicesError;
 
 	module.exports = function getDeviceId(facingMode) {
 	  // Get manual deviceId from available devices.
 	  return new Promise(function (resolve, reject) {
-	    navigator.mediaDevices.enumerateDevices().then(function (devices) {
+	    var enumerateDevices = void 0;
+	    try {
+	      enumerateDevices = navigator.mediaDevices.enumerateDevices();
+	    } catch (err) {
+	      reject(new NoVideoInputDevicesError());
+	    }
+	    enumerateDevices.then(function (devices) {
 	      // Filter out non-videoinputs
 	      var videoDevices = devices.filter(function (device) {
 	        return device.kind == 'videoinput';
 	      });
 
 	      if (videoDevices.length < 1) {
-	        reject(new Error('No video input devices found'));
+	        reject(new NoVideoInputDevicesError());
 	        return;
 	      } else if (videoDevices.length == 1) {
 	        // Only 1 video device available thus stop here
@@ -22521,9 +22557,25 @@
 	  });
 	};
 
-/***/ },
-/* 193 */
-/***/ function(module, exports) {
+/***/ }),
+/* 186 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	function NoVideoInputDevicesError() {
+	  this.name = 'NoVideoInputDevicesError';
+	  this.message = 'No video input devices found';
+	}
+	NoVideoInputDevicesError.prototype = new Error();
+
+	module.exports = {
+	  NoVideoInputDevicesError: NoVideoInputDevicesError
+	};
+
+/***/ }),
+/* 187 */
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -22537,9 +22589,9 @@
 	  return changedProps;
 	};
 
-/***/ },
-/* 194 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 188 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/*
 	 *  Copyright (c) 2016 The WebRTC project authors. All Rights Reserved.
@@ -22556,12 +22608,12 @@
 
 	(function () {
 	  // Utils.
-	  var logging = __webpack_require__(195).log;
-	  var browserDetails = __webpack_require__(195).browserDetails;
+	  var logging = __webpack_require__(189).log;
+	  var browserDetails = __webpack_require__(189).browserDetails;
 	  // Export to the adapter global object visible in the browser.
 	  module.exports.browserDetails = browserDetails;
-	  module.exports.extractVersion = __webpack_require__(195).extractVersion;
-	  module.exports.disableLog = __webpack_require__(195).disableLog;
+	  module.exports.extractVersion = __webpack_require__(189).extractVersion;
+	  module.exports.disableLog = __webpack_require__(189).disableLog;
 
 	  // Uncomment the line below if you want logging to occur, including logging
 	  // for the switch statement below. Can also be turned on in the browser via
@@ -22570,10 +22622,10 @@
 	  // require('./utils').disableLog(false);
 
 	  // Browser shims.
-	  var chromeShim = __webpack_require__(196) || null;
-	  var edgeShim = __webpack_require__(198) || null;
-	  var firefoxShim = __webpack_require__(201) || null;
-	  var safariShim = __webpack_require__(203) || null;
+	  var chromeShim = __webpack_require__(190) || null;
+	  var edgeShim = __webpack_require__(192) || null;
+	  var firefoxShim = __webpack_require__(195) || null;
+	  var safariShim = __webpack_require__(197) || null;
 
 	  // Shim browser if found.
 	  switch (browserDetails.browser) {
@@ -22635,9 +22687,9 @@
 	  }
 	})();
 
-/***/ },
-/* 195 */
-/***/ function(module, exports) {
+/***/ }),
+/* 189 */
+/***/ (function(module, exports) {
 
 	/*
 	 *  Copyright (c) 2016 The WebRTC project authors. All Rights Reserved.
@@ -22649,7 +22701,7 @@
 	/* eslint-env node */
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var logDisabled_ = true;
 
@@ -22765,9 +22817,9 @@
 	  extractVersion: utils.extractVersion
 	};
 
-/***/ },
-/* 196 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 190 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	
 	/*
@@ -22780,10 +22832,10 @@
 	/* eslint-env node */
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var logging = __webpack_require__(195).log;
-	var browserDetails = __webpack_require__(195).browserDetails;
+	var logging = __webpack_require__(189).log;
+	var browserDetails = __webpack_require__(189).browserDetails;
 
 	var chromeShim = {
 	  shimMediaStream: function shimMediaStream() {
@@ -23022,12 +23074,12 @@
 	  shimOnTrack: chromeShim.shimOnTrack,
 	  shimSourceObject: chromeShim.shimSourceObject,
 	  shimPeerConnection: chromeShim.shimPeerConnection,
-	  shimGetUserMedia: __webpack_require__(197)
+	  shimGetUserMedia: __webpack_require__(191)
 	};
 
-/***/ },
-/* 197 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 191 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/*
 	 *  Copyright (c) 2016 The WebRTC project authors. All Rights Reserved.
@@ -23039,9 +23091,9 @@
 	/* eslint-env node */
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var logging = __webpack_require__(195).log;
+	var logging = __webpack_require__(189).log;
 
 	// Expose public methods.
 	module.exports = function () {
@@ -23224,9 +23276,9 @@
 	  }
 	};
 
-/***/ },
-/* 198 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 192 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/*
 	 *  Copyright (c) 2016 The WebRTC project authors. All Rights Reserved.
@@ -23238,8 +23290,8 @@
 	/* eslint-env node */
 	'use strict';
 
-	var SDPUtils = __webpack_require__(199);
-	var browserDetails = __webpack_require__(195).browserDetails;
+	var SDPUtils = __webpack_require__(193);
+	var browserDetails = __webpack_require__(189).browserDetails;
 
 	var edgeShim = {
 	  shimPeerConnection: function shimPeerConnection() {
@@ -24275,12 +24327,12 @@
 	// Expose public methods.
 	module.exports = {
 	  shimPeerConnection: edgeShim.shimPeerConnection,
-	  shimGetUserMedia: __webpack_require__(200)
+	  shimGetUserMedia: __webpack_require__(194)
 	};
 
-/***/ },
-/* 199 */
-/***/ function(module, exports) {
+/***/ }),
+/* 193 */
+/***/ (function(module, exports) {
 
 	/* eslint-env node */
 	'use strict';
@@ -24354,7 +24406,8 @@
 	        candidate.tcpType = parts[i + 1];
 	        break;
 	      default:
-	        // Unknown extensions are silently ignored.
+	        // extension handling, in particular ufrag
+	        candidate[parts[i]] = parts[i + 1];
 	        break;
 	    }
 	  }
@@ -24387,13 +24440,19 @@
 	  return 'candidate:' + sdp.join(' ');
 	};
 
+	// Parses an ice-options line, returns an array of option tags.
+	// a=ice-options:foo bar
+	SDPUtils.parseIceOptions = function (line) {
+	  return line.substr(14).split(' ');
+	};
+
 	// Parses an rtpmap line, returns RTCRtpCoddecParameters. Sample input:
 	// a=rtpmap:111 opus/48000/2
 	SDPUtils.parseRtpMap = function (line) {
 	  var parts = line.substr(9).split(' ');
 	  var parsed = {
-	    payloadType: parseInt(parts.shift(), 10) // was: id
-	  };
+	    payloadType: parseInt(parts.shift(), 10 // was: id
+	    ) };
 
 	  parts = parts[0].split('/');
 
@@ -24416,10 +24475,12 @@
 
 	// Parses an a=extmap line (headerextension from RFC 5285). Sample input:
 	// a=extmap:2 urn:ietf:params:rtp-hdrext:toffset
+	// a=extmap:2/sendonly urn:ietf:params:rtp-hdrext:toffset
 	SDPUtils.parseExtmap = function (line) {
 	  var parts = line.substr(9).split(' ');
 	  return {
 	    id: parseInt(parts[0], 10),
+	    direction: parts[0].indexOf('/') > 0 ? parts[0].split('/')[1] : 'sendrecv',
 	    uri: parts[1]
 	  };
 	};
@@ -24427,7 +24488,7 @@
 	// Generates a=extmap line from RTCRtpHeaderExtensionParameters or
 	// RTCRtpHeaderExtension.
 	SDPUtils.writeExtmap = function (headerExtension) {
-	  return 'a=extmap:' + (headerExtension.id || headerExtension.preferredId) + ' ' + headerExtension.uri + '\r\n';
+	  return 'a=extmap:' + (headerExtension.id || headerExtension.preferredId) + (headerExtension.direction && headerExtension.direction !== 'sendrecv' ? '/' + headerExtension.direction : '') + ' ' + headerExtension.uri + '\r\n';
 	};
 
 	// Parses an ftmp line, returns dictionary. Sample input:
@@ -24512,26 +24573,25 @@
 	  }
 	};
 
+	SDPUtils.parseFingerprint = function (line) {
+	  var parts = line.substr(14).split(' ');
+	  return {
+	    algorithm: parts[0].toLowerCase(), // algorithm is case-sensitive in Edge.
+	    value: parts[1]
+	  };
+	};
+
 	// Extracts DTLS parameters from SDP media section or sessionpart.
 	// FIXME: for consistency with other functions this should only
 	//   get the fingerprint line as input. See also getIceParameters.
 	SDPUtils.getDtlsParameters = function (mediaSection, sessionpart) {
-	  var lines = SDPUtils.splitLines(mediaSection);
-	  // Search in session part, too.
-	  lines = lines.concat(SDPUtils.splitLines(sessionpart));
-	  var fpLine = lines.filter(function (line) {
-	    return line.indexOf('a=fingerprint:') === 0;
-	  })[0].substr(14);
+	  var lines = SDPUtils.matchPrefix(mediaSection + sessionpart, 'a=fingerprint:');
 	  // Note: a=setup line is ignored since we use the 'auto' role.
 	  // Note2: 'algorithm' is not case sensitive except in Edge.
-	  var dtlsParameters = {
+	  return {
 	    role: 'auto',
-	    fingerprints: [{
-	      algorithm: fpLine.split(' ')[0].toLowerCase(),
-	      value: fpLine.split(' ')[1]
-	    }]
+	    fingerprints: lines.map(SDPUtils.parseFingerprint)
 	  };
-	  return dtlsParameters;
 	};
 
 	// Serializes DTLS parameters to SDP.
@@ -24748,7 +24808,7 @@
 	  return rtcpParameters;
 	};
 
-	// parses either a=msid: or a=ssrc:... msid lines an returns
+	// parses either a=msid: or a=ssrc:... msid lines and returns
 	// the id of the MediaStream and MediaStreamTrack.
 	SDPUtils.parseMsid = function (mediaSection) {
 	  var parts;
@@ -24784,7 +24844,9 @@
 
 	  sdp += 'a=mid:' + transceiver.mid + '\r\n';
 
-	  if (transceiver.rtpSender && transceiver.rtpReceiver) {
+	  if (transceiver.direction) {
+	    sdp += 'a=' + transceiver.direction + '\r\n';
+	  } else if (transceiver.rtpSender && transceiver.rtpReceiver) {
 	    sdp += 'a=sendrecv\r\n';
 	  } else if (transceiver.rtpSender) {
 	    sdp += 'a=sendonly\r\n';
@@ -24848,9 +24910,9 @@
 	// Expose public methods.
 	module.exports = SDPUtils;
 
-/***/ },
-/* 200 */
-/***/ function(module, exports) {
+/***/ }),
+/* 194 */
+/***/ (function(module, exports) {
 
 	/*
 	 *  Copyright (c) 2016 The WebRTC project authors. All Rights Reserved.
@@ -24885,9 +24947,9 @@
 	  };
 	};
 
-/***/ },
-/* 201 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 195 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/*
 	 *  Copyright (c) 2016 The WebRTC project authors. All Rights Reserved.
@@ -24899,9 +24961,9 @@
 	/* eslint-env node */
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var browserDetails = __webpack_require__(195).browserDetails;
+	var browserDetails = __webpack_require__(189).browserDetails;
 
 	var firefoxShim = {
 	  shimOnTrack: function shimOnTrack() {
@@ -25043,12 +25105,12 @@
 	  shimOnTrack: firefoxShim.shimOnTrack,
 	  shimSourceObject: firefoxShim.shimSourceObject,
 	  shimPeerConnection: firefoxShim.shimPeerConnection,
-	  shimGetUserMedia: __webpack_require__(202)
+	  shimGetUserMedia: __webpack_require__(196)
 	};
 
-/***/ },
-/* 202 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 196 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	/*
 	 *  Copyright (c) 2016 The WebRTC project authors. All Rights Reserved.
@@ -25060,10 +25122,10 @@
 	/* eslint-env node */
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var logging = __webpack_require__(195).log;
-	var browserDetails = __webpack_require__(195).browserDetails;
+	var logging = __webpack_require__(189).log;
+	var browserDetails = __webpack_require__(189).browserDetails;
 
 	// Expose public methods.
 	module.exports = function () {
@@ -25202,9 +25264,9 @@
 	  };
 	};
 
-/***/ },
-/* 203 */
-/***/ function(module, exports) {
+/***/ }),
+/* 197 */
+/***/ (function(module, exports) {
 
 	/*
 	 *  Copyright (c) 2016 The WebRTC project authors. All Rights Reserved.
@@ -25236,5 +25298,5 @@
 	  // shimPeerConnection: safariShim.shimPeerConnection
 	};
 
-/***/ }
+/***/ })
 /******/ ]);
