@@ -81,6 +81,12 @@ Type: `function`, Optional
 
 Called when the component is ready for use.
 
+**onImageLoad**
+
+Type: `function`, Optional, Argument: React img onLoad event
+
+Called when the image in legacyMode is loaded.
+
 **delay**
 
 Type: `number`, Optional, Default: `500`

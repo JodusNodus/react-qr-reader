@@ -20,6 +20,7 @@ module.exports = class Reader extends Component {
     onScan: PropTypes.func.isRequired,
     onError: PropTypes.func.isRequired,
     onLoad: PropTypes.func,
+    onImageLoad: PropTypes.func,
     delay: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
     facingMode: PropTypes.string,
     legacyMode: PropTypes.bool,
@@ -180,11 +181,11 @@ module.exports = class Reader extends Component {
 
     if (legacyMode) {
       // Downscale image to `maxImageSize`
-      const greatestSize = width > height ? width : height;
+      const greatestSize = width > height ? width : height
       if(greatestSize > maxImageSize){
-        const ratio = maxImageSize / greatestSize;
-        height = ratio * height;
-        width = ratio * width;
+        const ratio = maxImageSize / greatestSize
+        height = ratio * height
+        width = ratio * width
       }
     }
 
@@ -246,16 +247,18 @@ module.exports = class Reader extends Component {
     }
   }
   render() {
+    const { style, className, onImageLoad, legacyMode } = this.props
+
     const hiddenStyle = { display: 'none' }
     const previewStyle = {
       display: 'block',
       objectFit: 'contain',
-      ...this.props.style,
+      ...style,
     }
 
     return (
-      <section className={this.props.className}>
-        {this.props.legacyMode
+      <section className={className}>
+        {legacyMode
           ? <div>
               <input
                 style={hiddenStyle}
@@ -264,7 +267,7 @@ module.exports = class Reader extends Component {
                 ref={this.setRefFactory('input')}
                 onChange={this.handleInputChange}
               />
-              <img style={previewStyle} ref={this.setRefFactory('img')} />
+              <img style={previewStyle} ref={this.setRefFactory('img')} onLoad={onImageLoad} />
             </div>
           : <video style={previewStyle} ref={this.setRefFactory('preview')} />}
         <canvas style={hiddenStyle} ref={this.setRefFactory('canvas')} />
