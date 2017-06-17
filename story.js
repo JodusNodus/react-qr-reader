@@ -24,7 +24,7 @@ class Wrapper extends Component {
             )
         }
         {
-          (selectDelay || legacyMode) && (
+          selectDelay && (
               <div>
                 <button onClick={() => this.setState({ delay: false })}>
                   Disable Delay
@@ -44,9 +44,11 @@ class Wrapper extends Component {
           onError={action('Error')}
           onScan={action('Scan')}
           onLoad={action('Load')}
+          onImageLoad={action('ImageLoad')}
           ref="reader"
           facingMode={this.state.facingMode}
           legacyMode={legacyMode}
+          maxImageSize={1000}
           delay={this.state.delay}
           className="reader-container"
         />
