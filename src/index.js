@@ -27,7 +27,7 @@ module.exports = class Reader extends Component {
     style: PropTypes.object,
     className: PropTypes.string,
   };
-  static defaultProps = { delay: 500, style: {}, maxImageSize: 1500 };
+  static defaultProps = { delay: 500, style: {}, maxImageSize: 1000 };
 
   els = {};
 
@@ -180,10 +180,11 @@ module.exports = class Reader extends Component {
 
     if (legacyMode) {
       // Downscale image to `maxImageSize`
-      const ratio = 1.1
-      while ((width > height ? width : height) > maxImageSize) {
-        width = Math.floor(width / ratio)
-        height = Math.floor(height / ratio)
+      const greatestSize = width > height ? width : height;
+      if(greatestSize > maxImageSize){
+        const ratio = maxImageSize / greatestSize;
+        height = ratio * height;
+        width = ratio * width;
       }
     }
 
