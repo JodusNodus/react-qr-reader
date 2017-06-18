@@ -149,6 +149,9 @@ module.exports = class Reader extends Component {
       preview.src = stream
     }
 
+    // IOS play in fullscreen
+    preview.playsInline = true
+
     const streamTrack = stream.getTracks()[0]
     // Assign `stopCamera` so the track can be stopped once component is cleared
     this.stopCamera = streamTrack.stop.bind(streamTrack)
