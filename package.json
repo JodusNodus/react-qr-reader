@@ -6,7 +6,7 @@
   "scripts": {
     "storybook": "start-storybook -p 9001",
     "build": "gulp",
-    "build:watch": "gulp",
+    "build:watch": "gulp watch",
     "lint": "eslint -c ./.eslintrc.js ./src"
   },
   "repository": {
