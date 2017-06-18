@@ -27,10 +27,10 @@ class Demo extends Component {
     }
   }
   handleError(err) {
+    console.error(err)
     this.setState({ legacyMode: true })
   }
   handleLoad() {
-    console.log("hello world")
     this.setState({ loading: false });
   }
   handleFacingModeChange(e) {
