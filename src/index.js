@@ -136,13 +136,15 @@ module.exports = class Reader extends Component {
   handleVideo(stream) {
     const { preview } = this.els
 
-    // Handle different browser implementations of `createObjectURL`
-    if (window.URL.createObjectURL) {
+    // Handle different browser implementations of MediaStreams as src
+    if(preview.srcObject !== undefined){
+      preview.srcObject = stream
+    } else if (preview.mozSrcObject !== undefined) {
+      preview.mozSrcObject = stream
+    } else if (window.URL.createObjectURL) {
       preview.src = window.URL.createObjectURL(stream)
     } else if (window.webkitURL) {
       preview.src = window.webkitURL.createObjectURL(stream)
-    } else if (preview.mozSrcObject !== undefined) {
-      preview.mozSrcObject = stream
     } else {
       preview.src = stream
     }
