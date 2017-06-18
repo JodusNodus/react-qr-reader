@@ -23,6 +23,7 @@ gulp.task('worker', [ 'clean' ], function() {
   return gulp
     .src([ paths.jsQR, paths.worker ])
     .pipe(concat('worker.js'))
+    .pipe(uglify())
     .pipe(gulp.dest(paths.destination))
 })
 
