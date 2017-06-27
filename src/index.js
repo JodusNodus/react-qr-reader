@@ -27,6 +27,7 @@ module.exports = class Reader extends Component {
     maxImageSize: PropTypes.number,
     style: PropTypes.object,
     className: PropTypes.string,
+    chooseDeviceId: PropTypes.func,
   };
   static defaultProps = { delay: 500, style: {}, maxImageSize: 1000 };
 
@@ -117,9 +118,9 @@ module.exports = class Reader extends Component {
     }
   }
   initiate(props = this.props) {
-    const { onError, facingMode } = props
+    const { onError, facingMode, chooseDeviceId } = props
 
-    getDeviceId(facingMode)
+    getDeviceId(facingMode, chooseDeviceId)
       .then(deviceId => {
         return navigator.mediaDevices.getUserMedia({
           video: {
