@@ -1,6 +1,13 @@
 const { NoVideoInputDevicesError } = require('./errors')
 
-module.exports = function getDeviceId(facingMode) {
+function defaultDeviceIdChooser(filteredDevices, videoDevices) {
+  return (filteredDevices.length > 0)
+    ? filteredDevices[0].deviceId
+    // No device found with the pattern thus use another video device
+    : videoDevices[0].deviceId
+}
+
+module.exports = function getDeviceId(facingMode, chooseDeviceId = defaultDeviceIdChooser) {
   // Get manual deviceId from available devices.
   return new Promise((resolve, reject) => {
     let enumerateDevices
@@ -32,12 +39,7 @@ module.exports = function getDeviceId(facingMode) {
       const filteredDevices = videoDevices.filter(({ label }) =>
         pattern.test(label))
 
-      if (filteredDevices.length > 0) {
-        resolve(filteredDevices[0].deviceId)
-      } else {
-        // No device found with the pattern thus use another video device
-        resolve(videoDevices[0].deviceId)
-      }
+      resolve(chooseDeviceId(filteredDevices, videoDevices))
     })
   })
 }
