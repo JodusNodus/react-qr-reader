@@ -22,13 +22,17 @@ module.exports = class Reader extends Component {
     onLoad: PropTypes.func,
     onImageLoad: PropTypes.func,
     delay: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-    facingMode: PropTypes.string,
+    facingMode: PropTypes.oneOf(['rear', 'front']),
     legacyMode: PropTypes.bool,
     maxImageSize: PropTypes.number,
-    style: PropTypes.object,
+    style: PropTypes.any,
     className: PropTypes.string,
   };
-  static defaultProps = { delay: 500, style: {}, maxImageSize: 1000 };
+  static defaultProps = {
+    delay: 500,
+    maxImageSize: 1000,
+    facingMode: 'rear'
+  };
 
   els = {};
 
@@ -119,12 +123,13 @@ module.exports = class Reader extends Component {
   initiate(props = this.props) {
     const { onError, facingMode } = props
 
+    console.log(facingMode)
+
     getDeviceId(facingMode)
       .then(deviceId => {
         return navigator.mediaDevices.getUserMedia({
           video: {
             deviceId,
-            facingMode: facingMode == 'rear' ? 'environment' : 'user',
             width: { min: 360, ideal: 1280, max: 1920 },
             height: { min: 240, ideal: 720, max: 1080 },
           },
