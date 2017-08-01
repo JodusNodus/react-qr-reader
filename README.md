@@ -123,6 +123,12 @@ Type: `string`, Optional
 
 ClassName for the container element.
 
+**chooseDeviceId**
+
+Type: `function`, Optional, Arguments: (1) video devices matching `facingMode`, (2) all video devices
+
+Called when choosing which device to use for scanning. By default chooses the first video device matching `facingMode`, if no devices match the first video device found is choosen.
+
 ## Dev
 
 ### Install dependencies
