@@ -1,10 +1,13 @@
 const { NoVideoInputDevicesError } = require('./errors')
 
-function defaultDeviceIdChooser(filteredDevices, videoDevices) {
-  return (filteredDevices.length > 0)
-    ? filteredDevices[0].deviceId
-    // No device found with the pattern thus use another video device
-    : videoDevices[0].deviceId
+function defaultDeviceIdChooser(filteredDevices, videoDevices, facingMode) {
+  if(filteredDevices.length > 0){
+    return filteredDevices[0].deviceId
+  }
+  if(videoDevices.length == 0 || facingMode == 'front'){
+    return videoDevices[0].deviceId
+  }
+  return videoDevices[1].deviceId
 }
 
 module.exports = function getDeviceId(facingMode, chooseDeviceId = defaultDeviceIdChooser) {
@@ -39,7 +42,7 @@ module.exports = function getDeviceId(facingMode, chooseDeviceId = defaultDevice
       const filteredDevices = videoDevices.filter(({ label }) =>
         pattern.test(label))
 
-      resolve(chooseDeviceId(filteredDevices, videoDevices))
+      resolve(chooseDeviceId(filteredDevices, videoDevices, facingMode))
     })
   })
 }
