@@ -8,6 +8,7 @@ const havePropsChanged = require('./havePropsChanged')
 require('webrtc-adapter')
 
 // Inline worker.js as a string value of workerBlob.
+// eslint-disable-next-line
 const workerBlob = new Blob([__inline('../lib/worker.js')], {
   type: 'application/javascript',
 })
@@ -41,6 +42,7 @@ module.exports = class Reader extends Component {
     super(props)
 
     // Bind function to the class
+    this.getPermissions = this.getPermissions.bind(this)
     this.initiate = this.initiate.bind(this)
     this.initiateLegacyMode = this.initiateLegacyMode.bind(this)
     this.check = this.check.bind(this)
@@ -121,10 +123,39 @@ module.exports = class Reader extends Component {
       this.els.img.removeEventListener('load', this.check)
     }
   }
+  getPermissions(){
+    if(this.hasPermission){
+      return Promise.resolve(true)
+    }
+
+    return navigator.mediaDevices.getUserMedia({
+      video: {
+        width: 360,
+        height: 240,
+      },
+    })
+    .then((stream) => {
+      const track = stream.getTracks()[0]
+      this.hasPermission = true
+      track.stop()
+    })
+  }
   initiate(props = this.props) {
     const { onError, facingMode, chooseDeviceId } = props
 
-    getDeviceId(facingMode, chooseDeviceId)
+    const isFirefox = /firefox/i.test(navigator.userAgent)
+
+    let deviceIdPromise
+    if(isFirefox){
+      // Firefox doesn't follow facingMode or deviceId constraints and lets the user decide
+      deviceIdPromise = Promise.resolve(undefined)
+    }else{
+      deviceIdPromise = this.getPermissions()
+        .then(() => getDeviceId(facingMode, chooseDeviceId))
+    }
+
+
+    deviceIdPromise
       .then(deviceId => {
         return navigator.mediaDevices.getUserMedia({
           video: {
@@ -269,15 +300,15 @@ module.exports = class Reader extends Component {
       <section className={className}>
         {legacyMode
           ? <div>
-              <input
-                style={hiddenStyle}
-                type="file"
-                accept="image/*"
-                ref={this.setRefFactory('input')}
-                onChange={this.handleInputChange}
-              />
-              <img style={previewStyle} ref={this.setRefFactory('img')} onLoad={onImageLoad} />
-            </div>
+            <input
+              style={hiddenStyle}
+              type="file"
+              accept="image/*"
+              ref={this.setRefFactory('input')}
+              onChange={this.handleInputChange}
+            />
+            <img style={previewStyle} ref={this.setRefFactory('img')} onLoad={onImageLoad} />
+          </div>
           : <video style={previewStyle} ref={this.setRefFactory('preview')} />}
         <canvas style={hiddenStyle} ref={this.setRefFactory('canvas')} />
       </section>
