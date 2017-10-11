@@ -16,6 +16,12 @@ const workerBlob = new Blob([__inline('../lib/worker.js')], {
 // Props that are allowed to change dynamicly
 const propsKeys = ['delay', 'legacyMode', 'facingMode']
 
+
+const videoConstrains = {
+  width: { min: 360, ideal: 1280, max: 1920 },
+  height: { min: 240, ideal: 720, max: 1080 },
+}
+
 module.exports = class Reader extends Component {
   static propTypes = {
     onScan: PropTypes.func.isRequired,
@@ -129,10 +135,7 @@ module.exports = class Reader extends Component {
     }
 
     return navigator.mediaDevices.getUserMedia({
-      video: {
-        width: 360,
-        height: 240,
-      },
+      video: videoConstrains
     })
     .then((stream) => {
       const track = stream.getTracks()[0]
@@ -160,8 +163,7 @@ module.exports = class Reader extends Component {
         return navigator.mediaDevices.getUserMedia({
           video: {
             deviceId,
-            width: { min: 360, ideal: 1280, max: 1920 },
-            height: { min: 240, ideal: 720, max: 1080 },
+            ...videoConstrains
           },
         })
       })
