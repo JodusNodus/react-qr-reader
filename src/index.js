@@ -160,12 +160,23 @@ module.exports = class Reader extends Component {
 
     deviceIdPromise
       .then(deviceId => {
-        return navigator.mediaDevices.getUserMedia({
-          video: {
-            deviceId,
-            ...videoConstrains
-          },
-        })
+        // iOS supports a different syntax for accessing a specific deviceId
+        if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+          return navigator.mediaDevices.getUserMedia({
+            video: {
+              deviceId: {exact: deviceId},
+              ...videoConstrains
+            },
+          })
+        }
+        else {
+          return navigator.mediaDevices.getUserMedia({
+            video: {
+              deviceId,
+              ...videoConstrains
+            },
+          })
+        }
       })
       .then(this.handleVideo)
       .catch(onError)
