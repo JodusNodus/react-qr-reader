@@ -40,7 +40,8 @@
     "gulp-concat": "^2.6.1",
     "gulp-inline-str": "^0.1.0",
     "gulp-uglify": "^2.0.0",
-    "react": "^15.0.2"
+    "react": "^15.0.2",
+    "react-dom": "^15.0.2"
   },
   "peerDependencies": {
     "react": "^15.0.2",

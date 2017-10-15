@@ -162,7 +162,7 @@ module.exports = class Reader extends Component {
       .then(deviceId => {
         return navigator.mediaDevices.getUserMedia({
           video: {
-            deviceId,
+            deviceId: {exact: deviceId},
             ...videoConstrains
           },
         })
