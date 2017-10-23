@@ -144,8 +144,6 @@ module.exports = class Reader extends Component {
         video: {
           ...vConstraints,
           aspectRatio: supportedConstraints.aspectRatio ? 1 : undefined,
-          width: { ideal: resolution },
-          height: { ideal: resolution }
         }
       }))
       .then(this.handleVideo)
@@ -204,16 +202,25 @@ module.exports = class Reader extends Component {
     let hozOffset = 0
     let vertOffset = 0
 
-    // Downscale image to resolution
+    // Scale image to correct resolution
     if(legacyMode){
+      // Keep image aspect ratio
       const greatestSize = width > height ? width : height
       const ratio = resolution / greatestSize
+
       height = ratio * height
       width = ratio * width
 
       canvas.width = width
       canvas.height = height
     }else{
+      // Crop image to fit 1:1 aspect ratio
+      const smallestSize = width < height ? width : height
+      const ratio = resolution / smallestSize
+
+      height = ratio * height
+      width = ratio * width
+
       vertOffset = (height - resolution) / 2 * -1
       hozOffset = (width - resolution) / 2 * -1
 
@@ -230,7 +237,7 @@ module.exports = class Reader extends Component {
 
       ctx.drawImage(legacyMode ? img : preview, hozOffset, vertOffset, width, height)
 
-      const imageData = ctx.getImageData(0, 0, width, height)
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
       // Send data to web-worker
       this.worker.postMessage(imageData)
     } else {
