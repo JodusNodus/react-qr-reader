@@ -50,6 +50,6 @@
   "dependencies": {
     "jsqr": "https://github.com/JodusNodus/jsQR.git",
     "prop-types": "^15.5.8",
-    "webrtc-adapter": "^2.0.8"
+    "webrtc-adapter": "^5.0.6"
   }
 }
