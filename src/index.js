@@ -16,12 +16,6 @@ const workerBlob = new Blob([__inline('../lib/worker.js')], {
 // Props that are allowed to change dynamicly
 const propsKeys = ['delay', 'legacyMode', 'facingMode']
 
-
-const videoConstrains = {
-  width: { min: 360, ideal: 1280, max: 1920 },
-  height: { min: 240, ideal: 720, max: 1080 },
-}
-
 module.exports = class Reader extends Component {
   static propTypes = {
     onScan: PropTypes.func.isRequired,
@@ -29,17 +23,16 @@ module.exports = class Reader extends Component {
     onLoad: PropTypes.func,
     onImageLoad: PropTypes.func,
     delay: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-    facingMode: PropTypes.oneOf(['rear', 'front']),
+    facingMode: PropTypes.oneOf(['user', 'environment']),
     legacyMode: PropTypes.bool,
     maxImageSize: PropTypes.number,
     style: PropTypes.any,
-    className: PropTypes.string,
-    chooseDeviceId: PropTypes.func,
+    className: PropTypes.string
   };
   static defaultProps = {
     delay: 500,
     maxImageSize: 1000,
-    facingMode: 'rear',
+    facingMode: 'user',
   };
 
   els = {};
@@ -48,7 +41,6 @@ module.exports = class Reader extends Component {
     super(props)
 
     // Bind function to the class
-    this.getPermissions = this.getPermissions.bind(this)
     this.initiate = this.initiate.bind(this)
     this.initiateLegacyMode = this.initiateLegacyMode.bind(this)
     this.check = this.check.bind(this)
@@ -129,44 +121,30 @@ module.exports = class Reader extends Component {
       this.els.img.removeEventListener('load', this.check)
     }
   }
-  getPermissions(){
-    if(this.hasPermission){
-      return Promise.resolve(true)
-    }
-
-    return navigator.mediaDevices.getUserMedia({
-      video: videoConstrains
-    })
-    .then((stream) => {
-      const track = stream.getTracks()[0]
-      this.hasPermission = true
-      track.stop()
-    })
-  }
   initiate(props = this.props) {
-    const { onError, facingMode, chooseDeviceId } = props
+    const { onError, facingMode } = props
 
+    // Check browser facingMode constraint support
+    // Firefox ignores facingMode or deviceId constraints
     const isFirefox = /firefox/i.test(navigator.userAgent)
+    const supportedConstraints = navigator.mediaDevices.getSupportedConstraints()
+    const supportsFacingMode = supportedConstraints.facingMode
 
-    let deviceIdPromise
-    if(isFirefox){
-      // Firefox doesn't follow facingMode or deviceId constraints and lets the user decide
-      deviceIdPromise = Promise.resolve(undefined)
-    }else{
-      deviceIdPromise = this.getPermissions()
-        .then(() => getDeviceId(facingMode, chooseDeviceId))
-    }
+    const vConstraintsPromise = isFirefox
+      ? Promise.resolve({})
+      : supportsFacingMode
+      ? Promise.resolve({ facingMode })
+      : getDeviceId(facingMode).then(deviceId => ({ deviceId }))
 
 
-    deviceIdPromise
-      .then(deviceId => {
-        return navigator.mediaDevices.getUserMedia({
-          video: {
-            deviceId: {exact: deviceId},
-            ...videoConstrains
-          },
-        })
-      })
+    vConstraintsPromise
+      .then(vConstraints => navigator.mediaDevices.getUserMedia({
+        video: {
+          ...vConstraints,
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        }
+      }))
       .then(this.handleVideo)
       .catch(onError)
   }

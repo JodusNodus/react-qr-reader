@@ -5,7 +5,7 @@ import Reader from './lib'
 class Wrapper extends Component {
   constructor(props) {
     super(props)
-    this.state = { facingMode: 'front', delay: 500 }
+    this.state = { facingMode: 'user', delay: 500 }
   }
   render() {
     const { selectFacingMode, selectDelay, legacyMode } = this.props
@@ -18,8 +18,8 @@ class Wrapper extends Component {
               <select
                 onChange={e => this.setState({ facingMode: e.target.value })}
               >
-                <option value="front">Front</option>
-                <option value="rear">Rear</option>
+                <option value="user">User</option>
+                <option value="environment">Environment</option>
               </select>
             )
         }
