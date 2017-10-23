@@ -10,7 +10,7 @@ class Wrapper extends Component {
   render() {
     const { selectFacingMode, selectDelay, legacyMode } = this.props
 
-    const previewStyle = { width: 320 }
+    const previewStyle = { width: '320px', height: '320px' }
     return (
       <div>
         {

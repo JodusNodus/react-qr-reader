@@ -25,13 +25,13 @@ module.exports = class Reader extends Component {
     delay: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
     facingMode: PropTypes.oneOf(['user', 'environment']),
     legacyMode: PropTypes.bool,
-    maxImageSize: PropTypes.number,
+    resolution: PropTypes.number,
     style: PropTypes.any,
     className: PropTypes.string
   };
   static defaultProps = {
     delay: 500,
-    maxImageSize: 1000,
+    resolution: 720,
     facingMode: 'user',
   };
 
@@ -122,7 +122,7 @@ module.exports = class Reader extends Component {
     }
   }
   initiate(props = this.props) {
-    const { onError, facingMode } = props
+    const { onError, facingMode, resolution } = props
 
     // Check browser facingMode constraint support
     // Firefox ignores facingMode or deviceId constraints
@@ -141,8 +141,9 @@ module.exports = class Reader extends Component {
       .then(vConstraints => navigator.mediaDevices.getUserMedia({
         video: {
           ...vConstraints,
-          width: { ideal: 1280 },
-          height: { ideal: 720 }
+          aspectRatio: supportedConstraints.aspectRatio ? 1 : undefined,
+          width: { ideal: resolution },
+          height: { ideal: resolution }
         }
       }))
       .then(this.handleVideo)
@@ -190,34 +191,42 @@ module.exports = class Reader extends Component {
     preview.removeEventListener('loadstart', this.handleLoadStart)
   }
   check() {
-    const { legacyMode, maxImageSize, delay } = this.props
+    const { legacyMode, resolution, delay } = this.props
     const { preview, canvas, img } = this.els
 
     // Get image/video dimensions
     let width = Math.floor(legacyMode ? img.naturalWidth : preview.videoWidth)
-    let height = Math.floor(
-      legacyMode ? img.naturalHeight : preview.videoHeight
-    )
+    let height = Math.floor(legacyMode ? img.naturalHeight : preview.videoHeight)
 
-    if (legacyMode) {
-      // Downscale image to `maxImageSize`
+    // Canvas draw offsets
+    let hozOffset = 0
+    let vertOffset = 0
+
+    // Downscale image to resolution
+    if(legacyMode){
       const greatestSize = width > height ? width : height
-      if(greatestSize > maxImageSize){
-        const ratio = maxImageSize / greatestSize
-        height = ratio * height
-        width = ratio * width
-      }
+      const ratio = resolution / greatestSize
+      height = ratio * height
+      width = ratio * width
+
+      canvas.width = width
+      canvas.height = height
+    }else{
+      vertOffset = (height - resolution) / 2 * -1
+      hozOffset = (width - resolution) / 2 * -1
+
+      canvas.width = resolution
+      canvas.height = resolution
     }
 
-    canvas.width = width
-    canvas.height = height
 
     const previewIsPlaying = preview &&
       preview.readyState === preview.HAVE_ENOUGH_DATA
 
     if (legacyMode || previewIsPlaying) {
       const ctx = canvas.getContext('2d')
-      ctx.drawImage(legacyMode ? img : preview, 0, 0, width, height)
+
+      ctx.drawImage(legacyMode ? img : preview, hozOffset, vertOffset, width, height)
 
       const imageData = ctx.getImageData(0, 0, width, height)
       // Send data to web-worker
@@ -267,13 +276,24 @@ module.exports = class Reader extends Component {
     }
   }
   render() {
-    const { style, className, onImageLoad, legacyMode } = this.props
+    const { style, className, onImageLoad, legacyMode, resolution } = this.props
 
     const hiddenStyle = { display: 'none' }
     const previewStyle = {
-      display: 'block',
-      objectFit: 'contain',
-      ...style,
+      display: 'inline-block',
+      position: 'relative',
+      overflow: 'hidden',
+      width: resolution,
+      height: resolution,
+      ...style
+    }
+    const videoPreviewStyle = {
+      ...previewStyle,
+      objectFit: 'cover',
+    }
+    const imgPreviewStyle = {
+      ...previewStyle,
+      objectFit: 'scale-down',
     }
 
     return (
@@ -287,9 +307,9 @@ module.exports = class Reader extends Component {
               ref={this.setRefFactory('input')}
               onChange={this.handleInputChange}
             />
-            <img style={previewStyle} ref={this.setRefFactory('img')} onLoad={onImageLoad} />
+            <img style={imgPreviewStyle} ref={this.setRefFactory('img')} onLoad={onImageLoad} />
           </div>
-          : <video style={previewStyle} ref={this.setRefFactory('preview')} />}
+          : <video style={videoPreviewStyle} ref={this.setRefFactory('preview')} />}
         <canvas style={hiddenStyle} ref={this.setRefFactory('canvas')} />
       </section>
     )
