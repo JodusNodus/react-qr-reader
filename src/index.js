@@ -26,13 +26,15 @@ module.exports = class Reader extends Component {
     facingMode: PropTypes.oneOf(['user', 'environment']),
     legacyMode: PropTypes.bool,
     resolution: PropTypes.number,
+    showViewFinder: PropTypes.bool,
     style: PropTypes.any,
     className: PropTypes.string
   };
   static defaultProps = {
     delay: 500,
-    resolution: 720,
+    resolution: 600,
     facingMode: 'user',
+    showViewFinder: true
   };
 
   els = {};
@@ -276,16 +278,28 @@ module.exports = class Reader extends Component {
     }
   }
   render() {
-    const { style, className, onImageLoad, legacyMode, resolution } = this.props
+    const {
+      style,
+      className,
+      onImageLoad,
+      legacyMode,
+      showViewFinder,
+      resolution
+    } = this.props
 
+    const containerStyle = {
+      position: 'relative',
+      height: resolution,
+      width: resolution,
+      ...style
+    }
     const hiddenStyle = { display: 'none' }
     const previewStyle = {
       display: 'inline-block',
       position: 'relative',
       overflow: 'hidden',
-      width: resolution,
-      height: resolution,
-      ...style
+      width: '100%',
+      height: '100%'
     }
     const videoPreviewStyle = {
       ...previewStyle,
@@ -296,20 +310,42 @@ module.exports = class Reader extends Component {
       objectFit: 'scale-down',
     }
 
+    const viewFinderStyle = {
+      top: 0,
+      left: 0,
+      zIndex: 1,
+      boxSizing: 'border-box',
+      border: '50px solid rgba(0, 0, 0, 0.3)',
+      boxShadow: 'inset 0 0 0 5px rgba(255, 0, 0, 0.5)',
+      position: 'absolute',
+      width: '100%',
+      height: '100%'
+    }
+
     return (
-      <section className={className}>
-        {legacyMode
-          ? <div>
-            <input
+      <section className={className} style={containerStyle}>
+        {
+          (!legacyMode && showViewFinder)
+          ? <div style={viewFinderStyle} />
+          : null
+        }
+        {
+          legacyMode
+            ? <input
               style={hiddenStyle}
               type="file"
               accept="image/*"
               ref={this.setRefFactory('input')}
               onChange={this.handleInputChange}
             />
-            <img style={imgPreviewStyle} ref={this.setRefFactory('img')} onLoad={onImageLoad} />
-          </div>
-          : <video style={videoPreviewStyle} ref={this.setRefFactory('preview')} />}
+            : null
+        }
+        {
+          legacyMode
+          ? <img style={imgPreviewStyle} ref={this.setRefFactory('img')} onLoad={onImageLoad} />
+          : <video style={videoPreviewStyle} ref={this.setRefFactory('preview')} />
+        }
+
         <canvas style={hiddenStyle} ref={this.setRefFactory('canvas')} />
       </section>
     )
