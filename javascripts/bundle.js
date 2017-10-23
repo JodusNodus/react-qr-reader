@@ -217,16 +217,19 @@
 	                'Submit an Image'
 	              )
 	            ),
-	            _react2.default.createElement(_reactQrReader2.default, {
-	              onScan: this.handleScan,
-	              onError: this.handleError,
-	              onLoad: this.handleLoad,
-	              facingMode: this.state.facingMode,
-	              delay: this.state.delay,
-	              legacyMode: this.state.legacyMode,
-	              ref: 'reader',
-	              style: { width: '500px', height: '500px', margin: 'auto' }
-	            }),
+	            _react2.default.createElement(
+	              'div',
+	              { style: { width: '500px', height: '500px', margin: 'auto' } },
+	              _react2.default.createElement(_reactQrReader2.default, {
+	                onScan: this.handleScan,
+	                onError: this.handleError,
+	                onLoad: this.handleLoad,
+	                facingMode: this.state.facingMode,
+	                delay: this.state.delay,
+	                legacyMode: this.state.legacyMode,
+	                ref: 'reader'
+	              })
+	            ),
 	            _react2.default.createElement(
 	              'h3',
 	              null,
@@ -23241,13 +23244,15 @@
 
 	      var containerStyle = _extends({
 	        position: 'relative',
-	        height: resolution,
-	        width: resolution
+	        width: '100%',
+	        paddingTop: '100%'
 	      }, style);
 	      var hiddenStyle = { display: 'none' };
 	      var previewStyle = {
-	        display: 'inline-block',
-	        position: 'relative',
+	        top: 0,
+	        left: 0,
+	        display: 'block',
+	        position: 'absolute',
 	        overflow: 'hidden',
 	        width: '100%',
 	        height: '100%'

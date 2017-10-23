@@ -95,16 +95,17 @@ class Demo extends Component {
                 <button onClick={this.handleImgSubmit}>Submit an Image</button>
               </div>
             )}
-            <QrReader
-              onScan={this.handleScan}
-              onError={this.handleError}
-              onLoad={this.handleLoad}
-              facingMode={this.state.facingMode}
-              delay={this.state.delay}
-              legacyMode={this.state.legacyMode}
-              ref="reader"
-              style={{ width: '500px', height: '500px', margin: 'auto' }}
+            <div style={{ width: '500px', height: '500px', margin: 'auto' }}>
+              <QrReader
+                onScan={this.handleScan}
+                onError={this.handleError}
+                onLoad={this.handleLoad}
+                facingMode={this.state.facingMode}
+                delay={this.state.delay}
+                legacyMode={this.state.legacyMode}
+                ref="reader"
               />
+            </div>
             <h3>Decoded QR-Code: {this.state.result}</h3>
           </div>
         </div>
