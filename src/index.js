@@ -289,14 +289,16 @@ module.exports = class Reader extends Component {
 
     const containerStyle = {
       position: 'relative',
-      height: resolution,
-      width: resolution,
+      width: '100%',
+      paddingTop: '100%',
       ...style
     }
     const hiddenStyle = { display: 'none' }
     const previewStyle = {
-      display: 'inline-block',
-      position: 'relative',
+      top: 0,
+      left: 0,
+      display: 'block',
+      position: 'absolute',
       overflow: 'hidden',
       width: '100%',
       height: '100%'

@@ -10,9 +10,8 @@ class Wrapper extends Component {
   render() {
     const { selectFacingMode, selectDelay, legacyMode } = this.props
 
-    const previewStyle = { width: '400px', height: '400px' }
     return (
-      <div>
+      <div style={{ width: '400px', margin: 'auto' }}>
         {
           selectFacingMode && (
               <select
@@ -40,7 +39,6 @@ class Wrapper extends Component {
             )
         }
         <Reader
-          style={previewStyle}
           onError={action('Error')}
           onScan={action('Scan')}
           onLoad={action('Load')}
