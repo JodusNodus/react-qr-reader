@@ -10,7 +10,7 @@ class Demo extends Component {
       legacyMode: false,
       result: 'No result',
       error: false,
-      facingMode: 'front',
+      facingMode: 'user',
       delay: 500,
     };
 
@@ -76,8 +76,8 @@ class Demo extends Component {
                   value={this.state.facingMode}
                   onChange={this.handleFacingModeChange}
                   >
-                  <option value="front">Front Camera</option>
-                  <option value="rear">Rear Camera</option>
+                  <option value="user">User Camera</option>
+                  <option value="environment">Environment Camera</option>
                 </select>
                 <span>
                   <label htmlFor="delay">Delay in ms: </label>
@@ -103,7 +103,7 @@ class Demo extends Component {
               delay={this.state.delay}
               legacyMode={this.state.legacyMode}
               ref="reader"
-              style={{ width: '100%', maxWidth: 700, margin: 'auto' }}
+              style={{ width: '500px', height: '500px', margin: 'auto' }}
               />
             <h3>Decoded QR-Code: {this.state.result}</h3>
           </div>
