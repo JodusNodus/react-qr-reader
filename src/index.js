@@ -95,7 +95,7 @@ class Demo extends Component {
                 <button onClick={this.handleImgSubmit}>Submit an Image</button>
               </div>
             )}
-            <div style={{ width: '500px', height: '500px', margin: 'auto' }}>
+            <div style={{ width: '100%', maxWidth: '500px' }}>
               <QrReader
                 onScan={this.handleScan}
                 onError={this.handleError}
