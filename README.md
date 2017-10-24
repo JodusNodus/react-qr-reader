@@ -8,7 +8,6 @@ A [React](https://facebook.github.io/react/) component for reading QR codes from
 
 ## Known Issues
 - Due to browser implementations the camera can only be accessed over https or localhost.
-- Not compatible with macOS/iOS Safari. Use `legacyMode` to support these platforms.
 - In Firefox a prompt will be shown to the user asking which camera to use, so `facingMode` will not affect it.
 
 ## Install
@@ -39,18 +38,17 @@ class Test extends Component {
     console.error(err)
   }
   render(){
-    const previewStyle = {
-      height: 240,
-      width: 320,
+    const style = {
+      width: '100%',
     }
 
     return(
-      <div>
+      <div >
         <QrReader
           delay={this.state.delay}
-          style={previewStyle}
           onError={this.handleError}
           onScan={this.handleScan}
+          style={style}
           />
         <p>{this.state.result}</p>
       </div>
@@ -97,7 +95,7 @@ The delay between scans in milliseconds. To disable the interval pass in `false`
 
 Type: `string`, Optional
 
-Specify which camera direction should be used (if available). Options: `front` and `rear`.
+Specify which camera direction should be used (if available). Options: `user` and `environment`.
 
 **legacyMode**
 
@@ -105,17 +103,17 @@ Type: `boolean`, Optional, Default: `false`.
 
 If the device does not allow camera access (e.g. IOS Browsers, Safari) you can enable legacyMode to allow the user to take a picture (On a mobile device) or use an existing one. To trigger the image dialog just call the method `openImageDialog` from the parent component. **Warning** You must call the method from a user action (eg. click event on some element).
 
-**maxImageSize**
+**resolution**
 
-Type: `number`, Optional, Default: `1500`.
+Type: `number`, Optional, Default: `600`.
 
-If `legacyMode` is active then the image will be downscaled to the given value while keepings its aspect ratio. Allowing larger images will increase the accuracy but it will also slow down the processing time.
+The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.
 
 **style**
 
 Type: `object`, Optional
 
-Styling for the preview element. This will be a `video` or an `img` when `legacymode` is `true`. **Warning** The preview will keep its aspect ratio, to disable this set the CSS property [objectFit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) to `fill`.
+Styling for the container element. **Warning** The preview will keep its 1:1 aspect ratio.
 
 **className**
 
@@ -123,11 +121,12 @@ Type: `string`, Optional
 
 ClassName for the container element.
 
-**chooseDeviceId**
+**showViewFinder**
 
-Type: `function`, Optional, Arguments: (1) video devices matching `facingMode`, (2) all video devices
+Type: `boolean`, Optional, Default: `true`
 
-Called when choosing which device to use for scanning. By default chooses the first video device matching `facingMode`, if no devices match the first video device found is choosen.
+Show or hide the build in view finder. See demo
+
 
 ## Dev
 
@@ -140,15 +139,13 @@ Called when choosing which device to use for scanning. By default chooses the fi
 ### Demo
 `npm run storybook`
 
-### Test
-`npm test`
-
 ### Linting
 `npm run lint`
 
 ## Tested platforms
-- Chrome 56 and Firefox 53 on macOs 10.12
-- Chrome 55 and Firefox 50 on Android 6.0.1
+- Chrome macOs & Android
+- Firefox macOs & Android
+- Safari macOs & IOS
 
 ## License
 The MIT License (MIT)
