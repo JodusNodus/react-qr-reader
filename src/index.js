@@ -291,7 +291,7 @@ module.exports = class Reader extends Component {
       onImageLoad,
       legacyMode,
       showViewFinder,
-      resolution
+      facingMode
     } = this.props
 
     const containerStyle = {
@@ -313,6 +313,7 @@ module.exports = class Reader extends Component {
     const videoPreviewStyle = {
       ...previewStyle,
       objectFit: 'cover',
+      transform: facingMode == 'user' ? 'scaleX(-1)' : undefined,
     }
     const imgPreviewStyle = {
       ...previewStyle,
