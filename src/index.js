@@ -135,7 +135,7 @@ module.exports = class Reader extends Component {
     const vConstraintsPromise = isFirefox
       ? Promise.resolve({})
       : supportsFacingMode
-      ? Promise.resolve({ facingMode })
+      ? Promise.resolve({ facingMode: { exact: facingMode } })
       : getDeviceId(facingMode).then(deviceId => ({ deviceId }))
 
 
