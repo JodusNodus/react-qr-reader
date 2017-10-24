@@ -26,29 +26,26 @@ class Test extends Component {
       delay: 100,
       result: 'No result',
     }
-
     this.handleScan = this.handleScan.bind(this)
   }
   handleScan(data){
-    this.setState({
-      result: data,
-    })
+    if(data){
+      this.setState({
+        result: data,
+      })
+    }
   }
   handleError(err){
     console.error(err)
   }
   render(){
-    const style = {
-      width: '100%',
-    }
-
     return(
-      <div >
+      <div>
         <QrReader
           delay={this.state.delay}
           onError={this.handleError}
           onScan={this.handleScan}
-          style={style}
+          style={{ width: '100%' }}
           />
         <p>{this.state.result}</p>
       </div>
@@ -58,74 +55,24 @@ class Test extends Component {
 ```
 
 ## Props
+### Events
+| Prop        | Argument         | Description
+|-------------|------------------|-------------
+| onScan      | `result`         | Scan event handler. Called every scan with the decoded value or `null` if no QR code was found.
+| onError     | `Error`          | Called when an error occurs.
+| onLoad      | none             | Called when the component is ready for use.
+| onImageLoad | img onLoad event | Called when the image in legacyMode is loaded.
 
-**onScan**
-
-Type: `function`, Required, Argument: `result`
-
-Scan event handler. Called every scan with the decoded value or `null` if no QR code was found.
-
-**onError**
-
-Type: `function`, Required, Argument: `error`
-
-Function to call when an error occurs such as:
-- Not supported platform
-- The lack of available devices
-
-**onLoad**
-
-Type: `function`, Optional
-
-Called when the component is ready for use.
-
-**onImageLoad**
-
-Type: `function`, Optional, Argument: React img onLoad event
-
-Called when the image in legacyMode is loaded.
-
-**delay**
-
-Type: `number`, Optional, Default: `500`
-
-The delay between scans in milliseconds. To disable the interval pass in `false`.
-
-**facingMode**
-
-Type: `string`, Optional
-
-Specify which camera direction should be used (if available). Options: `user` and `environment`.
-
-**legacyMode**
-
-Type: `boolean`, Optional, Default: `false`.
-
-If the device does not allow camera access (e.g. IOS Browsers, Safari) you can enable legacyMode to allow the user to take a picture (On a mobile device) or use an existing one. To trigger the image dialog just call the method `openImageDialog` from the parent component. **Warning** You must call the method from a user action (eg. click event on some element).
-
-**resolution**
-
-Type: `number`, Optional, Default: `600`.
-
-The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.
-
-**style**
-
-Type: `object`, Optional
-
-Styling for the container element. **Warning** The preview will keep its 1:1 aspect ratio.
-
-**className**
-
-Type: `string`, Optional
-
-ClassName for the container element.
-
-**showViewFinder**
-
-Type: `boolean`, Optional, Default: `true`
-
-Show or hide the build in view finder. See demo
+### Options
+| Prop           | Type                    | Default       | Description
+|----------------|-------------------------|---------------|-------------
+| delay          | number or `false`       | `500`         | The delay between scans in milliseconds. To disable the interval pass in `false`.
+| facingMode     | `user` or `environment` | `environment` | Specify which camera should be used (if available).
+| resolution     | number                  | `600`         | The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.
+| style          | a valid React style     | none          | Styling for the container element. **Warning** The preview will always keep its 1:1 aspect ratio.
+| className      | string                  | none          | ClassName for the container element.
+| showViewFinder | boolean                 | `true`        | Show or hide the build in view finder. See demo
+| legacyMode     | boolean                 | `false`       | If the device does not allow camera access (e.g. IOS Browsers, Safari) you can enable legacyMode to allow the user to take a picture (On a mobile device) or use an existing one. To trigger the image dialog just call the method `openImageDialog` from the parent component. **Warning** You must call the method from a user action (eg. click event on some element).
 
 
 ## Dev
