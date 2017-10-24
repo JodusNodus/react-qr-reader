@@ -48,7 +48,7 @@
     "react-dom": "^15.0.2"
   },
   "dependencies": {
-    "jsqr": "https://github.com/JodusNodus/jsQR.git",
+    "jsqr": "https://github.com/cozmo/jsQR.git",
     "prop-types": "^15.5.8",
     "webrtc-adapter": "^5.0.6"
   }
