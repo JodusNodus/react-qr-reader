@@ -23,7 +23,7 @@ class Test extends Component {
   constructor(props){
     super(props)
     this.state = {
-      delay: 100,
+      delay: 300,
       result: 'No result',
     }
     this.handleScan = this.handleScan.bind(this)
