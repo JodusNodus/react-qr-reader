@@ -33,7 +33,7 @@ module.exports = class Reader extends Component {
   static defaultProps = {
     delay: 500,
     resolution: 600,
-    facingMode: 'user',
+    facingMode: 'environment',
     showViewFinder: true
   };
 
