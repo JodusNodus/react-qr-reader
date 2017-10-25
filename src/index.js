@@ -8,10 +8,13 @@ const havePropsChanged = require('./havePropsChanged')
 require('webrtc-adapter')
 
 // Inline worker.js as a string value of workerBlob.
-// eslint-disable-next-line
-const workerBlob = new Blob([__inline('../lib/worker.js')], {
-  type: 'application/javascript',
-})
+let workerBlob
+if(typeof Blob === 'function') {
+  // eslint-disable-next-line
+  workerBlob = new Blob([__inline('../lib/worker.js')], {
+    type: 'application/javascript',
+  })
+}
 
 // Props that are allowed to change dynamicly
 const propsKeys = ['delay', 'legacyMode', 'facingMode']
