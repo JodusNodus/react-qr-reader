@@ -6,7 +6,7 @@
   "dependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-qr-reader": "https://github.com/JodusNodus/react-qr-reader.git#ios11-fix"
+    "react-qr-reader": "2.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
