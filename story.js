@@ -5,21 +5,20 @@ import Reader from './lib'
 class Wrapper extends Component {
   constructor(props) {
     super(props)
-    this.state = { facingMode: 'front', delay: 500 }
+    this.state = { facingMode: 'user', delay: 500 }
   }
   render() {
     const { selectFacingMode, selectDelay, legacyMode } = this.props
 
-    const previewStyle = { width: 320 }
     return (
-      <div>
+      <div style={{ width: '400px', margin: 'auto' }}>
         {
           selectFacingMode && (
               <select
                 onChange={e => this.setState({ facingMode: e.target.value })}
               >
-                <option value="front">Front</option>
-                <option value="rear">Rear</option>
+                <option value="user">User</option>
+                <option value="environment">Environment</option>
               </select>
             )
         }
@@ -40,7 +39,6 @@ class Wrapper extends Component {
             )
         }
         <Reader
-          style={previewStyle}
           onError={action('Error')}
           onScan={action('Scan')}
           onLoad={action('Load')}

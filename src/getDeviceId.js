@@ -4,7 +4,7 @@ function defaultDeviceIdChooser(filteredDevices, videoDevices, facingMode) {
   if(filteredDevices.length > 0){
     return filteredDevices[0].deviceId
   }
-  if(videoDevices.length == 0 || facingMode == 'front'){
+  if(videoDevices.length == 1 || facingMode == 'front'){
     return videoDevices[0].deviceId
   }
   return videoDevices[1].deviceId
@@ -27,10 +27,6 @@ module.exports = function getDeviceId(facingMode, chooseDeviceId = defaultDevice
 
       if (videoDevices.length < 1) {
         reject(new NoVideoInputDevicesError())
-        return
-      } else if (videoDevices.length == 1) {
-        // Only 1 video device available thus stop here
-        resolve(devices[0].deviceId)
         return
       }
 
