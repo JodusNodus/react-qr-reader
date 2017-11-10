@@ -9,7 +9,7 @@ require('webrtc-adapter')
 
 // Inline worker.js as a string value of workerBlob.
 let workerBlob
-if(typeof Blob === 'function') {
+if (typeof Blob === 'function') {
   // eslint-disable-next-line
   workerBlob = new Blob([__inline('../lib/worker.js')], {
     type: 'application/javascript',
@@ -31,16 +31,20 @@ module.exports = class Reader extends Component {
     resolution: PropTypes.number,
     showViewFinder: PropTypes.bool,
     style: PropTypes.any,
-    className: PropTypes.string
-  };
+    className: PropTypes.string,
+    viewFinderStyle: PropTypes.any,
+    viewFinderClassName: PropTypes.string,
+    containerStyle: PropTypes.any,
+    containerClassName: PropTypes.string,
+  }
   static defaultProps = {
     delay: 500,
     resolution: 600,
     facingMode: 'environment',
-    showViewFinder: true
-  };
+    showViewFinder: true,
+  }
 
-  els = {};
+  els = {}
 
   constructor(props) {
     super(props)
@@ -127,7 +131,7 @@ module.exports = class Reader extends Component {
     }
   }
   initiate(props = this.props) {
-    const { onError, facingMode, resolution } = props
+    const { onError, facingMode } = props
 
     // Check browser facingMode constraint support
     // Firefox ignores facingMode or deviceId constraints
@@ -138,17 +142,18 @@ module.exports = class Reader extends Component {
     const vConstraintsPromise = isFirefox
       ? Promise.resolve({})
       : supportsFacingMode
-      ? Promise.resolve({ facingMode: { exact: facingMode } })
-      : getDeviceId(facingMode).then(deviceId => ({ deviceId }))
-
+        ? Promise.resolve({ facingMode: { exact: facingMode } })
+        : getDeviceId(facingMode).then(deviceId => ({ deviceId }))
 
     vConstraintsPromise
-      .then(vConstraints => navigator.mediaDevices.getUserMedia({
-        video: {
-          ...vConstraints,
-          aspectRatio: supportedConstraints.aspectRatio ? 1 : undefined,
-        }
-      }))
+      .then(vConstraints =>
+        navigator.mediaDevices.getUserMedia({
+          video: {
+            ...vConstraints,
+            aspectRatio: supportedConstraints.aspectRatio ? 1 : undefined,
+          },
+        })
+      )
       .then(this.handleVideo)
       .catch(onError)
   }
@@ -156,7 +161,7 @@ module.exports = class Reader extends Component {
     const { preview } = this.els
 
     // Handle different browser implementations of MediaStreams as src
-    if(preview.srcObject !== undefined){
+    if (preview.srcObject !== undefined) {
       preview.srcObject = stream
     } else if (preview.mozSrcObject !== undefined) {
       preview.mozSrcObject = stream
@@ -182,7 +187,7 @@ module.exports = class Reader extends Component {
     const preview = this.els.preview
     preview.play()
 
-    if(typeof onLoad == 'function') {
+    if (typeof onLoad == 'function') {
       onLoad()
     }
 
@@ -199,14 +204,16 @@ module.exports = class Reader extends Component {
 
     // Get image/video dimensions
     let width = Math.floor(legacyMode ? img.naturalWidth : preview.videoWidth)
-    let height = Math.floor(legacyMode ? img.naturalHeight : preview.videoHeight)
+    let height = Math.floor(
+      legacyMode ? img.naturalHeight : preview.videoHeight
+    )
 
     // Canvas draw offsets
     let hozOffset = 0
     let vertOffset = 0
 
     // Scale image to correct resolution
-    if(legacyMode){
+    if (legacyMode) {
       // Keep image aspect ratio
       const greatestSize = width > height ? width : height
       const ratio = resolution / greatestSize
@@ -216,7 +223,7 @@ module.exports = class Reader extends Component {
 
       canvas.width = width
       canvas.height = height
-    }else{
+    } else {
       // Crop image to fit 1:1 aspect ratio
       const smallestSize = width < height ? width : height
       const ratio = resolution / smallestSize
@@ -231,14 +238,19 @@ module.exports = class Reader extends Component {
       canvas.height = resolution
     }
 
-
-    const previewIsPlaying = preview &&
-      preview.readyState === preview.HAVE_ENOUGH_DATA
+    const previewIsPlaying =
+      preview && preview.readyState === preview.HAVE_ENOUGH_DATA
 
     if (legacyMode || previewIsPlaying) {
       const ctx = canvas.getContext('2d')
 
-      ctx.drawImage(legacyMode ? img : preview, hozOffset, vertOffset, width, height)
+      ctx.drawImage(
+        legacyMode ? img : preview,
+        hozOffset,
+        vertOffset,
+        width,
+        height
+      )
 
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
       // Send data to web-worker
@@ -266,7 +278,7 @@ module.exports = class Reader extends Component {
     // Reset componentDidUpdate
     this.componentDidUpdate = undefined
 
-    if(typeof this.props.onLoad == 'function') {
+    if (typeof this.props.onLoad == 'function') {
       this.props.onLoad()
     }
   }
@@ -291,17 +303,16 @@ module.exports = class Reader extends Component {
     const {
       style,
       className,
+      viewFinderStyle,
+      viewFinderClassName,
+      containerStyle,
+      containerClassName,
       onImageLoad,
       legacyMode,
       showViewFinder,
-      facingMode
+      facingMode,
     } = this.props
 
-    const containerStyle = {
-      position: 'relative',
-      width: '100%',
-      paddingTop: '100%',
-    }
     const hiddenStyle = { display: 'none' }
     const previewStyle = {
       top: 0,
@@ -322,7 +333,13 @@ module.exports = class Reader extends Component {
       objectFit: 'scale-down',
     }
 
-    const viewFinderStyle = {
+    const defaultContainerStyle = {
+      position: 'relative',
+      width: '100%',
+      paddingTop: '100%',
+    }
+
+    const defaultViewFinderStyle = {
       top: 0,
       left: 0,
       zIndex: 1,
@@ -336,28 +353,37 @@ module.exports = class Reader extends Component {
 
     return (
       <section className={className} style={style}>
-        <section style={containerStyle}>
-          {
-            (!legacyMode && showViewFinder)
-            ? <div style={viewFinderStyle} />
-            : null
-          }
-          {
-            legacyMode
-              ? <input
-                style={hiddenStyle}
-                type="file"
-                accept="image/*"
-                ref={this.setRefFactory('input')}
-                onChange={this.handleInputChange}
-              />
-              : null
-          }
-          {
-            legacyMode
-              ? <img style={imgPreviewStyle} ref={this.setRefFactory('img')} onLoad={onImageLoad} />
-              : <video style={videoPreviewStyle} ref={this.setRefFactory('preview')} />
-          }
+        <section
+          style={containerStyle || defaultContainerStyle}
+          className={containerClassName}
+        >
+          {!legacyMode && showViewFinder ? (
+            <div
+              style={viewFinderStyle || defaultViewFinderStyle}
+              className={viewFinderClassName}
+            />
+          ) : null}
+          {legacyMode ? (
+            <input
+              style={hiddenStyle}
+              type="file"
+              accept="image/*"
+              ref={this.setRefFactory('input')}
+              onChange={this.handleInputChange}
+            />
+          ) : null}
+          {legacyMode ? (
+            <img
+              style={imgPreviewStyle}
+              ref={this.setRefFactory('img')}
+              onLoad={onImageLoad}
+            />
+          ) : (
+            <video
+              style={videoPreviewStyle}
+              ref={this.setRefFactory('preview')}
+            />
+          )}
 
           <canvas style={hiddenStyle} ref={this.setRefFactory('canvas')} />
         </section>
