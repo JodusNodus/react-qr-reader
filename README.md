@@ -9,6 +9,7 @@ A [React](https://facebook.github.io/react/) component for reading QR codes from
 ## Known Issues
 - Due to browser implementations the camera can only be accessed over https or localhost.
 - In Firefox a prompt will be shown to the user asking which camera to use, so `facingMode` will not affect it.
+- On IOS 11 it is only supported on Safari and not on Chrome or Firefox due to Apple making the API not available to 3th party browsers.
 
 ## Install
 `npm install --save react-qr-reader`
