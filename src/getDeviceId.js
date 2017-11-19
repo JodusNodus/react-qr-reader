@@ -4,13 +4,17 @@ function defaultDeviceIdChooser(filteredDevices, videoDevices, facingMode) {
   if(filteredDevices.length > 0){
     return filteredDevices[0].deviceId
   }
-  if(videoDevices.length == 1 || facingMode == 'front'){
+  if(videoDevices.length == 1 || facingMode == 'user'){
     return videoDevices[0].deviceId
   }
   return videoDevices[1].deviceId
 }
 
-module.exports = function getDeviceId(facingMode, chooseDeviceId = defaultDeviceIdChooser) {
+const getFacingModePattern = (facingMode) => facingMode == 'environment'
+  ? /rear|back|environment/ig
+  : /front|user|face/ig
+
+function getDeviceId(facingMode, chooseDeviceId = defaultDeviceIdChooser) {
   // Get manual deviceId from available devices.
   return new Promise((resolve, reject) => {
     let enumerateDevices
@@ -30,9 +34,7 @@ module.exports = function getDeviceId(facingMode, chooseDeviceId = defaultDevice
         return
       }
 
-      const pattern = facingMode == 'rear'
-        ? /rear|back|environment/ig
-        : /front|user|face/ig
+      const pattern = getFacingModePattern(facingMode)
 
       // Filter out video devices without the pattern
       const filteredDevices = videoDevices.filter(({ label }) =>
@@ -42,3 +44,5 @@ module.exports = function getDeviceId(facingMode, chooseDeviceId = defaultDevice
     })
   })
 }
+
+module.exports = { getDeviceId, getFacingModePattern }

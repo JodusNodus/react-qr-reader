@@ -1,7 +1,7 @@
 const React = require('react')
 const { Component } = React
 const PropTypes = require('prop-types')
-const getDeviceId = require('./getDeviceId')
+const { getDeviceId, getFacingModePattern } = require('./getDeviceId')
 const havePropsChanged = require('./havePropsChanged')
 
 // Require adapter to support older browser implementations
@@ -31,19 +31,23 @@ module.exports = class Reader extends Component {
     resolution: PropTypes.number,
     showViewFinder: PropTypes.bool,
     style: PropTypes.any,
-    className: PropTypes.string
+    className: PropTypes.string,
   };
   static defaultProps = {
     delay: 500,
     resolution: 600,
     facingMode: 'environment',
-    showViewFinder: true
+    showViewFinder: true,
   };
 
   els = {};
 
   constructor(props) {
     super(props)
+
+    this.state = {
+      mirrorVideo: false,
+    }
 
     // Bind function to the class
     this.initiate = this.initiate.bind(this)
@@ -97,7 +101,11 @@ module.exports = class Reader extends Component {
       }
     }
   }
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps, nextState) {
+    if(nextState !== this.state){
+      return true
+    }
+
     // Only render when the `propsKeys` have changed.
     const changedProps = havePropsChanged(this.props, nextProps, propsKeys)
     return changedProps.length > 0
@@ -127,7 +135,7 @@ module.exports = class Reader extends Component {
     }
   }
   initiate(props = this.props) {
-    const { onError, facingMode, resolution } = props
+    const { onError, facingMode } = props
 
     // Check browser facingMode constraint support
     // Firefox ignores facingMode or deviceId constraints
@@ -178,6 +186,10 @@ module.exports = class Reader extends Component {
     this.stopCamera = streamTrack.stop.bind(streamTrack)
 
     preview.addEventListener('loadstart', this.handleLoadStart)
+
+    const facingUserPattern = getFacingModePattern('user')
+    const isUserFacing = facingUserPattern.test(streamTrack.label)
+    this.setState({ mirrorVideo: isUserFacing })
   }
   handleLoadStart() {
     const { delay, onLoad } = this.props
@@ -317,7 +329,7 @@ module.exports = class Reader extends Component {
     const videoPreviewStyle = {
       ...previewStyle,
       objectFit: 'cover',
-      transform: facingMode == 'user' ? 'scaleX(-1)' : undefined,
+      transform: this.state.mirrorVideo ? 'scaleX(-1)' : undefined,
     }
     const imgPreviewStyle = {
       ...previewStyle,
