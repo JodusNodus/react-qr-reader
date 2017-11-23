@@ -150,8 +150,8 @@ module.exports = class Reader extends Component {
     const vConstraintsPromise = isFirefox
       ? Promise.resolve({})
       : supportsFacingMode
-        ? Promise.resolve({ facingMode: { exact: facingMode } })
-        : getDeviceId(facingMode).then(deviceId => ({ deviceId }))
+      ? Promise.resolve({ facingMode: { exact: facingMode } })
+      : getDeviceId(facingMode).then(deviceId => ({ deviceId }))
 
 
     vConstraintsPromise
@@ -355,8 +355,8 @@ module.exports = class Reader extends Component {
         <section style={containerStyle}>
           {
             (!legacyMode && showViewFinder)
-              ? <div style={viewFinderStyle} />
-              : null
+            ? <div style={viewFinderStyle} />
+            : null
           }
           {
             legacyMode
