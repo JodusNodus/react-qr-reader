@@ -40,7 +40,9 @@ module.exports = class Reader extends Component {
     showViewFinder: true,
   };
 
-  els = {};
+  els = {
+    preview: {}
+  };
 
   constructor(props) {
     super(props)
