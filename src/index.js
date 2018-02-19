@@ -140,25 +140,26 @@ module.exports = class Reader extends Component {
     // Check browser facingMode constraint support
     // Firefox ignores facingMode or deviceId constraints
     const isFirefox = /firefox/i.test(navigator.userAgent)
-    const supportedConstraints = navigator.mediaDevices !== undefined
+    const supported = navigator.mediaDevices !== undefined
       ? navigator.mediaDevices.getSupportedConstraints()
       : {}
-    const supportsFacingMode = supportedConstraints.facingMode
+    const constraints = {}
 
-    const vConstraintsPromise = isFirefox
-      ? Promise.resolve({})
-      : supportsFacingMode
-      ? Promise.resolve({ facingMode: { exact: facingMode } })
+    if(supported.facingMode) {
+      constraints.facingMode = { ideal: facingMode }
+    }
+    if(supported.aspectRatio) {
+      constraints.aspectRatio = 1
+    }
+    if(supported.frameRate) {
+      constraints.frameRate = {ideal: 25, min: 10}
+    }
+    const vConstraintsPromise = (supported.facingMode || isFirefox)
+      ? Promise.resolve(constraints)
       : getDeviceId(facingMode).then(deviceId => ({ deviceId }))
 
-
     vConstraintsPromise
-      .then(vConstraints => navigator.mediaDevices.getUserMedia({
-        video: {
-          ...vConstraints,
-          aspectRatio: supportedConstraints.aspectRatio ? 1 : undefined,
-        }
-      }))
+      .then(video => navigator.mediaDevices.getUserMedia({ video }))
       .then(this.handleVideo)
       .catch(onError)
   }
@@ -265,7 +266,6 @@ module.exports = class Reader extends Component {
   handleWorkerMessage(e) {
     const { onScan, legacyMode, delay } = this.props
     const decoded = e.data
-
     onScan(decoded || null)
 
     if (!legacyMode && typeof delay == 'number' && this.worker) {

@@ -50,8 +50,8 @@
     "react-dom": "^15.0.2"
   },
   "dependencies": {
-    "jsqr": "https://github.com/cozmo/jsQR.git",
+    "jsqr": "^1.0.1",
     "prop-types": "^15.5.8",
-    "webrtc-adapter": "^5.0.6"
+    "webrtc-adapter": "^6.1.1"
   }
 }
