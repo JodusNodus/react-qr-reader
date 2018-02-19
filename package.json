@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/JodusNodus/react-qr-reader#readme",
   "devDependencies": {
-    "@kadira/storybook": "^2.33.0",
     "babel-cli": "^6.8.0",
     "babel-eslint": "^7.2.3",
     "babel-preset-es2015": "^6.24.1",
@@ -42,12 +41,15 @@
     "gulp-concat": "^2.6.1",
     "gulp-inline-str": "^0.1.0",
     "gulp-uglify": "^2.0.0",
-    "react": "^15.0.2",
-    "react-dom": "^15.0.2"
+    "react": "~16",
+    "react-dom": "~16",
+    "@storybook/react": "^3.3.13",
+    "@storybook/addons": "^3.3.13",
+    "babel-core": "^6.26.0"
   },
   "peerDependencies": {
-    "react": "^15.0.2",
-    "react-dom": "^15.0.2"
+    "react": "~16",
+    "react-dom": "~16"
   },
   "dependencies": {
     "jsqr": "^1.0.1",
