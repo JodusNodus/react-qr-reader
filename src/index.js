@@ -32,6 +32,7 @@ module.exports = class Reader extends Component {
     showViewFinder: PropTypes.bool,
     style: PropTypes.any,
     className: PropTypes.string,
+    videoStream: PropTypes.any,
   };
   static defaultProps = {
     delay: 500,
@@ -163,7 +164,10 @@ module.exports = class Reader extends Component {
       .then(this.handleVideo)
       .catch(onError)
   }
-  handleVideo(stream) {
+  handleVideo(cameraStream) {
+    let stream = this.props.videoStream
+      ? this.props.videoStream
+      : cameraStream
     const { preview } = this.els
 
     // Handle different browser implementations of MediaStreams as src
