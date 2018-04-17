@@ -30,6 +30,7 @@ module.exports = class Reader extends Component {
     legacyMode: PropTypes.bool,
     resolution: PropTypes.number,
     showViewFinder: PropTypes.bool,
+    constraints: PropTypes.any,
     style: PropTypes.any,
     className: PropTypes.string,
   };
@@ -145,17 +146,20 @@ module.exports = class Reader extends Component {
       : {}
     const constraints = {}
 
-    if(supported.facingMode) {
-      constraints.facingMode = { ideal: facingMode }
+    if (!props.constraints) {
+      if(supported.facingMode) {
+        constraints.facingMode = { ideal: facingMode }
+      }
+      if(supported.aspectRatio) {
+        constraints.aspectRatio = 1
+      }
+      if(supported.frameRate) {
+        constraints.frameRate = {ideal: 25, min: 10}
+      }
     }
-    if(supported.aspectRatio) {
-      constraints.aspectRatio = 1
-    }
-    if(supported.frameRate) {
-      constraints.frameRate = {ideal: 25, min: 10}
-    }
+
     const vConstraintsPromise = (supported.facingMode || isFirefox)
-      ? Promise.resolve(constraints)
+      ? Promise.resolve(props.constraints || constraints)
       : getDeviceId(facingMode).then(deviceId => ({ deviceId }))
 
     vConstraintsPromise
