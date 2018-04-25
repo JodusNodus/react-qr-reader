@@ -135,29 +135,34 @@ module.exports = class Reader extends Component {
     }
   }
   initiate(props = this.props) {
-    const { onError, facingMode } = props
+    const { onError, facingMode, chooseDeviceId } = props
 
-    // Check browser facingMode constraint support
-    // Firefox ignores facingMode or deviceId constraints
-    const isFirefox = /firefox/i.test(navigator.userAgent)
-    const supported = navigator.mediaDevices !== undefined
-      ? navigator.mediaDevices.getSupportedConstraints()
-      : {}
-    const constraints = {}
+    //override with prop version of chooseDeviceId
+    let vConstraintsPromise
+    if (chooseDeviceId) {
+      vConstraintsPromise = getDeviceId(facingMode, chooseDeviceId).then(deviceId => ({ deviceId }))
+    } else {
+      // Check browser facingMode constraint support
+      // Firefox ignores facingMode or deviceId constraints
+      const isFirefox = /firefox/i.test(navigator.userAgent)
+      const supported = navigator.mediaDevices !== undefined
+        ? navigator.mediaDevices.getSupportedConstraints()
+        : {}
+      const constraints = {}
 
-    if(supported.facingMode) {
-      constraints.facingMode = { ideal: facingMode }
+      if(supported.facingMode) {
+        constraints.facingMode = { ideal: facingMode }
+      }
+      if(supported.aspectRatio) {
+        constraints.aspectRatio = 1
+      }
+      if(supported.frameRate) {
+        constraints.frameRate = {ideal: 25, min: 10}
+      }
+      vConstraintsPromise = (supported.facingMode || isFirefox)
+        ? Promise.resolve(constraints)
+        : getDeviceId(facingMode).then(deviceId => ({ deviceId }))
     }
-    if(supported.aspectRatio) {
-      constraints.aspectRatio = 1
-    }
-    if(supported.frameRate) {
-      constraints.frameRate = {ideal: 25, min: 10}
-    }
-    const vConstraintsPromise = (supported.facingMode || isFirefox)
-      ? Promise.resolve(constraints)
-      : getDeviceId(facingMode).then(deviceId => ({ deviceId }))
-
     vConstraintsPromise
       .then(video => navigator.mediaDevices.getUserMedia({ video }))
       .then(this.handleVideo)
