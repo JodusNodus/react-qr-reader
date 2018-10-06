@@ -313,6 +313,7 @@ module.exports = class Reader extends Component {
     } = this.props
 
     const containerStyle = {
+      overflow: 'hidden',
       position: 'relative',
       width: '100%',
       paddingTop: '100%',
