@@ -3,18 +3,16 @@ const { Component } = React
 const PropTypes = require('prop-types')
 const { getDeviceId, getFacingModePattern } = require('./getDeviceId')
 const havePropsChanged = require('./havePropsChanged')
+const createBlob = require('./createBlob')
 
 // Require adapter to support older browser implementations
 require('webrtc-adapter')
 
 // Inline worker.js as a string value of workerBlob.
-let workerBlob
-if(typeof Blob === 'function') {
-  // eslint-disable-next-line
-  workerBlob = new Blob([__inline('../lib/worker.js')], {
-    type: 'application/javascript',
-  })
-}
+// eslint-disable-next-line
+let workerBlob = createBlob([__inline('../lib/worker.js')], {
+  type: 'application/javascript',
+})
 
 // Props that are allowed to change dynamicly
 const propsKeys = ['delay', 'legacyMode', 'facingMode']
