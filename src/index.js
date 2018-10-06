@@ -138,9 +138,10 @@ module.exports = class Reader extends Component {
     // Check browser facingMode constraint support
     // Firefox ignores facingMode or deviceId constraints
     const isFirefox = /firefox/i.test(navigator.userAgent)
-    const supported = navigator.mediaDevices !== undefined
-      ? navigator.mediaDevices.getSupportedConstraints()
-      : {}
+    let supported = {}
+    if (navigator.mediaDevices.hasOwnProperty('getSupportedConstraints')) {
+      supported = navigator.mediaDevices.getSupportedConstraints()
+    }
     const constraints = {}
 
     if(supported.facingMode) {
