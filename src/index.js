@@ -146,9 +146,6 @@ module.exports = class Reader extends Component {
     if(supported.facingMode) {
       constraints.facingMode = { ideal: facingMode }
     }
-    if(supported.aspectRatio) {
-      constraints.aspectRatio = 1
-    }
     if(supported.frameRate) {
       constraints.frameRate = {ideal: 25, min: 10}
     }
