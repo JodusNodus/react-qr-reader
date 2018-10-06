@@ -164,6 +164,11 @@ module.exports = class Reader extends Component {
   handleVideo(stream) {
     const { preview } = this.els
 
+    // Preview element hasn't been rendered so wait for it.
+    if (!preview) {
+      setTimeout(this.handleVideo, 200, stream)
+    }
+
     // Handle different browser implementations of MediaStreams as src
     if(preview.srcObject !== undefined){
       preview.srcObject = stream
