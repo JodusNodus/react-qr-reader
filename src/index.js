@@ -30,12 +30,14 @@ module.exports = class Reader extends Component {
     showViewFinder: PropTypes.bool,
     style: PropTypes.any,
     className: PropTypes.string,
+    constraints: PropTypes.object
   };
   static defaultProps = {
     delay: 500,
     resolution: 600,
     facingMode: 'environment',
     showViewFinder: true,
+    constraints: null
   };
 
   els = {};
@@ -139,7 +141,7 @@ module.exports = class Reader extends Component {
     // Firefox ignores facingMode or deviceId constraints
     const isFirefox = /firefox/i.test(navigator.userAgent)
     let supported = {}
-    if (navigator.mediaDevices.hasOwnProperty('getSupportedConstraints')) {
+    if (typeof navigator.mediaDevices.getSupportedConstraints === 'function') {
       supported = navigator.mediaDevices.getSupportedConstraints()
     }
     const constraints = {}
@@ -148,11 +150,12 @@ module.exports = class Reader extends Component {
       constraints.facingMode = { ideal: facingMode }
     }
     if(supported.frameRate) {
-      constraints.frameRate = {ideal: 25, min: 10}
+      constraints.frameRate = { ideal: 25, min: 10 }
     }
+
     const vConstraintsPromise = (supported.facingMode || isFirefox)
-      ? Promise.resolve(constraints)
-      : getDeviceId(facingMode).then(deviceId => ({ deviceId }))
+      ? Promise.resolve(props.constraints || constraints)
+      : getDeviceId(facingMode).then(deviceId => Object.assign({}, { deviceId }, props.constraints))
 
     vConstraintsPromise
       .then(video => navigator.mediaDevices.getUserMedia({ video }))
