@@ -49,6 +49,7 @@ class Wrapper extends Component {
           maxImageSize={1000}
           delay={this.state.delay}
           className="reader-container"
+          constraints={{ deviceId: 2 }}
         />
         {
           legacyMode && (
