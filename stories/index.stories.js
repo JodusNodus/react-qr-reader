@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { storiesOf, action } from '@storybook/react'
-import Reader from './lib'
+import Reader from '../lib'
 
 class Wrapper extends Component {
   constructor(props) {

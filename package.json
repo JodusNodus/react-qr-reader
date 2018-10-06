@@ -5,10 +5,10 @@
   "main": "./lib/index.js",
   "scripts": {
     "start": "concurrently --kill-others \"npm run build:watch\" \"npm run storybook\"",
-    "storybook": "start-storybook -p 9001",
     "build": "gulp",
     "build:watch": "gulp watch",
-    "lint": "eslint -c ./.eslintrc.js ./src"
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
@@ -28,14 +28,12 @@
   "homepage": "https://github.com/JodusNodus/react-qr-reader#readme",
   "devDependencies": {
     "babel-cli": "^6.8.0",
-    "babel-eslint": "^7.2.3",
+    "babel-core": "^6.26.3",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.5.0",
     "concurrently": "^3.5.0",
     "del": "^2.2.2",
-    "eslint": "^2.13.1",
-    "eslint-plugin-react": "^5.2.2",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.1",
@@ -43,17 +41,19 @@
     "gulp-uglify": "^2.0.0",
     "react": "~16",
     "react-dom": "~16",
-    "@storybook/react": "^3.3.13",
-    "@storybook/addons": "^3.3.13",
-    "babel-core": "^6.26.0"
+    "@storybook/react": "^3.4.11",
+    "@storybook/addon-actions": "^3.4.11",
+    "@storybook/addon-links": "^3.4.11",
+    "@storybook/addons": "^3.4.11",
+    "babel-runtime": "^6.26.0"
   },
   "peerDependencies": {
     "react": "~16",
     "react-dom": "~16"
   },
   "dependencies": {
-    "jsqr": "^1.0.1",
+    "jsqr": "^1.1.1",
     "prop-types": "^15.5.8",
-    "webrtc-adapter": "^6.1.1"
+    "webrtc-adapter": "^6.4.0"
   }
 }
