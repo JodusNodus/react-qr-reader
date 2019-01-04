@@ -12,7 +12,7 @@ A [React](https://facebook.github.io/react/) component for reading QR codes from
 
 * Due to browser implementations the camera can only be accessed over https or localhost.
 * In Firefox a prompt will be shown to the user asking which camera to use, so `facingMode` will not affect it.
-* On IOS 11 it is only supported on Safari and not on Chrome or Firefox due to Apple making the API not available to 3th party browsers.
+* On IOS 11 it is only supported on Safari and not on Chrome or Firefox due to Apple making the API not available to 3rd party browsers.
 
 ## Install
 
@@ -21,42 +21,39 @@ A [React](https://facebook.github.io/react/) component for reading QR codes from
 ## Example
 
 ```js
-import React, { Component } from "react";
-import QrReader from "react-qr-reader";
+import React, { Component } from 'react'
+import QrReader from 'react-qr-reader'
 
 class Test extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      delay: 300,
-      result: "No result"
-    };
-    this.handleScan = this.handleScan.bind(this);
+  state = {
+    result: 'No result'
   }
-  handleScan(data) {
+
+  handleScan = data => {
     if (data) {
       this.setState({
         result: data
-      });
+      })
     }
   }
-  handleError(err) {
-    console.error(err);
+  handleError = err => {
+    console.error(err)
   }
   render() {
     return (
       <div>
         <QrReader
-          delay={this.state.delay}
+          delay={300}
           onError={this.handleError}
           onScan={this.handleScan}
-          style={{ width: "100%" }}
+          style={{ width: '100%' }}
         />
         <p>{this.state.result}</p>
       </div>
-    );
+    )
   }
 }
+
 ```
 
 ## Props
