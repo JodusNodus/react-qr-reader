@@ -6,7 +6,7 @@ A [React](https://facebook.github.io/react/) component for reading QR codes from
 
 ## Demo
 
-[thomasbilliet.com/react-qr-reader](https://thomasbilliet.com/react-qr-reader)
+[https://jodusnodus.github.io/react-qr-reader](https://jodusnodus.github.io/react-qr-reader)
 
 ## Known Issues
 
