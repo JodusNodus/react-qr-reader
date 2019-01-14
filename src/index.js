@@ -164,6 +164,7 @@ module.exports = class Reader extends Component {
   }
   handleVideo(stream) {
     const { preview } = this.els
+    const { facingMode } = this.props
 
     // Preview element hasn't been rendered so wait for it.
     if (!preview) {
@@ -192,17 +193,16 @@ module.exports = class Reader extends Component {
 
     preview.addEventListener('loadstart', this.handleLoadStart)
 
-    const facingUserPattern = getFacingModePattern('user')
-    const isUserFacing = facingUserPattern.test(streamTrack.label)
-    this.setState({ mirrorVideo: isUserFacing })
+    this.setState({ mirrorVideo: facingMode == 'user', streamLabel: streamTrack.label })
   }
   handleLoadStart() {
     const { delay, onLoad } = this.props
+    const { mirrorVideo, streamLabel } = this.state
     const preview = this.els.preview
     preview.play()
 
     if(typeof onLoad == 'function') {
-      onLoad()
+      onLoad({ mirrorVideo, streamLabel })
     }
 
     if (typeof delay == 'number') {

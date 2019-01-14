@@ -61,12 +61,12 @@ class Test extends Component {
 
 ### Events
 
-| Prop        | Argument         | Description                                                                                     |
-| ----------- | ---------------- | ----------------------------------------------------------------------------------------------- |
-| onScan      | `result`         | Scan event handler. Called every scan with the decoded value or `null` if no QR code was found. |
-| onError     | `Error`          | Called when an error occurs.                                                                    |
-| onLoad      | none             | Called when the component is ready for use.                                                     |
-| onImageLoad | img onLoad event | Called when the image in legacyMode is loaded.                                                  |
+| Prop        | Argument         | Description                                                                                                     |
+| ----------- | ---------------- | --------------------------------------------------------------------------------------------------------------- |
+| onScan      | `result`         | Scan event handler. Called every scan with the decoded value or `null` if no QR code was found.                 |
+| onError     | `Error`          | Called when an error occurs.                                                                                    |
+| onLoad      | `object`         | Called when the component is ready for use. Object properties are `mirrorVideo`: boolean, `streamLabel`: string |
+| onImageLoad | img onLoad event | Called when the image in legacyMode is loaded.                                                                  |
 
 ### Options
 
