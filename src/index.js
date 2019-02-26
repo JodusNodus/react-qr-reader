@@ -171,7 +171,7 @@ module.exports = class Reader extends Component {
     }
 
     // Handle different browser implementations of MediaStreams as src
-    if(preview.srcObject !== undefined){
+    if((preview || {}).srcObject !== undefined){
       preview.srcObject = stream
     } else if (preview.mozSrcObject !== undefined) {
       preview.mozSrcObject = stream
