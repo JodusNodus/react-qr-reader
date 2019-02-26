@@ -27,33 +27,34 @@
   },
   "homepage": "https://github.com/JodusNodus/react-qr-reader#readme",
   "devDependencies": {
+    "@storybook/addon-actions": "^3.4.11",
+    "@storybook/addon-links": "^3.4.11",
+    "@storybook/addons": "^3.4.11",
+    "@storybook/react": "^3.4.11",
     "babel-cli": "^6.8.0",
     "babel-core": "^6.26.3",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.5.0",
-    "concurrently": "^3.5.0",
+    "babel-runtime": "^6.26.0",
+    "concurrently": "^3.6.1",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
+    "gulp-babel": "^6.1.3",
     "gulp-concat": "^2.6.1",
     "gulp-inline-str": "^0.1.0",
     "gulp-uglify": "^2.0.0",
-    "react": "~16",
-    "react-dom": "~16",
-    "@storybook/react": "^3.4.11",
-    "@storybook/addon-actions": "^3.4.11",
-    "@storybook/addon-links": "^3.4.11",
-    "@storybook/addons": "^3.4.11",
-    "babel-runtime": "^6.26.0"
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
   },
   "peerDependencies": {
     "react": "~16",
     "react-dom": "~16"
   },
   "dependencies": {
+    "fsevents": "^1.2.7",
     "jsqr": "^1.2.0",
-    "prop-types": "^15.5.8",
+    "prop-types": "^15.7.2",
     "webrtc-adapter": "^7.2.1"
   }
 }
