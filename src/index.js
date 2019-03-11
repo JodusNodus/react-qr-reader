@@ -119,6 +119,8 @@ module.exports = class Reader extends Component {
     this.clearComponent()
   }
   clearComponent() {
+    this.shouldStop = true
+
     // Remove all event listeners and variables
     if (this.timeout) {
       clearTimeout(this.timeout)
@@ -165,6 +167,10 @@ module.exports = class Reader extends Component {
   handleVideo(stream) {
     const { preview } = this.els
     const { facingMode } = this.props
+    
+    if (this.shouldStop) {
+      return stream.getTracks()[0].stop()
+    }
 
     // Preview element hasn't been rendered so wait for it.
     if (!preview) {
