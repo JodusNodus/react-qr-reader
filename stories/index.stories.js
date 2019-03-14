@@ -8,7 +8,7 @@ class Wrapper extends Component {
     this.state = { facingMode: "user", delay: 500, on: true };
   }
   render() {
-    const { selectFacingMode, selectDelay, legacyMode, onAndOff } = this.props;
+    const { selectFacingMode, selectDelay, legacyMode, onAndOff, customViewFinder } = this.props;
 
     return (
       <div style={{ width: "400px", margin: "auto" }}>
@@ -48,6 +48,7 @@ class Wrapper extends Component {
             maxImageSize={1000}
             delay={this.state.delay}
             className="reader-container"
+            customViewFinder={customViewFinder}
           />
         )}
         {legacyMode && (
@@ -65,4 +66,17 @@ storiesOf("QR Reader", module)
   .add("Choose facingMode", () => <Wrapper selectFacingMode />)
   .add("Legacy mode", () => <Wrapper legacyMode />)
   .add("Choose delay", () => <Wrapper selectDelay />)
-  .add("On and off", () => <Wrapper onAndOff />);
+  .add("On and off", () => <Wrapper onAndOff />)
+  .add("With custom viewfinder", () => (
+    <Wrapper
+      customViewFinder={
+        <div style={{
+          borderRadius: '50%',
+          backgroundColor: 'red',
+          opacity: 0.3,
+          flex: 1
+        }} />
+      }
+    />)
+  );
+  
