@@ -193,16 +193,16 @@ module.exports = class Reader extends Component {
 
     preview.addEventListener('loadstart', this.handleLoadStart)
 
-    this.setState({ mirrorVideo: facingMode == 'user', streamLabel: streamTrack.label })
+    this.setState({ mirrorVideo: facingMode == 'user', streamLabel: streamTrack.label, streamTrack })
   }
   handleLoadStart() {
     const { delay, onLoad } = this.props
-    const { mirrorVideo, streamLabel } = this.state
+    const { mirrorVideo, streamLabel, streamTrack } = this.state
     const preview = this.els.preview
     preview.play()
 
     if(typeof onLoad == 'function') {
-      onLoad({ mirrorVideo, streamLabel })
+      onLoad({ mirrorVideo, streamLabel, streamTrack })
     }
 
     if (typeof delay == 'number') {
