@@ -4,6 +4,7 @@ const PropTypes = require('prop-types')
 const { getDeviceId, getFacingModePattern } = require('./getDeviceId')
 const havePropsChanged = require('./havePropsChanged')
 const createBlob = require('./createBlob')
+const DefaultViewFinder = require('./defaultViewFinder')
 
 // Require adapter to support older browser implementations
 require('webrtc-adapter')
@@ -30,7 +31,8 @@ module.exports = class Reader extends Component {
     showViewFinder: PropTypes.bool,
     style: PropTypes.any,
     className: PropTypes.string,
-    constraints: PropTypes.object
+    constraints: PropTypes.object,
+    customViewFinder: PropTypes.node
   };
   static defaultProps = {
     delay: 500,
@@ -345,9 +347,8 @@ module.exports = class Reader extends Component {
       top: 0,
       left: 0,
       zIndex: 1,
+      display: 'flex',
       boxSizing: 'border-box',
-      border: '50px solid rgba(0, 0, 0, 0.3)',
-      boxShadow: 'inset 0 0 0 5px rgba(255, 0, 0, 0.5)',
       position: 'absolute',
       width: '100%',
       height: '100%',
@@ -358,7 +359,11 @@ module.exports = class Reader extends Component {
         <section style={containerStyle}>
           {
             (!legacyMode && showViewFinder)
-            ? <div style={viewFinderStyle} />
+            ? (
+              <div style={viewFinderStyle}>
+                {this.props.customViewFinder || <DefaultViewFinder />}
+              </div>
+              )
             : null
           }
           {
