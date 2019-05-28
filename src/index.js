@@ -10,7 +10,7 @@ class Demo extends Component {
       legacyMode: false,
       result: 'No result',
       error: false,
-      facingMode: 'user',
+      facingMode: 'environment',
       delay: 500,
     };
 
