@@ -167,8 +167,14 @@ module.exports = class Reader extends Component {
     const { facingMode } = this.props
 
     // Preview element hasn't been rendered so wait for it.
-    if (!preview) {
+    if (!preview && this.worker !== undefined) {
       return setTimeout(this.handleVideo, 200, stream)
+    }
+
+    // Bail if preview is null by now.
+    // We're probably executing handleVideo after the component has been unmounted...
+    if(preview === null) {
+      return;
     }
 
     // Handle different browser implementations of MediaStreams as src
