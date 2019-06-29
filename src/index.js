@@ -171,6 +171,12 @@ module.exports = class Reader extends Component {
       return setTimeout(this.handleVideo, 200, stream)
     }
 
+    // Bail if preview is null by now.
+    // We're probably executing handleVideo after the component has been unmounted...
+    if(preview === null) {
+      return;
+    }
+
     // Handle different browser implementations of MediaStreams as src
     if((preview || {}).srcObject !== undefined){
       preview.srcObject = stream
