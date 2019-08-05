@@ -1,6 +1,6 @@
 {
-  "name": "react-qr-reader",
-  "version": "2.2.1",
+  "name": "react-qr-reader2",
+  "version": "1.0.0",
   "description": "A react component for reading QR codes from the webcam.",
   "main": "./lib/index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JodusNodus/react-qr-reader.git"
+    "url": "git+https://github.com/tahv0/react-qr-reader2/react-qr-reader.git"
   },
   "keywords": [
     "react",
@@ -20,22 +20,22 @@
     "qrcode",
     "qrreader"
   ],
-  "author": "thomas billiet",
+  "author": "Tuomas Aho",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/JodusNodus/react-qr-reader/issues"
+    "url": "https://github.com/tahv0/react-qr-reader2/issues"
   },
-  "homepage": "https://github.com/JodusNodus/react-qr-reader#readme",
+  "homepage": "https://github.com/tahv0/react-qr-reader2#readme",
   "devDependencies": {
-    "@storybook/addon-actions": "^3.4.11",
-    "@storybook/addon-links": "^3.4.11",
-    "@storybook/addons": "^3.4.11",
-    "@storybook/react": "^3.4.11",
-    "babel-cli": "^6.8.0",
+    "@storybook/addon-actions": "^3.4.12",
+    "@storybook/addon-links": "^3.4.12",
+    "@storybook/addons": "^3.4.12",
+    "@storybook/react": "^3.4.12",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.5.0",
+    "babel-preset-stage-0": "^6.24.1",
     "babel-runtime": "^6.26.0",
     "concurrently": "^3.6.1",
     "del": "^2.2.2",
@@ -43,7 +43,7 @@
     "gulp-babel": "^6.1.3",
     "gulp-concat": "^2.6.1",
     "gulp-inline-str": "^0.1.0",
-    "gulp-uglify": "^2.0.0",
+    "gulp-uglify": "^2.1.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.3"
   },
@@ -54,6 +54,6 @@
   "dependencies": {
     "jsqr": "^1.2.0",
     "prop-types": "^15.7.2",
-    "webrtc-adapter": "^7.2.1"
+    "webrtc-adapter": "^7.2.9"
   }
 }

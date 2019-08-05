@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import QrReader from 'react-qr-reader'
+import QrReader from 'react-qr-reader2'
 
 class LegacyModeExample extends Component {
   constructor(props){
