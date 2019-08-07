@@ -1,20 +1,22 @@
-import React, { Component } from "react";
-import { storiesOf, action } from "@storybook/react";
-import Reader from "../lib";
+import React from 'react'
+import { storiesOf, action } from '@storybook/react'
+import Reader from '../lib'
+import ExampleReader from '../examples/example'
 
-class Wrapper extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { facingMode: "user", delay: 500, on: true };
+class Wrapper extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = { facingMode: 'user', delay: 500, on: true }
   }
-  render() {
-    const { selectFacingMode, selectDelay, legacyMode, onAndOff } = this.props;
+
+  render () {
+    const { selectFacingMode, selectDelay, onAndOff } = this.props
 
     return (
-      <div style={{ width: "400px", margin: "auto" }}>
+      <div style={{ width: '400px', margin: 'auto' }}>
         {onAndOff && (
           <button onClick={() => this.setState({ on: !this.state.on })}>
-            {this.state.on ? "Turn off" : "Turn on"}
+            {this.state.on ? 'Turn off' : 'Turn on'}
           </button>
         )}
         {selectFacingMode && (
@@ -37,32 +39,15 @@ class Wrapper extends Component {
           </div>
         )}
         {this.state.on && (
-          <Reader
-            onError={action("Error")}
-            onScan={action("Scan")}
-            onLoad={action("Load")}
-            onImageLoad={action("ImageLoad")}
-            ref="reader"
-            facingMode={this.state.facingMode}
-            legacyMode={legacyMode}
-            maxImageSize={1000}
-            delay={this.state.delay}
-            className="reader-container"
-          />
-        )}
-        {legacyMode && (
-          <button onClick={() => this.refs.reader.openImageDialog()}>
-            Open Image Dialog
-          </button>
+          <ExampleReader ref="reader" className="reader-container" />
         )}
       </div>
-    );
+    )
   }
 }
 
-storiesOf("QR Reader", module)
-  .add("FacingMode not specified", () => <Wrapper />)
-  .add("Choose facingMode", () => <Wrapper selectFacingMode />)
-  .add("Legacy mode", () => <Wrapper legacyMode />)
-  .add("Choose delay", () => <Wrapper selectDelay />)
-  .add("On and off", () => <Wrapper onAndOff />);
+storiesOf('QR Reader', module)
+  .add('FacingMode not specified', () => <Wrapper />)
+  .add('Choose facingMode', () => <Wrapper selectFacingMode />)
+  .add('Choose delay', () => <Wrapper selectDelay />)
+  .add('On and off', () => <Wrapper onAndOff />)
