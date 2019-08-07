@@ -1,4 +1,4 @@
-function NoVideoInputDevicesError() {
+function NoVideoInputDevicesError () {
   this.name = 'NoVideoInputDevicesError'
   this.message = 'No video input devices found'
 }
