@@ -73,7 +73,7 @@ module.exports = class Reader extends Component {
       this.initiateLegacyMode()
     }
   }
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(nextProps) {
     // React according to change in props
     const changedProps = havePropsChanged(this.props, nextProps, propsKeys)
 
