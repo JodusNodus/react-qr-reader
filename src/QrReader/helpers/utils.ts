@@ -41,7 +41,9 @@ export const getDeviceId = async (
 export const isFunction = (val) => typeof val === 'function';
 
 export const decodeQR = ({ data, width, height }) => {
-  const decoded = (self as any).jsQR(data, width, height);
+  const decoded = (self as any).jsQR(data, width, height, {
+    inversionAttempts: 'attemptBoth',
+  });
 
   let parsed = null;
 

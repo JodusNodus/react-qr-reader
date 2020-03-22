@@ -1,12 +1,18 @@
 import { getDeviceId } from './utils';
 
-export const getVideoStream = async ({ facingMode, constraints }) => {
+export const getVideoStream = async ({
+  facingMode,
+  constraints,
+  resolution,
+}) => {
   // Check browser facingMode constraint support
   // Firefox ignores facingMode or deviceId constraints
   const isFirefox = /firefox/i.test(navigator?.userAgent);
 
   const supportedConstraints: any = navigator?.mediaDevices?.getSupportedConstraints();
-  const defaultConstraints: any = {};
+  const defaultConstraints: any = {
+    width: { min: resolution },
+  };
 
   if (supportedConstraints?.facingMode) {
     defaultConstraints.facingMode = { ideal: facingMode };

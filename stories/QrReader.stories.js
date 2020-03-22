@@ -6,14 +6,10 @@ export default {
   title: 'QrReader',
 };
 
-const QrReaderWrapper = ({
-  selectFacingMode,
-  selectDelay,
-  legacyMode,
-  onAndOff,
-}) => {
+const QrReaderWrapper = ({ selectFacingMode, selectDelay, onAndOff }) => {
   const [facingMode, setFacingMode] = useState('user');
   const [delay, setDelay] = useState(500);
+  const [data, setData] = useState(null);
   const [on, setOn] = useState(true);
 
   const ref = useRef({});
@@ -44,21 +40,18 @@ const QrReaderWrapper = ({
       )}
       {on && (
         <QrReader
+          debug
           ref={ref}
           delay={delay}
           maxImageSize={1000}
           facingMode={facingMode}
-          onScan={actions('Scan')}
+          onScan={setData}
           onLoad={actions('Load')}
           onError={actions('Error')}
           className="reader-container"
         />
       )}
-      {legacyMode && (
-        <button onClick={() => ref.current.reader.openImageDialog()}>
-          Open Image Dialog
-        </button>
-      )}
+      <p>El valor escaneado es: {JSON.stringify(data, null, 2)}</p>
     </div>
   );
 };
@@ -68,7 +61,5 @@ export const ChooseFacingMode = () => <QrReaderWrapper selectFacingMode />;
 export const ChooseDelay = () => <QrReaderWrapper selectDelay />;
 
 export const FacingModeNotSpecified = () => <QrReaderWrapper />;
-
-//export const LegacyMode = () => <QrReaderWrapper legacyMode />;
 
 export const OnAndOff = () => <QrReaderWrapper onAndOff />;

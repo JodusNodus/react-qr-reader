@@ -19,37 +19,37 @@ export interface QrReaderProps {
    */
   delay: number;
   /**
-   * If the device does not allow camera access (e.g. IOS Browsers, Safari) you can enable legacyMode to allow the user to take a picture (On a mobile device) or use an existing one.
-   */
-  legacyMode: boolean;
-  /**
    * The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.
    */
   resolution: number;
   /**
    * ClassName for the container element.
    */
-  className: string;
+  className?: string;
   /**
    * Use custom camera constraints that the override default behavior.
    */
-  constraints: MediaTrackConstraintSet;
+  constraints?: MediaTrackConstraintSet;
   /**
    * Called when an error occurs.
    */
-  onError: any;
+  onError?: any;
   /**
    * Scan event handler. Called every scan with the decoded value or null if no QR code was found.
    */
-  onScan: any;
+  onScan?: any;
   /**
    * Called when the component is ready for use.
    */
-  onLoad: any;
+  onLoad?: any;
   /**
    * Styling for the container element. Warning The preview will always keep its 1:1 aspect ratio.
    */
-  style: any;
+  style?: any;
+  /**
+   * It enables debug logs to see what's going on with the QrReader
+   */
+  debug?: boolean;
 }
 
 export const QrReader: React.FunctionComponent<QrReaderProps> = ({
@@ -63,6 +63,7 @@ export const QrReader: React.FunctionComponent<QrReaderProps> = ({
   onLoad,
   delay,
   style,
+  debug,
 }: QrReaderProps) => {
   const canvasRef = useRef(null);
   const videoRef = useRef(null);
@@ -74,6 +75,7 @@ export const QrReader: React.FunctionComponent<QrReaderProps> = ({
     facingMode,
     resolution,
     delay,
+    debug,
   });
 
   return (

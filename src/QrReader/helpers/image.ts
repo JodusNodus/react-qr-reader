@@ -22,7 +22,9 @@ export const getImageData = async ({ preview, canvas, resolution }) =>
     canvas.height = resolution;
 
     if (preview.readyState === preview.HAVE_ENOUGH_DATA) {
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d', { alpha: false });
+
+      ctx.imageSmoothingEnabled = false; // gives less blurry images
 
       ctx.drawImage(preview, hozOffset, vertOffset, width, height);
 
