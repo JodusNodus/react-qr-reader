@@ -1,6 +1,9 @@
-import { Ref } from 'react';
 import { useWorker } from '@koale/useworker';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+
+import { getImageData } from '../helpers/image';
+import { isFunction, decodeQR } from '../helpers/utils';
+import { getVideoStream, getVideoStreamTrack } from '../helpers/video';
 
 export type UseQrReaderHook = (
   props: UseQrReaderHookProps
@@ -16,11 +19,7 @@ export type UseQrReaderHookProps = {
   /**
    * The delay between scans in milliseconds.
    */
-  delay?: number | boolean;
-  /**
-   * If the device does not allow camera access (e.g. IOS Browsers, Safari) you can enable legacyMode to allow the user to take a picture (On a mobile device) or use an existing one.
-   */
-  legacyMode?: boolean;
+  delay?: number;
   /**
    * The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.
    */
@@ -32,7 +31,7 @@ export type UseQrReaderHookProps = {
   /**
    * Refs of the elements that the components will render
    */
-  refs?: Ref<any>[];
+  refs?: any[];
   /**
    * Callbacks that the component uses
    */
@@ -41,29 +40,109 @@ export type UseQrReaderHookProps = {
 
 export const useQrReader: UseQrReaderHook = ({
   callbacks: [onScan, onLoad, onError],
-  refs: [canvas, input, video, img],
+  refs: [canvas, preview],
   constraints,
-  legacyMode,
   facingMode,
   resolution,
   delay,
 }) => {
-  const [decodeQrImage, status, killWorker] = useWorker(() => {}, {
-    timeout: undefined,
-    dependencies: [],
+  const [mirrorVideo, setMirrorVideo] = useState(false);
+  const [streamTrack, setStreamTrack] = useState(null);
+
+  const [decodeQrImage, _, terminateWorker] = useWorker(decodeQR, {
+    dependencies: ['https://cdn.jsdelivr.net/npm/jsqr@1.2.0/dist/jsQR.min.js'],
+    timeout: 200,
   });
 
-  const [mirrorVideo, setMirrorVideo] = useState(false);
-  const [streamLabel, setStreamLabel] = useState(null);
-  const [stopCamera, setStopCamera] = useState(null);
+  const initQrScan = useCallback(async () => {
+    let timeoutId = null;
 
-  useEffect(() => {
-    if (legacyMode) {
-    } else {
+    try {
+      const stream = await getVideoStream({ facingMode, constraints });
+
+      if (!preview.current) {
+        setTimeout(initQrScan, 200);
+        return;
+      } else {
+        clearTimeout(timeoutId);
+      }
+
+      const streamTrack: any = await getVideoStreamTrack({
+        preview: preview.current,
+        onLoadStart,
+        stream,
+      });
+
+      setMirrorVideo(facingMode === 'user');
+      setStreamTrack(streamTrack);
+    } catch (err) {
+      if (isFunction(onError)) {
+        onError(err);
+      }
+
+      timeoutId = setTimeout(initQrScan, 200);
+    }
+  }, []);
+
+  const onLoadStart = useCallback(() => {
+    if (!preview.current) {
+      return;
     }
 
+    preview.current.play();
+
+    if (isFunction(onLoad)) {
+      onLoad({ mirrorVideo, streamLabel: streamTrack?.label });
+    }
+
+    setTimeout(tryQrScan, delay);
+
+    preview.current.removeEventListener('loadstart', onLoadStart);
+  }, []);
+
+  const tryQrScan = useCallback(async () => {
+    let timeoutId = null;
+
+    try {
+      if (!preview.current || !canvas.current) {
+        return;
+      } else {
+        clearTimeout(timeoutId);
+      }
+
+      const data: any = await getImageData({
+        preview: preview.current,
+        canvas: canvas.current,
+        resolution,
+      });
+
+      if (!!data) {
+        const decoded: any = await decodeQrImage(data);
+
+        console.info('Decoding QR', decoded);
+
+        if (isFunction(onScan)) {
+          onScan(decoded);
+        }
+      }
+    } catch (err) {
+      if (isFunction(onError)) {
+        onError(err);
+      }
+    } finally {
+      timeoutId = setTimeout(tryQrScan, delay);
+    }
+  }, []);
+
+  useEffect(() => {
+    initQrScan();
+
     return () => {
-      killWorker();
+      terminateWorker();
+
+      if (streamTrack) {
+        streamTrack.stop();
+      }
     };
   }, []);
 

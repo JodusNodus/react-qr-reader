@@ -26,7 +26,7 @@ const QrReaderWrapper = ({
         </button>
       )}
       {selectFacingMode && (
-        <select onChange={e => setFacingMode(e.target.value)}>
+        <select onChange={(e) => setFacingMode(e.target.value)}>
           <option value="user">User</option>
           <option value="environment">Environment</option>
         </select>
@@ -38,7 +38,7 @@ const QrReaderWrapper = ({
             type="number"
             value={delay}
             placeholder="Delay in ms"
-            onChange={e => setDelay(parseInt(e.target.value))}
+            onChange={(e) => setDelay(parseInt(e.target.value))}
           />
         </div>
       )}
@@ -48,12 +48,10 @@ const QrReaderWrapper = ({
           delay={delay}
           maxImageSize={1000}
           facingMode={facingMode}
-          legacyMode={legacyMode}
           onScan={actions('Scan')}
           onLoad={actions('Load')}
           onError={actions('Error')}
           className="reader-container"
-          onImageLoad={actions('ImageLoad')}
         />
       )}
       {legacyMode && (
@@ -71,6 +69,6 @@ export const ChooseDelay = () => <QrReaderWrapper selectDelay />;
 
 export const FacingModeNotSpecified = () => <QrReaderWrapper />;
 
-export const LegacyMode = () => <QrReaderWrapper legacyMode />;
+//export const LegacyMode = () => <QrReaderWrapper legacyMode />;
 
 export const OnAndOff = () => <QrReaderWrapper onAndOff />;

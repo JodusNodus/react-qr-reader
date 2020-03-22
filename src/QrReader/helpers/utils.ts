@@ -37,3 +37,19 @@ export const getDeviceId = async (
     throw err;
   }
 };
+
+export const isFunction = (val) => typeof val === 'function';
+
+export const decodeQR = ({ data, width, height }) => {
+  const decoded = (self as any).jsQR(data, width, height);
+
+  let parsed = null;
+
+  try {
+    parsed = JSON.parse(decoded?.data);
+  } catch (err) {
+    parsed = decoded?.data;
+  }
+
+  return parsed;
+};

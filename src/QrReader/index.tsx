@@ -17,7 +17,7 @@ export interface QrReaderProps {
   /**
    * The delay between scans in milliseconds.
    */
-  delay: number | boolean;
+  delay: number;
   /**
    * If the device does not allow camera access (e.g. IOS Browsers, Safari) you can enable legacyMode to allow the user to take a picture (On a mobile device) or use an existing one.
    */
@@ -34,10 +34,6 @@ export interface QrReaderProps {
    * Use custom camera constraints that the override default behavior.
    */
   constraints: MediaTrackConstraintSet;
-  /**
-   * Called when the image in legacyMode is loaded.
-   */
-  onImageLoad: any;
   /**
    * Called when an error occurs.
    */
@@ -59,9 +55,7 @@ export interface QrReaderProps {
 export const QrReader: React.FunctionComponent<QrReaderProps> = ({
   showViewFinder,
   constraints,
-  onImageLoad,
   facingMode,
-  legacyMode,
   resolution,
   className,
   onError,
@@ -71,16 +65,13 @@ export const QrReader: React.FunctionComponent<QrReaderProps> = ({
   style,
 }: QrReaderProps) => {
   const canvasRef = useRef(null);
-  const inputRef = useRef(null);
   const videoRef = useRef(null);
-  const imgRef = useRef(null);
 
   const [mirrorVideo] = useQrReader({
-    refs: [canvasRef, inputRef, videoRef, imgRef],
     callbacks: [onScan, onLoad, onError],
+    refs: [canvasRef, videoRef],
     constraints,
     facingMode,
-    legacyMode,
     resolution,
     delay,
   });
@@ -88,37 +79,17 @@ export const QrReader: React.FunctionComponent<QrReaderProps> = ({
   return (
     <section className={className} style={style}>
       <section style={styles.container as any}>
-        {!legacyMode && showViewFinder && (
-          <div style={styles.viewFinder as any} />
-        )}
-        {!legacyMode && (
-          <video
-            ref={videoRef}
-            style={
-              {
-                ...styles.videoPreview,
-                transform: mirrorVideo && 'scaleX(-1)',
-              } as any
-            }
-          />
-        )}
-        {legacyMode && (
-          <>
-            <input
-              type="file"
-              ref={inputRef}
-              accept="image/*"
-              style={styles.hidden}
-              /** TODO: Remove this.handleInputChange */
-              onChange={this.handleInputChange}
-            />
-            <img
-              ref={imgRef}
-              onLoad={onImageLoad}
-              style={styles.imgPreview as any}
-            />
-          </>
-        )}
+        {showViewFinder && <div style={styles.viewFinder as any} />}
+        <video
+          muted
+          ref={videoRef}
+          style={
+            {
+              ...styles.videoPreview,
+              transform: mirrorVideo && 'scaleX(-1)',
+            } as any
+          }
+        />
         <canvas ref={canvasRef} style={styles.hidden} />
       </section>
     </section>

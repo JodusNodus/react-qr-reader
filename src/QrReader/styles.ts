@@ -17,16 +17,6 @@ export default {
     objectFit: 'cover',
     transform: undefined,
   },
-  imgPreview: {
-    top: 0,
-    left: 0,
-    display: 'block',
-    position: 'absolute',
-    overflow: 'hidden',
-    width: '100%',
-    height: '100%',
-    objectFit: 'scale-down',
-  },
   viewFinder: {
     top: 0,
     left: 0,
