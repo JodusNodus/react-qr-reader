@@ -55,11 +55,11 @@ const Test = (props) => {
 
 ### Events
 
-| Prop    | Argument | Description                                                                                                     |
-| ------- | -------- | --------------------------------------------------------------------------------------------------------------- |
-| onScan  | `result` | Scan event handler. Called every scan with the decoded value or `null` if no QR code was found.                 |
-| onError | `Error`  | Called when an error occurs.                                                                                    |
-| onLoad  | `object` | Called when the component is ready for use. Object properties are `mirrorVideo`: boolean, `streamLabel`: string |
+| Prop    | Argument | Description                                                                                                               |
+| ------- | -------- | ------------------------------------------------------------------------------------------------------------------------- |
+| onScan  | `result` | Scan event handler. Called every scan with the decoded value or `null` if no QR code was found.                           |
+| onError | `Error`  | Called when an error occurs.                                                                                              |
+| onLoad  | `object` | Called when the component is ready for use. Object properties are `mirrorVideo`: boolean, `streamTrack`: MediaStreamTrack |
 
 ### Options
 

@@ -92,7 +92,7 @@ export const useQrReader: UseQrReaderHook = ({
     preview.current.play();
 
     if (isFunction(onLoad)) {
-      onLoad({ mirrorVideo, streamLabel: streamTrack?.label });
+      onLoad({ mirrorVideo, streamTrack });
     }
 
     setTimeout(tryQrScan, delay);
