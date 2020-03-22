@@ -55,25 +55,23 @@ const Test = (props) => {
 
 ### Events
 
-| Prop        | Argument         | Description                                                                                                     |
-| ----------- | ---------------- | --------------------------------------------------------------------------------------------------------------- |
-| onScan      | `result`         | Scan event handler. Called every scan with the decoded value or `null` if no QR code was found.                 |
-| onError     | `Error`          | Called when an error occurs.                                                                                    |
-| onLoad      | `object`         | Called when the component is ready for use. Object properties are `mirrorVideo`: boolean, `streamLabel`: string |
-| onImageLoad | img onLoad event | Called when the image in legacyMode is loaded.                                                                  |
+| Prop    | Argument | Description                                                                                                     |
+| ------- | -------- | --------------------------------------------------------------------------------------------------------------- |
+| onScan  | `result` | Scan event handler. Called every scan with the decoded value or `null` if no QR code was found.                 |
+| onError | `Error`  | Called when an error occurs.                                                                                    |
+| onLoad  | `object` | Called when the component is ready for use. Object properties are `mirrorVideo`: boolean, `streamLabel`: string |
 
 ### Options
 
-| Prop           | Type                    | Default       | Description                                                                                                                                                                                                                                                                                                                                                                |
-| -------------- | ----------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| delay          | number or `false`       | `500`         | The delay between scans in milliseconds. To disable the interval pass in `false`.                                                                                                                                                                                                                                                                                          |
-| facingMode     | `user` or `environment` | `environment` | Specify which camera should be used (if available).                                                                                                                                                                                                                                                                                                                        |
-| resolution     | number                  | `600`         | The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.                                                                                                                                                                                                                         |
-| style          | a valid React style     | none          | Styling for the container element. **Warning** The preview will always keep its 1:1 aspect ratio.                                                                                                                                                                                                                                                                          |
-| className      | string                  | none          | ClassName for the container element.                                                                                                                                                                                                                                                                                                                                       |
-| showViewFinder | boolean                 | `true`        | Show or hide the build in view finder. See demo                                                                                                                                                                                                                                                                                                                            |
-| constraints    | object                  | `null`        | Use custom camera constraints that the override default behavior. [MediaTrackConstraints](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints)                                                                                                                                                                                                          |
-| legacyMode     | boolean                 | `false`       | If the device does not allow camera access (e.g. IOS Browsers, Safari) you can enable legacyMode to allow the user to take a picture (On a mobile device) or use an existing one. To trigger the image dialog just call the method `openImageDialog` from the parent component. **Warning** You must call the method from a user action (eg. click event on some element). |
+| Prop           | Type                    | Default       | Description                                                                                                                                                       |
+| -------------- | ----------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| delay          | number or `false`       | `500`         | The delay between scans in milliseconds. To disable the interval pass in `false`.                                                                                 |
+| facingMode     | `user` or `environment` | `environment` | Specify which camera should be used (if available).                                                                                                               |
+| resolution     | number                  | `600`         | The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.                |
+| style          | a valid React style     | none          | Styling for the container element. **Warning** The preview will always keep its 1:1 aspect ratio.                                                                 |
+| className      | string                  | none          | ClassName for the container element.                                                                                                                              |
+| showViewFinder | boolean                 | `true`        | Show or hide the build in view finder. See demo                                                                                                                   |
+| constraints    | object                  | `null`        | Use custom camera constraints that the override default behavior. [MediaTrackConstraints](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints) |
 
 ## Tested platforms
 
