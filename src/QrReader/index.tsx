@@ -15,10 +15,6 @@ export interface QrReaderProps {
    */
   showViewFinder: boolean;
   /**
-   * The delay between scans in milliseconds.
-   */
-  delay: number;
-  /**
    * The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.
    */
   resolution: number;
@@ -61,7 +57,6 @@ export const QrReader: React.FunctionComponent<QrReaderProps> = ({
   onError,
   onScan,
   onLoad,
-  delay,
   style,
   debug,
 }: QrReaderProps) => {
@@ -74,7 +69,6 @@ export const QrReader: React.FunctionComponent<QrReaderProps> = ({
     constraints,
     facingMode,
     resolution,
-    delay,
     debug,
   });
 
@@ -100,8 +94,7 @@ export const QrReader: React.FunctionComponent<QrReaderProps> = ({
 
 QrReader.displayName = 'QrReader';
 QrReader.defaultProps = {
-  delay: 500,
-  resolution: 600,
+  resolution: 768,
   constraints: null,
   showViewFinder: true,
   facingMode: 'environment',

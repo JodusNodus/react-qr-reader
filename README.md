@@ -40,7 +40,6 @@ const Test = (props) => {
   return (
     <>
       <QrReader
-        delay={300}
         onScan={handleScan}
         onError={handleError}
         style={{ width: '100%' }}
@@ -65,7 +64,6 @@ const Test = (props) => {
 
 | Prop           | Type                    | Default       | Description                                                                                                                                                       |
 | -------------- | ----------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| delay          | number or `false`       | `500`         | The delay between scans in milliseconds. To disable the interval pass in `false`.                                                                                 |
 | facingMode     | `user` or `environment` | `environment` | Specify which camera should be used (if available).                                                                                                               |
 | resolution     | number                  | `600`         | The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.                |
 | style          | a valid React style     | none          | Styling for the container element. **Warning** The preview will always keep its 1:1 aspect ratio.                                                                 |

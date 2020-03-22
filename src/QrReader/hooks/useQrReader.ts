@@ -17,10 +17,6 @@ export type UseQrReaderHookProps = {
    */
   facingMode?: VideoFacingModeEnum;
   /**
-   * The delay between scans in milliseconds.
-   */
-  delay?: number;
-  /**
    * The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.
    */
   resolution?: number;
@@ -48,7 +44,6 @@ export const useQrReader: UseQrReaderHook = ({
   constraints,
   facingMode,
   resolution,
-  delay,
   debug,
 }) => {
   const [mirrorVideo, setMirrorVideo] = useState(false);
@@ -60,8 +55,6 @@ export const useQrReader: UseQrReaderHook = ({
   });
 
   const initQrScan = useCallback(async () => {
-    let timeoutId = null;
-
     try {
       if (debug) {
         console.info(`[QrReader]: Initializing QrScanner`);
@@ -83,8 +76,6 @@ export const useQrReader: UseQrReaderHook = ({
 
         setTimeout(initQrScan, 200);
         return;
-      } else {
-        clearTimeout(timeoutId);
       }
 
       if (debug) {
@@ -95,7 +86,6 @@ export const useQrReader: UseQrReaderHook = ({
 
       const streamTrack: any = await getVideoStreamTrack({
         preview: preview.current,
-        onLoadStart,
         stream,
       });
 
@@ -105,51 +95,35 @@ export const useQrReader: UseQrReaderHook = ({
 
       setMirrorVideo(facingMode === 'user');
       setStreamTrack(streamTrack);
+
+      if (debug) {
+        console.info(`[QrReader]: Start playing MediaTrack on Video Element`);
+      }
+
+      preview.current.play();
+
+      if (isFunction(onLoad)) {
+        if (debug) {
+          console.info(`[QrReader]: Calling onLoad if exists`);
+        }
+
+        onLoad({ mirrorVideo, streamTrack });
+      }
+
+      window.requestAnimationFrame(tryQrScan);
     } catch (err) {
       if (isFunction(onError)) {
         onError(err);
       }
 
-      timeoutId = setTimeout(initQrScan, 200);
+      setTimeout(initQrScan, 200);
     }
-  }, []);
-
-  const onLoadStart = useCallback(() => {
-    if (!preview.current) {
-      return;
-    }
-
-    if (debug) {
-      console.info(`[QrReader]: Start playing MediaTrack on Video Element`);
-    }
-
-    preview.current.play();
-
-    if (isFunction(onLoad)) {
-      if (debug) {
-        console.info(`[QrReader]: Calling onLoad if exists`);
-      }
-
-      onLoad({ mirrorVideo, streamTrack });
-    }
-
-    setTimeout(tryQrScan, delay);
-
-    if (debug) {
-      console.info(`[QrReader]: Cleaning event listeners`);
-    }
-
-    preview.current.removeEventListener('loadstart', onLoadStart);
   }, []);
 
   const tryQrScan = useCallback(async () => {
-    let timeoutId = null;
-
     try {
       if (!preview.current || !canvas.current) {
         return;
-      } else {
-        clearTimeout(timeoutId);
       }
 
       if (debug) {
@@ -194,7 +168,7 @@ export const useQrReader: UseQrReaderHook = ({
         console.info(`[QrReader]: Retry scan in another round ...`);
       }
 
-      timeoutId = setTimeout(tryQrScan, delay);
+      window.requestAnimationFrame(tryQrScan);
     }
   }, []);
 

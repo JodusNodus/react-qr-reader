@@ -38,7 +38,7 @@ export const getVideoStream = async ({
   return await navigator.mediaDevices.getUserMedia({ video });
 };
 
-export const getVideoStreamTrack = async ({ preview, stream, onLoadStart }) =>
+export const getVideoStreamTrack = async ({ preview, stream }) =>
   new Promise((resolve) => {
     // Handle different browser implementations of MediaStreams as src
     if (preview.srcObject !== undefined) {
@@ -54,8 +54,7 @@ export const getVideoStreamTrack = async ({ preview, stream, onLoadStart }) =>
     }
 
     // IOS play in fullscreen
-    preview.playsInline = true;
-    preview.addEventListener('loadstart', onLoadStart);
+    preview.setAttribute('playsInline', true);
 
     const [streamTrack] = stream.getTracks();
 
