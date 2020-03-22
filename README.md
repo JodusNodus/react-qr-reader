@@ -72,6 +72,7 @@ const Test = (props) => {
 | className      | string                  | none          | ClassName for the container element.                                                                                                                              |
 | showViewFinder | boolean                 | `true`        | Show or hide the build in view finder. See demo                                                                                                                   |
 | constraints    | object                  | `null`        | Use custom camera constraints that the override default behavior. [MediaTrackConstraints](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints) |
+| debug          | boolean                 | `null`        | Enable debug logs to see what's going on inside the component                                                                                                     |
 
 ## Tested platforms
 
