@@ -51,7 +51,7 @@ export const useQrReader: UseQrReaderHook = ({
 
   const [decodeQrImage, _, terminateWorker] = useWorker(decodeQR, {
     dependencies: ['https://cdn.jsdelivr.net/npm/jsqr@1.2.0/dist/jsQR.min.js'],
-    timeout: 200,
+    timeout: 5000,
   });
 
   const initQrScan = useCallback(async () => {
