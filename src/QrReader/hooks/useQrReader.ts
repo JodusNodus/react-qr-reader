@@ -150,9 +150,7 @@ export const useQrReader: UseQrReaderHook = ({
         onLoad({ stream });
       }
 
-      const clearId = window.requestAnimationFrame(tryQrScan);
-
-      cancelIds.current.push(clearId);
+      cancelIds.current.push(window.requestAnimationFrame(tryQrScan));
     } catch (err) {
       if (isFunction(onError)) {
         log(`[QrReader]: Calling onError if exists`, 'red', { debug });
@@ -164,7 +162,7 @@ export const useQrReader: UseQrReaderHook = ({
   useEffect(() => {
     const clearId = setTimeout(initQrScan, 350);
 
-    return function cleanup() {
+    return function willUnMount() {
       log(`[QrReader]: Starting to unmount component`, 'yellow', { debug });
       log(`[QrReader]: Killing QR Reader WebWorker thread`, 'yellow', {
         debug,
