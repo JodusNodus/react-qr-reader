@@ -19,7 +19,7 @@ export const getImageData = async ({
   canvas,
 }: GetImageDataParams): Promise<ImageData | null> =>
   new Promise((resolve) => {
-    if (!preview) {
+    if (!preview || !canvas) {
       resolve(null);
     }
 
