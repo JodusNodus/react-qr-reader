@@ -63,7 +63,7 @@ export const QrReader: React.FunctionComponent<QrReaderProps> = ({
   const canvasRef = useRef(null);
   const videoRef = useRef(null);
 
-  const [mirrorVideo] = useQrReader({
+  useQrReader({
     callbacks: [onScan, onLoad, onError],
     refs: [canvasRef, videoRef],
     constraints,
@@ -82,7 +82,7 @@ export const QrReader: React.FunctionComponent<QrReaderProps> = ({
           style={
             {
               ...styles.videoPreview,
-              transform: mirrorVideo && 'scaleX(-1)',
+              transform: facingMode === 'user' && 'scaleX(-1)',
             } as any
           }
         />

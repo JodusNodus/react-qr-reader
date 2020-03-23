@@ -1,5 +1,1 @@
-export class NoVideoInputDevicesError extends Error {
-  constructor(message) {
-    super(message);
-  }
-}
+export class NoVideoInputDevicesError extends Error {}

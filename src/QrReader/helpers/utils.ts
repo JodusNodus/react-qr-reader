@@ -1,7 +1,9 @@
 import { NoVideoInputDevicesError } from './error';
 
 export const getFacingModePattern = (facingMode: VideoFacingModeEnum): RegExp =>
-  facingMode == 'environment' ? /rear|back|environment/gi : /front|user|face/gi;
+  facingMode === 'environment'
+    ? /rear|back|environment/gi
+    : /front|user|face/gi;
 
 export const getDeviceId = async (
   facingMode: VideoFacingModeEnum
@@ -38,9 +40,8 @@ export const getDeviceId = async (
   }
 };
 
-export const isFunction = (val) => typeof val === 'function';
-
-export const decodeQR = ({ data, width, height }) => {
+export const decodeQR = ({ data, width, height }: ImageData): any => {
+  // eslint-disable-next-line no-restricted-globals
   const decoded = (self as any).jsQR(data, width, height, {
     inversionAttempts: 'attemptBoth',
   });
@@ -55,3 +56,17 @@ export const decodeQR = ({ data, width, height }) => {
 
   return parsed;
 };
+
+export type LogOptions = {
+  debug?: boolean;
+};
+
+export type Color = 'green' | 'red' | 'yellow' | 'white';
+
+export const log = (msg: string, color: Color, { debug }: LogOptions): void => {
+  if (debug) {
+    console.log(`%c${msg}`, `color:${color};font-weight:bold;`);
+  }
+};
+
+export const isFunction = (val: any) => typeof val === 'function';
