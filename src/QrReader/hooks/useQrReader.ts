@@ -176,13 +176,28 @@ export const useQrReader: UseQrReaderHook = ({
     initQrScan();
 
     return () => {
+      if (debug) {
+        console.info(`[QrReader]: Starting to unmount component`);
+        console.info(`[QrReader]: Killing QR Reader WebWorker thread`);
+      }
+
       terminateWorker();
 
+      if (debug) {
+        console.info(
+          `[QrReader]: Trying to remove all tracks from videoStream`
+        );
+      }
+
       if (videoStream) {
+        if (debug) {
+          console.info(`[QrReader]: Removing all tracks from videoStream`);
+        }
+
         videoStream.getTracks().forEach((track) => track.stop());
       }
     };
-  }, []);
+  });
 
   return [mirrorVideo];
 };
