@@ -160,7 +160,7 @@ export const useQrReader: UseQrReaderHook = ({
   };
 
   useEffect(() => {
-    const clearId = setTimeout(initQrScan, 350);
+    const clearId = setTimeout(initQrScan, 500);
 
     return function willUnMount() {
       log(`[QrReader]: Starting to unmount component`, 'yellow', { debug });
