@@ -1,10 +1,25 @@
 import { getDeviceId } from './utils';
 
+export type GetVideoStreamParams = {
+  /**
+   * Use custom camera constraints that the override default behavior.
+   */
+  constraints?: MediaTrackConstraintSet;
+  /**
+   * The camera to use, especify 'user' for front camera or 'environment' for back camera.
+   */
+  facingMode: VideoFacingModeEnum;
+  /**
+   * The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.
+   */
+  resolution?: number;
+};
+
 export const getVideoStream = async ({
   facingMode,
   constraints,
   resolution,
-}) => {
+}: GetVideoStreamParams): Promise<MediaStream> => {
   // Check browser facingMode constraint support
   // Firefox ignores facingMode or deviceId constraints
   const isFirefox = /firefox/i.test(navigator?.userAgent);
@@ -38,25 +53,43 @@ export const getVideoStream = async ({
   return await navigator.mediaDevices.getUserMedia({ video });
 };
 
-export const getVideoStreamTrack = async ({ preview, stream }) =>
-  new Promise((resolve) => {
-    // Handle different browser implementations of MediaStreams as src
-    if (preview.srcObject !== undefined) {
-      preview.srcObject = stream;
-    } else if (preview.mozSrcObject !== undefined) {
-      preview.mozSrcObject = stream;
-    } else if (window.URL.createObjectURL) {
-      preview.src = window.URL.createObjectURL(stream);
-    } else if (window.webkitURL) {
-      preview.src = window.webkitURL.createObjectURL(stream);
-    } else {
-      preview.src = stream;
+export type PrepareVideoStreamParams = {
+  /**
+   * Video element to use for setting camera stream
+   */
+  preview: HTMLVideoElement | any;
+  /**
+   * Camera stream to setup in the video element
+   */
+  stream: MediaStream;
+};
+
+export const prepareVideoStream = async ({
+  preview,
+  stream,
+}: PrepareVideoStreamParams): Promise<void> =>
+  new Promise((resolve, reject) => {
+    try {
+      window.URL =
+        window.URL ||
+        window.webkitURL ||
+        (window as any).mozURL ||
+        (window as any).msURL;
+
+      if ('srcObject' in preview) {
+        preview.srcObject = stream;
+      } else if ('mozSrcObject' in preview) {
+        preview.mozSrcObject = stream;
+      } else {
+        preview.src =
+          (window.URL && window.URL.createObjectURL(stream)) || stream;
+      }
+
+      // IOS play in fullscreen
+      preview.setAttribute('playsInline', true);
+
+      resolve();
+    } catch (err) {
+      reject(err);
     }
-
-    // IOS play in fullscreen
-    preview.setAttribute('playsInline', true);
-
-    const [streamTrack] = stream.getTracks();
-
-    resolve(streamTrack);
   });

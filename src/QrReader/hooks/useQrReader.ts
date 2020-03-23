@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { getImageData } from '../helpers/image';
 import { isFunction, decodeQR } from '../helpers/utils';
-import { getVideoStream, getVideoStreamTrack } from '../helpers/video';
+import { getVideoStream, prepareVideoStream } from '../helpers/video';
 
 export type UseQrReaderHook = (
   props: UseQrReaderHookProps
@@ -47,7 +47,7 @@ export const useQrReader: UseQrReaderHook = ({
   debug,
 }) => {
   const [mirrorVideo, setMirrorVideo] = useState(false);
-  const [streamTrack, setStreamTrack] = useState(null);
+  const [videoStream, setVideoStream] = useState(null);
 
   const [decodeQrImage, _, terminateWorker] = useWorker(decodeQR, {
     dependencies: ['https://cdn.jsdelivr.net/npm/jsqr@1.2.0/dist/jsQR.min.js'],
@@ -84,7 +84,7 @@ export const useQrReader: UseQrReaderHook = ({
         );
       }
 
-      const streamTrack: any = await getVideoStreamTrack({
+      await prepareVideoStream({
         preview: preview.current,
         stream,
       });
@@ -94,7 +94,7 @@ export const useQrReader: UseQrReaderHook = ({
       }
 
       setMirrorVideo(facingMode === 'user');
-      setStreamTrack(streamTrack);
+      setVideoStream(stream);
 
       if (debug) {
         console.info(`[QrReader]: Start playing MediaTrack on Video Element`);
@@ -107,7 +107,7 @@ export const useQrReader: UseQrReaderHook = ({
           console.info(`[QrReader]: Calling onLoad if exists`);
         }
 
-        onLoad({ mirrorVideo, streamTrack });
+        onLoad({ mirrorVideo, stream });
       }
 
       window.requestAnimationFrame(tryQrScan);
@@ -178,8 +178,8 @@ export const useQrReader: UseQrReaderHook = ({
     return () => {
       terminateWorker();
 
-      if (streamTrack) {
-        streamTrack.stop();
+      if (videoStream) {
+        videoStream.getTracks().forEach((track) => track.stop());
       }
     };
   }, []);
