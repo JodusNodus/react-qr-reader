@@ -5,7 +5,7 @@ module.exports = {
   ],
   extends: 'react-app',
   rules: {
-    'no-console': ['error', { allow: ['warn', 'error'] }],
+    'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
     'no-debugger': 'error',
     'no-var': 'error',
     'react-hooks/rules-of-hooks': 'error',

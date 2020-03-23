@@ -6,7 +6,7 @@
     "analyze": "source-map-explorer pkg/**/*.js pkg/**/*.js.map",
     "clean": "rimraf pkg",
     "build": "npm run clean && pika build",
-    "lint": "eslint 'src/**' --fix",
+    "lint": "eslint --fix 'src/**'",
     "publish": "pika publish",
     "version": "npm run build",
     "storybook": "start-storybook -p 6006",
