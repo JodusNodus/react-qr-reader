@@ -9,10 +9,9 @@ export default {
 const QrReaderWrapper = ({ selectFacingMode, selectDelay, onAndOff }) => {
   const [facingMode, setFacingMode] = useState('user');
   const [delay, setDelay] = useState(500);
+  const [error, setError] = useState({});
   const [data, setData] = useState(null);
   const [on, setOn] = useState(true);
-
-  const ref = useRef({});
 
   return (
     <div style={{ width: '400px', margin: 'auto' }}>
@@ -38,8 +37,16 @@ const QrReaderWrapper = ({ selectFacingMode, selectDelay, onAndOff }) => {
           />
         </div>
       )}
-      {on && <QrReader debug={true} onScan={setData} facingMode={facingMode} />}
+      {on && (
+        <QrReader
+          debug={true}
+          onScan={setData}
+          onError={setError}
+          facingMode={facingMode}
+        />
+      )}
       <p>El valor escaneado es: {JSON.stringify(data, null, 2)}</p>
+      <p>El Error es: {error.message}</p>
     </div>
   );
 };

@@ -19,6 +19,10 @@ export const getImageData = async ({
   canvas,
 }: GetImageDataParams): Promise<ImageData | null> =>
   new Promise((resolve) => {
+    if (!preview) {
+      resolve(null);
+    }
+
     // Get image/video dimensions
     let width = Math.floor(preview.videoWidth);
     let height = Math.floor(preview.videoHeight);
