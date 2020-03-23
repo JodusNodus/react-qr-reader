@@ -1,4 +1,4 @@
-![Qr Reader Logo](./logo.png)
+![Qr Reader Logo](./qr-reader-logo.png)
 
 # React QR Reader [![npm version](https://badge.fury.io/js/%40blackbox-vision%2Freact-qr-reader.svg)](https://badge.fury.io/js/%40blackbox-vision%2Freact-qr-reader) [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Known Vulnerabilities](https://snyk.io/test/github/blackboxvision/react-qr-reader/badge.svg)](https://snyk.io/test/github/blackboxvision/react-qr-reader)
 
