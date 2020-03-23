@@ -94,7 +94,7 @@ export const QrReader: React.FunctionComponent<QrReaderProps> = ({
 
 QrReader.displayName = 'QrReader';
 QrReader.defaultProps = {
-  resolution: 768,
+  resolution: 600,
   constraints: null,
   showViewFinder: true,
   facingMode: 'environment',
