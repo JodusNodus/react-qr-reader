@@ -95,7 +95,7 @@ export const useQrReader: UseQrReaderHook = ({
         console.info(`[QrReader]: Start playing MediaTrack on Video Element`);
       }
 
-      preview.current.play();
+      await preview.current.play();
 
       if (isFunction(onLoad)) {
         if (debug) {
@@ -190,12 +190,27 @@ export const useQrReader: UseQrReaderHook = ({
         );
       }
 
+      if (preview.current) {
+        if (debug) {
+          console.info(`[QrReader]: Cleaning all srcObject`);
+        }
+
+        preview.current.pause();
+
+        preview.current.mozSrcObject = null;
+        preview.current.srcObject = null;
+        preview.current.src = '';
+      }
+
       if (stream) {
         if (debug) {
           console.info(`[QrReader]: Removing all tracks from videoStream`);
         }
 
-        stream.getTracks().forEach((track) => track.stop());
+        stream.getTracks().forEach((track: MediaStreamTrack) => {
+          track.enabled = !track.enabled;
+          track.stop();
+        });
       }
     };
   }, []);
