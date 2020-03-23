@@ -47,8 +47,6 @@ export const useQrReader: UseQrReaderHook = ({
   debug,
 }) => {
   const [mirrorVideo, setMirrorVideo] = useState(false);
-  const [videoStream, setVideoStream] = useState(null);
-
   const [decodeQrImage, _, terminateWorker] = useWorker(decodeQR, {
     dependencies: ['https://cdn.jsdelivr.net/npm/jsqr@1.2.0/dist/jsQR.min.js'],
     timeout: 5000,
@@ -93,9 +91,6 @@ export const useQrReader: UseQrReaderHook = ({
         console.info(`[QrReader]: Finish setup for video and StreamTrack`);
       }
 
-      setMirrorVideo(facingMode === 'user');
-      setVideoStream(stream);
-
       if (debug) {
         console.info(`[QrReader]: Start playing MediaTrack on Video Element`);
       }
@@ -107,16 +102,20 @@ export const useQrReader: UseQrReaderHook = ({
           console.info(`[QrReader]: Calling onLoad if exists`);
         }
 
-        onLoad({ mirrorVideo, stream });
+        onLoad({ mirrorVideo: facingMode === 'user', stream });
       }
 
       window.requestAnimationFrame(tryQrScan);
+
+      return { mirrorVideo: facingMode === 'user', stream };
     } catch (err) {
       if (isFunction(onError)) {
         onError(err);
       }
 
       setTimeout(initQrScan, 200);
+
+      return { mirrorVideo: facingMode === 'user', stream: null };
     }
   }, []);
 
@@ -173,7 +172,9 @@ export const useQrReader: UseQrReaderHook = ({
   }, []);
 
   useEffect(() => {
-    initQrScan();
+    const { mirrorVideo, stream }: any = initQrScan();
+
+    setMirrorVideo(mirrorVideo);
 
     return () => {
       if (debug) {
@@ -189,15 +190,15 @@ export const useQrReader: UseQrReaderHook = ({
         );
       }
 
-      if (videoStream) {
+      if (stream) {
         if (debug) {
           console.info(`[QrReader]: Removing all tracks from videoStream`);
         }
 
-        videoStream.getTracks().forEach((track) => track.stop());
+        stream.getTracks().forEach((track) => track.stop());
       }
     };
-  });
+  }, []);
 
   return [mirrorVideo];
 };

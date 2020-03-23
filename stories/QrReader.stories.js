@@ -38,9 +38,7 @@ const QrReaderWrapper = ({ selectFacingMode, selectDelay, onAndOff }) => {
           />
         </div>
       )}
-      {on && (
-        <QrReader debug={false} onScan={setData} facingMode={facingMode} />
-      )}
+      {on && <QrReader debug={true} onScan={setData} facingMode={facingMode} />}
       <p>El valor escaneado es: {JSON.stringify(data, null, 2)}</p>
     </div>
   );
