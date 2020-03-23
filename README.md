@@ -1,6 +1,6 @@
-<div style="text-align:center;">
-  <img alt="Lib logo" src="./qr-reader-logo.png" style="width:300px" />
-</div>
+<p align="center">
+  <img al width="300" height="380" alt="Lib logo" src="./qr-reader-logo.png" style="width: 300px !important;" />
+</p>
 
 # React QR Reader [![npm version](https://badge.fury.io/js/%40blackbox-vision%2Freact-qr-reader.svg)](https://badge.fury.io/js/%40blackbox-vision%2Freact-qr-reader) [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Known Vulnerabilities](https://snyk.io/test/github/blackboxvision/react-qr-reader/badge.svg)](https://snyk.io/test/github/blackboxvision/react-qr-reader)
 
