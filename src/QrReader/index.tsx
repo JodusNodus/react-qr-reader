@@ -46,9 +46,20 @@ export interface QrReaderProps {
    * It enables debug logs to see what's going on with the QrReader
    */
   debug?: boolean;
+  /**
+   * Color to display in viewFinder
+   */
+  viewFinderColor?: string;
+
+  /**
+   * Width for view finder line borders
+   */
+  viewFinderStrokeWidth?: string;
 }
 
 export const QrReader: React.FunctionComponent<QrReaderProps> = ({
+  viewFinderStrokeWidth,
+  viewFinderColor,
   showViewFinder,
   constraints,
   facingMode,
@@ -75,7 +86,38 @@ export const QrReader: React.FunctionComponent<QrReaderProps> = ({
   return (
     <section className={className} style={style}>
       <section style={styles.container as any}>
-        {showViewFinder && <div style={styles.viewFinder as any} />}
+        {showViewFinder && (
+          <svg
+            width="50px"
+            viewBox="0 0 100 100"
+            style={styles.viewFinder as any}
+          >
+            <path
+              fill="none"
+              d="M13,0 L0,0 L0,13"
+              stroke={viewFinderColor}
+              strokeWidth={viewFinderStrokeWidth}
+            />
+            <path
+              fill="none"
+              d="M0,87 L0,100 L13,100"
+              stroke={viewFinderColor}
+              strokeWidth={viewFinderStrokeWidth}
+            />
+            <path
+              fill="none"
+              d="M87,100 L100,100 L100,87"
+              stroke={viewFinderColor}
+              strokeWidth={viewFinderStrokeWidth}
+            />
+            <path
+              fill="none"
+              d="M100,13 L100,0 87,0"
+              stroke={viewFinderColor}
+              strokeWidth={viewFinderStrokeWidth}
+            />
+          </svg>
+        )}
         <video
           muted
           ref={videoRef}
@@ -98,6 +140,8 @@ QrReader.defaultProps = {
   constraints: null,
   showViewFinder: true,
   facingMode: 'environment',
+  viewFinderColor: 'rgba(255, 0, 0, 0.5)',
+  viewFinderStrokeWidth: '5',
 };
 
 export default QrReader;
