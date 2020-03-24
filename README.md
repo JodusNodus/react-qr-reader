@@ -66,15 +66,17 @@ const Test = (props) => {
 
 ### Options
 
-| Prop           | Type                    | Default       | Description                                                                                                                                                       |
-| -------------- | ----------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| facingMode     | `user` or `environment` | `environment` | Specify which camera should be used (if available).                                                                                                               |
-| resolution     | number                  | `600`         | The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.                |
-| style          | a valid React style     | none          | Styling for the container element. **Warning** The preview will always keep its 1:1 aspect ratio.                                                                 |
-| className      | string                  | none          | ClassName for the container element.                                                                                                                              |
-| showViewFinder | boolean                 | `true`        | Show or hide the build in view finder. See demo                                                                                                                   |
-| constraints    | object                  | `null`        | Use custom camera constraints that the override default behavior. [MediaTrackConstraints](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints) |
-| debug          | boolean                 | `null`        | Enable debug logs to see what's going on inside the component                                                                                                     |
+| Prop                  | Type                    | Default                  | Description                                                                                                                                                       |
+| --------------------- | ----------------------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| facingMode            | `user` or `environment` | `environment`            | Specify which camera should be used (if available).                                                                                                               |
+| resolution            | number                  | `600`                    | The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.                |
+| style                 | a valid React style     | none                     | Styling for the container element. **Warning** The preview will always keep its 1:1 aspect ratio.                                                                 |
+| className             | string                  | none                     | ClassName for the container element.                                                                                                                              |
+| showViewFinder        | boolean                 | `true`                   | Show or hide the build in view finder. See demo                                                                                                                   |
+| constraints           | object                  | `null`                   | Use custom camera constraints that the override default behavior. [MediaTrackConstraints](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints) |
+| debug                 | boolean                 | `null`                   | Enable debug logs to see what's going on inside the component                                                                                                     |
+| viewFinderColor       | string                  | `'rgba(255, 0, 0, 0.5)'` | Change viewFinder color for SVG Path                                                                                                                              |
+| viewFinderStrokeWidth | string                  | `'5'`                    | Change viewFinder width for SVG Path                                                                                                                              |
 
 ## Tested platforms
 
