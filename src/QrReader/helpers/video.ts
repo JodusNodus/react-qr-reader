@@ -70,6 +70,10 @@ export const prepareVideoStream = async ({
 }: PrepareVideoStreamParams): Promise<void> =>
   new Promise((resolve, reject) => {
     try {
+      if (!preview || !stream) {
+        resolve();
+      }
+
       window.URL =
         window.URL ||
         window.webkitURL ||

@@ -23,28 +23,28 @@ export const getImageData = async ({
       resolve(null);
     }
 
-    // Get image/video dimensions
-    let width = Math.floor(preview.videoWidth);
-    let height = Math.floor(preview.videoHeight);
-
-    // Canvas draw offsets
-    let hozOffset = 0;
-    let vertOffset = 0;
-
-    // Crop image to fit 1:1 aspect ratio
-    const smallestSize = width < height ? width : height;
-    const ratio = resolution / smallestSize;
-
-    height = ratio * height;
-    width = ratio * width;
-
-    vertOffset = ((height - resolution) / 2) * -1;
-    hozOffset = ((width - resolution) / 2) * -1;
-
-    canvas.width = resolution;
-    canvas.height = resolution;
-
     if (preview.readyState === preview.HAVE_ENOUGH_DATA) {
+      // Get image/video dimensions
+      let width = Math.floor(preview.videoWidth);
+      let height = Math.floor(preview.videoHeight);
+
+      // Canvas draw offsets
+      let hozOffset = 0;
+      let vertOffset = 0;
+
+      // Crop image to fit 1:1 aspect ratio
+      const smallestSize = width < height ? width : height;
+      const ratio = resolution / smallestSize;
+
+      height = ratio * height;
+      width = ratio * width;
+
+      vertOffset = ((height - resolution) / 2) * -1;
+      hozOffset = ((width - resolution) / 2) * -1;
+
+      canvas.width = resolution;
+      canvas.height = resolution;
+
       const ctx = canvas.getContext('2d', { alpha: false });
 
       ctx.imageSmoothingEnabled = false; // gives less blurry images

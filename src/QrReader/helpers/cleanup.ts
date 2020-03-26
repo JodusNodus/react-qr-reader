@@ -25,32 +25,27 @@ export const clearStreams = (
   streams: MediaStream[],
   { debug }: CleanupOptions
 ): void => {
-  if (streams && streams.length > 0) {
-    log(`[QrReader]: Removing all tracks from videoStream`, 'yellow', {
-      debug,
-    });
+  log(`[QrReader]: Removing all tracks from videoStream`, 'yellow', {
+    debug,
+  });
 
-    const pc: any = new RTCPeerConnection();
+  const pc: any = new RTCPeerConnection();
 
-    streams.forEach((stream: MediaStream | any) => {
+  streams.forEach((stream: MediaStream | any) => {
+    if (stream.stop) {
       // Legacy way for older browsers
-      if ('stop' in stream) {
-        stream.stop();
+      stream.stop && stream.stop();
+      pc.addStream && pc.addStream(stream);
+    } else {
+      // New way for modern browsers
+      stream.getTracks().forEach((track: MediaStreamTrack) => {
+        track.enabled = !track.enabled;
+        track.stop();
 
-        if ('addStream' in pc) {
-          pc.addStream(stream);
-        }
-        // New way for modern browsers
-      } else {
-        stream.getTracks().forEach((track: MediaStreamTrack) => {
-          track.enabled = !track.enabled;
-          track.stop();
-
-          pc.addTrack(track, stream);
-        });
-      }
-    });
-  }
+        pc.addTrack(track, stream);
+      });
+    }
+  });
 };
 
 export const clearFrames = (
@@ -61,11 +56,5 @@ export const clearFrames = (
     debug,
   });
 
-  if (cancelIds && cancelIds.length > 0) {
-    log(`[QrReader]: Killing all previous requestAnimationFrame`, 'yellow', {
-      debug,
-    });
-
-    cancelIds.forEach((cancelId) => window.cancelAnimationFrame(cancelId));
-  }
+  cancelIds.forEach(window.cancelAnimationFrame);
 };
