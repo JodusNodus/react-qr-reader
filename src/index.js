@@ -25,6 +25,7 @@ module.exports = class Reader extends Component {
     onImageLoad: PropTypes.func,
     delay: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
     facingMode: PropTypes.oneOf(['user', 'environment']),
+    cameraId: PropTypes.string,
     legacyMode: PropTypes.bool,
     resolution: PropTypes.number,
     showViewFinder: PropTypes.bool,
@@ -63,7 +64,7 @@ module.exports = class Reader extends Component {
     this.setRefFactory = this.setRefFactory.bind(this)
   }
   componentDidMount() {
-    // Initiate web worker execute handler according to mode.
+     // Initiate web worker execute handler according to mode.
     this.worker = new Worker(URL.createObjectURL(workerBlob))
     this.worker.onmessage = this.handleWorkerMessage
 
@@ -73,7 +74,7 @@ module.exports = class Reader extends Component {
       this.initiateLegacyMode()
     }
   }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     // React according to change in props
     const changedProps = havePropsChanged(this.props, nextProps, propsKeys)
 
@@ -135,32 +136,35 @@ module.exports = class Reader extends Component {
     }
   }
   initiate(props = this.props) {
-    const { onError, facingMode } = props
+    const { onError, facingMode, cameraId } = props
 
     // Check browser facingMode constraint support
     // Firefox ignores facingMode or deviceId constraints
-    const isFirefox = /firefox/i.test(navigator.userAgent)
-    let supported = {}
+    const isFirefox = /firefox/i.test(navigator.userAgent);
+    const isSafari = !!navigator.userAgent.match(/Version\/[\d.]+.*Safari/);
+    
     if (navigator.mediaDevices && typeof navigator.mediaDevices.getSupportedConstraints === 'function') {
-      supported = navigator.mediaDevices.getSupportedConstraints()
-    }
-    const constraints = {}
+      const supported = navigator.mediaDevices.getSupportedConstraints()
+      const constraints = {}
 
-    if(supported.facingMode) {
-      constraints.facingMode = { ideal: facingMode }
-    }
-    if(supported.frameRate) {
-      constraints.frameRate = { ideal: 25, min: 10 }
-    }
+      if (supported.facingMode) {
+        constraints.facingMode = { ideal: facingMode }
+      }
+      if (supported.frameRate) {
+        constraints.frameRate = { ideal: 25, min: 10 }
+      }
 
-    const vConstraintsPromise = (supported.facingMode || isFirefox)
-      ? Promise.resolve(props.constraints || constraints)
-      : getDeviceId(facingMode).then(deviceId => Object.assign({}, { deviceId }, props.constraints))
+      const vConstraintsPromise = (isSafari || isFirefox)
+        ? Promise.resolve(props.constraints || constraints)
+        : getDeviceId(facingMode, undefined, cameraId).then(deviceId => Object.assign({}, { deviceId }, props.constraints))
 
-    vConstraintsPromise
-      .then(video => navigator.mediaDevices.getUserMedia({ video }))
-      .then(this.handleVideo)
-      .catch(onError)
+      vConstraintsPromise
+        .then(video => navigator.mediaDevices.getUserMedia({ video }))
+        .then(this.handleVideo)
+        .catch(onError)
+    } else {
+      console.error('browser does not support "navigator.mediaDevices"');
+    }
   }
   handleVideo(stream) {
     const { preview } = this.els
