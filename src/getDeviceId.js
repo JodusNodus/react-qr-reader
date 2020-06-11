@@ -11,17 +11,17 @@ function defaultDeviceIdChooser(filteredDevices, videoDevices, facingMode) {
 }
 
 const getFacingModePattern = (facingMode) => facingMode == 'environment'
-  ? /rear|back|environment/ig
-  : /front|user|face/ig
+  ? /rear|back|environment/i
+  : /front|user|face/i
 
-function getDeviceId(facingMode, chooseDeviceId = defaultDeviceIdChooser) {
+function getDeviceId(facingMode, chooseDeviceId = defaultDeviceIdChooser, cameraId = 'camera2 0') {
   // Get manual deviceId from available devices.
   return new Promise((resolve, reject) => {
     let enumerateDevices
     try{
-      enumerateDevices = navigator.mediaDevices.enumerateDevices()
+      enumerateDevices = navigator.mediaDevices.enumerateDevices();
     }catch(err){
-      reject(new NoVideoInputDevicesError())
+      reject(new NoVideoInputDevicesError());
     }
     enumerateDevices.then(devices => {
       // Filter out non-videoinputs
@@ -30,15 +30,16 @@ function getDeviceId(facingMode, chooseDeviceId = defaultDeviceIdChooser) {
       )
 
       if (videoDevices.length < 1) {
-        reject(new NoVideoInputDevicesError())
+        reject(new NoVideoInputDevicesError());
         return
       }
 
-      const pattern = getFacingModePattern(facingMode)
+      const pattern = getFacingModePattern(facingMode);
 
       // Filter out video devices without the pattern
-      const filteredDevices = videoDevices.filter(({ label }) =>
-        pattern.test(label))
+      const filteredDevices = videoDevices.filter(({ label }) => {
+        return pattern.test(label) && label.includes(cameraId); 
+      })
 
       resolve(chooseDeviceId(filteredDevices, videoDevices, facingMode))
     })
