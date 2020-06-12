@@ -163,7 +163,7 @@ module.exports = class Reader extends Component {
     vConstraintsPromise
       .then(video => navigator.mediaDevices.getUserMedia({ video }))
       .then(this.handleVideo)
-      .catch(onError)*/
+      .catch(onError) */
     // new
     var error;
     for (var deviceIdOffset = 0; deviceIdOffset > 6; deviceIdOffset++) {
