@@ -1,5 +1,5 @@
 import { useWorker } from '@koale/useworker';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, MutableRefObject } from 'react';
 
 import { getImageData } from '../helpers/image';
 import { isFunction, decodeQR, log } from '../helpers/utils';
@@ -11,6 +11,20 @@ export type UseQrReaderHook = (
 ) => UseQrReaderHookReturnType;
 
 export type UseQrReaderHookReturnType = void;
+export type UseQrReaderRefs = [
+  MutableRefObject<HTMLCanvasElement>,
+  MutableRefObject<HTMLVideoElement>
+];
+export type UseQrReaderCallbacks = [
+  OnLoadFunction,
+  OnScanFunction,
+  OnErrorFunction
+];
+
+// Callbacks
+export type OnScanFunction = (decoded: any) => void;
+export type OnLoadFunction = (stream: MediaStream) => void;
+export type OnErrorFunction = (err: Error) => void;
 
 export type UseQrReaderHookProps = {
   /**
@@ -28,32 +42,34 @@ export type UseQrReaderHookProps = {
   /**
    * Refs of the elements that the components will render
    */
-  refs?: any[];
+  refs?: UseQrReaderRefs;
   /**
-   * Callbacks that the component uses
+   * Callbacks that the hook uses
    */
-  callbacks?: any[];
+  callbacks?: UseQrReaderCallbacks;
   /**
    * It enables debug logs to see what's going on with the QrReader
    */
   debug?: boolean;
 };
 
+const JSQR = 'https://cdn.jsdelivr.net/npm/jsqr@1.2.0/dist/jsQR.min.js';
+
 export const useQrReader: UseQrReaderHook = ({
-  callbacks: [onScan, onLoad, onError],
+  callbacks: [onLoad, onScan, onError],
   refs: [canvas, preview],
   constraints,
   facingMode,
   resolution,
   debug,
 }) => {
-  const cancelIds = useRef([]);
-  const streams = useRef([]);
+  const cancelIds = useRef<number[]>([]);
+  const streams = useRef<MediaStream[]>([]);
 
   // eslint-disable-next-line no-unused-vars
-  const [decodeQrImage, _, clearWorker] = useWorker(decodeQR, {
-    dependencies: ['https://cdn.jsdelivr.net/npm/jsqr@1.2.0/dist/jsQR.min.js'],
-    timeout: 5000,
+  const [decodeQrImage, { kill: clearWorker }] = useWorker(decodeQR, {
+    remoteDependencies: [JSQR],
+    autoTerminate: false,
   });
 
   const tryQrScan = async () => {
@@ -147,7 +163,7 @@ export const useQrReader: UseQrReaderHook = ({
 
       if (isFunction(onLoad)) {
         log(`[QrReader]: Calling onLoad if exists`, 'white', { debug });
-        onLoad({ stream });
+        onLoad(stream);
       }
 
       cancelIds.current.push(window.requestAnimationFrame(tryQrScan));

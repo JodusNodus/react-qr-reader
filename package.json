@@ -75,8 +75,8 @@
     "react-dom": "~16"
   },
   "dependencies": {
-    "@koale/useworker": "^2.1.0",
-    "webrtc-adapter": "^7.5.1"
+    "@koale/useworker": "^3.2.1",
+    "webrtc-adapter": "^7.7.0"
   },
   "@pika/pack": {
     "pipeline": [

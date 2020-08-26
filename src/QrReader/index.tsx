@@ -3,7 +3,12 @@ import styles from './styles';
 import 'webrtc-adapter';
 import React, { useRef } from 'react';
 
-import { useQrReader } from './hooks/useQrReader';
+import {
+  useQrReader,
+  OnErrorFunction,
+  OnScanFunction,
+  OnLoadFunction,
+} from './hooks/useQrReader';
 
 export interface QrReaderProps {
   /**
@@ -29,15 +34,15 @@ export interface QrReaderProps {
   /**
    * Called when an error occurs.
    */
-  onError?: any;
+  onError?: OnErrorFunction;
   /**
    * Scan event handler. Called every scan with the decoded value or null if no QR code was found.
    */
-  onScan?: any;
+  onScan?: OnScanFunction;
   /**
    * Called when the component is ready for use.
    */
-  onLoad?: any;
+  onLoad?: OnLoadFunction;
   /**
    * Styling for the container element. Warning The preview will always keep its 1:1 aspect ratio.
    */
@@ -71,11 +76,11 @@ export const QrReader: React.FunctionComponent<QrReaderProps> = ({
   style,
   debug,
 }: QrReaderProps) => {
-  const canvasRef = useRef(null);
-  const videoRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useQrReader({
-    callbacks: [onScan, onLoad, onError],
+    callbacks: [onLoad, onScan, onError],
     refs: [canvasRef, videoRef],
     constraints,
     facingMode,
