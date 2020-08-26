@@ -1,18 +1,5 @@
-import { log } from './utils';
-
-export type CleanupOptions = {
-  debug?: boolean;
-};
-
-export const clearPreview = (
-  preview: HTMLVideoElement | any,
-  { debug }: CleanupOptions
-): void => {
+export const clearPreview = (preview: HTMLVideoElement | any): void => {
   if (preview) {
-    log(`[QrReader]: Cleaning all properties from video element`, 'yellow', {
-      debug,
-    });
-
     preview.pause();
 
     preview.mozSrcObject = null;
@@ -21,14 +8,7 @@ export const clearPreview = (
   }
 };
 
-export const clearStreams = (
-  streams: MediaStream[],
-  { debug }: CleanupOptions
-): void => {
-  log(`[QrReader]: Removing all tracks from videoStream`, 'yellow', {
-    debug,
-  });
-
+export const clearStreams = (streams: MediaStream[]): void => {
   const pc: any = new RTCPeerConnection();
 
   streams.forEach((stream: MediaStream | any) => {
@@ -48,13 +28,6 @@ export const clearStreams = (
   });
 };
 
-export const clearFrames = (
-  cancelIds: number[],
-  { debug }: CleanupOptions
-): void => {
-  log(`[QrReader]: Trying to cancel requestAnimationFrame`, 'yellow', {
-    debug,
-  });
-
+export const clearFrames = (cancelIds: number[]): void => {
   cancelIds.forEach(window.cancelAnimationFrame);
 };

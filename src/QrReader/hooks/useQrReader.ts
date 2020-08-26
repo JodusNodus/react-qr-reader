@@ -1,8 +1,8 @@
 import { useWorker } from '@koale/useworker';
 import { useEffect, useRef, MutableRefObject } from 'react';
 
+import { decodeQR } from '../helpers/utils';
 import { getImageData } from '../helpers/image';
-import { isFunction, decodeQR, log } from '../helpers/utils';
 import { getVideoStream, prepareVideoStream } from '../helpers/video';
 import { clearFrames, clearPreview, clearStreams } from '../helpers/cleanup';
 
@@ -11,10 +11,12 @@ export type UseQrReaderHook = (
 ) => UseQrReaderHookReturnType;
 
 export type UseQrReaderHookReturnType = void;
+
 export type UseQrReaderRefs = [
   MutableRefObject<HTMLCanvasElement>,
   MutableRefObject<HTMLVideoElement>
 ];
+
 export type UseQrReaderCallbacks = [
   OnLoadFunction,
   OnScanFunction,
@@ -25,6 +27,12 @@ export type UseQrReaderCallbacks = [
 export type OnScanFunction = (decoded: any) => void;
 export type OnLoadFunction = (stream: MediaStream) => void;
 export type OnErrorFunction = (err: Error) => void;
+
+// Data Types
+export type DebugDataTypes = 'raw_data' | 'load' | 'value' | 'error';
+
+// Debug Function
+export type DebugFunction = (data: any, type: DebugDataTypes) => void;
 
 export type UseQrReaderHookProps = {
   /**
@@ -50,7 +58,7 @@ export type UseQrReaderHookProps = {
   /**
    * It enables debug logs to see what's going on with the QrReader
    */
-  debug?: boolean;
+  debug?: DebugFunction;
 };
 
 const JSQR = 'https://cdn.jsdelivr.net/npm/jsqr@1.2.0/dist/jsQR.min.js';
@@ -74,63 +82,37 @@ export const useQrReader: UseQrReaderHook = ({
 
   const tryQrScan = async () => {
     try {
-      log(`[QrReader]: Starting to scan for QR codes`, 'white', { debug });
-
       const data: ImageData = await getImageData({
         preview: preview.current,
         canvas: canvas.current,
         resolution,
       });
 
-      log(`[QrReader]: Getting image preview from MediaTrack`, 'white', {
-        debug,
-      });
+      debug && debug(data, 'raw_data');
 
-      if (!!data) {
-        log(`[QrReader]: Decoding image ...`, 'white', { debug });
+      if (!data) {
+        throw '[QrReader]: error while trying to decode value';
+      }
 
-        const decoded: any = await decodeQrImage(data);
+      const decoded: any = await decodeQrImage(data);
 
-        log(
-          `[QrReader]: Decoded image value: ${JSON.stringify(
-            decoded,
-            null,
-            2
-          )}`,
-          'white',
-          { debug }
-        );
-
-        if (isFunction(onScan)) {
-          log(`[QrReader]: Calling onScan to pass decoded value`, 'white', {
-            debug,
-          });
-
-          onScan(decoded);
-        }
+      if (typeof onScan === 'function') {
+        debug && debug(decoded, 'value');
+        onScan(decoded);
       }
     } catch (err) {
-      if (isFunction(onError)) {
-        log(`[QrReader]: Calling onError to pass current error`, 'red', {
-          debug,
-        });
-
+      if (typeof onError === 'function') {
+        debug && debug(err, 'error');
         onError(err);
       }
     } finally {
-      log(`[QrReader]: Retry scan in another round ...`, 'yellow', { debug });
-
-      cancelIds.current.push(window.requestAnimationFrame(tryQrScan));
+      const cancelID = window.requestAnimationFrame(tryQrScan);
+      cancelIds.current.push(cancelID);
     }
   };
 
   const initQrScan = async () => {
     try {
-      log(`[QrReader]: Initializing QrScanner`, 'white', { debug });
-      log(`[QrReader]: Getting video stream to setup video element`, 'white', {
-        debug,
-      });
-
       const stream = await getVideoStream({
         constraints,
         resolution,
@@ -139,37 +121,23 @@ export const useQrReader: UseQrReaderHook = ({
 
       streams.current.push(stream);
 
-      log(
-        `[QrReader]: Setting up Video Element and getting StreamTrack`,
-        'white',
-        {
-          debug,
-        }
-      );
-
       await prepareVideoStream({
         preview: preview.current,
         stream,
       });
 
-      log(`[QrReader]: Finish setup for video and StreamTrack`, 'white', {
-        debug,
-      });
-      log(`[QrReader]: Start playing MediaTrack on Video Element`, 'white', {
-        debug,
-      });
-
       await preview.current.play();
 
-      if (isFunction(onLoad)) {
-        log(`[QrReader]: Calling onLoad if exists`, 'white', { debug });
+      if (typeof onLoad === 'function') {
+        debug && debug(stream, 'load');
         onLoad(stream);
       }
 
-      cancelIds.current.push(window.requestAnimationFrame(tryQrScan));
+      const cancelID = window.requestAnimationFrame(tryQrScan);
+      cancelIds.current.push(cancelID);
     } catch (err) {
-      if (isFunction(onError)) {
-        log(`[QrReader]: Calling onError if exists`, 'red', { debug });
+      if (typeof onError === 'function') {
+        debug && debug(err, 'error');
         onError(err);
       }
     }
@@ -178,21 +146,12 @@ export const useQrReader: UseQrReaderHook = ({
   useEffect(() => {
     const clearId = setTimeout(initQrScan, 500);
 
-    return function willUnMount() {
-      log(`[QrReader]: Starting to unmount component`, 'yellow', { debug });
-      log(`[QrReader]: Killing QR Reader WebWorker thread`, 'yellow', {
-        debug,
-      });
-
+    return () => {
       clearWorker();
-
-      log(`[QrReader]: Trying to cancel timeouts`, 'yellow', { debug });
-
       clearTimeout(clearId);
-
-      clearFrames(cancelIds.current, { debug });
-      clearPreview(preview.current, { debug });
-      clearStreams(streams.current, { debug });
+      clearFrames(cancelIds.current);
+      clearPreview(preview.current);
+      clearStreams(streams.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

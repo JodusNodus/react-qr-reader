@@ -71,6 +71,10 @@ const Test = (props) => {
   return (
     <>
       <QrReader
+        debug={(data, type) => {
+          console.info('type', type);
+          console.info('data', data);
+        }}
         onScan={handleScan}
         onError={handleError}
         style={{ width: '100%' }}
@@ -93,7 +97,7 @@ The `QrReader` component has the following props:
 | className             | string                  | none                     | ClassName for the container element.                                                                                                                              |
 | showViewFinder        | boolean                 | `true`                   | Show or hide the build in view finder. See demo                                                                                                                   |
 | constraints           | object                  | `null`                   | Use custom camera constraints that the override default behavior. [MediaTrackConstraints](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints) |
-| debug                 | boolean                 | `null`                   | Enable debug logs to see what's going on inside the component                                                                                                     |
+| debug                 | function                | `null`                   | Enable debug logs to see what's going on inside the component                                                                                                     |
 | viewFinderColor       | string                  | `'rgba(255, 0, 0, 0.5)'` | Change viewFinder color for SVG Path                                                                                                                              |
 | viewFinderStrokeWidth | string                  | `'5'`                    | Change viewFinder width for SVG Path                                                                                                                              |
 | onScan                | `decoded`               | none                     | Scan event handler. Called every scan with the decoded value or `null` if no QR code was found                                                                    |

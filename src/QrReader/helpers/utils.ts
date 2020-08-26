@@ -45,15 +45,3 @@ export const decodeQR = ({ data, width, height }: ImageData): any => {
     return decoded?.data;
   }
 };
-
-export type LogOptions = {
-  debug?: boolean;
-};
-
-export type Color = 'green' | 'red' | 'yellow' | 'white';
-
-export const log = (msg: string, color: Color, { debug }: LogOptions): void => {
-  debug && console.log(`%c${msg}`, `color:${color};font-weight:bold;`);
-};
-
-export const isFunction = (val: any) => typeof val === 'function';

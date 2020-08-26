@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { actions } from '@storybook/addon-actions';
+import React, { useState } from 'react';
+
 import { QrReader } from '../src';
 
 export default {
@@ -39,7 +39,10 @@ const QrReaderWrapper = ({ selectFacingMode, selectDelay, onAndOff }) => {
       )}
       {on && (
         <QrReader
-          debug={true}
+          debug={(data, type) => {
+            console.info('type', type);
+            console.info('data', data);
+          }}
           onScan={setData}
           onError={setError}
           facingMode={facingMode}

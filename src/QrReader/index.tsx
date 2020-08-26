@@ -8,6 +8,7 @@ import {
   OnErrorFunction,
   OnScanFunction,
   OnLoadFunction,
+  DebugFunction,
 } from './hooks/useQrReader';
 
 export interface QrReaderProps {
@@ -48,9 +49,9 @@ export interface QrReaderProps {
    */
   style?: any;
   /**
-   * It enables debug logs to see what's going on with the QrReader
+   * Function that takes a context and gives you the choice to log
    */
-  debug?: boolean;
+  debug?: DebugFunction;
   /**
    * Color to display in viewFinder
    */
