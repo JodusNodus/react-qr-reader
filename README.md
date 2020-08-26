@@ -6,7 +6,34 @@
 
 :rocket: React QR Reader component. Check out the [demo](https://codesandbox.io/s/qrreader-u2mcu).
 
-## Install
+## Table of contents
+
+- [Use Case](#use-case)
+- [Compatibility](#compatibility)
+- [Installation](#installation)
+  - [NPM](#npm)
+  - [YARN](#yarn)
+- [Example Usage](#example-usage)
+- [QrReader API](#component-api)
+- [Issues](#issues)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Use Case
+
+You need a component for Scanning QR codes from a web browser based app.
+
+## Compatibility
+
+This component has been tested in the following browsers:
+
+- Chrome Mac OS & Android
+- Firefox Mac OS & Android
+- Safari Mac OS & IOS
+
+Since this library does internal use of hooks you need `React >= 16.8.0`.
+
+## Installation
 
 You can install this library via NPM or YARN.
 
@@ -22,9 +49,9 @@ npm i @blackbox-vision/react-qr-reader
 yarn add @blackbox-vision/react-qr-reader
 ```
 
-## Usage
+## Example Usage
 
-The usage is really simple:
+After reading and performing the previous steps, you should be able to import the library and use it like in this example:
 
 ```javascript
 import React, { useState } from 'react';
@@ -54,19 +81,11 @@ const Test = (props) => {
 };
 ```
 
-## Props
+## Component API
 
-### Events
+The `QrReader` component has the following props:
 
-| Prop    | Argument  | Description                                                                                     |
-| ------- | --------- | ----------------------------------------------------------------------------------------------- |
-| onScan  | `decoded` | Scan event handler. Called every scan with the decoded value or `null` if no QR code was found. |
-| onError | `err`     | Called when an error occurs.                                                                    |
-| onLoad  | `stream`  | Called when the component is ready for use.                                                     |
-
-### Options
-
-| Prop                  | Type                    | Default                  | Description                                                                                                                                                       |
+| Properties            | Types                   | Default Value            | Description                                                                                                                                                       |
 | --------------------- | ----------------------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | facingMode            | `user` or `environment` | `environment`            | Specify which camera should be used (if available).                                                                                                               |
 | resolution            | number                  | `600`                    | The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.                |
@@ -77,12 +96,9 @@ const Test = (props) => {
 | debug                 | boolean                 | `null`                   | Enable debug logs to see what's going on inside the component                                                                                                     |
 | viewFinderColor       | string                  | `'rgba(255, 0, 0, 0.5)'` | Change viewFinder color for SVG Path                                                                                                                              |
 | viewFinderStrokeWidth | string                  | `'5'`                    | Change viewFinder width for SVG Path                                                                                                                              |
-
-## Tested platforms
-
-- Chrome Mac OS & Android
-- Firefox Mac OS & Android
-- Safari Mac OS & IOS
+| onScan                | `decoded`               | none                     | Scan event handler. Called every scan with the decoded value or `null` if no QR code was found                                                                    |
+| onError               | `err`                   | none                     | Called when an error occurs                                                                                                                                       |
+| onLoad                | `stream`                | none                     | Called when the component is ready for use                                                                                                                        |
 
 ## Issues
 
