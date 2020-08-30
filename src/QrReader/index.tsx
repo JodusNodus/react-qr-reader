@@ -1,6 +1,5 @@
 import styles from './styles';
 
-import 'webrtc-adapter';
 import React, { useRef } from 'react';
 
 import {
@@ -11,15 +10,11 @@ import {
   DebugFunction,
 } from './hooks/useQrReader';
 
-export interface QrReaderProps {
+export type QrReaderProps = {
   /**
    * The camera to use, especify 'user' for front camera or 'environment' for back camera.
    */
   facingMode: VideoFacingModeEnum;
-  /**
-   * Show or hide the build in view finder.
-   */
-  showViewFinder: boolean;
   /**
    * The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.
    */
@@ -53,23 +48,16 @@ export interface QrReaderProps {
    */
   debug?: DebugFunction;
   /**
-   * Color to display in viewFinder
+   * Property that represents the view finder component
    */
-  viewFinderColor?: string;
-
-  /**
-   * Width for view finder line borders
-   */
-  viewFinderStrokeWidth?: string;
-}
+  ViewFinder: (props: any) => React.ReactElement<any, any> | null;
+};
 
 export const QrReader: React.FunctionComponent<QrReaderProps> = ({
-  viewFinderStrokeWidth,
-  viewFinderColor,
-  showViewFinder,
   constraints,
   facingMode,
   resolution,
+  ViewFinder,
   className,
   onError,
   onScan,
@@ -92,38 +80,7 @@ export const QrReader: React.FunctionComponent<QrReaderProps> = ({
   return (
     <section className={className} style={style}>
       <section style={styles.container as any}>
-        {showViewFinder && (
-          <svg
-            width="50px"
-            viewBox="0 0 100 100"
-            style={styles.viewFinder as any}
-          >
-            <path
-              fill="none"
-              d="M13,0 L0,0 L0,13"
-              stroke={viewFinderColor}
-              strokeWidth={viewFinderStrokeWidth}
-            />
-            <path
-              fill="none"
-              d="M0,87 L0,100 L13,100"
-              stroke={viewFinderColor}
-              strokeWidth={viewFinderStrokeWidth}
-            />
-            <path
-              fill="none"
-              d="M87,100 L100,100 L100,87"
-              stroke={viewFinderColor}
-              strokeWidth={viewFinderStrokeWidth}
-            />
-            <path
-              fill="none"
-              d="M100,13 L100,0 87,0"
-              stroke={viewFinderColor}
-              strokeWidth={viewFinderStrokeWidth}
-            />
-          </svg>
-        )}
+        {!!ViewFinder && <ViewFinder />}
         <video
           muted
           ref={videoRef}
@@ -144,10 +101,7 @@ QrReader.displayName = 'QrReader';
 QrReader.defaultProps = {
   resolution: 600,
   constraints: null,
-  showViewFinder: true,
   facingMode: 'environment',
-  viewFinderColor: 'rgba(255, 0, 0, 0.5)',
-  viewFinderStrokeWidth: '5',
 };
 
 export default QrReader;

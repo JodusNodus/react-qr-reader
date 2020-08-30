@@ -10,6 +10,7 @@
 
 - [Use Case](#use-case)
 - [Compatibility](#compatibility)
+- [Supporting Older Browsers](#supporting-older-browsers)
 - [Installation](#installation)
   - [NPM](#npm)
   - [YARN](#yarn)
@@ -32,6 +33,24 @@ This component has been tested in the following browsers:
 - Safari Mac OS & IOS
 
 Since this library does internal use of hooks you need `React >= 16.8.0`.
+
+## Supporting Older Browsers
+
+This library uses the `WebRTC APIs` supported in [modern browsers](https://caniuse.com/#search=webrtc).
+
+If you're supporting older browers you'll need to perform the following steps:
+
+1. Install `webrtc-adapter` library:
+
+```bash
+npm i webrtc-adapter
+```
+
+2. Import the shim from the root of your app:
+
+```javascript
+import 'webrtc-adapter';
+```
 
 ## Installation
 
@@ -89,20 +108,18 @@ const Test = (props) => {
 
 The `QrReader` component has the following props:
 
-| Properties            | Types                   | Default Value            | Description                                                                                                                                                       |
-| --------------------- | ----------------------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| facingMode            | `user` or `environment` | `environment`            | Specify which camera should be used (if available).                                                                                                               |
-| resolution            | number                  | `600`                    | The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.                |
-| style                 | a valid React style     | none                     | Styling for the container element. **Warning** The preview will always keep its 1:1 aspect ratio.                                                                 |
-| className             | string                  | none                     | ClassName for the container element.                                                                                                                              |
-| showViewFinder        | boolean                 | `true`                   | Show or hide the build in view finder. See demo                                                                                                                   |
-| constraints           | object                  | `null`                   | Use custom camera constraints that the override default behavior. [MediaTrackConstraints](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints) |
-| debug                 | function                | `null`                   | Enable debug logs to see what's going on inside the component                                                                                                     |
-| viewFinderColor       | string                  | `'rgba(255, 0, 0, 0.5)'` | Change viewFinder color for SVG Path                                                                                                                              |
-| viewFinderStrokeWidth | string                  | `'5'`                    | Change viewFinder width for SVG Path                                                                                                                              |
-| onScan                | `decoded`               | none                     | Scan event handler. Called every scan with the decoded value or `null` if no QR code was found                                                                    |
-| onError               | `err`                   | none                     | Called when an error occurs                                                                                                                                       |
-| onLoad                | `stream`                | none                     | Called when the component is ready for use                                                                                                                        |
+| Properties  | Types                   | Default Value | Description                                                                                                                                                       |
+| ----------- | ----------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| facingMode  | `user` or `environment` | `environment` | Specify which camera should be used (if available).                                                                                                               |
+| resolution  | number                  | `600`         | The resolution of the video (or image in legacyMode). Larger resolution will increase the accuracy but it will also slow down the processing time.                |
+| style       | a valid React style     | none          | Styling for the container element. **Warning** The preview will always keep its 1:1 aspect ratio.                                                                 |
+| className   | string                  | none          | ClassName for the container element.                                                                                                                              |
+| constraints | object                  | `null`        | Use custom camera constraints that the override default behavior. [MediaTrackConstraints](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints) |
+| debug       | function                | `null`        | Enable debug logs to see what's going on inside the component                                                                                                     |
+| ViewFinder  | component               | -             | ViewFinder component to rendering over the video element                                                                                                          |
+| onScan      | `decoded`               | none          | Scan event handler. Called every scan with the decoded value or `null` if no QR code was found                                                                    |
+| onError     | `err`                   | none          | Called when an error occurs                                                                                                                                       |
+| onLoad      | `stream`                | none          | Called when the component is ready for use                                                                                                                        |
 
 ## Issues
 
