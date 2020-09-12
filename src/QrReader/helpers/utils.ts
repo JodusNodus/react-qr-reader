@@ -1,36 +1,57 @@
-export const getFacingModePattern = (facingMode: VideoFacingModeEnum): RegExp =>
-  facingMode === 'environment'
-    ? /rear|back|environment/gi
-    : /front|user|face/gi;
-
 export const getDeviceId = async (
   facingMode: VideoFacingModeEnum
 ): Promise<string> => {
-  const devices = await navigator.mediaDevices.enumerateDevices();
-  const videoDevices = devices.filter(({ kind }) => kind === 'videoinput');
+  let videoInputDevices = await navigator.mediaDevices.enumerateDevices();
 
-  if (videoDevices.length < 1) {
+  videoInputDevices = videoInputDevices.filter(
+    (deviceInfo: MediaDeviceInfo) => deviceInfo.kind === 'videoinput'
+  );
+
+  if (videoInputDevices.length < 1) {
     throw new Error('No video input devices found');
   }
 
-  const pattern = getFacingModePattern(facingMode);
+  const regex =
+    facingMode === 'environment'
+      ? /rear|back|environment/gi
+      : /front|user|face/gi;
 
-  // Filter out video devices without the pattern
-  const filteredDevices = videoDevices.filter(({ label }) =>
-    pattern.test(label)
+  const devices = await Promise.all(
+    videoInputDevices
+      .filter((videoDevice: MediaDeviceInfo) => regex.test(videoDevice.label))
+      .map(async (videoDevice: MediaDeviceInfo) => {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: { deviceId: { exact: videoDevice.deviceId } },
+          });
+
+          stream.getVideoTracks().forEach((track) => {
+            track.getCapabilities();
+            track.getSettings();
+          });
+
+          stream.getTracks().forEach((track) => track.stop());
+
+          return {
+            deviceId: videoDevice.deviceId,
+            streamError: false,
+          };
+        } catch (err) {
+          return {
+            deviceId: videoDevice.deviceId,
+            streamError: true,
+          };
+        }
+      })
   );
 
-  const [filtered] = filteredDevices;
+  const [device] = devices.filter((device) => !device.streamError);
 
-  if (filtered) {
-    return filtered.deviceId;
+  if (!device) {
+    throw new Error('No video input devices found');
   }
 
-  const [first, second] = videoDevices;
-
-  return videoDevices.length === 1 || facingMode === 'user'
-    ? first.deviceId
-    : second.deviceId;
+  return device.deviceId;
 };
 
 export const decodeQR = ({ data, width, height }: ImageData): any => {
