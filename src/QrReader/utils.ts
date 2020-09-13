@@ -1,8 +1,7 @@
 export const getDeviceId = async (
+  videoInputDevices: MediaDeviceInfo[],
   facingMode: VideoFacingModeEnum
 ): Promise<string> => {
-  let videoInputDevices = await navigator.mediaDevices.enumerateDevices();
-
   videoInputDevices = videoInputDevices.filter(
     (deviceInfo: MediaDeviceInfo) => deviceInfo.kind === 'videoinput'
   );
@@ -52,17 +51,4 @@ export const getDeviceId = async (
   }
 
   return device.deviceId;
-};
-
-export const decodeQR = ({ data, width, height }: ImageData): any => {
-  // eslint-disable-next-line no-restricted-globals
-  const decoded = (self as any).jsQR(data, width, height, {
-    inversionAttempts: 'attemptBoth',
-  });
-
-  try {
-    return JSON.parse(decoded?.data);
-  } catch (err) {
-    return decoded?.data;
-  }
 };
