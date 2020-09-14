@@ -12,9 +12,9 @@ class LegacyModeExample extends Component {
     this.handleScan = this.handleScan.bind(this)
     this.openImageDialog = this.openImageDialog.bind(this)
   }
-  handleScan(result){
-    if(result){
-      this.setState({ result })
+  handleScan({ data }){
+    if(data){
+      this.setState({ result: data })
     }
   }
   handleError(err){
