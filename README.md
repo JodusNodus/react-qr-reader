@@ -57,6 +57,46 @@ class Test extends Component {
 
 ```
 
+### Legacy Mode
+
+```js
+import React, { useState, useRef } from 'react'
+import QrReader from 'react-qr-reader'
+
+onst QrScanner = () => {
+  const reader = useRef(null)
+
+  const [code, setCode] = useState('')
+
+  const handleScan = (data) => {
+    setCode(data)
+  }
+
+  const handleError = (err) => {
+    console.error(err)
+  }
+
+  const openImageDialog = () => {
+    reader.current.openImageDialog()
+  }
+
+  return (
+    <div>
+      <QrReader
+        ref={reader}
+        onError={handleError}
+        onScan={handleScan}
+        legacyMode
+      />
+      <input type='button' value='Submit QR Code' onClick={openImageDialog} />
+      <p>{code}</p>
+    </div>
+  )
+}
+
+export default QrScanner
+```
+
 ## Props
 
 ### Events
