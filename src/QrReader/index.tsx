@@ -37,7 +37,7 @@ export const QrReader: React.FC<QrReaderProps> = ({
 
 QrReader.displayName = 'QrReader';
 QrReader.defaultProps = {
-  facingMode: 'environment',
+  facingMode: 'user',
   videoId: 'video',
   scanDelay: 500,
 };
