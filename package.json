@@ -44,12 +44,12 @@
     "gulp-concat": "^2.6.1",
     "gulp-inline-str": "^0.1.0",
     "gulp-uglify": "^2.0.0",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3"
+    "react": ">=16.8.3",
+    "react-dom": ">=16.8.3"
   },
   "peerDependencies": {
-    "react": "~16",
-    "react-dom": "~16"
+    "react": ">=16",
+    "react-dom": ">=16"
   },
   "dependencies": {
     "jsqr": "^1.2.0",
