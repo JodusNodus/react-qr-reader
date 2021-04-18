@@ -312,10 +312,14 @@ module.exports = class Reader extends Component {
       onImageLoad,
       legacyMode,
       showViewFinder,
-      facingMode
+      facingMode,
+      containerStyle,
+      viewFinderStyle,
+      videoPreviewStyle,
+      imgPreviewStyle,
     } = this.props
 
-    const containerStyle = {
+    const defaultContainerStyle = {
       overflow: 'hidden',
       position: 'relative',
       width: '100%',
@@ -331,17 +335,17 @@ module.exports = class Reader extends Component {
       width: '100%',
       height: '100%',
     }
-    const videoPreviewStyle = {
+    const defaultVideoPreviewStyle = {
       ...previewStyle,
       objectFit: 'cover',
       transform: this.state.mirrorVideo ? 'scaleX(-1)' : undefined,
     }
-    const imgPreviewStyle = {
+    const defaultImgPreviewStyle = {
       ...previewStyle,
       objectFit: 'scale-down',
     }
 
-    const viewFinderStyle = {
+    const defaultViewFinderStyle = {
       top: 0,
       left: 0,
       zIndex: 1,
@@ -355,10 +359,10 @@ module.exports = class Reader extends Component {
 
     return (
       <section className={className} style={style}>
-        <section style={containerStyle}>
+        <section style={containerStyle? containerStyle : defaultContainerStyle}>
           {
             (!legacyMode && showViewFinder)
-            ? <div style={viewFinderStyle} />
+            ? <div style={viewFinderStyle? viewFinderStyle : defaultVideoPreviewStyle} />
             : null
           }
           {
@@ -374,8 +378,8 @@ module.exports = class Reader extends Component {
           }
           {
             legacyMode
-              ? <img style={imgPreviewStyle} ref={this.setRefFactory('img')} onLoad={onImageLoad} />
-              : <video style={videoPreviewStyle} ref={this.setRefFactory('preview')} />
+              ? <img style={imgPreviewStyle? imgPreviewStyle : defaultImgPreviewStyle} ref={this.setRefFactory('img')} onLoad={onImageLoad} />
+              : <video style={videoPreviewStyle? videoPreviewStyle : defaultVideoPreviewStyle} ref={this.setRefFactory('preview')} />
           }
 
           <canvas style={hiddenStyle} ref={this.setRefFactory('canvas')} />
