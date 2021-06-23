@@ -1,6 +1,6 @@
 {
   "name": "@blackbox-vision/react-qr-reader",
-  "version": "3.0.1",
+  "version": "4.0.0-2",
   "description": "A React Component for reading QR codes from the webcam",
   "scripts": {
     "analyze": "source-map-explorer pkg/**/*.js pkg/**/*.js.map",
@@ -30,8 +30,8 @@
   },
   "homepage": "https://github.com/BlackBoxVision/react-qr-reader#readme",
   "devDependencies": {
-    "@babel/core": "^7.11.6",
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/core": "^7.12.0",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
     "@babel/plugin-proposal-optional-chaining": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
@@ -43,18 +43,17 @@
     "@pika/plugin-build-types": "^0.9.2",
     "@pika/plugin-build-web": "^0.9.2",
     "@pika/plugin-standard-pkg": "^0.9.2",
-    "@storybook/addon-actions": "^6.0.21",
-    "@storybook/addon-links": "^6.0.21",
-    "@storybook/addons": "^6.0.21",
-    "@storybook/react": "^6.0.21",
-    "@storybook/storybook-deployer": "^2.8.6",
+    "@storybook/addon-essentials": "^6.1.21",
+    "@storybook/react": "^6.1.21",
+    "@storybook/storybook-deployer": "^2.8.7",
     "@types/react": "^16.9.49",
     "@typescript-eslint/eslint-plugin": "^4.1.0",
     "@typescript-eslint/parser": "^4.1.0",
-    "@zxing/library": "^0.17.1",
+    "@zxing/browser": "0.0.7",
+    "@zxing/library": "^0.18.3",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
-    "eslint": "^7.9.0",
+    "eslint": "^7.18.0",
     "eslint-config-react-app": "^5.2.1",
     "eslint-plugin-flowtype": "^5.2.0",
     "eslint-plugin-import": "^2.22.0",
@@ -74,7 +73,8 @@
   "peerDependencies": {
     "react": "~16",
     "react-dom": "~16",
-    "@zxing/library": "^0.17.1"
+    "@zxing/browser": "0.0.7",
+    "@zxing/library": "^0.18.3"
   },
   "@pika/pack": {
     "pipeline": [
@@ -103,5 +103,6 @@
       "prettier --write",
       "git add"
     ]
-  }
+  },
+  "dependencies": {}
 }

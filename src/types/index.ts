@@ -1,22 +1,15 @@
-import { BrowserQRCodeReader, Result } from '@zxing/library';
+import { BrowserQRCodeReader } from '@zxing/browser';
+import { Result } from '@zxing/library';
 
 export type QrReaderProps = {
   /**
-   * The camera to use, especify 'user' for front camera or 'environment' for back camera.
+   * Media track constraints object, to specify which camera and capabilities to use
    */
-  facingMode: VideoFacingModeEnum;
-  /**
-   * ClassName for the container element.
-   */
-  className?: string;
+  constraints: MediaTrackConstraints;
   /**
    * Called when an error occurs.
    */
   onResult?: OnResultFunction;
-  /**
-   * Styling for the container element. Warning The preview will always keep its 1:1 aspect ratio.
-   */
-  style?: any;
   /**
    * Property that represents the view finder component
    */
@@ -31,23 +24,15 @@ export type QrReaderProps = {
   videoId?: string;
 };
 
-export type CodeReaderError =
-  | 'FormatException'
-  | 'NotFoundException'
-  | 'ChecksumException'
-  | 'NoDeviceFoundException'
-  | 'NoMediaDevicesSupportException';
-
-export type UseQrReaderHook = (props: UseQrReaderHookProps) => void;
 export type OnResultFunction = (
   /**
    * The QR values extracted by Zxing
    */
-  result?: Result,
+  result?: Result | undefined | null,
   /**
    * The name of the exceptions thrown while reading the QR
    */
-  error?: CodeReaderError,
+  error?: Error | undefined | null,
   /**
    * The instance of the QR browser reader
    */
@@ -56,9 +41,9 @@ export type OnResultFunction = (
 
 export type UseQrReaderHookProps = {
   /**
-   * The camera to use, especify 'user' for front camera or 'environment' for back camera.
+   * Media constraints object, to specify which camera and capabilities to use
    */
-  facingMode?: VideoFacingModeEnum;
+  constraints?: MediaTrackConstraints;
   /**
    * Callback for retrieving the result
    */
@@ -72,3 +57,5 @@ export type UseQrReaderHookProps = {
    */
   videoId?: string;
 };
+
+export type UseQrReaderHook = (props: UseQrReaderHookProps) => void;

@@ -1,54 +1,24 @@
-export const getDeviceId = async (
-  videoInputDevices: MediaDeviceInfo[],
-  facingMode: VideoFacingModeEnum
-): Promise<string> => {
-  videoInputDevices = videoInputDevices.filter(
-    (deviceInfo: MediaDeviceInfo) => deviceInfo.kind === 'videoinput'
-  );
+export const isMediaDevicesSupported = () => {
+  const isMediaDevicesSupported =
+    typeof navigator !== 'undefined' && !!navigator.mediaDevices;
 
-  if (videoInputDevices.length < 1) {
-    throw new Error('No video input devices found');
+  if (!isMediaDevicesSupported) {
+    console.warn(
+      `[ReactQrReader]: MediaDevices API has no support for your browser. You can fix this by running "npm i webrtc-adapter"`
+    );
   }
 
-  const regex =
-    facingMode === 'environment'
-      ? /rear|back|environment/gi
-      : /front|user|face/gi;
+  return isMediaDevicesSupported;
+};
 
-  const devices = await Promise.all(
-    videoInputDevices
-      .filter((videoDevice: MediaDeviceInfo) => regex.test(videoDevice.label))
-      .map(async (videoDevice: MediaDeviceInfo) => {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({
-            video: { deviceId: { exact: videoDevice.deviceId } },
-          });
+export const isValidType = (value: any, name: string, type: string) => {
+  const isValid = typeof value === type;
 
-          stream.getVideoTracks().forEach((track) => {
-            track.getCapabilities();
-            track.getSettings();
-          });
-
-          stream.getTracks().forEach((track) => track.stop());
-
-          return {
-            deviceId: videoDevice.deviceId,
-            streamError: false,
-          };
-        } catch (err) {
-          return {
-            deviceId: videoDevice.deviceId,
-            streamError: true,
-          };
-        }
-      })
-  );
-
-  const [device] = devices.filter((device) => !device.streamError);
-
-  if (!device) {
-    throw new Error('No video input devices found');
+  if (!isValid) {
+    console.warn(
+      `[ReactQrReader]: Expected "${name}" to be a of type "${type}".`
+    );
   }
 
-  return device.deviceId;
+  return isValid;
 };

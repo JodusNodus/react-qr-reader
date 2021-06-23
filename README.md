@@ -41,14 +41,16 @@ You can install this library via NPM or YARN.
 ### NPM
 
 ```bash
-npm i @blackbox-vision/react-qr-reader @zxing/library
+npm i @blackbox-vision/react-qr-reader @zxing/browser @zxing/library
 ```
 
 ### YARN
 
 ```bash
-yarn add @blackbox-vision/react-qr-reader @zxing/library
+yarn add @blackbox-vision/react-qr-reader @zxing/browser @zxing/library
 ```
+
+// TODO: add info about polyfilling UserMedia API
 
 ## Example Usage
 
@@ -85,15 +87,15 @@ const Test = (props) => {
 
 The `QrReader` component has the following props:
 
-| Properties | Types                   | Default Value | Description                                                                                       |
-| ---------- | ----------------------- | ------------- | ------------------------------------------------------------------------------------------------- |
-| facingMode | `user` or `environment` | `environment` | Specify which camera should be used (if available).                                               |
-| onResult   | `function`              | none          | Scan event handler                                                                                |
-| videoId    | `string`                | `video`       | The ID for the video element                                                                      |
-| scanDelay  | `number`                | `500`         | The scan period for the QR hook                                                                   |
-| ViewFinder | component               | none          | ViewFinder component to rendering over the video element                                          |
-| style      | a valid React style     | none          | Styling for the container element. **Warning** The preview will always keep its 1:1 aspect ratio. |
-| className  | string                  | none          | ClassName for the container element.                                                              |
+| Properties  | Types                 | Default Value            | Description                                                                                       |
+| ----------- | --------------------- | ------------------------ | ------------------------------------------------------------------------------------------------- |
+| constraints | MediaTrackConstraints | `{ facingMode: 'user' }` | Specify which camera should be used (if available).                                               |
+| onResult    | `function`            | none                     | Scan event handler                                                                                |
+| videoId     | `string`              | `video`                  | The ID for the video element                                                                      |
+| scanDelay   | `number`              | `500`                    | The scan period for the QR hook                                                                   |
+| ViewFinder  | component             | none                     | ViewFinder component to rendering over the video element                                          |
+| style       | a valid React style   | none                     | Styling for the container element. **Warning** The preview will always keep its 1:1 aspect ratio. |
+| className   | string                | none                     | ClassName for the container element.                                                              |
 
 ## Browser Support
 

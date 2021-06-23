@@ -1,22 +1,18 @@
-export default {
+export const styles: any = {
   container: {
-    overflow: 'hidden',
-    position: 'relative',
     width: '100%',
     paddingTop: '100%',
+    overflow: 'hidden',
+    position: 'relative',
   },
-  hidden: {
-    display: 'none',
-  },
-  videoPreview: {
+  video: {
     top: 0,
     left: 0,
-    display: 'block',
-    position: 'absolute',
-    overflow: 'hidden',
     width: '100%',
     height: '100%',
-    objectFit: 'cover',
+    display: 'block',
+    overflow: 'hidden',
+    position: 'absolute',
     transform: undefined,
   },
 };

@@ -1,46 +1,51 @@
-import { useEffect } from 'react';
-import { BrowserQRCodeReader } from '@zxing/library';
+import { MutableRefObject, useEffect, useRef } from 'react';
+import { BrowserQRCodeReader, IScannerControls } from '@zxing/browser';
 
-import { getDeviceId } from './utils';
-import { UseQrReaderHook, CodeReaderError } from '../types';
+import { UseQrReaderHook } from '../types';
 
-// TODO: implement dependencies in a way that video stream doesn't flashback
+import { isMediaDevicesSupported, isValidType } from './utils';
+
+// TODO: add support for debug logs
 export const useQrReader: UseQrReaderHook = ({
-  facingMode,
-  scanDelay,
+  scanDelay: delayBetweenScanAttempts,
+  constraints: video,
   onResult,
   videoId,
 }) => {
-  useEffect(() => {
-    const codeReader = new BrowserQRCodeReader(scanDelay);
+  const controlsRef: MutableRefObject<IScannerControls> = useRef(null);
 
-    if (!codeReader.isMediaDevicesSuported) {
-      if (typeof onResult === 'function') {
-        onResult(null, 'NoMediaDevicesSupportException');
-      }
+  useEffect(() => {
+    const codeReader = new BrowserQRCodeReader(null, {
+      delayBetweenScanAttempts,
+    });
+
+    if (
+      !isMediaDevicesSupported() &&
+      isValidType(onResult, 'onResult', 'function')
+    ) {
+      const message =
+        'MediaDevices API has no support for your browser. You can fix this by running "npm i webrtc-adapter"';
+
+      onResult(null, new Error(message), codeReader);
     }
 
-    codeReader
-      .listVideoInputDevices()
-      .then((videoInputDevices) => getDeviceId(videoInputDevices, facingMode))
-      .then((deviceId) =>
-        codeReader.decodeFromVideoDevice(deviceId, videoId, (result, error) => {
-          const exception = (error && (error.name as CodeReaderError)) || null;
-
-          if (typeof onResult === 'function') {
-            onResult(result, exception, codeReader);
+    if (isValidType(video, 'constraints', 'object')) {
+      codeReader
+        .decodeFromConstraints({ video }, videoId, (result, error) => {
+          if (isValidType(onResult, 'onResult', 'function')) {
+            onResult(result, error, codeReader);
           }
         })
-      )
-      .catch(() => {
-        if (typeof onResult === 'function') {
-          onResult(null, 'NoDeviceFoundException', codeReader);
-        }
-      });
+        .then((controls: IScannerControls) => (controlsRef.current = controls))
+        .catch((error: Error) => {
+          if (isValidType(onResult, 'onResult', 'function')) {
+            onResult(null, error, codeReader);
+          }
+        });
+    }
 
     return () => {
-      codeReader.stopContinuousDecode();
-      codeReader.stopAsyncDecode();
+      controlsRef.current?.stop();
     };
   }, []);
 };
