@@ -9,6 +9,7 @@ export const QrReader: React.FC<QrReaderProps> = ({
   constraints,
   ViewFinder,
   scanDelay,
+  className,
   onResult,
   videoId,
 }) => {
@@ -20,16 +21,18 @@ export const QrReader: React.FC<QrReaderProps> = ({
   });
 
   return (
-    <section style={styles.container}>
-      {!!ViewFinder && <ViewFinder />}
-      <video
-        muted
-        id={videoId}
-        style={{
-          ...styles.video,
-          transform: constraints?.facingMode === 'user' && 'scaleX(-1)',
-        }}
-      />
+    <section className={className}>
+      <div style={styles.container}>
+        {!!ViewFinder && <ViewFinder />}
+        <video
+          muted
+          id={videoId}
+          style={{
+            ...styles.video,
+            transform: constraints?.facingMode === 'user' && 'scaleX(-1)',
+          }}
+        />
+      </div>
     </section>
   );
 };
