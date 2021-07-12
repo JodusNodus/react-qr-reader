@@ -85,15 +85,17 @@ const Test = (props) => {
 
 The `QrReader` component has the following props:
 
-| Properties  | Types                                                                                           | Default Value            | Description                                                                                       |
-| ----------- | ----------------------------------------------------------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------- |
-| constraints | [MediaTrackConstraints](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints) | `{ facingMode: 'user' }` | Specify which camera should be used (if available).                                               |
-| onResult    | `function`                                                                                      | none                     | Scan event handler                                                                                |
-| videoId     | `string`                                                                                        | `video`                  | The ID for the video element                                                                      |
-| scanDelay   | `number`                                                                                        | `500`                    | The scan period for the QR hook                                                                   |
-| ViewFinder  | component                                                                                       | none                     | ViewFinder component to rendering over the video element                                          |
-| style       | a valid React style                                                                             | none                     | Styling for the container element. **Warning** The preview will always keep its 1:1 aspect ratio. |
-| className   | string                                                                                          | none                     | ClassName for the container element.                                                              |
+| Properties          | Types                                                                                           | Default Value            | Description                                              |
+| ------------------- | ----------------------------------------------------------------------------------------------- | ------------------------ | -------------------------------------------------------- |
+| constraints         | [MediaTrackConstraints](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints) | `{ facingMode: 'user' }` | Specify which camera should be used (if available).      |
+| onResult            | `function`                                                                                      | none                     | Scan event handler                                       |
+| videoId             | `string`                                                                                        | `video`                  | The ID for the video element                             |
+| scanDelay           | `number`                                                                                        | `500`                    | The scan period for the QR hook                          |
+| ViewFinder          | component                                                                                       | none                     | ViewFinder component to rendering over the video element |
+| className           | string                                                                                          | none                     | ClassName for the container element.                     |
+| containerStyle      | object                                                                                          | none                     | Style object for the container element.                  |
+| videoContainerStyle | object                                                                                          | none                     | Style object for the video container element.            |
+| videoStyle          | object                                                                                          | none                     | Style object for the video element.                      |
 
 ## Browser Support
 
