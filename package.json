@@ -1,6 +1,6 @@
 {
   "name": "@blackbox-vision/react-qr-reader",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "A React Component for reading QR codes from the webcam",
   "scripts": {
     "analyze": "source-map-explorer pkg/**/*.js pkg/**/*.js.map",
