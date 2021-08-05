@@ -4,8 +4,8 @@
   "description": "A React Component for reading QR codes from the webcam",
   "scripts": {
     "analyze": "source-map-explorer pkg/**/*.js pkg/**/*.js.map",
-    "clean": "rimraf pkg",
-    "build": "npm run clean && pika build",
+    "prebuild": "rimraf pkg",
+    "build": "pika build",
     "lint": "eslint --fix 'src/**'",
     "publish": "pika publish",
     "version": "npm run build",
@@ -21,14 +21,23 @@
     "react",
     "qr",
     "qrcode",
-    "qrreader"
+    "qrreader",
+    "react-qr-reader"
   ],
-  "author": "thomas billiet",
+  "author": "Jonatan Salas <jonatan.salas@blackbox-vision.tech>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/BlackBoxVision/react-qr-reader/issues"
   },
   "homepage": "https://github.com/BlackBoxVision/react-qr-reader#readme",
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
+  },
+  "dependencies": {
+    "@zxing/browser": "0.0.7",
+    "@zxing/library": "^0.18.3"
+  },
   "devDependencies": {
     "@babel/core": "^7.12.0",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
@@ -49,8 +58,6 @@
     "@types/react": "^16.9.49",
     "@typescript-eslint/eslint-plugin": "^4.1.0",
     "@typescript-eslint/parser": "^4.1.0",
-    "@zxing/browser": "0.0.7",
-    "@zxing/library": "^0.18.3",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "eslint": "^7.18.0",
@@ -69,12 +76,6 @@
     "source-map-explorer": "^2.5.0",
     "ts-loader": "^8.0.3",
     "typescript": "^4.0.2"
-  },
-  "peerDependencies": {
-    "@zxing/browser": "^0.0.7",
-    "@zxing/library": "^0.18.3",
-    "react": "^16.8.0 || ^17.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0"
   },
   "@pika/pack": {
     "pipeline": [
@@ -103,6 +104,5 @@
       "prettier --write",
       "git add"
     ]
-  },
-  "dependencies": {}
+  }
 }
