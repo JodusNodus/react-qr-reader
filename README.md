@@ -1,6 +1,13 @@
 [![npm version](https://badge.fury.io/js/react-qr-reader.svg)](https://badge.fury.io/js/react-qr-reader)
 
 ## Introduction
+This project is adopted from [react-qr-reader](https://github.com/JodusNodus/react-qr-reader).
+I made a few changes:
+1. Uses jsqr-es6 instead of jsqr.
+2. Removed webrtc-adapter, if you need that, please install that package manually
+3. Updated all toolchains and cleanup the NPM package, make it much smaller
+
+In the end, it reduced the final lib from 140KB+ to 60KB+.
 
 A [React](https://facebook.github.io/react/) component for reading QR codes from the webcam. It uses the WebRTC standards for reading webcam data and [jsQR](https://github.com/cozmo/jsQR) is used for detecting QR codes in that data. To optimise the speed and experience, a web-worker is used to offload the heavy QR code algorithm on a separate process. The web worker is inlined and loaded on creation of the component.
 
@@ -17,7 +24,7 @@ A [React](https://facebook.github.io/react/) component for reading QR codes from
 
 ## Install
 
-`npm install --save react-qr-reader`
+`npm install --save react-qr-reader-es6`
 
 ## Example
 

@@ -1,12 +1,9 @@
 const React = require('react')
 const { Component } = React
 const PropTypes = require('prop-types')
-const { getDeviceId, getFacingModePattern } = require('./getDeviceId')
+const { getDeviceId } = require('./getDeviceId')
 const havePropsChanged = require('./havePropsChanged')
 const createBlob = require('./createBlob')
-
-// Require adapter to support older browser implementations
-require('webrtc-adapter')
 
 // Inline worker.js as a string value of workerBlob.
 // eslint-disable-next-line
@@ -73,26 +70,26 @@ module.exports = class Reader extends Component {
       this.initiateLegacyMode()
     }
   }
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     // React according to change in props
-    const changedProps = havePropsChanged(this.props, nextProps, propsKeys)
+    const changedProps = havePropsChanged(this.props, prevProps, propsKeys)
 
     for (const prop of changedProps) {
       if (prop == 'facingMode') {
         this.clearComponent()
-        this.initiate(nextProps)
+        this.initiate(this.props)
         break
       } else if (prop == 'delay') {
-        if (this.props.delay == false && !nextProps.legacyMode) {
-          this.timeout = setTimeout(this.check, nextProps.delay)
+        if (prevProps.delay == false && !this.props.legacyMode) {
+          this.timeout = setTimeout(this.check, this.props.delay)
         }
-        if (nextProps.delay == false) {
+        if (this.props.delay == false) {
           clearTimeout(this.timeout)
         }
       } else if (prop == 'legacyMode') {
-        if (this.props.legacyMode && !nextProps.legacyMode) {
+        if (prevProps.legacyMode && !this.props.legacyMode) {
           this.clearComponent()
-          this.initiate(nextProps)
+          this.initiate(this.props)
         } else {
           this.clearComponent()
           this.componentDidUpdate = this.initiateLegacyMode
