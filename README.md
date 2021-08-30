@@ -3,9 +3,10 @@
 ## Introduction
 This project is adopted from [react-qr-reader](https://github.com/JodusNodus/react-qr-reader).
 I made a few changes:
-1. Uses jsqr-es6 instead of jsqr.
-2. Removed webrtc-adapter, if you need that, please install that package manually
-3. Updated all toolchains and cleanup the NPM package, make it much smaller
+1. Refactor the React component to not using the deprecated componentWillReceiveProps method.
+2. Uses jsqr-es6 instead of jsqr.
+3. Removed webrtc-adapter, if you need that, please install that package manually
+4. Updated all toolchains and cleanup the NPM package, make it much smaller
 
 In the end, it reduced the final lib from 140KB+ to 60KB+.
 
@@ -30,7 +31,7 @@ A [React](https://facebook.github.io/react/) component for reading QR codes from
 
 ```js
 import React, { Component } from 'react'
-import QrReader from 'react-qr-reader'
+import QrReader from 'react-qr-reader-es6'
 
 class Test extends Component {
   state = {
