@@ -1,6 +1,6 @@
 {
   "name": "react-qr-reader-es6",
-  "version": "2.2.1",
+  "version": "2.2.1-2",
   "description": "A react component for reading QR codes from the webcam.",
   "main": "./lib/index.js",
   "files": [
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JodusNodus/react-qr-reader.git"
+    "url": "git+https://github.com/dsonet/react-qr-reader-es6.git"
   },
   "keywords": [
     "react",
@@ -30,7 +30,7 @@
   "bugs": {
     "url": "https://github.com/JodusNodus/react-qr-reader/issues"
   },
-  "homepage": "https://github.com/JodusNodus/react-qr-reader#readme",
+  "homepage": "https://github.com/dsonet/react-qr-reader-es6#readme",
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@babel/preset-env": "^7.15.0",

@@ -30,6 +30,8 @@ gulp.task('worker', gulp.series('clean', function() {
 }))
 
 gulp.task('build', gulp.series('worker', function() {
+  gulp.src('src/index.d.ts')
+    .pipe(gulp.dest(paths.destination))
   return gulp
     .src(paths.scripts)
     .pipe(inlineStr({ basePath: paths.destination }))
