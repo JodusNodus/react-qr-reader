@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { storiesOf, action } from "@storybook/react";
+import { storiesOf } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
 import Reader from "../lib";
-
 class Wrapper extends Component {
   constructor(props) {
     super(props);
