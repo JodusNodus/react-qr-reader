@@ -15,7 +15,7 @@ let workerBlob = createBlob([__inline('../lib/worker.js')], {
 })
 
 // Props that are allowed to change dynamicly
-const propsKeys = ['delay', 'legacyMode', 'facingMode']
+const propsKeys = ['delay', 'legacyMode', 'facingMode', 'showFeedback']
 
 module.exports = class Reader extends Component {
   static propTypes = {
@@ -30,23 +30,52 @@ module.exports = class Reader extends Component {
     showViewFinder: PropTypes.bool,
     style: PropTypes.any,
     className: PropTypes.string,
-    constraints: PropTypes.object
+    constraints: PropTypes.object,
+    showFeedback: PropTypes.bool,
   };
+
   static defaultProps = {
     delay: 500,
     resolution: 600,
     facingMode: 'environment',
     showViewFinder: true,
-    constraints: null
+    constraints: null,
+    showFeedback: true,
   };
 
   els = {};
+  transformData = {
+    dx: 0,
+    dy: 0,
+    xscale: 400,
+    yscale: 400,
+  };
+
+  transformRect(top, left, bottom, right) {
+    const tx_top = Math.floor(100*(top-this.transformData.dy)/this.transformData.yscale)
+    const tx_bottom = Math.floor(100*(bottom-this.transformData.dy)/this.transformData.yscale)
+
+    const tx_left = Math.floor(100*(left-this.transformData.dx)/this.transformData.xscale)
+    const tx_right = Math.floor(100*(right-this.transformData.dx)/this.transformData.xscale)
+
+    const new_left = Math.min(tx_left, tx_right)
+    const new_width = Math.abs(tx_left - tx_right)
+    const new_top = Math.min(tx_top, tx_bottom)
+    const new_height = Math.abs(tx_top - tx_bottom)
+    return {
+      top: new_top + "%",
+      left: new_left + "%",
+      height: new_height + "%",
+      width: new_width + "%",
+    }
+  }
 
   constructor(props) {
     super(props)
 
     this.state = {
       mirrorVideo: false,
+      qrFound: false,
     }
 
     // Bind function to the class
@@ -193,6 +222,7 @@ module.exports = class Reader extends Component {
 
     preview.addEventListener('loadstart', this.handleLoadStart)
 
+
     this.setState({ mirrorVideo: facingMode == 'user', streamLabel: streamTrack.label })
   }
   handleLoadStart() {
@@ -215,10 +245,12 @@ module.exports = class Reader extends Component {
   check() {
     const { legacyMode, resolution, delay } = this.props
     const { preview, canvas, img } = this.els
+    const { mirrorVideo } = this.state
 
     // Get image/video dimensions
     let width = Math.floor(legacyMode ? img.naturalWidth : preview.videoWidth)
     let height = Math.floor(legacyMode ? img.naturalHeight : preview.videoHeight)
+
 
     // Canvas draw offsets
     let hozOffset = 0
@@ -248,6 +280,20 @@ module.exports = class Reader extends Component {
 
       canvas.width = resolution
       canvas.height = resolution
+
+      const vidWidth = Math.floor(preview.videoWidth)
+      const vidHeight = Math.floor(preview.videoHeight)
+
+      const box = Math.min(vidWidth, vidHeight)
+      this.transformData.dy = 0
+      this.transformData.yscale = resolution
+      this.transformData.dx = 0
+      this.transformData.xscale = resolution
+
+      if(mirrorVideo) {
+        this.transformData.dx = resolution + this.transformData.dx
+        this.transformData.xscale = -this.transformData.xscale
+      }
     }
 
 
@@ -268,9 +314,36 @@ module.exports = class Reader extends Component {
     }
   }
   handleWorkerMessage(e) {
-    const { onScan, legacyMode, delay } = this.props
+    const { onScan, legacyMode, delay, showFeedback } = this.props
+    const { preview } = this.els
+
     const decoded = e.data
-    onScan(decoded || null)
+    if(decoded) {
+
+      const org_left = Math.min(decoded.location.topLeftCorner.x, decoded.location.bottomLeftCorner.x)
+      const org_right = Math.max(decoded.location.topRightCorner.x, decoded.location.bottomRightCorner.x)
+      const org_top = Math.min(decoded.location.topLeftCorner.y, decoded.location.topRightCorner.y)
+      const org_bottom = Math.max(decoded.location.bottomLeftCorner.y, decoded.location.bottomRightCorner.y)
+
+      const {top, left, width, height} = this.transformRect(org_top, org_left, org_bottom, org_right)
+
+      this.setState({
+        qrFound: showFeedback,
+        top: top,
+        left: left,
+        width: width,
+        height: height,
+      })
+    } else {
+      this.setState({
+        qrFound: false,
+        top: 0,
+        left: 0,
+        width: 0,
+        height: 0,
+      })
+    }
+    onScan(decoded && decoded.data || null)
 
     if (!legacyMode && typeof delay == 'number' && this.worker) {
       this.timeout = setTimeout(this.check, delay)
@@ -315,6 +388,15 @@ module.exports = class Reader extends Component {
       facingMode
     } = this.props
 
+    const {
+      qrFound,
+      top,
+      left,
+      width,
+      height,
+    } = this.state
+
+
     const containerStyle = {
       overflow: 'hidden',
       position: 'relative',
@@ -353,6 +435,17 @@ module.exports = class Reader extends Component {
       height: '100%',
     }
 
+    const qrLocatorStyle = {
+      top: top,
+      left: left,
+      boxSizing: 'border',
+      border: '10px solid rgba(0, 255, 0, 0.5)',
+      position: 'absolute',
+      width: width,
+      height: height,
+      zIndex: 2,
+      visibility: qrFound ? 'visible' : 'hidden'
+    }
     return (
       <section className={className} style={style}>
         <section style={containerStyle}>
@@ -376,6 +469,11 @@ module.exports = class Reader extends Component {
             legacyMode
               ? <img style={imgPreviewStyle} ref={this.setRefFactory('img')} onLoad={onImageLoad} />
               : <video style={videoPreviewStyle} ref={this.setRefFactory('preview')} />
+          }
+          {
+            legacyMode
+              ? null
+              : <div style={qrLocatorStyle} />
           }
 
           <canvas style={hiddenStyle} ref={this.setRefFactory('canvas')} />
