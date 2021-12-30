@@ -15,7 +15,7 @@ let workerBlob = createBlob([__inline('../lib/worker.js')], {
 })
 
 // Props that are allowed to change dynamicly
-const propsKeys = ['delay', 'legacyMode', 'facingMode']
+const propsKeys = ['delay', 'legacyMode', 'facingMode', 'showFeedback']
 
 module.exports = class Reader extends Component {
   static propTypes = {
@@ -30,23 +30,70 @@ module.exports = class Reader extends Component {
     showViewFinder: PropTypes.bool,
     style: PropTypes.any,
     className: PropTypes.string,
-    constraints: PropTypes.object
+    constraints: PropTypes.object,
+    showFeedback: PropTypes.bool,
   };
+
   static defaultProps = {
     delay: 500,
     resolution: 600,
     facingMode: 'environment',
     showViewFinder: true,
-    constraints: null
+    constraints: null,
+    showFeedback: false,
   };
 
   els = {};
+
+  // This data gets dynamically updated - its used to transform
+  // coordinates in the video image into coordinates in css %-space
+  transformData = {
+    x_offset: 0,
+    y_offset: 0,
+    x_scale: 400,
+    y_scale: 400,
+  };
+
+  // transforms a rectangle bounded by top, left, bottom, right
+  // into %-based coordinates (top, left, width, height) to
+  // place a div approximately around the detected qr code in
+  // the image.
+  transformRect(top, left, bottom, right) {
+    const {x_offset, y_offset, x_scale, y_scale} = this.transformData
+
+    const tx_top = Math.floor(100*(top-y_offset)/y_scale)
+    const tx_bottom = Math.floor(100*(bottom-y_offset)/y_scale)
+    const tx_left = Math.floor(100*(left-x_offset)/x_scale)
+    const tx_right = Math.floor(100*(right-x_offset)/x_scale)
+
+    // we have to work out left/right and top/bottom after the transform
+    // because there is no guarantee that x_scale/y_scale are positive.
+    const new_left = Math.min(tx_left, tx_right)
+    const new_width = Math.abs(tx_left - tx_right)
+    const new_top = Math.min(tx_top, tx_bottom)
+    const new_height = Math.abs(tx_top - tx_bottom)
+
+    // results are strings in % units suitable for placing
+    // in the inline css for a div to place it on top of the
+    // video, enclosing the detected qr code.
+    return {
+      top: new_top + "%",
+      left: new_left + "%",
+      height: new_height + "%",
+      width: new_width + "%",
+    }
+  }
 
   constructor(props) {
     super(props)
 
     this.state = {
       mirrorVideo: false,
+      qrFound: false,
+      top: 0,
+      left: 0,
+      width: 0,
+      height: 0,
     }
 
     // Bind function to the class
@@ -193,6 +240,7 @@ module.exports = class Reader extends Component {
 
     preview.addEventListener('loadstart', this.handleLoadStart)
 
+
     this.setState({ mirrorVideo: facingMode == 'user', streamLabel: streamTrack.label })
   }
   handleLoadStart() {
@@ -215,10 +263,12 @@ module.exports = class Reader extends Component {
   check() {
     const { legacyMode, resolution, delay } = this.props
     const { preview, canvas, img } = this.els
+    const { mirrorVideo } = this.state
 
     // Get image/video dimensions
     let width = Math.floor(legacyMode ? img.naturalWidth : preview.videoWidth)
     let height = Math.floor(legacyMode ? img.naturalHeight : preview.videoHeight)
+
 
     // Canvas draw offsets
     let hozOffset = 0
@@ -248,6 +298,16 @@ module.exports = class Reader extends Component {
 
       canvas.width = resolution
       canvas.height = resolution
+
+      this.transformData.y_offset = 0
+      this.transformData.y_scale = resolution
+      this.transformData.x_offset = 0
+      this.transformData.x_scale = resolution
+
+      if(mirrorVideo) {
+        this.transformData.x_offset = resolution + this.transformData.x_offset
+        this.transformData.x_scale = -this.transformData.x_scale
+      }
     }
 
 
@@ -268,9 +328,39 @@ module.exports = class Reader extends Component {
     }
   }
   handleWorkerMessage(e) {
-    const { onScan, legacyMode, delay } = this.props
+    const { onScan, legacyMode, delay, } = this.props
+    const { preview } = this.els
+
     const decoded = e.data
-    onScan(decoded || null)
+    if(decoded) {
+
+      // Calculate a bounding rectangle around the detected qr code
+      const org_left = Math.min(decoded.location.topLeftCorner.x, decoded.location.bottomLeftCorner.x)
+      const org_right = Math.max(decoded.location.topRightCorner.x, decoded.location.bottomRightCorner.x)
+      const org_top = Math.min(decoded.location.topLeftCorner.y, decoded.location.topRightCorner.y)
+      const org_bottom = Math.max(decoded.location.bottomLeftCorner.y, decoded.location.bottomRightCorner.y)
+
+      // Transform the video-based coordinates into %-based units suitable
+      // for css on a div
+      const {top, left, width, height} = this.transformRect(org_top, org_left, org_bottom, org_right)
+
+      this.setState({
+        qrFound: true,
+        top: top,
+        left: left,
+        width: width,
+        height: height,
+      })
+    } else {
+      this.setState({
+        qrFound: false,
+        top: 0,
+        left: 0,
+        width: 0,
+        height: 0,
+      })
+    }
+    onScan(decoded && (decoded.data || null))
 
     if (!legacyMode && typeof delay == 'number' && this.worker) {
       this.timeout = setTimeout(this.check, delay)
@@ -312,8 +402,18 @@ module.exports = class Reader extends Component {
       onImageLoad,
       legacyMode,
       showViewFinder,
-      facingMode
+      facingMode,
+      showFeedback,
     } = this.props
+
+    const {
+      qrFound,
+      top,
+      left,
+      width,
+      height,
+    } = this.state
+
 
     const containerStyle = {
       overflow: 'hidden',
@@ -353,6 +453,16 @@ module.exports = class Reader extends Component {
       height: '100%',
     }
 
+    const qrLocatorStyle = {
+      top: top,
+      left: left,
+      outline: '10px solid rgba(0, 255, 0, 0.5)',
+      position: 'absolute',
+      width: width,
+      height: height,
+      zIndex: 2,
+      visibility: (showFeedback && qrFound) ? 'visible' : 'hidden'
+    }
     return (
       <section className={className} style={style}>
         <section style={containerStyle}>
@@ -376,6 +486,11 @@ module.exports = class Reader extends Component {
             legacyMode
               ? <img style={imgPreviewStyle} ref={this.setRefFactory('img')} onLoad={onImageLoad} />
               : <video style={videoPreviewStyle} ref={this.setRefFactory('preview')} />
+          }
+          {
+            legacyMode
+              ? null
+              : <div style={qrLocatorStyle} />
           }
 
           <canvas style={hiddenStyle} ref={this.setRefFactory('canvas')} />
