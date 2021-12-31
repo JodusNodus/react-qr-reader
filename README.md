@@ -81,6 +81,9 @@ class Test extends Component {
 | constraints    | object                  | `null`          | Use custom camera constraints that the override default behavior. [MediaTrackConstraints](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints)                                                                                                                                                                                                                                                                                                                            |
 | legacyMode     | boolean                 | `false`       | If the device does not allow camera access (e.g. IOS Browsers, Safari) you can enable legacyMode to allow the user to take a picture (On a mobile device) or use an existing one. To trigger the image dialog just call the method `openImageDialog` from the parent component. **Warning** You must call the method from a user action (eg. click event on some element). |
 
+| showFeedback   | boolean                 | `false`       | When this property is set, detected QR codes in the camera feed will be highlighted with an enclosing green box. |
+
+
 ## Dev
 
 ### Install dependencies
