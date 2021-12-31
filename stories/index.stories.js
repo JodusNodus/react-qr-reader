@@ -8,7 +8,7 @@ class Wrapper extends Component {
     this.state = { facingMode: "user", delay: 500, on: true };
   }
   render() {
-    const { selectFacingMode, selectDelay, legacyMode, onAndOff } = this.props;
+    const { selectFacingMode, selectDelay, legacyMode, onAndOff, selectFeedback } = this.props;
 
     return (
       <div style={{ width: "400px", margin: "auto" }}>
@@ -36,6 +36,12 @@ class Wrapper extends Component {
             />
           </div>
         )}
+        {selectFeedback && (
+          <select onChange={e => this.setState({ showFeedback: e.target.value == "true" })}>
+            <option value="false">No QR Feedback</option>
+            <option value="true">QR Feedback</option>
+          </select>
+        )}
         {this.state.on && (
           <Reader
             onError={action("Error")}
@@ -45,6 +51,7 @@ class Wrapper extends Component {
             ref="reader"
             facingMode={this.state.facingMode}
             legacyMode={legacyMode}
+            showFeedback={this.state.showFeedback}
             maxImageSize={1000}
             delay={this.state.delay}
             className="reader-container"
@@ -55,6 +62,8 @@ class Wrapper extends Component {
             Open Image Dialog
           </button>
         )}
+
+
       </div>
     );
   }
@@ -65,4 +74,5 @@ storiesOf("QR Reader", module)
   .add("Choose facingMode", () => <Wrapper selectFacingMode />)
   .add("Legacy mode", () => <Wrapper legacyMode />)
   .add("Choose delay", () => <Wrapper selectDelay />)
-  .add("On and off", () => <Wrapper onAndOff />);
+  .add("On and off", () => <Wrapper onAndOff />)
+  .add("Select Feedback", () => <Wrapper selectFeedback />);
