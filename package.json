@@ -1,6 +1,6 @@
 {
-  "name": "@blackbox-vision/react-qr-reader",
-  "version": "5.0.0",
+  "name": "react-qr-reader",
+  "version": "3.0.0",
   "description": "A React Component for reading QR codes from the webcam",
   "scripts": {
     "analyze": "source-map-explorer pkg/**/*.js pkg/**/*.js.map",
@@ -15,21 +15,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BlackBoxVision/react-qr-reader.git"
+    "url": "git+https://github.com/react-qr-reader/react-qr-reader.git"
   },
   "keywords": [
     "react",
     "qr",
     "qrcode",
-    "qrreader",
-    "react-qr-reader"
+    "qrreader"
   ],
-  "author": "Jonatan Salas <jonatan.salas@blackbox-vision.tech>",
+  "author": "thomas billiet",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/BlackBoxVision/react-qr-reader/issues"
+    "url": "https://github.com/react-qr-reader/react-qr-reader/issues"
   },
-  "homepage": "https://github.com/BlackBoxVision/react-qr-reader#readme",
+  "homepage": "https://github.com/react-qr-reader/react-qr-reader#readme",
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0"
