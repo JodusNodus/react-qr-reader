@@ -1,7 +1,6 @@
 {
-  "presets": [
-    "es2015",
-    "stage-0",
-    "react"
+  "presets": ["@babel/preset-typescript", "@babel/preset-react"],
+  "plugins": [
+    "@babel/plugin-proposal-optional-chaining"
   ]
 }
