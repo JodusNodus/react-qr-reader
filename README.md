@@ -95,8 +95,8 @@ The `QrReader` component has the following props:
 
 ## Maintainers
 
-- Created by @JodusNodus .
-- Revived thanks to @JonatanSalas and his company @BlackBoxVision .
+- Created by [@JodusNodus](https://github.com/JodusNodus) .
+- Revived thanks to [@JonatanSalas](https://github.com/JonatanSalas) and his company [@BlackBoxVision](https://github.com/BlackBoxVision) .
 
 ## Browser Support
 
