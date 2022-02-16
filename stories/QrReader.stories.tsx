@@ -3,8 +3,8 @@ import { Story } from '@storybook/react';
 
 import { ViewFinder } from './ViewFinder';
 
-import { QrReader } from '../src';
-import { QrReaderProps } from '../src/types';
+import { QrReader } from '../dist/esm';
+import { QrReaderProps } from '../dist';
 
 const styles = {
   container: {
