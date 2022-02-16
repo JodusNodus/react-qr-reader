@@ -21,7 +21,9 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "declarationDir": "types",
+    "emitDeclarationOnly": true
   },
   "include": ["src/**/*", "old.js"],
   "exclude": ["node_modules"]
