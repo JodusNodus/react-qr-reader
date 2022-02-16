@@ -2394,7 +2394,7 @@
     ts-dedent "^2.0.0"
     util-deprecate "^1.0.2"
 
-"@storybook/storybook-deployer@^2.8.7":
+"@storybook/storybook-deployer@^2.8.10":
   version "2.8.10"
   resolved "https://registry.yarnpkg.com/@storybook/storybook-deployer/-/storybook-deployer-2.8.10.tgz#3cf96aea823d424fbfce98e76fca108d07470ec2"
   integrity sha512-2uleH0AFuI98sdTkbyHt1BgPa0kmLxhC3zwfwtacE8FB+2ffdRdqBlp6GYDZ7CZ+R4B4XuPYhsgUKWkB+zngyQ==

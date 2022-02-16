@@ -52,7 +52,7 @@
     "@rollup/plugin-typescript": "^8.3.0",
     "@storybook/addon-essentials": "^6.1.21",
     "@storybook/react": "^6.1.21",
-    "@storybook/storybook-deployer": "^2.8.7",
+    "@storybook/storybook-deployer": "^2.8.10",
     "@types/react": "^16.9.49",
     "@typescript-eslint/eslint-plugin": "^4.1.0",
     "@typescript-eslint/parser": "^4.1.0",
