@@ -93,6 +93,11 @@ The `QrReader` component has the following props:
 | videoContainerStyle | object                                                                                          | none                     | Style object for the video container element.            |
 | videoStyle          | object                                                                                          | none                     | Style object for the video element.                      |
 
+## Maintainers
+
+- Created by @JodusNodus .
+- Revived thanks to @JonatanSalas and his company @BlackBoxVision .
+
 ## Browser Support
 
 If you need to support older browsers, checkout [this guide](https://github.com/zxing-js/library#browser-support) in how to make it compatible with legacy ones
