@@ -4,6 +4,7 @@
   "description": "A React Component for reading QR codes from the webcam",
   "scripts": {
     "build": "rollup -c",
+    "prepublish": "yarn build",
     "lint": "eslint --fix 'src/**'",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
