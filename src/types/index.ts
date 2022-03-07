@@ -5,7 +5,7 @@ export type QrReaderProps = {
   /**
    * Media track constraints object, to specify which camera and capabilities to use
    */
-  constraints: MediaTrackConstraints;
+  constraints?: MediaTrackConstraints;
   /**
    * Called when an error occurs.
    */
