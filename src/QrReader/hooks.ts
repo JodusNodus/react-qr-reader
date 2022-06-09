@@ -43,7 +43,9 @@ export const useQrReader: UseQrReaderHook = ({
           }
         });
     }
+  }, [delayBetweenScanAttempts, onResult, video, videoId]);
 
+  useEffect(() => {
     return () => {
       controlsRef.current?.stop();
     };
