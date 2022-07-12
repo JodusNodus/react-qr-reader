@@ -12,10 +12,10 @@ export const useQrReader: UseQrReaderHook = ({
   onResult,
   videoId,
 }) => {
-  const controlsRef: MutableRefObject<IScannerControls> = useRef(null);
+  const controlsRef: MutableRefObject<IScannerControls> = useRef(undefined);
 
   useEffect(() => {
-    const codeReader = new BrowserQRCodeReader(null, {
+    const codeReader = new BrowserQRCodeReader(undefined, {
       delayBetweenScanAttempts,
     });
 
@@ -26,24 +26,26 @@ export const useQrReader: UseQrReaderHook = ({
       const message =
         'MediaDevices API has no support for your browser. You can fix this by running "npm i webrtc-adapter"';
 
-      onResult(null, new Error(message), codeReader);
+      onResult?.(null, new Error(message), codeReader);
     }
 
     if (isValidType(video, 'constraints', 'object')) {
       codeReader
         .decodeFromConstraints({ video }, videoId, (result, error) => {
           if (isValidType(onResult, 'onResult', 'function')) {
-            onResult(result, error, codeReader);
+            onResult?.(result, error, codeReader);
           }
         })
         .then((controls: IScannerControls) => (controlsRef.current = controls))
         .catch((error: Error) => {
           if (isValidType(onResult, 'onResult', 'function')) {
-            onResult(null, error, codeReader);
+            onResult?.(null, error, codeReader);
           }
         });
     }
+  }, [delayBetweenScanAttempts, onResult, video, videoId]);
 
+  useEffect(() => {
     return () => {
       controlsRef.current?.stop();
     };
