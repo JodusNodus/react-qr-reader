@@ -62,7 +62,7 @@ const Test = (props) => {
       <QrReader
         onResult={(result, error) => {
           if (!!result) {
-            setData(result?.text);
+            setData(result.getText());
           }
 
           if (!!error) {
