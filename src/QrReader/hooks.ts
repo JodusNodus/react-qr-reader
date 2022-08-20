@@ -12,8 +12,14 @@ export const useQrReader: UseQrReaderHook = ({
   onResult,
   videoId,
 }) => {
-  const controlsRef: MutableRefObject<IScannerControls> = useRef(null);
-
+  /**
+   * The ref has 3 possible states:
+   * undefined - reader is not initialized
+   * null - useEffect cleanup was called so we should throw an error if the decode Promise resolves
+   * IScannerControls - reader is initialized and ready to be used
+   */
+  const controlsRef: MutableRefObject<IScannerControls | null | undefined> =
+    useRef(undefined);
   useEffect(() => {
     const codeReader = new BrowserQRCodeReader(null, {
       delayBetweenScanAttempts,
@@ -33,10 +39,17 @@ export const useQrReader: UseQrReaderHook = ({
       codeReader
         .decodeFromConstraints({ video }, videoId, (result, error) => {
           if (isValidType(onResult, 'onResult', 'function')) {
+            if (controlsRef.current === null) {
+              throw new Error('Component is unmounted');
+            }
             onResult(result, error, codeReader);
           }
         })
-        .then((controls: IScannerControls) => (controlsRef.current = controls))
+        .then((controls: IScannerControls) => {
+          if (controlsRef.current === undefined) {
+            controlsRef.current = controls;
+          }
+        })
         .catch((error: Error) => {
           if (isValidType(onResult, 'onResult', 'function')) {
             onResult(null, error, codeReader);
@@ -45,7 +58,12 @@ export const useQrReader: UseQrReaderHook = ({
     }
 
     return () => {
-      controlsRef.current?.stop();
+      if (controlsRef.current === undefined) {
+        /** invalidate the ref as the component is unmounted */
+        controlsRef.current = null;
+      } else {
+        controlsRef.current?.stop();
+      }
     };
   }, []);
 };
