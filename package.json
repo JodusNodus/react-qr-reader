@@ -76,7 +76,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-web-worker-loader": "^1.6.1",
     "source-map-explorer": "^2.5.0",
-    "ts-loader": "^8.0.3",
+    "ts-loader": "^9.4.1",
     "typescript": "^4.0.2"
   },
   "husky": {
