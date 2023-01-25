@@ -29,10 +29,6 @@
     "url": "https://github.com/react-qr-reader/react-qr-reader/issues"
   },
   "homepage": "https://github.com/react-qr-reader/react-qr-reader#readme",
-  "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0"
-  },
   "dependencies": {
     "@zxing/browser": "0.0.7",
     "@zxing/library": "^0.18.3",
