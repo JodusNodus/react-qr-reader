@@ -4,17 +4,20 @@
 
 ## Table of contents
 
-- [Use Case](#use-case)
-- [Compatibility](#compatibility)
-- [Installation](#installation)
-  - [NPM](#npm)
-  - [YARN](#yarn)
-- [Example Usage](#example-usage)
-- [QrReader API](#component-api)
-- [Browser support](#browser-support)
-- [Issues](#issues)
-- [Contributing](#contributing)
-- [License](#license)
+- [React QR Reader ](#react-qr-reader---)
+  - [Table of contents](#table-of-contents)
+  - [Use Case](#use-case)
+  - [Compatibility](#compatibility)
+  - [Installation](#installation)
+    - [NPM](#npm)
+    - [YARN](#yarn)
+  - [Example Usage](#example-usage)
+  - [Component API](#component-api)
+  - [Maintainers](#maintainers)
+  - [Browser Support](#browser-support)
+  - [Issues](#issues)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 ## Use Case
 
@@ -28,7 +31,7 @@ This component has been tested in the following browsers:
 - Firefox Mac OS & Android
 - Safari Mac OS & IOS
 
-Since this library does internal use of hooks you need `React >= 16.8.0`.
+Since this library does internal use of hooks you need `React >= 18.2.0`.
 
 ## Installation
 
