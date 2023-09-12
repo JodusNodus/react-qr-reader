@@ -1,5 +1,14 @@
 import { BrowserQRCodeReader } from '@zxing/browser';
 import { Result } from '@zxing/library';
+import { Exception } from '@zxing/library';
+import { MutableRefObject } from 'react';
+
+export class StopRequestedException extends Exception {
+  constructor() {
+    super();
+    Object.setPrototypeOf(this, new.target.prototype);
+  }
+}
 
 export type QrReaderProps = {
   /**
@@ -74,4 +83,6 @@ export type UseQrReaderHookProps = {
   videoId?: string;
 };
 
-export type UseQrReaderHook = (props: UseQrReaderHookProps) => void;
+export type UseQrReaderHook = (
+  props: UseQrReaderHookProps
+) => [MutableRefObject<boolean>];

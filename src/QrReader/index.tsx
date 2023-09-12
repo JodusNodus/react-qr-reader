@@ -17,7 +17,7 @@ export const QrReader: React.FC<QrReaderProps> = ({
   onResult,
   videoId,
 }) => {
-  useQrReader({
+  const [stopRequested] = useQrReader({
     constraints,
     scanDelay,
     onResult,
@@ -28,18 +28,25 @@ export const QrReader: React.FC<QrReaderProps> = ({
   useEffect(
     () => () => {
       if (isUnmounting.current) {
+        //Stop and remove all video based tracks from video media streams
         navigator.mediaDevices
           .getUserMedia({
             video: true,
             audio: false,
           })
-          .then((mediaStream) => mediaStream.getTracks().forEach((track) => track.stop()));
+          .then((mediaStream) =>
+            mediaStream.getTracks().forEach((track) => {
+              track.stop();
+              mediaStream.removeTrack(track);
+            })
+          );
+        stopRequested.current = true;
       }
       isUnmounting.current = true;
     },
-    [],
+    []
   );
-  
+
   return (
     <section className={className} style={containerStyle}>
       <div

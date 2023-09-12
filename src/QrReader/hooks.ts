@@ -1,7 +1,7 @@
 import { MutableRefObject, useEffect, useRef } from 'react';
 import { BrowserQRCodeReader, IScannerControls } from '@zxing/browser';
 
-import { UseQrReaderHook } from '../types';
+import { StopRequestedException, UseQrReaderHook } from '../types';
 
 import { isMediaDevicesSupported, isValidType } from './utils';
 
@@ -13,6 +13,7 @@ export const useQrReader: UseQrReaderHook = ({
   videoId,
 }) => {
   const controlsRef: MutableRefObject<IScannerControls> = useRef(null);
+  const stopRequested = useRef(false);
 
   useEffect(() => {
     const codeReader = new BrowserQRCodeReader(null, {
@@ -32,6 +33,11 @@ export const useQrReader: UseQrReaderHook = ({
     if (isValidType(video, 'constraints', 'object')) {
       codeReader
         .decodeFromConstraints({ video }, videoId, (result, error) => {
+          if (stopRequested.current) {
+            //Callback to parent function continuously runs after destruction of Video Element // Stream Video Tracks
+            //Intentionally throwing exception to step out of parent function.
+            throw new StopRequestedException();
+          }
           if (isValidType(onResult, 'onResult', 'function')) {
             onResult(result, error, codeReader);
           }
@@ -48,4 +54,5 @@ export const useQrReader: UseQrReaderHook = ({
       controlsRef.current?.stop();
     };
   }, []);
+  return [stopRequested];
 };
