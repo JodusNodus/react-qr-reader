@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useRef } from 'react';
 
 import { styles } from './styles';
 import { useQrReader } from './hooks';
@@ -22,7 +23,23 @@ export const QrReader: React.FC<QrReaderProps> = ({
     onResult,
     videoId,
   });
+  const isUnmounting = useRef(false);
 
+  useEffect(
+    () => () => {
+      if (isUnmounting.current) {
+        navigator.mediaDevices
+          .getUserMedia({
+            video: true,
+            audio: false,
+          })
+          .then((mediaStream) => mediaStream.getTracks().forEach((track) => track.stop()));
+      }
+      isUnmounting.current = true;
+    },
+    [],
+  );
+  
   return (
     <section className={className} style={containerStyle}>
       <div
