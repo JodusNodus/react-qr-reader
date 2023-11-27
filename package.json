@@ -30,8 +30,8 @@
   },
   "homepage": "https://github.com/react-qr-reader/react-qr-reader#readme",
   "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0"
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "dependencies": {
     "@zxing/browser": "0.0.7",
